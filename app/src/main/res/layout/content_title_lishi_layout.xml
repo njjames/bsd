@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout23"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/qb_px_36"
+    android:background="#FFFF"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="title"
+        android:textColor="#636364"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_lishi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/qb_px_10"
+        android:orientation="vertical"
+        android:padding="@dimen/qb_px_2">
+
+        <ImageView
+            android:layout_width="@dimen/qb_px_18"
+            android:layout_height="@dimen/qb_px_18"
+            android:src="@drawable/bsd_lishibaojia" />
+
+        <TextView
+            android:id="@+id/tv_title_lishi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="titlelishi"
+            android:textColor="#F7714C"
+            android:textSize="12sp" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content">
+
+      <Button
+          android:id="@+id/but_upload"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qb_px_40"
+          android:drawableLeft="@drawable/ic_upload"
+          android:drawablePadding="@dimen/qb_px_6"
+          android:text="上传图片"/>
+
+      <Button
+          android:id="@+id/but_delete"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qb_px_40"
+          android:layout_marginLeft="@dimen/qb_px_10"
+          android:drawableLeft="@drawable/ic_delete"
+          android:drawablePadding="@dimen/qb_px_6"
+          android:text="删除图片"/>
+  </LinearLayout>
+
+<WebView
+    android:id="@+id/bsd_cxq_wbweb"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+</LinearLayout>

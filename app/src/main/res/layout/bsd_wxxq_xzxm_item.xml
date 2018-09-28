@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/bsd_xm11"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/y45"
+        android:background="@drawable/biankuang_info_bg">
+
+        <TextView
+            android:id="@+id/bsd_xzcl_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="项目名称" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bsd_xm22"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/y45"
+        android:background="@drawable/biankuang_info_bg">
+
+        <TextView
+            android:id="@+id/bsd_xzcl_shuliang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="标准工时" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bsd_xm33"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/y45"
+        android:background="@drawable/biankuang_info_bg">
+
+        <TextView
+            android:id="@+id/bsd_xzcl_danjia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="工时单价" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bsd_xm44"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/y45"
+        android:background="@drawable/biankuang_info_bg">
+
+        <TextView
+            android:id="@+id/bsd_xzcl_yuangongshifei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="原工时费" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/y45"
+        android:background="@drawable/biankuang_info_bg">
+        <TextView
+            android:id="@+id/bsd_xzcl_huiyuanzhekou"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="会员折扣" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/y45"
+        android:background="@drawable/biankuang_info_bg">
+
+        <TextView
+            android:id="@+id/bsd_xzcl_tuhao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="金额" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

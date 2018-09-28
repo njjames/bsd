@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center"
+    android:background="@drawable/banbai">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请选择上传"
+        android:textSize="20sp"
+        android:padding="@dimen/qb_px_10"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_2"
+        android:layout_marginLeft="@dimen/qb_px_2"
+        android:layout_marginRight="@dimen/qb_px_2"
+        android:background="@color/hong"/>
+
+    <Button
+        android:id="@+id/but_1"
+        android:layout_width="@dimen/qb_px_200"
+        android:layout_height="wrap_content"
+        android:text="上传图片一"
+        android:textSize="18sp"
+        android:padding="@dimen/qb_px_10"
+        android:layout_marginTop="@dimen/qb_px_18"/>
+
+
+    <Button
+        android:id="@+id/but_2"
+        android:layout_width="@dimen/qb_px_200"
+        android:layout_height="wrap_content"
+        android:text="上传图片二"
+        android:textSize="18sp"
+        android:padding="@dimen/qb_px_10"
+        android:layout_marginTop="@dimen/qb_px_18"/>
+
+    <Button
+        android:id="@+id/but_3"
+        android:layout_width="@dimen/qb_px_200"
+        android:layout_height="wrap_content"
+        android:text="上传图片三"
+        android:textSize="18sp"
+        android:padding="@dimen/qb_px_10"
+        android:layout_marginTop="@dimen/qb_px_18"/>
+
+    <Button
+        android:id="@+id/but_4"
+        android:layout_width="@dimen/qb_px_200"
+        android:layout_height="wrap_content"
+        android:text="上传图片四"
+        android:textSize="18sp"
+        android:padding="@dimen/qb_px_10"
+        android:layout_marginTop="@dimen/qb_px_18"/>
+</LinearLayout>

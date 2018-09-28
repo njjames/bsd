@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y65"
+    android:gravity="center"
+    android:layout_marginTop="@dimen/y10">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout7"
+        android:layout_width="@dimen/x100"
+        android:layout_height="@dimen/y45"
+        android:layout_marginLeft="@dimen/x10"
+        android:gravity="center_vertical"
+        android:background="@drawable/bsd_chepaiyuan">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x3"
+            android:text="品牌:" />
+
+        <EditText
+            android:id="@+id/et_pp_query"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x2"
+            android:layout_toRightOf="@+id/textView7"
+            android:background="@null"
+            android:hint="请输入品牌名称"
+            android:textColorHint="#B1B0B0"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/but_pp_query"
+        android:layout_width="@dimen/x30"
+        android:layout_height="@dimen/y45"
+        android:layout_marginLeft="@dimen/x10"
+        android:background="@drawable/cundang">
+
+        <TextView
+            android:id="@+id/tv_wx_chaxun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="查询"
+            android:textColor="#FFFFFF" />
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+
+    <GridView
+        android:id="@+id/grid_pinpai"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/y10"
+        android:layout_marginBottom="@dimen/y15"
+        android:columnWidth="@dimen/x20"
+        android:drawSelectorOnTop="false"
+        android:listSelector="#00000000"
+        android:numColumns="3"
+        android:horizontalSpacing="@dimen/x10"
+        android:verticalSpacing="@dimen/y30"
+        android:stretchMode="columnWidth"/>
+
+</LinearLayout>

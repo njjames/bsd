@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/banbai"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingTop="@dimen/qb_px_20"
+    android:paddingLeft="@dimen/qb_px_20"
+    android:paddingRight="@dimen/qb_px_20">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/jianchagengxin" />
+
+    <TextView
+        android:id="@+id/bsd_queren_neirong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_15"
+        android:gravity="center"
+        android:text="已是最新版本，无需更新。"
+        android:textColor="#7E7E7F"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/xiahong"
+        android:layout_width="@dimen/qb_px_300"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/qb_px_15"
+        android:background="#F7714C" />
+
+    <TextView
+        android:id="@+id/bsd_queren_queren"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/qb_px_15"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="#F7714C"
+        android:textSize="18sp" />
+</LinearLayout>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y45">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y45">
+
+
+        <RelativeLayout
+            android:id="@+id/bsd_xm888"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_bycx_tv_item_licheng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="保养公里" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bsd_xm111"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_bycx_tv_item_xmname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="保养项目名称" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bsd_xm222"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_bycx_tv_item_lingjianhao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="原厂零件号" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bsd_xm333"
+            android:layout_width="0dp"
+            android:layout_weight="0.8"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_bycx_tv_item_danwei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="单位" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bsd_xm444"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_bycx_tv_item_byyongliang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="保养用量" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bsd_xm555"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_bycx_tv_item_zhidaojia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="指导价格" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bsd_xm666"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_bycx_tv_item_gongshfei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="工时费" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bsd_xm777"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_bycx_tv_item_hejijine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="合计金额" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

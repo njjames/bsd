@@ -1,0 +1,247 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="mydialog" parent="android:style/Theme.Dialog">
+
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 没有标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <!-- my loading dialog -->
+    <style name="MyDialogStyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <!-- popup window 显示消失动画-->
+    <style name="PopWindowAnimStyle">
+        <item name="android:windowShowAnimation">@anim/dialog_enter</item>
+        <!-- 指定显示的动画xml  -->
+        <item name="android:windowHideAnimation">@anim/dialog_exit</item>
+        <!-- 指定消失的动画xml  -->
+    </style>
+
+    <style name="AlertDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="myleftboximgstyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_marginLeft">@dimen/qb_px_8</item>
+        <item name="android:layout_marginRight">@dimen/qb_px_8</item>
+        <item name="android:layout_marginTop">@dimen/qb_px_6</item>
+        <item name="android:layout_marginBottom">@dimen/qb_px_6</item>
+    </style>
+
+    <style name="myleftboxstyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">#38495c</item>
+        <item name="android:onClick">clickbox</item>
+    </style>
+
+    <style name="mychoosecarimgstyle">
+        <item name="android:layout_width">@dimen/qb_px_168</item>
+        <item name="android:layout_height">@dimen/qb_px_180</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+    <style name="myconditionboxstyle">
+        <item name="android:background">@drawable/bsd_chepaiyuan</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">@dimen/qb_px_4</item>
+    </style>
+
+    <style name="myconditionname">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="myconditionvalue">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/qb_px_4</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColorHint">#B1B0B0</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="mysearchtitlestyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/biankuang_title_bg</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="mysearchconfirmstyle">
+        <item name="android:background">@drawable/cundang</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="mysearchinfostyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/biankuang_info_bg</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="myinfonamestyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginRight">@dimen/qb_px_4</item>
+    </style>
+
+    <style name="myinfovaluestyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColorHint">#B1B0B0</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="myinforowstyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bodyshangyuan</item>
+        <item name="android:paddingLeft">@dimen/qb_px_6</item>
+        <item name="android:paddingRight">@dimen/qb_px_6</item>
+        <item name="android:paddingTop">@dimen/qb_px_4</item>
+        <item name="android:paddingBottom">@dimen/qb_px_2</item>
+        <item name="android:layout_marginTop">@dimen/qb_px_2</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="FullScreenDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="mycardnoinputstyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxEms">1</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="mycardnodividestyle">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/beijing</item>
+        <item name="android:layout_marginTop">@dimen/qb_px_4</item>
+        <item name="android:layout_marginBottom">@dimen/qb_px_4</item>
+    </style>
+
+    <style name="myeditinfonamestyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/qb_px_4</item>
+        <item name="android:textColor">@color/text_clxx</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="myeditinfomarqeestyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@null</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">#B1B0B0</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="myeditdowimgstyle">
+        <item name="android:layout_width">@dimen/qb_px_24</item>
+        <item name="android:layout_height">@dimen/qb_px_24</item>
+        <item name="android:padding">@dimen/qb_px_4</item>
+        <item name="android:src">@drawable/ic_down</item>
+    </style>
+
+    <style name="myeditlinearlayoutstyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/qb_px_32</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bsd_chepaiyuan</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="myeditinfovaluestyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColorHint">#B1B0B0</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="myeditreadbtnstyle">
+        <item name="android:layout_width">@dimen/qb_px_46</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/cundang</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="myeditnormalbtnstyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/qb_px_30</item>
+        <item name="android:background">@drawable/cundang</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:layout_marginLeft">@dimen/qb_px_8</item>
+    </style>
+
+    <style name="myworlmx_gzitemstyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+</resources>

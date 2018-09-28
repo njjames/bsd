@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bsd_log_wangzhezhilu"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/bsd_xm333"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/biankuang_title_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="选择车型"
+            android:textColor="#3d3d3d"
+
+            />
+
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/bsd_ksbj_chexi_s"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bsd_xm333"
+
+        >
+
+
+    </ListView>
+
+
+</RelativeLayout>

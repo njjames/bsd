@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/qb_px_30"
+    android:minHeight="@dimen/qb_px_30">
+
+    <TextView
+        android:id="@+id/bsd_xsbj_name"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="客户名称" />
+
+    <TextView
+        android:id="@+id/tv_chezhu"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="车主" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_bzsj"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="电话" />
+
+
+    <TextView
+        android:id="@+id/bsd_kxbj_gsdj"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="车牌" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_qian"
+        android:layout_weight="1.2"
+        style="@style/mysearchinfostyle"
+        android:text="单据日期" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_je"
+        android:layout_weight="1.2"
+        style="@style/mysearchinfostyle"
+        android:text="合计金额" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_qian1"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="经办人" />
+</LinearLayout>

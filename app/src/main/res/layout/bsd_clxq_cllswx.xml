@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bsd_lsbj_toubuju"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_30">
+
+        <TextView
+            android:layout_weight="1"
+            style="@style/mysearchtitlestyle"
+            android:text="客户名称" />
+
+        <TextView
+            android:layout_weight="1"
+            style="@style/mysearchtitlestyle"
+            android:text="车主" />
+
+        <TextView
+            android:layout_weight="1"
+            style="@style/mysearchtitlestyle"
+            android:text="电话" />
+
+        <TextView
+            android:layout_weight="1"
+            style="@style/mysearchtitlestyle"
+            android:text="车牌" />
+
+        <TextView
+            android:layout_weight="1.2"
+            style="@style/mysearchtitlestyle"
+            android:text="接待日期" />
+
+        <TextView
+            android:layout_weight="1.2"
+            style="@style/mysearchtitlestyle"
+            android:text="合计金额" />
+
+        <TextView
+            android:layout_weight="1"
+            style="@style/mysearchtitlestyle"
+            android:text="经办人" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/bsd_lsbj_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+</LinearLayout>

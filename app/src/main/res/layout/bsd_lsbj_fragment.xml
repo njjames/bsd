@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F1F1">
+
+    <!-- 头部 -->
+    <RelativeLayout
+        android:id="@+id/relativeLayout23"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y55"
+        android:background="#FFFFFF">
+
+        <RelativeLayout
+            android:id="@+id/bsd_lsbj_fanhui"
+            android:layout_width="@dimen/x60"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/x5">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="@dimen/x5"
+                android:layout_height="@dimen/y25"
+                android:scaleType="fitXY"
+                android:src="@mipmap/bsd_fanhui"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x2"
+                android:layout_toEndOf="@+id/imageView5"
+                android:layout_centerVertical="true"
+                android:text="返回"
+                android:textColor="#636364"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="历史报价"
+            android:textColor="#636364"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+    <!-- 头部 结束-->
+    <!--中间开始-->
+    <RelativeLayout
+        android:id="@+id/bsd_lsbj_zhong"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bsd_lsbj_di"
+        android:layout_below="@+id/relativeLayout23"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/y10"
+        android:background="@drawable/bsd_lsbj_body"
+        android:paddingLeft="@dimen/x5"
+        android:paddingRight="@dimen/x5">
+
+        <RelativeLayout
+            android:id="@+id/bsd_on_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y65"
+            android:gravity="center_vertical">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout7"
+                android:layout_width="@dimen/x100"
+                android:layout_height="@dimen/y45"
+                android:background="@drawable/bsd_chepaiyuan"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="车牌:" />
+
+                <EditText
+                    android:id="@+id/bsd_lsbj_cp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toRightOf="@+id/textView7"
+                    android:background="@null"
+                    android:hint="请输入车牌号"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout12"
+                android:layout_width="@dimen/x100"
+                android:layout_height="@dimen/y45"
+                android:layout_marginStart="@dimen/x5"
+                android:layout_toEndOf="@+id/relativeLayout7"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="车主:" />
+
+                <EditText
+                    android:id="@+id/bsd_lsbj_cz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textView11"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toEndOf="@+id/textView11"
+                    android:background="@null"
+                    android:hint="请输入车主姓名"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout13"
+                android:layout_width="@dimen/x30"
+                android:layout_height="@dimen/y45"
+                android:layout_marginStart="@dimen/x10"
+                android:layout_toEndOf="@+id/relativeLayout12"
+                android:background="@drawable/cundang">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="查询"
+                    android:textColor="#FFFFFF" />
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/bsd_on_xian"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/bsd_on_top"
+            android:background="#F7714C" />
+
+        <LinearLayout
+            android:id="@+id/bsd_lsbj_toubuju"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y45"
+            android:layout_below="@+id/bsd_on_xian"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/y10">
+
+            <LinearLayout
+                android:id="@+id/bsd_xm12"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:background="@drawable/biankuang_title_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="报价日期" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bsd_xm22"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:background="@drawable/biankuang_title_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="车主" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bsd_xm33"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:background="@drawable/biankuang_title_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="车牌" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bsd_xm44"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:background="@drawable/biankuang_title_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="服务顾问" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bsd_xm55"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:background="@drawable/biankuang_title_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="金额" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bsd_xm66"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:background="@drawable/biankuang_title_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="联系方式" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/bsd_lsbj_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/bsd_lsbj_toubuju"/>
+
+
+    </RelativeLayout>
+    <!--中间结束-->
+
+    <!--最下面的小文字 -->
+    <RelativeLayout
+        android:id="@+id/bsd_lsbj_di"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y40"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/bsd_07_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="售后服务电话: 0311-83998032      保修 (非工作时间) : 15176436937   13930122976" />
+    </RelativeLayout>
+</RelativeLayout>

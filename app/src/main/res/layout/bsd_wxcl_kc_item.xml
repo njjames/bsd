@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y50"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_tv_kc_ckmc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="仓库名称" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/biankuang_info_bg"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/bsd_tv_kc_dqkc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前库存" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_tv_kc_pjdj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="平均单价" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_tv_kc_je"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="金额" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_tv_kc_kcsx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="库存上限" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_tv_kc_kcxx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="库存下限" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@drawable/biankuang_info_bg">
+
+            <TextView
+                android:id="@+id/bsd_tv_kc_kw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="库位" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

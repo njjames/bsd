@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bsd_rl_xuanxiang"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/qb_px_30"
+    android:minHeight="@dimen/qb_px_30"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/bsd_xsbj_name"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="车主"/>
+
+
+    <TextView
+        android:id="@+id/bsd_kxbj_bzsj"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="客户姓名" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_gsdj"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1.2"
+        android:text="日期" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_je"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="车牌" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_qian"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="服务"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/bsd_kxbj_cz"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1.8"
+        android:text="车型" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_qian1"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="性质" />
+</LinearLayout>

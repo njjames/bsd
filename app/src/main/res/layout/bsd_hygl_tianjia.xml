@@ -1,0 +1,935 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/bsd_lsbj_zhong"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:background="@drawable/bsd_lsbj_body">
+
+
+        <TextView
+            android:id="@+id/bus_hybl_jia_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y15"
+            android:text="会员办理"
+            android:textColor="#636364"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/bsd_hybl_xian"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/bus_hybl_jia_tv"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_marginTop="@dimen/y10"
+            android:background="#ED1C24" />
+
+        <LinearLayout
+            android:id="@+id/bsd_hybl_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y80"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_below="@+id/bsd_hybl_xian"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout1"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="车牌:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:id="@+id/et_hy_chepai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toEndOf="@+id/textView1"
+                    android:background="@null"
+                    android:hint="请输入车牌号"
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/bsd_chepaichaun"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="@dimen/y55"
+                android:background="@drawable/cundang"
+                android:gravity="center"
+                android:text="查询"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="客户:"
+                    android:textColor="#ED1C24" />
+
+                <EditText
+                    android:id="@+id/et_hy_lianxi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toEndOf="@+id/textView2"
+                    android:background="@null"
+                    android:hint="                               "
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="地址:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:id="@+id/et_hy_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textView3"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toEndOf="@+id/textView3"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout4"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="客户电话:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:id="@+id/et_hy_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignBottom="@+id/textView4"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bsd_hygl_2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y80"
+            android:layout_below="@+id/bsd_hybl_1"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2_1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/y55"
+                android:background="@drawable/bsd_chepaiyuan"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView2_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:text="会员卡号:"
+                    android:textColor="#ED1C24" />
+
+                <EditText
+                    android:id="@+id/et_hy_kahao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView2_1"
+                    android:layout_alignBottom="@+id/textView2_1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/textView2_1"
+                    android:background="@null"
+                    android:hint="请输入"
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout5"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="手机:"
+                    android:textColor="#ED1C24"/>
+
+                <EditText
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:id="@+id/et_hy_shouphone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toEndOf="@+id/textView5"
+                    android:background="@null"
+                    android:hint="                               "
+                    android:digits="0123456789"
+                    android:maxLength="11"
+                    android:inputType="number"
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeday"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="生日:"
+                    android:textColor="@color/main_ziti" />
+
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/et_hy_birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textView6"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toRightOf="@+id/textView6"
+                    android:background="@null"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rela_ka"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView2_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="卡名称:"
+                    android:textColor="#ED1C24" />
+
+                <TextView
+                    android:id="@+id/et_hy_kaname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/textView2_3"
+                    android:layout_toLeftOf="@+id/iv_card"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:background="@null"
+                    android:hint=""
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:id="@+id/iv_card"
+                    android:layout_width="@dimen/x8"
+                    android:layout_height="@dimen/y15"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/x3"
+                    android:src="@mipmap/bsd_duoxuan" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rela_youxiao"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView2_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="有效日期:"
+                    android:textColor="@color/main_ziti" />
+
+                <TextView
+                    android:id="@+id/et_hy_youdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textView2_2"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toEndOf="@+id/textView2_2"
+                    android:background="@null"
+                    android:hint=""
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/bsd_hygl_3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y80"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/bsd_hygl_2"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2_6"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView2_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="开户金额:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:id="@+id/et_hy_kaimoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView2_6"
+                    android:layout_alignBottom="@+id/textView2_6"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toEndOf="@+id/textView2_6"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2_7"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView2_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="可用金额:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:id="@+id/et_hy_keyongjie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView2_7"
+                    android:layout_alignBottom="@+id/textView2_7"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toEndOf="@+id/textView2_7"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3_1"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:background="@drawable/bsd_chepaiyuan"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView3_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:text="实收金额:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:id="@+id/et_hy_shishou"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/textView3_1"
+                    android:layout_marginLeft="5dp"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3_2"
+                android:layout_width="155dp"
+                android:layout_height="35dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="18dp"
+
+                android:background="@drawable/bsd_chepaiyuan"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView3_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:text="优惠金额:" />
+
+                <EditText
+                    android:id="@+id/et_hy_youhui"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3_3"
+                android:layout_width="160dp"
+                android:layout_height="35dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="18dp"
+                android:background="@drawable/bsd_chepaiyuan"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView3_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:text="可用金额:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:id="@+id/et_hy_keyong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView3_3"
+                    android:layout_alignBottom="@+id/textView3_3"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toEndOf="@+id/textView3_3"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3_4"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView3_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="普洗次数:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:id="@+id/et_hy_shouxi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView3_4"
+                    android:layout_alignBottom="@+id/textView3_4"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toEndOf="@+id/textView3_4"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3_5"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView3_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="精洗次数:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:id="@+id/et_hy_jingxi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textView3_5"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toEndOf="@+id/textView3_5"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3_6"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView3_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="积分:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:id="@+id/et_hy_jifen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textView3_6"
+
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_toEndOf="@+id/textView3_6"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textSize="13sp" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bsd_hygl_4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y80"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_below="@+id/bsd_hygl_3"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout4_1"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:background="@drawable/bsd_chepaiyuan"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView4_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:text="账号选择:" />
+
+                <EditText
+                    android:id="@+id/et_hy_zhanghao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="11dp"
+
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/textView4_1"
+                    android:layout_marginEnd="12dp"
+                    android:src="@mipmap/bsd_duoxuan" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rela_bumen"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView4_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="部门:"
+                    android:textColor="@color/main_ziti" />
+
+                <TextView
+                    android:id="@+id/et_hy_bumen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textView4_2"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toRightOf="@+id/textView4_2"
+                    android:layout_toLeftOf="@+id/imageView15"
+                    android:background="@null"
+                    android:hint=""
+                    android:textColor="@color/main_ziti"
+                    android:textSize="13sp" />
+
+
+                <ImageView
+                    android:id="@+id/imageView15"
+                    android:layout_width="@dimen/x8"
+                    android:layout_height="@dimen/y15"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/x3"
+                    android:src="@mipmap/bsd_duoxuan" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relat_jingban"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView4_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="经办人:"
+                    android:textColor="@color/main_ziti" />
+
+                <TextView
+                    android:id="@+id/et_hy_jingban"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/textView4_3"
+                    android:layout_alignTop="@+id/textView4_3"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toRightOf="@+id/textView4_3"
+                    android:layout_toLeftOf="@+id/imageView13"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:id="@+id/imageView13"
+                    android:layout_width="@dimen/x8"
+                    android:layout_height="@dimen/y15"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/x3"
+                    android:src="@mipmap/bsd_duoxuan" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relat_jiesuan"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="@dimen/y55"
+                android:layout_marginLeft="@dimen/x5"
+                android:background="@drawable/bsd_chepaiyuan">
+
+                <TextView
+                    android:id="@+id/textView4_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x3"
+                    android:text="结算方式:"
+                    android:textColor="@color/main_ziti" />
+
+                <TextView
+                    android:id="@+id/et_hy_payselect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x2"
+                    android:layout_toLeftOf="@+id/iv_jsfs"
+                    android:layout_toRightOf="@+id/textView4_4"
+                    android:background="@null"
+                    android:hint="                             "
+                    android:textColor="@color/main_ziti"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:id="@+id/iv_jsfs"
+                    android:layout_width="@dimen/x8"
+                    android:layout_height="@dimen/y15"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/x3"
+                    android:src="@mipmap/bsd_duoxuan" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout4_5"
+                android:layout_width="330dp"
+                android:layout_height="35dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="18dp"
+                android:background="@drawable/bsd_chepaiyuan"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView4_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:text="备注:"
+                    android:textColor="@color/main_ziti" />
+
+                <EditText
+                    android:id="@+id/et_hy_beizhu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:background="@null"
+                    android:hint="                               "
+                    android:textColor="@color/main_ziti"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_bz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/bsd_hybl_xian"
+            android:layout_below="@+id/bsd_hygl_4"
+            android:layout_marginStart="@dimen/x5"
+            android:layout_marginTop="@dimen/y10"
+            android:text="注：红色字体的字段不能为空"
+            android:textColor="#ED1C24" />
+
+        <TextView
+            android:id="@+id/tv_hy_banli"
+            android:layout_width="@dimen/x60"
+            android:layout_height="@dimen/y60"
+            android:layout_below="@+id/tv_bz"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y10"
+            android:background="@drawable/cundang"
+            android:gravity="center"
+            android:text="确认办理"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

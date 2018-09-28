@@ -1,0 +1,926 @@
+package com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan;
+
+import android.app.Dialog;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ab.http.AbRequestParams;
+import com.ab.http.AbStringHttpResponseListener;
+import com.example.administrator.boshide2.Conts;
+import com.example.administrator.boshide2.Https.Request;
+import com.example.administrator.boshide2.Https.URLS;
+import com.example.administrator.boshide2.Main.MyApplication;
+import com.example.administrator.boshide2.Modular.Activity.MainActivity;
+import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
+import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
+import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.Adapter.BSD_wxywdd_dap;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_wxywdd_wxcl;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_wxywdd_wxxm;
+import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
+import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
+import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
+import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.DownJianPan;
+import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
+import com.example.administrator.boshide2.Tools.Show;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @维修业务调度 Created by Administrator on 2017-4-13.
+ */
+public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnClickListener {
+    RelativeLayout bsd_lsbj_fanhui;
+    TextView bsd_clxq_tv_cltp, bsd_clxq_tv_lswx;
+    private Fragment[] fragments;
+    private TextView[] arr_tv;// 图标的数组
+    private int[] arr_id_box = {R.id.tv_wxxm_add, R.id.tv_wxll_add};
+    public Fragment BSD_wxcl;
+    public ListView bsd_wxywdd_you_lv;
+    BSD_wxywdd_dap adapter;
+    List<HashMap<String, String>> data = new ArrayList<>();
+    TextView bsd_ywwwdd_dh;
+    TextView bsd_ywwwdd_cp;
+    TextView bsd_ywwwdd_pinpai;
+    TextView bsdywwwdd_chexi;
+    TextView bsd_ywwwdd_chezu;
+    TextView bsd_ywwwdd_chexing;
+    TextView bsd_ywwwdd_vin;
+    TextView bsd_ywwwdd_user;
+    TextView bsd_ywwwdd_fuwuguwen;
+    TextView bsd_ywwwdd_dengjishijian;
+    TextView bsd_ywwwdd_dianhua;
+    private List<BSD_WeiXiuJieDan_Entity> list = new ArrayList<BSD_WeiXiuJieDan_Entity>();
+    private Dialog mWeiboDialog;
+    BSD_wxywdd_wxxm BSD_wxxm;
+    Queding_Quxiao queding_quxiao;
+    //修改工时弹框
+    BSD_XiuGaiGongShi bsd_xiuGaiGongShi;
+    List<Map<String, String>> listPGrenyuan = new ArrayList<Map<String, String>>();
+    URLS url;
+    TextView bsd_zaichangdiaodu_zhuangtai;
+    RelativeLayout bsd_zadd_wg;
+    QueRen queRen;
+    double renyuangongshi;
+    RelativeLayout bsd_zadd_zz;
+    TiaoZhuan tiaoZhuan;
+    //车辆信息、历史维修、历史维修建议
+    private  RelativeLayout  bsd_wxywdd_clxx,bsd_wxywdd_lswxjy,bsd_wxywdd_lswx;
+
+    private MainActivity mainActivity;
+    public void setTiaoZhuan(TiaoZhuan tiaoZhuan) {
+        this.tiaoZhuan = tiaoZhuan;
+    }
+
+    public interface TiaoZhuan {
+        void onYesClick();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.bsd_wxywdd, null);
+        mainActivity = (MainActivity) getActivity();
+        tiaoZhuan.onYesClick();
+        url = new URLS();
+        init(view);
+        if (Conts.wxjdtiaozhuan == 1) {
+            Log.i("cjn", "aaaaa");
+            tiaozhuanjiedan();
+            Conts.wxjdtiaozhuan = 0;
+        } else {
+            jibendata();
+            Log.i("cjn", "bbbbb");
+            Conts.wxjdtiaozhuan = 0;
+        }
+        bsdtext(view);
+
+
+        bsd_lsbj_fanhui = (RelativeLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
+        bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).upzcdd(view);
+            }
+        });
+
+        initFragment();
+        checkHighLight(0);
+        return view;
+    }
+
+    public void DY() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", Conts.work_no);
+        params.put("caozuoyuan", MyApplication.shared.getString("bsd_user_name", ""));
+        Log.i("cjn", "查看打印的参数+" + Conts.work_no + "===caozuoyuan====" + MyApplication.shared.getString("bsd_user_name", ""));
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_DY, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+                Log.i("cjn", "打印成功显示==" + s);
+                queRen = new QueRen(getActivity(), "打印成功");
+                queRen.show();
+                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        queRen.dismiss();
+                        ((MainActivity) getActivity()).upzcdd();
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Log.i("cjn", "打印失败显示==" + s);
+            }
+        });
+
+    }
+
+    public void WG(String wxid) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", wxid);
+        Log.i("cjn", "查看完工的参数" + wxid);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_WG, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+                Log.i("cjn", "完工成功==" + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.get("message").toString().equals("查询失败")) {
+                        queRen = new QueRen(getActivity(), jsonObject.getString("data"));
+                        queRen.show();
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                            }
+                        });
+
+                    } else {
+
+                        queding_quxiao = new Queding_Quxiao(getActivity(), "成功！是否打印");
+                        queding_quxiao.show();
+                        queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
+                            @Override
+                            public void onConfirm() {
+                                DY();
+                                queding_quxiao.dismiss();
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                queding_quxiao.dismiss();
+                                ((MainActivity) getActivity()).upzcdd();
+                            }
+                        });
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Log.i("cjn", "完工失败==" + s);
+            }
+        });
+
+    }
+
+    /**
+     * 终止派工
+     */
+    public void zz() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", Conts.work_no);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ZZ, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+                Log.i("cjn", s);
+                queRen = new QueRen(getActivity(), "终止成功");
+                queRen.show();
+                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        queRen.dismiss();
+                        ((MainActivity) getActivity()).upzcdd();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void init(View view) {
+
+        bsd_zadd_zz = (RelativeLayout) view.findViewById(R.id.bsd_zadd_zz);
+        bsd_zadd_zz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zz();
+            }
+        });
+
+        bsd_zadd_wg = (RelativeLayout) view.findViewById(R.id.bsd_zadd_wg);
+        bsd_zadd_wg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                queding_quxiao = new Queding_Quxiao(getActivity(), "确认是否完工");
+                queding_quxiao.show();
+                queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
+                    @Override
+                    public void onConfirm() {
+                        queding_quxiao.dismiss();
+                        WG(Conts.work_no);
+                        //发送微信
+                        weixin();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        queding_quxiao.dismiss();
+                    }
+                });
+
+
+            }
+        });
+
+
+        //车辆信息、历史维修、历史维修建议
+        bsd_wxywdd_clxx = (RelativeLayout) view.findViewById(R.id.bsd_wxywdd_clxx);
+        bsd_wxywdd_clxx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"车辆信息",Toast.LENGTH_LONG).show();
+                //跳转到编辑车辆、客户信息界面
+                Conts.danju_type="wxywdd";
+
+                //跳转到编辑车辆、客户信息对话框
+                new BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment()
+                        .show(getFragmentManager(), "dialog_fragment");
+
+            }
+        });
+        bsd_wxywdd_lswx= (RelativeLayout) view.findViewById(R.id.bsd_wxywdd_lswx);
+        bsd_wxywdd_lswx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Conts.danju_type="wxywdd";
+                new BSD_LishiWeiXiu_DialogFragment().
+                        show(getFragmentManager(),"mrkx_lswx");
+
+            }
+        });
+        bsd_wxywdd_lswxjy= (RelativeLayout) view.findViewById(R.id.bsd_wxywdd_lswxjy);
+        bsd_wxywdd_lswxjy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new BSD_LiShiWeiXiuJianYi_DialogFragment().
+                        show(getFragmentManager(),"mrkx_lswxjy");
+            }
+        });
+
+
+
+
+
+        bsd_zaichangdiaodu_zhuangtai = (TextView) view.findViewById(R.id.bsd_zaichangdiaodu_zhuangtai);
+        bsd_ywwwdd_dh = (TextView) view.findViewById(R.id.bsd_ywwwdd_dh);
+        bsd_ywwwdd_cp = (TextView) view.findViewById(R.id.bsd_ywwwdd_cp);
+        bsd_ywwwdd_pinpai = (TextView) view.findViewById(R.id.bsd_ywwwdd_pinpai);
+        bsdywwwdd_chexi = (TextView) view.findViewById(R.id.bsdywwwdd_chexi);
+        bsd_ywwwdd_chezu = (TextView) view.findViewById(R.id.bsd_ywwwdd_chezu);
+        bsd_ywwwdd_chexing = (TextView) view.findViewById(R.id.bsd_ywwwdd_chexing);
+        bsd_ywwwdd_vin = (TextView) view.findViewById(R.id.bsd_ywwwdd_vin);
+        bsd_ywwwdd_user = (TextView) view.findViewById(R.id.bsd_ywwwdd_user);
+        bsd_ywwwdd_fuwuguwen = (TextView) view.findViewById(R.id.bsd_ywwwdd_fuwuguwen);
+        bsd_ywwwdd_dengjishijian = (TextView) view.findViewById(R.id.bsd_ywwwdd_dengjishijian);
+        bsd_ywwwdd_dianhua = (TextView) view.findViewById(R.id.bsd_ywwwdd_dianhua);
+        //获取listView
+        bsd_wxywdd_you_lv = (ListView) view.findViewById(R.id.bsd_wxywdd_you_lv);
+        adapter = new BSD_wxywdd_dap(getActivity());
+        adapter.setRemove(new BSD_wxywdd_dap.Remo() {
+            @Override
+            public void onYesClick(String reco_no) {
+                remodata(reco_no);
+
+            }
+        });
+        adapter.setUp_gongshi(new BSD_wxywdd_dap.UP_gongshi() {
+            @Override
+            public void onYesClick(String gongshi, final int i) {
+
+
+                double gs = Double.parseDouble(gongshi);
+                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), "修改工时", 0,gs, "","修改工时");
+                bsd_xiuGaiGongShi.show();
+                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick(double gongshi) {
+
+                        int a;
+                        Double je;
+                        Double gs;
+
+                        a = Integer.parseInt(listPGrenyuan.get(i).get("reco_no"));
+                        double aa = Double.parseDouble(listPGrenyuan.get(i).get("paig_khje"));
+                        je =  aa;
+                        gs =  gongshi;
+                        renyuangongshi = 0.0;
+                        BigDecimal  gsbg=new BigDecimal(renyuangongshi);
+                        for (int j = 0; j < listPGrenyuan.size(); j++) {
+                            Log.i("pggs", "onAdd: Other  ==="+listPGrenyuan.get(j).get("paig_khgs"));
+//                            renyuangongshi = renyuangongshi + Double.parseDouble(listPGrenyuan.get(j).get("paig_khgs"));
+                            Double  gg= Double.parseDouble(listPGrenyuan.get(j).get("paig_khgs"));
+                            BigDecimal gsbd2 = new BigDecimal(Double.toString(gg));
+                            gsbg=gsbg.add(gsbd2);
+                            Log.i("pggs", "onAdd: Other  gsbd2==="+gsbd2);
+                            Log.i("pggs", "onAdd: Other   gsbg  ==="+gsbg);
+                            if (j == i) {
+//                                renyuangongshi = renyuangongshi - Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
+                                Double  ggg= Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
+                                BigDecimal gsbd3 = new BigDecimal(Double.toString(ggg));
+                                gsbg= gsbg.subtract(gsbd3);
+                                Log.i("pggs", "onAdd: This  gsbd3==="+gsbd3);
+                                Log.i("pggs", "onAdd: This   gsbg  ==="+gsbg);
+                            }
+                        }
+                        renyuangongshi=gsbg.doubleValue();
+                        Log.i("gsssss", "可以写入" + "查看总工时===" + Conts.wxxm_gs + "查看人员所有工时===" + renyuangongshi + "查看输入完工时" + gongshi);
+
+                        BigDecimal   gsA = BigDecimal.valueOf(Conts.wxxm_gs);
+                        BigDecimal   gsB= BigDecimal.valueOf(renyuangongshi);
+
+                        Double  gsC= gsA.subtract(gsB).doubleValue();
+                        Log.i("gsssss", "成功工时gsA="+gsA+"-----gsB="+gsB+"----gsC="+gsC);
+                        if (gsC>= gongshi) {
+                            xiugaigongshi(a, je, gs);
+                            listPGrenyuan.get(i).put("paig_khgs", String.valueOf(gongshi));
+                            adapter.notifyDataSetChanged();
+                            bsd_xiuGaiGongShi.dismiss();
+                            renyuangongshi = renyuangongshi + gongshi;
+                        } else {
+                            Log.i("gsssss", "不成功"+gsC );
+                            Log.i("cjn", "总工时-集合所有工时小于输入工时不可以输入");
+                            Toast.makeText(getActivity(), "派工工时不能大于总工时", Toast.LENGTH_SHORT).show();
+                            bsd_xiuGaiGongShi.dismiss();
+                        }
+
+
+                    }
+                });
+
+            }
+        });
+        adapter.setUp_jiaqian(new BSD_wxywdd_dap.UP_jiaqian() {
+            @Override
+            public void onYesClick(String gongshi, final int i) {
+                double gs = Double.parseDouble(gongshi);
+                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), "修改价钱",0, gs,"", "修改价钱");
+                bsd_xiuGaiGongShi.show();
+                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick(double gongshi) {
+                        int a;
+                        Double je;
+                        Double gs;
+                        a = Integer.parseInt(listPGrenyuan.get(i).get("reco_no"));
+                        double aa = Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
+                        je = gongshi;
+                        gs = aa;
+                        renyuangongshi = 0.0;
+                        for (int j = 0; j < listPGrenyuan.size(); j++) {
+                            renyuangongshi = renyuangongshi + Double.parseDouble(listPGrenyuan.get(j).get("paig_khje"));
+                            if (j == i) {
+                                renyuangongshi = renyuangongshi - Double.parseDouble(listPGrenyuan.get(i).get("paig_khje"));
+                            }
+                        }
+
+                        Log.i("cjn", "可以写入" + "查看总金额===" + Conts.wxxm_je + "查看人员所有工时===" + renyuangongshi + "查看输入完工时" + gongshi);
+                        BigDecimal   gsA = BigDecimal.valueOf(Conts.wxxm_je);
+                        BigDecimal   gsB= BigDecimal.valueOf(renyuangongshi);
+                        Double  gsC= gsA.subtract(gsB).doubleValue();
+                        if (gsC >= gongshi) {
+                            Log.i("cjn", "成功工时"+gsC);
+                            xiugaigongshi(a, je, gs);
+                            listPGrenyuan.get(i).put("paig_khje", String.valueOf(gongshi));
+                            adapter.notifyDataSetChanged();
+                            bsd_xiuGaiGongShi.dismiss();
+                            renyuangongshi = renyuangongshi + gongshi;
+                        } else {
+                            Log.i("cjn", "总工时-集合所有工时小于输入工时不可以输入");
+                            Toast.makeText(getActivity(), "派工金额不能大于总金额", Toast.LENGTH_SHORT).show();
+                            bsd_xiuGaiGongShi.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+        bsd_wxywdd_you_lv.setAdapter(adapter);
+
+        bsd_clxq_tv_cltp = (TextView) view.findViewById(R.id.tv_wxxm_add);
+        bsd_clxq_tv_lswx = (TextView) view.findViewById(R.id.tv_wxll_add);
+        arr_tv = new TextView[2];
+        arr_tv[0] = bsd_clxq_tv_cltp;
+
+        arr_tv[1] = bsd_clxq_tv_lswx;
+        bsd_clxq_tv_cltp.setOnClickListener(this);
+        bsd_clxq_tv_lswx.setOnClickListener(this);
+    }
+
+    /**
+     * 修改工时
+     *
+     * @param id
+     * @param je
+     * @param gs
+     */
+    public void xiugaigongshi(int id, Double je, Double gs) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("id", id);
+        params.put("je", je+"");
+        params.put("gs", gs+"");
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_GsDj_xiugai, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+                Log.i("cjn", "成功的显示" + s);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Log.i("cjn", "失败的显示" + s);
+            }
+        });
+
+
+    }
+
+    /**
+     * 派工人员详细
+     *
+     * @param work_no
+     * @param wxxm_no
+     */
+    public void PGRenYuan(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je) {
+        listPGrenyuan.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", Conts.work_no);
+        params.put("wxxm_no", wxxm_no);
+        Log.i("cjn", "查看两个数据" + work_no + "======" + wxxm_no);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_PaiGong_XiangXi, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int a, String s) {
+                Log.i("cjn", "派工明细" + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.get("status").toString().equals("1")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            //这块拿到的是维系接单的详细表
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("reco_no", item.getString("reco_no"));
+                            map.put("work_no", item.getString("work_no"));
+                            map.put("wxxm_no", item.getString("wxxm_no"));
+                            map.put("reny_no", item.getString("reny_no"));
+                            map.put("reny_mc", item.getString("reny_mc"));
+                            map.put("wxry_bm", item.getString("wxry_bm"));
+                            map.put("paig_khgs", item.getString("paig_khgs"));
+                            map.put("paig_khje", item.getString("paig_khje"));
+                            map.put("paig_pgsj", item.getString("paig_pgsj"));
+                            listPGrenyuan.add(map);
+                        }
+                        adapter.setList(listPGrenyuan);
+                        adapter.notifyDataSetChanged();
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+
+            }
+        });
+
+
+    }
+
+    /**
+     *完工时发微信
+     */
+    private   void    weixin(){
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", Conts.work_no);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wg_weixin, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+            }
+        });
+
+
+
+    }
+
+
+
+
+    /**
+     * 初始化碎片
+     */
+    public void initFragment() {
+        BSD_wxxm = new BSD_wxywdd_wxxm();
+
+        //查看
+        BSD_wxxm.setChaKanPaiGongREN(new BSD_wxywdd_wxxm.ChaKanPaiGongREN() {
+            @Override
+            public void onYesClick(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je) {
+                PGRenYuan(work_no, wxxm_no, wxxm_gs, wxxm_je);
+                Log.i("cjn", "点击事件更近数据");
+            }
+        });
+
+        BSD_wxxm.setClearPaiGongRenYuan(new BSD_wxywdd_wxxm.ClearPaiGongRenYuan() {
+            @Override
+            public void clearPaiGong() {
+                listPGrenyuan.clear();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        BSD_wxcl = new BSD_wxywdd_wxcl();
+
+        fragments = new Fragment[2];
+        fragments[0] = BSD_wxxm;
+        fragments[1] = BSD_wxcl;
+
+    }
+
+
+    //切换碎片事务的方法
+    private void change(Fragment f) {
+        getActivity().getSupportFragmentManager()//碎片管理者
+                //开启事务
+                .beginTransaction()
+                //替换方法
+                .replace(R.id.bsd_clxq_lswx, f)
+                //提交事务
+                .commit();
+    }
+
+
+    //选中项的变色
+    private void checkHighLight(int index) {
+        for (int i = 0; i < arr_tv.length; i++) {
+            arr_tv[i].setTextColor(this.getResources().getColor(R.color.transparent_background));
+        }
+        arr_tv[index].setTextColor(this.getResources().getColor(R.color.bsd_xz_yes));
+
+    }
+
+    /**
+     * 切换碎片的点击方法
+     */
+    @Override
+    public void onClick(View view) {
+        for (int i = 0; i < arr_id_box.length; i++) {
+            if (view.getId() == arr_id_box[i]) {
+
+                listPGrenyuan.clear();
+                adapter.notifyDataSetChanged();
+                DownJianPan.DJP(getActivity());
+                change(fragments[i]);
+                checkHighLight(i);
+            }
+        }
+
+    }
+
+    /**
+     * 维修接单详情
+     */
+    public void jibendata() {
+        list.clear();
+//        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no",  Conts.work_no );
+        params.put("gongsino",MyApplication.shared.getString("bsd_gs_id", ""));
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_zcdu_list, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String s) {
+                Log.i("cjn", "信息++++++++++++" + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+
+                    if (jsonObject.get("status").toString().equals("1")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            //这块拿到的是维系接单的主表
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
+
+                            entiy.setWork_no(item.getString("work_no"));
+                            entiy.setKehu_no(item.getString("kehu_no"));
+                            entiy.setKehu_mc(item.getString("kehu_mc"));
+                            entiy.setKehu_xm(item.getString("kehu_xm"));
+                            entiy.setKehu_dz(item.getString("kehu_dz"));
+                            entiy.setKehu_yb(item.getString("kehu_yb"));
+                            entiy.setKehu_dh(item.getString("kehu_dh"));
+                            entiy.setChe_no(item.getString("che_no"));
+                            entiy.setChe_cx(item.getString("che_cx"));
+                            entiy.setChe_vin(item.getString("che_vin"));
+                            entiy.setXche_lc(item.getInt("xche_lc"));
+                            entiy.setXche_cz(item.getString("xche_cz"));
+                            entiy.setXche_yjwgrq(item.getString("xche_yjwgrq"));
+                            entiy.setXche_ywlx(item.getString("substate"));
+                            list.add(entiy);
+                        }
+                        WeiboDialogUtils.closeDialog(mWeiboDialog);
+                        topinit();
+                        mainActivity.setWxjdentity(list.get(0));
+                        Log.i("lswx", "onSuccess:list.get(0) null??? "+list.get(0));
+
+
+                    } else {
+                        WeiboDialogUtils.closeDialog(mWeiboDialog);
+                        Show.showTime(getActivity(), jsonObject.get("message").toString());
+                    }
+
+                    change(BSD_wxxm);
+                    Conts.work_no = list.get(0).getWork_no();
+
+                    WeiboDialogUtils.closeDialog(mWeiboDialog);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                change(BSD_wxxm);
+                Show.showTime(getActivity(), "网络连接超时");
+                Log.i("cjn", "基本信息请求失败");
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+
+
+    }
+
+    /**
+     * 跳转之后的详情页面
+     */
+    public void tiaozhuanjiedan() {
+        list.clear();
+//        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("pai", Conts.cp);
+        params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
+        params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
+        Log.i("cjnn", "查看车牌" + Conts.cp + "---查看gongsiNo" + MyApplication.shared.getString("GongSiNo", "")
+                + "-----caozuoyuan_xm" + MyApplication.shared.getString("name", ""));
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_jbxxs, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String s) {
+                Log.i("cjn", "信息++++++++++++" + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            //这块拿到的是维系接单的详细表
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
+                            entiy.setWork_no(item.getString("work_no"));
+                            entiy.setKehu_no(item.getString("kehu_no"));
+                            entiy.setKehu_mc(item.getString("kehu_mc"));
+                            entiy.setKehu_xm(item.getString("kehu_xm"));
+                            entiy.setKehu_dz(item.getString("kehu_dz"));
+                            entiy.setKehu_yb(item.getString("kehu_yb"));
+                            entiy.setKehu_dh(item.getString("kehu_dh"));
+                            entiy.setChe_no(item.getString("che_no"));
+                            entiy.setChe_cx(item.getString("che_cx"));
+                            entiy.setChe_vin(item.getString("che_vin"));
+                            entiy.setXche_lc(item.getInt("xche_lc"));
+                            entiy.setXche_cz(item.getString("xche_cz"));
+                            entiy.setXche_yjwgrq(item.getString("xche_jdrq"));
+                            entiy.setXche_ywlx(item.getString("substate"));
+                            list.add(entiy);
+                        }
+                        WeiboDialogUtils.closeDialog(mWeiboDialog);
+                        topinit();
+
+                    } else {
+                        WeiboDialogUtils.closeDialog(mWeiboDialog);
+                        Show.showTime(getActivity(), jsonObject.get("message").toString());
+                    }
+
+                    change(BSD_wxxm);
+                    Conts.work_no = list.get(0).getWork_no();
+
+                    WeiboDialogUtils.closeDialog(mWeiboDialog);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                change(BSD_wxxm);
+                Show.showTime(getActivity(), "网络连接超时");
+                Log.i("cjn", "基本信息请求失败");
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+
+
+    }
+
+    public void topinit() {
+        bsd_ywwwdd_dh.setText(list.get(0).getWork_no());
+        Conts.wxxm_no = list.get(0).getWork_no();
+        bsd_ywwwdd_cp.setText(list.get(0).getChe_no());
+        ArrayList arr = new ArrayList();
+        String che = list.get(0).getChe_cx();
+        String[] s1 = che.split("\\|");
+        for (int j = 0; j < s1.length; j++) {
+            arr.add(j, s1[j]);
+        }
+        if (arr.size() < 4) {
+        } else {
+            bsd_ywwwdd_pinpai.setText(arr.get(0).toString());
+            bsdywwwdd_chexi.setText(arr.get(1).toString());
+            bsd_ywwwdd_chezu.setText(arr.get(2).toString());
+            bsd_ywwwdd_chexing.setText(arr.get(3).toString());
+        }
+        bsd_ywwwdd_vin.setText(list.get(0).getChe_vin());
+        bsd_ywwwdd_user.setText(list.get(0).getKehu_mc());
+        bsd_ywwwdd_fuwuguwen.setText(list.get(0).getXche_cz());
+        bsd_ywwwdd_dengjishijian.setText(list.get(0).getXche_yjwgrq());
+        bsd_ywwwdd_dianhua.setText(list.get(0).getKehu_dh());
+        bsd_zaichangdiaodu_zhuangtai.setText("维修状态:  " + list.get(0).getXche_ywlx());
+
+    }
+
+
+    public void remodata(String reco_no) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("xxNo", reco_no);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_paigongdelPgxx, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+                Log.i("cjn", "查看删除成功" + s);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Log.i("cjn", "查看删除错误信息" + s);
+            }
+        });
+
+
+    }
+
+
+    TextView bsd_01_text;
+
+    public void bsdtext(View view) {
+        bsd_01_text = (TextView) view.findViewById(R.id.bsd_14_text);
+        bsd_01_text.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
+                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
+    }
+
+}

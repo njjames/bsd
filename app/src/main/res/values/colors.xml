@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="bsd_xz_yes">#273340</color>
+    <color name="bsd_xz_no">#38495c</color>
+    <color name="main_ziti">#555555</color>
+    <color name="main_xian">#d6d6d6</color>
+    <color name="transparent_background">#50000000</color>
+    <color name="beijing">#4f000000</color>
+    <color name="hong">#F7714C</color>
+    <color name="bai">#FFFFFF</color>
+    <color name="text_clxx">#666666</color>
+    <color name="text_black">#000000</color>
+    <color name="button">#F7714C</color>
+    <color name="view">#dbdbdb</color>
+    <color name="text">#666666</color>
+    <color name="black">#000000</color>
+    <color name="maincolor">#F7714C</color>
+</resources>

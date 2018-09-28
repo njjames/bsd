@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F1F1">
+
+    <!-- 头部 -->
+    <RelativeLayout
+        android:id="@+id/relativeLayout23"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#FFFFFF">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="快速报价"
+            android:textColor="#636364"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+    <!-- 头部 结束-->
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/relativeLayout23"
+        android:layout_marginTop="15dp"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:id="@+id/bsd_ksbj_sm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="160dp"
+            android:src="@mipmap/bsd_zidongshibie"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:id="@+id/bsd_ksbj_sr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="268dp"
+            android:src="@mipmap/bsd_shoudongshuru"
+            android:layout_alignTop="@+id/bsd_ksbj_sm"
+            android:layout_toEndOf="@+id/bsd_ksbj_sm" />
+
+    </RelativeLayout>
+
+
+    <!--最下面的小文字 -->
+    <RelativeLayout
+        android:id="@+id/bsd_lsbj_di"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="售后服务电话: 0311-83998032      保修 (非工作时间) : 15176436937   13930122976" />
+    </RelativeLayout>
+</RelativeLayout>

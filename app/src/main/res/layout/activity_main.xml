@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bsd_top"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.boshide2.Modular.Activity.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/beijing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_50"
+        android:background="@drawable/bsd_main_log"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_caozuoyuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/bsd_main_loginAgain"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/qb_px_20">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="@dimen/qb_px_22"
+                android:layout_height="@dimen/qb_px_22"
+                android:src="@drawable/ic_my" />
+
+            <TextView
+                android:id="@+id/bsd_main_guanliyuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_2"
+                android:singleLine="true"
+                android:text="管理员"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bsd_main_loginAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/bsd_main_tuichu"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/qb_px_20">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="@dimen/qb_px_22"
+                android:layout_height="@dimen/qb_px_22"
+                android:src="@drawable/ic_logout" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_2"
+                android:singleLine="true"
+                android:text="重新登录"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bsd_main_tuichu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="@dimen/qb_px_22"
+                android:layout_height="@dimen/qb_px_22"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_close" />
+
+            <TextView
+                android:id="@+id/textVie4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_2"
+                android:singleLine="true"
+                android:text="退 出"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeLayout"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/linearLayout_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#38495c"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/bsd_rl_9"
+                style="@style/myleftboxstyle">
+
+                <ImageView
+                    android:id="@+id/bsd_im_9"
+                    style="@style/myleftboximgstyle"
+                    android:src="@drawable/bsd_mrkx_2"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#686A6D" />
+
+            <RelativeLayout
+                android:id="@+id/bsd_rl_1"
+                style="@style/myleftboxstyle">
+
+                <ImageView
+                    android:id="@+id/bsd_im_1"
+                    style="@style/myleftboximgstyle"
+                    android:src="@drawable/bsd_kuaisubaojia_2" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#686A6D" />
+
+            <RelativeLayout
+                android:id="@+id/bsd_rl_2"
+                style="@style/myleftboxstyle">
+
+                <ImageView
+                    android:id="@+id/bsd_im_2"
+                    style="@style/myleftboximgstyle"
+                    android:src="@drawable/bsd_weixiuyuyue_2" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#686A6D" />
+
+            <RelativeLayout
+                android:id="@+id/bsd_rl_3"
+                style="@style/myleftboxstyle">
+
+                <ImageView
+                    android:id="@+id/bsd_im_3"
+                    style="@style/myleftboximgstyle"
+                    android:src="@drawable/bsd_weixiujiedan_2" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#686A6D" />
+
+            <RelativeLayout
+                android:id="@+id/bsd_rl_4"
+                style="@style/myleftboxstyle">
+
+                <ImageView
+                    android:id="@+id/bsd_im_4"
+                    style="@style/myleftboximgstyle"
+                    android:src="@drawable/bsd_zaichangdiaodu_2" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#686A6D" />
+
+            <RelativeLayout
+                android:id="@+id/bsd_rl_5"
+                style="@style/myleftboxstyle">
+
+                <ImageView
+                    android:id="@+id/bsd_im_5"
+                    style="@style/myleftboximgstyle"
+                    android:src="@drawable/bsd_huiyuanguanli_2" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#686A6D" />
+
+            <RelativeLayout
+                android:id="@+id/bsd_rl_6"
+                style="@style/myleftboxstyle">
+
+                <ImageView
+                    android:id="@+id/bsd_im_6"
+                    style="@style/myleftboximgstyle"
+                    android:src="@drawable/bsd_lishiweixiu_2" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#686A6D" />
+
+            <RelativeLayout
+                android:id="@+id/bsd_rl_7"
+                style="@style/myleftboxstyle">
+
+                <ImageView
+                    android:id="@+id/bsd_im_7"
+                    style="@style/myleftboximgstyle"
+                    android:src="@drawable/bsd_cheliangxinxi_2" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#686A6D" />
+
+            <RelativeLayout
+                android:id="@+id/bsd_rl_8"
+                style="@style/myleftboxstyle">
+
+                <ImageView
+                    android:id="@+id/bsd_im_8"
+                    style="@style/myleftboximgstyle"
+                    android:src="@drawable/bsd_my_2" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#686A6D" />
+        </LinearLayout>
+
+        <!--中间碎片内容-->
+        <FrameLayout
+            android:id="@+id/login_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="#F1F1F1" />
+    </LinearLayout>
+</RelativeLayout>

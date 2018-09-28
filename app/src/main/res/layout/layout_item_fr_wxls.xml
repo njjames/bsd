@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/qb_px_28"
+    android:minHeight="@dimen/qb_px_28"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/biankuang_info_bg">
+
+        <ImageView
+            android:id="@+id/iv_selected"
+            android:layout_width="@dimen/qb_px_28"
+            android:layout_height="@dimen/qb_px_28"
+            android:src="@drawable/ic_arrow_right"
+            android:layout_gravity="center_vertical"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_work_no"
+        android:text="维修单号"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:text="日期"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"/>
+
+    <TextView
+        android:id="@+id/tv_chepai"
+        android:text="车牌"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"/>
+
+
+    <TextView
+        android:id="@+id/tv_chezhu"
+        android:text="司机/车主"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"/>
+
+    <TextView
+        android:id="@+id/tv_huiyuan"
+        android:text="会员账号"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"/>
+
+    <TextView
+        android:id="@+id/tv_dianhua"
+        android:text="电话"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"/>
+
+    <TextView
+        android:id="@+id/tv_licheng"
+        android:text="出厂里程"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"/>
+
+
+    <TextView
+        android:id="@+id/tv_jine"
+        android:text="金额"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"/>
+</LinearLayout>

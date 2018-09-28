@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bsd_log_wangzhezhilu">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_marginTop="25dp"
+                android:id="@+id/bsd_wzll_3"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/bsd_wzll_2">
+
+                <TextView
+                    android:id="@+id/bsd_wzll_zh1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignBottom="@+id/bsd_wzzl_et_user"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="合计金额:"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/bsd_mrkx_hejijiner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/bsd_wzll_zh1" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bsd_wzll_4"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/bsd_wzll_3">
+
+                <TextView
+                    android:id="@+id/bsd_wzll_zh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="维修项目优惠金额"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/bsd_mrkx_xmyh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/bsd_wzll_zh" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bsd_wzll_5"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/bsd_wzll_4">
+
+                <TextView
+                    android:id="@+id/bsd_wzll_zh3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="维修材料优惠金额"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/bsd_mrkx_clyh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/bsd_wzll_zh3" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/bsd_wzll_6"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/bsd_wzll_5">
+
+                <TextView
+                    android:id="@+id/bsd_wzll_zh4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="应收金额"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/bsd_mrkx_yingshou"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/bsd_wzll_zh4" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bsd_wzll_7"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/bsd_wzll_6">
+
+                <TextView
+                    android:id="@+id/bsd_wzll_zh5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="实收金额"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/bsd_mrkx_shishou"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/bsd_wzll_zh5" />
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/bsd_mrkx_qrjs"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/bsd_wzll_7">
+
+                <TextView
+                    android:id="@+id/bsd_wzzl_tv_queren"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="68dp"
+                    android:background="@drawable/bsd_log_wzzzl_queren_quxiao"
+                    android:gravity="center"
+                    android:text="确认结算"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/bsd_wzzl_tijiao"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="75dp"
+                    android:layout_toEndOf="@+id/bsd_wzzl_tv_queren"
+                    android:background="@drawable/bsd_log_wzzzl_queren_quxiao"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

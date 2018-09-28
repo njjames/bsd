@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F1F1"
+    android:orientation="vertical">
+
+    <include layout="@layout/content_title_lishi_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bsd_lsbj_body"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/bsd_im_zdsb"
+                style="@style/mychoosecarimgstyle"
+                android:src="@drawable/bsd_zdsb" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/bsd_im_sdsr"
+                style="@style/mychoosecarimgstyle"
+                android:src="@drawable/bsd_sdsr" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/bsd_im_xcbsb"
+                style="@style/mychoosecarimgstyle"
+                android:src="@drawable/bsd_xcbsb" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/content_footer_layout" />
+</LinearLayout>

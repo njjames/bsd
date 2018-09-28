@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F1F1"
+    android:orientation="vertical">
+
+    <include layout="@layout/content_title_back_layout" />
+
+    <RelativeLayout
+        android:id="@+id/bsd_lsbj_zhong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/qb_px_2"
+        android:layout_marginRight="@dimen/qb_px_2"
+        android:layout_marginTop="@dimen/qb_px_2"
+        android:background="@drawable/bsd_lsbj_body">
+
+        <LinearLayout
+            android:id="@+id/ll_car_license_inputbox_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/qb_px_20"
+                android:text="请输入车牌号"
+                android:textColor="#9DA9B4"
+                android:textSize="26sp"
+                android:layout_marginTop="@dimen/qb_px_40"/>
+
+            <LinearLayout
+                android:id="@+id/ll_license_input_boxes_content"
+                android:layout_width="@dimen/qb_px_630"
+                android:layout_height="@dimen/qb_px_70"
+                android:background="@drawable/cepai"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_car_license_inputbox1"
+                    style="@style/mycardnoinputstyle" />
+
+                <View style="@style/mycardnodividestyle" />
+
+                <EditText
+                    android:id="@+id/et_car_license_inputbox2"
+                    style="@style/mycardnoinputstyle"/>
+
+                <View style="@style/mycardnodividestyle" />
+
+                <EditText
+                    android:id="@+id/et_car_license_inputbox3"
+                    style="@style/mycardnoinputstyle"/>
+
+                <View style="@style/mycardnodividestyle" />
+
+                <EditText
+                    android:id="@+id/et_car_license_inputbox4"
+                    style="@style/mycardnoinputstyle"/>
+
+                <View style="@style/mycardnodividestyle" />
+
+                <EditText
+                    android:id="@+id/et_car_license_inputbox5"
+                    style="@style/mycardnoinputstyle"/>
+
+                <View style="@style/mycardnodividestyle" />
+
+                <EditText
+                    android:id="@+id/et_car_license_inputbox6"
+                    style="@style/mycardnoinputstyle" />
+
+                <View style="@style/mycardnodividestyle" />
+
+                <EditText
+                    android:id="@+id/et_car_license_inputbox7"
+                    style="@style/mycardnoinputstyle" />
+
+                <View style="@style/mycardnodividestyle" />
+
+                <EditText
+                    android:id="@+id/et_car_license_inputbox8"
+                    style="@style/mycardnoinputstyle" />
+
+                <View style="@style/mycardnodividestyle" />
+
+                <EditText
+                    android:id="@+id/et_car_license_inputbox9"
+                    style="@style/mycardnoinputstyle" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <android.inputmethodservice.KeyboardView
+                android:id="@+id/bsd_keyboard_view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:background="@drawable/bsd_lsbj_body"
+                android:keyBackground="@drawable/keyboard_normal_bg"
+                android:keyTextColor="#5E5E5E"
+                android:shadowRadius="0.0"
+                android:keyTextSize="20sp"
+                android:labelTextSize="20sp"
+                android:keyPreviewLayout="@layout/key_ios" />
+        </FrameLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/content_footer_layout" />
+</LinearLayout>

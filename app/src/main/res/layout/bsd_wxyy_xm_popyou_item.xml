@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/qb_px_30"
+    android:minHeight="@dimen/qb_px_30"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/bsd_xsbj_name1"
+        android:layout_weight="1.5"
+        style="@style/mysearchinfostyle"
+        android:text="项目名称" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_bzsj1"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="标准工时" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_gsdj1"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="工时单价" />
+
+    <TextView
+        android:id="@+id/bsd_kxbj_je1"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="金额" />
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:padding="@dimen/qb_px_2"
+        android:layout_weight="0.4"
+        android:src="@drawable/ic_add"
+        android:background="@drawable/biankuang_info_bg"/>
+</LinearLayout>

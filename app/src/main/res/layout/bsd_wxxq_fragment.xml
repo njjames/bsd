@@ -1,0 +1,823 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- 顶部开始 -->
+    <RelativeLayout
+        android:id="@+id/bsd_m_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y60"
+        android:background="#FFFFFF">
+
+
+        <RelativeLayout
+            android:id="@+id/bsd_lsbj_fanhui"
+            android:layout_width="@dimen/x60"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="@dimen/x10"
+                android:layout_height="@dimen/y30"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/bsd_fanhui" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x2"
+                android:layout_toEndOf="@+id/imageView5"
+                android:text="返回"
+                android:textColor="#636364"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="维修详情"
+            android:textColor="#636364"
+            android:textSize="20sp" />
+
+
+    </RelativeLayout>
+    <!-- 顶部结束 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/bsd_m_top"
+        android:background="#E0E0E0" />
+    <!-- 中间开始 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bsd_m_xia"
+        android:layout_below="@+id/bsd_m_top"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/y10"
+        android:background="@drawable/bodyshangyuan">
+
+        <!--中间头部 -->
+        <RelativeLayout
+            android:id="@+id/bsd_on_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y130"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_top_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y55"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout7"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y45"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/bsd_chepaiyuan">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/x3"
+                        android:text="维修单号:" />
+
+                    <TextView
+                        android:id="@+id/bsd_lswx_danhao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/x2"
+                        android:layout_toRightOf="@+id/textView7"
+                        android:background="@null"
+                        android:textColorHint="#B1B0B0"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout9"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/y45"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="@drawable/bsd_chepaiyuan">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/x3"
+                        android:text="车牌号:" />
+
+                    <TextView
+                        android:id="@+id/bsd_lswx_chepaihao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/textView8"
+                        android:layout_alignBottom="@+id/textView8"
+                        android:layout_marginLeft="@dimen/x2"
+                        android:layout_toEndOf="@+id/textView8"
+                        android:background="@null"
+                        android:singleLine="false"
+                        android:textColorHint="#B1B0B0"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout10"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/y45"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="@drawable/bsd_chepaiyuan">
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/x3"
+                        android:text="客户:" />
+
+                    <com.example.administrator.boshide2.Modular.View.MarqueeView
+                        android:id="@+id/bsd_lswx_kehu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/textView10"
+                        android:layout_alignBottom="@+id/textView10"
+                        android:layout_marginLeft="@dimen/x2"
+                        android:layout_toEndOf="@+id/textView10"
+                        android:background="@null"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textColorHint="#B1B0B0"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout11"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/y45"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="@drawable/bsd_chepaiyuan">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/x3"
+                        android:text="日期:" />
+
+                    <com.example.administrator.boshide2.Modular.View.MarqueeView
+                        android:id="@+id/bsd_lswx_riqi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/textView11"
+                        android:layout_alignBottom="@+id/textView11"
+                        android:layout_marginLeft="@dimen/x2"
+                        android:layout_toEndOf="@+id/textView11"
+                        android:background="@null"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textColorHint="#B1B0B0"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout12"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/y45"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="@drawable/bsd_chepaiyuan">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/x3"
+                        android:text="电话:" />
+
+                    <TextView
+                        android:id="@+id/bsd_lswx_dianhua"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/textView12"
+                        android:layout_alignBottom="@+id/textView12"
+                        android:layout_marginLeft="@dimen/x2"
+                        android:layout_toEndOf="@+id/textView12"
+                        android:background="@null"
+                        android:singleLine="false"
+                        android:textColorHint="#B1B0B0"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_top_2"
+                android:layout_below="@+id/ll_top_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y55"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout13"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="@dimen/y45"
+                    android:background="@drawable/bsd_chepaiyuan">
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/x3"
+                        android:text="会员卡号:" />
+
+                    <TextView
+                        android:id="@+id/bsd_lswx_huiyuankahao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/textView13"
+                        android:layout_alignBottom="@+id/textView13"
+                        android:layout_marginLeft="@dimen/x2"
+                        android:layout_toEndOf="@+id/textView13"
+                        android:background="@null"
+                        android:singleLine="false"
+                        android:textColorHint="#B1B0B0"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout14"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="@dimen/y45"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="@drawable/bsd_chepaiyuan">
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/x3"
+                        android:text="会员卡支付金额:" />
+
+                    <TextView
+                        android:id="@+id/bsd_lswx_huiyuankazhifujine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/textView14"
+                        android:layout_alignBottom="@+id/textView14"
+                        android:layout_marginLeft="@dimen/x2"
+                        android:layout_toEndOf="@+id/textView14"
+                        android:background="@null"
+                        android:singleLine="false"
+                        android:textColorHint="#B1B0B0"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout15"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="@dimen/y45"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="@drawable/bsd_chepaiyuan">
+
+                    <TextView
+                        android:id="@+id/textViewchuzhikahao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/x3"
+                        android:text="储值卡号:" />
+
+                    <TextView
+                        android:id="@+id/bsd_lswx_chuzhikahao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/textViewchuzhikahao"
+                        android:layout_alignBottom="@+id/textViewchuzhikahao"
+                        android:layout_marginLeft="@dimen/x2"
+                        android:layout_toEndOf="@+id/textViewchuzhikahao"
+                        android:background="@null"
+                        android:singleLine="false"
+                        android:textColorHint="#B1B0B0"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout16"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="@dimen/y45"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="@drawable/bsd_chepaiyuan">
+
+                    <CheckBox
+                        android:id="@+id/bsd_lswx_jiesuanbiaozhi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/x3"
+                        android:clickable="false" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/bsd_lswx_jiesuanbiaozhi"
+                        android:layout_alignBaseline="@+id/bsd_lswx_jiesuanbiaozhi"
+                        android:layout_alignBottom="@+id/bsd_lswx_jiesuanbiaozhi"
+                        android:text="储值卡结算标志"
+                        android:textColorHint="#B1B0B0"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout17"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="@dimen/y45"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:background="@drawable/bsd_chepaiyuan">
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/x3"
+                        android:text="补现金:" />
+
+                    <TextView
+                        android:id="@+id/bsd_lswx_buxianjin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/textView17"
+                        android:layout_alignBottom="@+id/textView17"
+                        android:layout_marginLeft="@dimen/x2"
+                        android:layout_toEndOf="@+id/textView17"
+                        android:background="@null"
+                        android:singleLine="false"
+                        android:textColorHint="#B1B0B0"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/bsd_on_xian"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/bsd_on_top"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:background="#F7714C" />
+
+        <!-- 中间滑动 -->
+        <com.example.administrator.boshide2.Modular.View.MyScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bsd_on_xian"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/no1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:id="@+id/bsd_rl_xuanxiang"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y45"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/bsd_xm111"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="项目名称" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/bsd_xm222"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="标准工时" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="工时单价" />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/bsd_xm333"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="原工时费" />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="会员折扣" />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/bsd_xm444"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg">
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="会员工时费" />
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/bsd_wxxq_lv"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y250"
+                        android:layout_below="@+id/bsd_rl_xuanxiang"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y45"
+                        android:layout_below="@+id/bsd_wxxq_lv"
+                        android:background="@drawable/bsd_xiamianyuan"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/textView20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/x20"
+                            android:text="合计:"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_xq_xm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/x10"
+                            android:layout_toEndOf="@+id/textView20"
+                            android:text="元"
+                            android:textColor="#F7714C"
+                            android:textSize="16sp" />
+                        <!-- <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="状态: 已完工"
+                             android:textSize="16sp"
+                             android:layout_marginEnd="46dp"
+                             android:layout_alignBaseline="@+id/textView12"
+                             android:layout_alignBottom="@+id/textView12"
+                             android:layout_alignParentEnd="true" />-->
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/bsd_onzhongjian"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/no1"
+                    android:layout_marginTop="@dimen/y10"
+                    android:background="#F7714C" />
+
+
+                <!-- 复制的开始-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/bsd_onzhongjian">
+
+
+                    <LinearLayout
+                        android:id="@+id/bsd_rl_xuanxiang1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y45"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/bsd_xm11"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:background="@drawable/biankuang_title_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="材料名称" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/bsd_xm22"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="数量" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/bsd_xm33"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="单价" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/bsd_xm44"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="图号" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/bsd_xm55"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="品牌" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/bsd_xm66"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/biankuang_title_bg"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="金额" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/bsd_wxxq_cl_lv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/y250"
+                        android:layout_below="@+id/bsd_rl_xuanxiang1"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y45"
+                        android:layout_below="@+id/bsd_wxxq_cl_lv1"
+                        android:layout_marginBottom="@dimen/y10"
+                        android:background="@drawable/bsd_xiamianyuan">
+
+                        <TextView
+                            android:id="@+id/textView21"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/x20"
+                            android:text="合计:"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_wxxq_wxcl_jine"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/x10"
+                            android:layout_toEndOf="@+id/textView21"
+                            android:text="元"
+                            android:textColor="#F7714C"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <!-- 复制的结束-->
+            </RelativeLayout>
+
+        </com.example.administrator.boshide2.Modular.View.MyScrollView>
+
+    </RelativeLayout>
+    <!-- 中间结束 -->
+
+
+    <!-- 底部开始 -->
+    <RelativeLayout
+        android:id="@+id/bsd_m_xia"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y75"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y45"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:gravity="center_vertical"
+            android:background="#DDDDDD">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:text="总计金额 :"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_xq_zj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x10"
+                android:layout_toEndOf="@+id/textView5"
+                android:text="元"
+                android:textColor="#F7714C"
+                android:textSize="18sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y30"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/bsd_13_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentBottom="true"
+                android:text="售后服务电话: 0311-83998032      保修 (非工作时间) : 15176436937   13930122976" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <!-- 底部结束 -->
+</RelativeLayout>

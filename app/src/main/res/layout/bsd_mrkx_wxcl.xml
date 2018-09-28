@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bsd_lsbj_toubuju"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_30"
+        android:layout_marginTop="@dimen/qb_px_2">
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="材料名称" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="数量" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="原单价" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="0.7"
+            android:text="单位" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="会员折扣" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="单价" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="金额" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="0.7"
+            android:text="操作" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="查看库存" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/bsd_lsbj_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <RelativeLayout
+        android:id="@+id/mrkx_xia"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_26"
+        android:background="@drawable/bsd_xiamianyuan">
+
+        <TextView
+            android:id="@+id/tv_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_centerVertical="true"
+            android:text="合计:"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_record_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:layout_toRightOf="@id/tv_total"/>
+
+        <TextView
+            android:id="@+id/tv_wxxm_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/qb_px_10"
+            android:text="元"
+            android:textColor="#F7714C"
+            android:textSize="16sp" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_back_gr"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="历史维修"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="@dimen/qb_px_8"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/button"
+        android:layout_marginLeft="@dimen/qb_px_2"
+        android:layout_marginRight="@dimen/qb_px_2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="@dimen/qb_px_2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_30"
+            android:background="#eeeeee">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/biankuang_title_bg">
+
+                <ImageView
+                    android:layout_width="@dimen/qb_px_28"
+                    android:layout_height="@dimen/qb_px_28"
+                    android:src="@drawable/ic_arrow_right"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="invisible"/>
+            </FrameLayout>
+
+            <TextView
+                android:text="维修单号"
+                android:layout_weight="1"
+                style="@style/mysearchtitlestyle"/>
+
+            <TextView
+                android:text="日期"
+                android:layout_weight="1"
+                style="@style/mysearchtitlestyle"/>
+
+            <TextView
+                android:text="车牌"
+                android:layout_weight="1"
+                style="@style/mysearchtitlestyle"/>
+
+            <TextView
+                android:text="司机/车主"
+                android:layout_weight="1"
+                style="@style/mysearchtitlestyle"/>
+
+            <TextView
+                android:text="会员账号"
+                android:layout_weight="1"
+                style="@style/mysearchtitlestyle"/>
+
+            <TextView
+                android:text="电话"
+                android:layout_weight="1"
+                style="@style/mysearchtitlestyle"/>
+
+            <TextView
+                android:text="出厂里程"
+                android:layout_weight="1"
+                style="@style/mysearchtitlestyle"/>
+
+            <TextView
+                android:text="金额"
+                android:layout_weight="1"
+                style="@style/mysearchtitlestyle"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view" />
+
+        <ListView
+            android:id="@+id/lv_lishi_weixiiu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/view"
+            android:dividerHeight="1dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="@dimen/qb_px_2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="维修项目"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:padding="@dimen/qb_px_4"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_1"
+                android:background="@color/button" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_28"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/qb_px_2">
+
+                <TextView
+                    android:text="维修项目名称"
+                    android:layout_weight="1"
+                    style="@style/mysearchtitlestyle" />
+
+                <TextView
+                    android:text="金额"
+                    android:layout_weight="1"
+                    style="@style/mysearchtitlestyle" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view" />
+
+            <ListView
+                android:id="@+id/lv_danhao"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/view"
+                android:dividerHeight="1dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/qb_px_2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="维修用料"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:padding="@dimen/qb_px_4"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_1"
+                android:background="@color/button" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_28"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/qb_px_2">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="配件名称"
+                    style="@style/mysearchtitlestyle" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="规格/型号"
+                    style="@style/mysearchtitlestyle" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="数量"
+                    style="@style/mysearchtitlestyle" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="单价"
+                    style="@style/mysearchtitlestyle" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="金额"
+                    style="@style/mysearchtitlestyle" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_yongliao"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/view"
+                android:dividerHeight="1dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/view" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/qb_px_8"
+        android:layout_gravity="right">
+
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="@dimen/qb_px_80"
+            android:layout_height="@dimen/qb_px_30"
+            android:background="@drawable/cundang"
+            android:text="确定"
+            android:textColor="@color/bai"
+            android:textSize="14sp"
+            android:layout_marginRight="@dimen/qb_px_40"/>
+    </FrameLayout>
+</LinearLayout>
