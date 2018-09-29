@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_XM_entity;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
@@ -87,7 +86,7 @@ public class BSD_wxxm_adp extends BaseAdapter {
             holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
+            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.tv_ygsf);
             holder.bsd_kxbj_xmsc= (ImageView) contetview.findViewById(R.id.bsd_kxbj_xmsc);
             holder.bsd_ksbj_tv_zt= (TextView) contetview.findViewById(R.id.bsd_ksbj_tv_zt);
             contetview.setTag(holder);

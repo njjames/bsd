@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
@@ -26,6 +26,7 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
     private  UPsl uPsl;
     private  UPdj uPdj;
     private  KuCun   kuCun;
+    private OnOperateItemListener onOperateItemListener;
 
     public void setuPsl(UPsl uPsl) {
         this.uPsl = uPsl;
@@ -73,8 +74,9 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
         return 0;
     }
     class Holder {
-        TextView bsd_kxbj_dj,bsd_mrkx_hyzk,bsd_kxbj_qian1,bsd_xsbj_name,bsd_kxbj_bzsj,bsd_kxbj_gsdj,bsd_kxbj_je,bsd_kxbj_qian,bsd_kxbj_cz;
-        TextView  bsd_wxcl_kc;
+        TextView bsd_kxbj_dj,bsd_mrkx_hyzk,bsd_xsbj_name,bsd_kxbj_bzsj,bsd_kxbj_gsdj,bsd_kxbj_je,bsd_kxbj_qian,bsd_kxbj_cz;
+        ImageView iv_stock;
+        ImageView iv_delete;
     }
 
     @Override
@@ -86,12 +88,12 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
             holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
+            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.tv_ygsf);
             holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_cz);
-            holder.bsd_kxbj_qian1= (TextView) contetview.findViewById(R.id.bsd_kxbj_qian1);
+            holder.iv_delete= (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_mrkx_hyzk= (TextView) contetview.findViewById(R.id.bsd_mrkx_hyzk);
             holder.bsd_kxbj_dj= (TextView) contetview.findViewById(R.id.bsd_kxbj_dj);
-            holder.bsd_wxcl_kc= (TextView) contetview.findViewById(R.id.bsd_wxcl_kc);
+            holder.iv_stock = (ImageView) contetview.findViewById(R.id.iv_stock);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
@@ -118,17 +120,19 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
         });
         holder.bsd_kxbj_je.setText(list.get(i).getPeij_dw());
         holder.bsd_kxbj_cz.setText(""+list.get(i).getPeij_sl()*v);
-        holder.bsd_kxbj_qian1.setText("删除");
-        holder.bsd_kxbj_qian1.setOnClickListener(new View.OnClickListener() {
+        // 删除
+        holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deletCL.onYesClick(list.get(i).getReco_no());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onDelete(list.get(i).getPeij_no(), i);
+                }
             }
         });
 
         holder.bsd_kxbj_dj.setText(""+v);
         holder.bsd_mrkx_hyzk.setText(""+list.get(i).getPeij_zk());
-        holder.bsd_wxcl_kc.setOnClickListener(new View.OnClickListener() {
+        holder.iv_stock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 kuCun.query_kc(list.get(i).getPeij_no());
@@ -149,5 +153,13 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
     }
     public interface UPdj {
         public void onYesClick(int i, double sl, double dj);
+    }
+
+    public interface OnOperateItemListener {
+        void onDelete(String peij_no, int position);
+    }
+
+    public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {
+        this.onOperateItemListener = onOperateItemListener;
     }
 }

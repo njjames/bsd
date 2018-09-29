@@ -52,7 +52,7 @@
 
         <TextView
             style="@style/mysearchtitlestyle"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:text="查看库存" />
     </LinearLayout>
 

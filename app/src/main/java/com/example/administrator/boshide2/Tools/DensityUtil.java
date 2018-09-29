@@ -64,4 +64,11 @@ public class DensityUtil {
             activityDisplayMetrics.scaledDensity = targetScaledDensity;
         }
     }
+
+    public static int getScreenHeight(Activity activity) {
+        WindowManager manager = activity.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.heightPixels;
+    }
 }

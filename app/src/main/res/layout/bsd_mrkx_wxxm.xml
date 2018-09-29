@@ -42,7 +42,7 @@
 
         <TextView
             style="@style/mysearchtitlestyle"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:text="删除" />
 
         <TextView

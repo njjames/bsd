@@ -32,7 +32,7 @@ public class BSD_XiuGaiGongShi extends Dialog implements View.OnClickListener {
         bt_toopromptdiaog_quxiao.setOnClickListener(this);
         textView1 = (TextView) view.findViewById(R.id.textView1);
         textView1.setText(a);
-        bsd_wxyy_gsxiugai = (EditText) view.findViewById(R.id.bsd_wxyy_gsxiugai);
+        bsd_wxyy_gsxiugai = (EditText) view.findViewById(R.id.et_changcontent);
 
         if(type==1){
             bsd_wxyy_gsxiugai.setText(xmmc);
@@ -45,15 +45,14 @@ public class BSD_XiuGaiGongShi extends Dialog implements View.OnClickListener {
             bsd_wxyy_gsxiugai.setTextSize(16);
         }
 
-        bsd_xiugaineirong = (TextView) view.findViewById(R.id.bsd_xiugaineirong);
+        bsd_xiugaineirong = (TextView) view.findViewById(R.id.tv_changetype);
         bsd_xiugaineirong.setText(xiugaineirong);
         setContentView(view);
         setCanceledOnTouchOutside(false);
 
-        WindowManager.LayoutParams params =
-                this.getWindow().getAttributes();
-        params.width = (int) getContext().getResources().getDimension(R.dimen.x180);
-        params.height = (int) getContext().getResources().getDimension(R.dimen.y300);
+        WindowManager.LayoutParams params = this.getWindow().getAttributes();
+        params.width = (int) getContext().getResources().getDimension(R.dimen.qb_px_300);
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         this.getWindow().setAttributes(params);
         Log.i("cjn", "查看传进来的工时" + gongshi);
     }

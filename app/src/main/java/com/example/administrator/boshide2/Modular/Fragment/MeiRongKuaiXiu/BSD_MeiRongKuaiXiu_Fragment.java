@@ -524,13 +524,13 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         //获取listView
         bsd_wxywdd_you_lv = (ListView) view.findViewById(R.id.bsd_wxywdd_you_lv);
         paiGongInfoAdapter = new BSD_wxywdd_dap(getActivity(), listPGrenyuan);
-        paiGongInfoAdapter.setRemove(new BSD_wxywdd_dap.Remo() {
+        paiGongInfoAdapter.setOnOperateItemListener(new BSD_wxywdd_dap.OnOperateItemListener() {
             @Override
-            public void onYesClick(String reco_no) {
-                remodata(reco_no);
-
+            public void onDelete(int reco_no, int position) {
+                deletePaigongInfo(reco_no, position);
             }
         });
+
         paiGongInfoAdapter.setUp_gongshi(new BSD_wxywdd_dap.UP_gongshi() {
             @Override
             public void onYesClick(String gongshi, final int i) {
@@ -685,7 +685,8 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                     paiGongDialog.setOnPaiGongListener(new PaiGongDialog.OnPaiGongListener() {
                         @Override
                         public void onSuccess() {
-//                            paiGongInfoAdapter.
+                            int currentPosition = BSD_wxxm.getCurrentPosition();
+                            getPaiGongInfo(billEntiy.getWork_no(), list_XM.get(currentPosition).getWxxm_no());
                         }
                     });
                     paiGongDialog.show();
@@ -2930,17 +2931,18 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 //    }
 
     /**
-     * 删除操作
-     *
+     * 删除派工人员
      * @param reco_no
+     * @param position
      */
-    public void remodata(String reco_no) {
+    public void deletePaigongInfo(int reco_no, final int position) {
         AbRequestParams params = new AbRequestParams();
         params.put("xxNo", reco_no);//id
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_paigongdelPgxx, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "查看删除成功" + s);
+            public void onSuccess(int code, String data) {
+                listPGrenyuan.remove(position);
+                paiGongInfoAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -2955,7 +2957,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "查看删除错误信息" + s);
+                Toast.makeText(getContext(), "派工人员删除失败", Toast.LENGTH_SHORT).show();
             }
         });
 

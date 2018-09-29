@@ -64,7 +64,7 @@ public class BSD_lsbj_adp extends BaseAdapter {
             holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_cheno= (TextView) contetview.findViewById(R.id.bsd_kxbj_cheno);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
+            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.tv_ygsf);
             holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_cz);
             holder.bsd_kxbj_qian= (TextView) contetview.findViewById(R.id.bsd_kxbj_qian);
             holder.bsd_xm6= (RelativeLayout) contetview.findViewById(R.id.bsd_xm6);

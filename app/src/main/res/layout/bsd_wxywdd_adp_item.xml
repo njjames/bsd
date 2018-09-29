@@ -23,9 +23,12 @@
         style="@style/mysearchinfostyle"
         android:text="金额" />
 
-    <TextView
-        android:id="@+id/bsd_xsbj_caozuo"
-        android:layout_weight="1"
-        style="@style/mysearchinfostyle"
-        android:text="删除" />
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_weight="0.7"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_32"
+        android:src="@drawable/ic_delete_maincolor"
+        android:padding="@dimen/qb_px_8"
+        android:background="@drawable/biankuang_info_bg" />
 </LinearLayout>

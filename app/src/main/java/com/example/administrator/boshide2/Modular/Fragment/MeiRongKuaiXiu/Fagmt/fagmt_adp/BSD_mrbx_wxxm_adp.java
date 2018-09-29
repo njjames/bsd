@@ -1,7 +1,6 @@
 package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.fagmt_adp;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.dialog.PaiGongDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
 
@@ -95,16 +93,16 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
         return 0;
     }
 
-    class Holder {
-        TextView bsd_kxbj_hygsf, bsd_kxbj_hyzk, bsd_shanchuxiangmu, bsd_xsbj_name, bsd_kxbj_bzsj, bsd_kxbj_gsdj, bsd_kxbj_je, bsd_kxbj_qian;
+    public final class Holder {
+        TextView bsd_kxbj_hygsf, bsd_kxbj_hyzk, bsd_xsbj_name, bsd_kxbj_bzsj, bsd_kxbj_gsdj, bsd_kxbj_qian;
+        TextView tv_ygsf;
+        ImageView tv_delete;
         ImageView bsd_kxbj_cz;
         ImageView iv_selected;
     }
 
     @Override
     public View getView(final int i, View contetview, ViewGroup viewGroup) {
-        Log.i("wxxmlb", "getView:项目的长度是 "+list.size());
-        Log.i("gscxaaa", "onClick:66666到了mrkx_wxxm里查询项目列表的适配器里了，工时是=== "+list.get(i).getWxxm_gs());
         Holder holder = null;
         if (contetview == null) {
             textView = new RelativeLayout(context);
@@ -113,9 +111,9 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
             holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj = (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj = (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je = (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
+            holder.tv_ygsf = (TextView) contetview.findViewById(R.id.tv_ygsf);
             holder.bsd_kxbj_cz = (ImageView) contetview.findViewById(R.id.bsd_kxbj_cz);
-            holder.bsd_shanchuxiangmu = (TextView) contetview.findViewById(R.id.bsd_kxbj_cz1);
+            holder.tv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_kxbj_hyzk = (TextView) contetview.findViewById(R.id.bsd_kxbj_hyzk);
             holder.bsd_kxbj_hygsf = (TextView) contetview.findViewById(R.id.bsd_kxbj_hygsf);
             holder.iv_selected =(ImageView) contetview.findViewById(R.id.iv_selected);
@@ -165,11 +163,13 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
 
         Log.i("gscxaaa", "getView22222:标准工时是多少== "+list.get(i).getWxxm_gs());
 
-        holder.bsd_kxbj_je.setText("" + list.get(i).getWxxm_yje());
-        holder.bsd_kxbj_je.setOnClickListener(new View.OnClickListener() {
+        holder.tv_ygsf.setText("" + list.get(i).getWxxm_yje());
+        holder.tv_ygsf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uPdj.onYesClick(list.get(i).getReco_no(), list.get(i).getWxxm_gs(), list.get(i).getWxxm_yje(),list.get(i).getWxxm_mc());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateYgsf(list.get(i).getWxxm_no(), list.get(i).getWxxm_gs(), list.get(i).getWxxm_yje(),list.get(i).getWxxm_mc(), i);
+                }
             }
         });
         // 单项派工
@@ -182,12 +182,13 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
             }
         });
 
-        holder.bsd_shanchuxiangmu.setOnClickListener(new View.OnClickListener() {
+        // 删除维修项目
+        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                delite.onYesClick(list.get(i).getReco_no());
-
-                notifyDataSetChanged();
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onDelete(list.get(i).getWxxm_no(), i);
+                }
             }
         });
 
@@ -225,7 +226,16 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
     }
 
     public interface OnOperateItemListener {
-        public void onPaiGong(String wxxmNo);
+        void onPaiGong(String wxxmNo);
+
+        /**
+         * 删除维修项目
+         * @param wxxmNo  维修项目编码
+         * @param position  这个维修项目在集合中的位置
+         */
+        void onDelete(String wxxmNo, int position);
+
+        void onUpdateYgsf(String wxxmNo, double wxxmGs, double wxxmYje, String wxxmMc, int position);
     }
 
     public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {

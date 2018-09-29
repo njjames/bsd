@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.boshide2.R;
@@ -18,14 +19,14 @@ import java.util.Map;
  */
 
 public class BSD_wxywdd_dap extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
+    private LayoutInflater layoutInflater;
+    private Context context;
     private List<Map<String, String>> list;
-    UP_jiaqian up_jiaqian;
-    Remo remove;
-    UP_gongshi up_gongshi;
-    UP_xm_mc  up_xm_mc;
-
+    private UP_jiaqian up_jiaqian;
+    private Remo remove;
+    private UP_gongshi up_gongshi;
+    private UP_xm_mc  up_xm_mc;
+    private OnOperateItemListener onOperateItemListener;
 
 
     public  void  setUp_xm_mc(UP_xm_mc up_xm_mc){
@@ -74,17 +75,17 @@ public class BSD_wxywdd_dap extends BaseAdapter {
 
     class Holder {
         TextView bsd_xsbj_name, bsd_xsbj_caozuo, bsd_xsbj_gongshi, bsd_xsbj_jiner;
+        ImageView iv_delete;
     }
 
     @Override
     public View getView(final int i, View contetview, ViewGroup viewGroup) {
-        Log.i("hehehehe", "getView: " + list.size());
         Holder holder = null;
         if (contetview == null) {
             holder = new Holder();
             contetview = LayoutInflater.from(context).inflate(R.layout.bsd_wxywdd_adp_item, null);
             holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
-            holder.bsd_xsbj_caozuo = (TextView) contetview.findViewById(R.id.bsd_xsbj_caozuo);
+            holder.iv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_xsbj_gongshi = (TextView) contetview.findViewById(R.id.bsd_xsbj_gongshi);
             holder.bsd_xsbj_jiner = (TextView) contetview.findViewById(R.id.bsd_xsbj_jiner);
             contetview.setTag(holder);
@@ -108,12 +109,12 @@ public class BSD_wxywdd_dap extends BaseAdapter {
             }
         });
 
-        holder.bsd_xsbj_caozuo.setOnClickListener(new View.OnClickListener() {
+        holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                remove.onYesClick(list.get(i).get("reco_no"));
-                list.remove(i);
-                notifyDataSetChanged();
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onDelete(Integer.parseInt(list.get(i).get("reco_no")), i);
+                }
             }
         });
         return contetview;
@@ -135,4 +136,11 @@ public class BSD_wxywdd_dap extends BaseAdapter {
         public void onYesClick(String xm_mc, int i);
     }
 
+    public interface OnOperateItemListener {
+        void onDelete(int reco_no, int position);
+    }
+
+    public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {
+        this.onOperateItemListener = onOperateItemListener;
+    }
 }

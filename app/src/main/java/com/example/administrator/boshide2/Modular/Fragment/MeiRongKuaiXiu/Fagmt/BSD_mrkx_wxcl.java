@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -22,15 +21,12 @@ import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.BSD_MeiRongKuaiXiu_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.fagmt_adp.BSD_mrkx_wxcl_adp;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
-import com.example.administrator.boshide2.Tools.Show;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,12 +51,12 @@ public class BSD_mrkx_wxcl extends Fragment {
 
 
 
-    ListView bsd_lsbj_lv;
-    BSD_mrkx_wxcl_adp adapter;
-    List<BSD_WeiXiuJieDan_CL_Entity> list_CL = new ArrayList<>();
-    URLS url;
-    BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
-    int choufutianjia = 0;
+    private ListView bsd_lsbj_lv;
+    private BSD_mrkx_wxcl_adp adapter;
+    private List<BSD_WeiXiuJieDan_CL_Entity> list_CL = new ArrayList<>();
+    private URLS url;
+    private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
+    private int choufutianjia = 0;
     private Dialog mWeiboDialog;
     RelativeLayout beijing;
     TooPromptdiaog promptdiaog;
@@ -134,6 +130,19 @@ public class BSD_mrkx_wxcl extends Fragment {
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
         adapter = new BSD_mrkx_wxcl_adp(getActivity(), list_CL);
         bsd_lsbj_lv.setAdapter(adapter);
+        adapter.setOnOperateItemListener(new BSD_mrkx_wxcl_adp.OnOperateItemListener() {
+            @Override
+            public void onDelete(final String peij_no, final int position) {
+                promptdiaog = new TooPromptdiaog(getContext(), "确定删除吗？");
+                promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        deletWxcl(peij_no, position);
+                    }
+                });
+                promptdiaog.show();
+            }
+        });
 //        删除
         adapter.setDeletCL(new BSD_mrkx_wxcl_adp.DeletCL() {
             @Override
@@ -142,7 +151,7 @@ public class BSD_mrkx_wxcl extends Fragment {
                 promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick() {
-                        deletcl(i);
+
 
                         adapter.notifyDataSetChanged();
                     }
@@ -155,13 +164,8 @@ public class BSD_mrkx_wxcl extends Fragment {
             @Override
             public void query_kc(String peij_no) {
                 //弹出配件库存明细界面；
-                Bundle   bundle=new Bundle();
-                bundle.putString("peij_no",peij_no);
-
-                BSD_MeiRongKuaiXiu_KuCun_Fragment  kcDialog = new BSD_MeiRongKuaiXiu_KuCun_Fragment();
-                kcDialog.setArguments(bundle);
+                BSD_MeiRongKuaiXiu_KuCun_Fragment  kcDialog = BSD_MeiRongKuaiXiu_KuCun_Fragment.newInstance(peij_no);
                 kcDialog.show(getFragmentManager(),"kcDialog");
-
             }
         });
         //修改数量
@@ -288,24 +292,22 @@ public class BSD_mrkx_wxcl extends Fragment {
         });
 
     }
-    /**
-     * 删除莋
-     *
-     * @param i
-     */
-    public void deletcl(int i) {
 
+    /**
+     * 删除维修用料
+     * @param peij_no
+     * @param position
+     */
+    public void deletWxcl(String peij_no, final int position) {
         AbRequestParams params = new AbRequestParams();
-        params.put("id", i);
+        params.put("work_no", Conts.work_no);
+        params.put("peij_no", peij_no);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_deletCL, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
-                Log.i("cjn", "成功" + s);
-                promptdiaog.dismiss();
-                Log.i("cjn", "成功操作==" + s);
-                cldata();
+                list_CL.remove(position);
                 adapter.notifyDataSetChanged();
-
+                promptdiaog.dismiss();
             }
 
             @Override

@@ -84,7 +84,7 @@ TextView bsd_xsbj_name,bsd_kxbj_bzsj,bsd_kxbj_gsdj,bsd_kxbj_je,bsd_ksbj_tv_zt;
             holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
+            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.tv_ygsf);
             holder.bsd_kxbj_xmsc= (ImageView) contetview.findViewById(R.id.bsd_kxbj_xmsc);
             holder.bsd_ksbj_tv_zt= (TextView) contetview.findViewById(R.id.bsd_ksbj_tv_zt);
             contetview.setTag(holder);

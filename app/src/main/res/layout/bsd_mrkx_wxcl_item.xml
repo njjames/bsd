@@ -25,7 +25,7 @@
 
 
     <TextView
-        android:id="@+id/bsd_kxbj_je"
+        android:id="@+id/tv_ygsf"
         android:layout_weight="0.7"
         style="@style/mysearchinfostyle"
         android:text="单位" />
@@ -49,16 +49,22 @@
         style="@style/mysearchinfostyle"
         android:text="金额" />
 
-    <TextView
-        android:id="@+id/bsd_kxbj_qian1"
+    <ImageView
+        android:id="@+id/iv_delete"
         android:layout_weight="0.7"
-        style="@style/mysearchinfostyle"
-        android:text="操作" />
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_30"
+        android:src="@drawable/ic_delete_maincolor"
+        android:padding="@dimen/qb_px_8"
+        android:background="@drawable/biankuang_info_bg" />
 
-    <TextView
-        android:id="@+id/bsd_wxcl_kc"
-        android:layout_weight="1"
-        style="@style/mysearchinfostyle"
-        android:text="查看库存" />
+    <ImageView
+        android:id="@+id/iv_stock"
+        android:layout_weight="0.8"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_30"
+        android:src="@drawable/ic_stock"
+        android:padding="@dimen/qb_px_6"
+        android:background="@drawable/biankuang_info_bg" />
 
 </LinearLayout>

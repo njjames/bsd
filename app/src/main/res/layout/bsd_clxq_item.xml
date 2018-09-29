@@ -36,7 +36,7 @@
         android:text="单据日期" />
 
     <TextView
-        android:id="@+id/bsd_kxbj_je"
+        android:id="@+id/tv_ygsf"
         android:layout_weight="1.2"
         style="@style/mysearchinfostyle"
         android:text="合计金额" />
