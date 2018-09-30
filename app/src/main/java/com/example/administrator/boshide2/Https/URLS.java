@@ -555,6 +555,10 @@ public class URLS {
      */
     public String BSD_mrkx_upxm = "paigong/editWxxmByhyzk";
     /**
+     * 派工项目修改工时单价
+     */
+    public String BSD_Update_WxxmMc = "paigong/updatewxxmmc";
+    /**
      * 派工材料修改数量单价
      */
     public String BSD_upcl = "paigong/editYl";
@@ -616,6 +620,11 @@ public class URLS {
      * 获取
      */
     public String BSD_meirongxiugai="paigong/editYl_mrkx";
+
+    /**
+     * 修改维修单配件原单价
+     */
+    public String BSD_update_peijydj="paigong/updatepeijydj";
 
     /**
      * 根据车型型号获取4级结构

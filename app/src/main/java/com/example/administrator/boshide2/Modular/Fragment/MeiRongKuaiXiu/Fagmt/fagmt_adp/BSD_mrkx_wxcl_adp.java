@@ -100,22 +100,24 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
         }
         holder.bsd_xsbj_name.setText(list.get(i).getPeij_mc());
         holder.bsd_kxbj_bzsj.setText(""+list.get(i).getPeij_sl());
+        // 修改数量
         holder.bsd_kxbj_bzsj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uPsl.onYesClick(
-                        list.get(i).getReco_no(),list.get(i).getPeij_sl(),
-                        list.get(i).getPeij_ydj()
-                );
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateSl(list.get(i).getPeij_no(), list.get(i).getPeij_mc(), list.get(i).getPeij_sl(), i);
+                }
             }
         });
         double v = (Math.round(list.get(i).getPeij_zk()* list.get(i).getPeij_ydj() * 100) / 100.0);
         holder.bsd_kxbj_gsdj.setText(""+list.get(i).getPeij_ydj());
+        // 修改原单价
         holder.bsd_kxbj_gsdj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uPdj.onYesClick(list.get(i).getReco_no(),list.get(i).getPeij_sl(),
-                        list.get(i).getPeij_ydj());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateYDj(list.get(i).getPeij_no(), list.get(i).getPeij_mc(), list.get(i).getPeij_ydj(), i);
+                }
             }
         });
         holder.bsd_kxbj_je.setText(list.get(i).getPeij_dw());
@@ -132,10 +134,13 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
 
         holder.bsd_kxbj_dj.setText(""+v);
         holder.bsd_mrkx_hyzk.setText(""+list.get(i).getPeij_zk());
+        // 查看库存
         holder.iv_stock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                kuCun.query_kc(list.get(i).getPeij_no());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onSearchStock(list.get(i).getPeij_no());
+                }
             }
         });
         return contetview;
@@ -157,6 +162,12 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
 
     public interface OnOperateItemListener {
         void onDelete(String peij_no, int position);
+
+        void onSearchStock(String peij_no);
+
+        void onUpdateSl(String peij_no, String peij_mc, double peij_sl, int position);
+
+        void onUpdateYDj(String peij_no, String peij_mc, double peij_ydj, int position);
     }
 
     public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {

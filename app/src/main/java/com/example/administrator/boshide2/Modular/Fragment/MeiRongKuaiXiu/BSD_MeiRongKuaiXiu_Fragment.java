@@ -695,6 +695,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 }
             }
         });
+        // 让会员卡号获取输入焦点
+        bsd_mrkx_et_huiyuankahao.setFocusable(true);
+        bsd_mrkx_et_huiyuankahao.setFocusableInTouchMode(true);
+        bsd_mrkx_et_huiyuankahao.requestFocus();
     }
 
     @Override
@@ -739,6 +743,9 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             billEntiy.setCangk_mc(item.getString("cangk_mc"));
             billEntiy.setGcsj(item.getString("gcsj"));
             billEntiy.setCard_no(item.getString("card_no"));
+            billEntiy.setXche_hjje(item.getDouble("xche_hjje"));
+            xm_zj = item.getDouble("xche_rgf");
+            cl_zj = item.getDouble("xche_clf");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -2436,6 +2443,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                     double v = (Math.round(zong_zj * 100) / 100.0);
                     bsd_mrkx_zongjia.setText("" + v);
                     Conts.MRKX_Zongjia = zong_zj;
+                    billEntiy.setXche_hjje(zong_zj);
                 }
             });
             transaction.add(R.id.bsd_clxq_lswx, BSD_wxxm);
@@ -2526,6 +2534,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                     double v = (Math.round(zong_zj * 100) / 100.0);
                     bsd_mrkx_zongjia.setText("" + v);
                     Conts.MRKX_Zongjia = zong_zj;
+                    billEntiy.setXche_hjje(zong_zj);
                 }
             });
             transaction.hide(BSD_wxxm);
@@ -2698,16 +2707,17 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                         }
                     }
                     BSD_wxcl.refreashData();
-                    // 2.计算维修单的总金额
-                    double addPrice = 0;
-                    for (BSD_WeiXiuJieDan_CL_Entity item : needAddList) {
-                        addPrice = addPrice + item.getPeij_je();
-                    }
-                    // 如果不等于0，则更新到总金额
-                    if (addPrice != 0) {
-                        billEntiy.setXche_hjje(billEntiy.getXche_hjje() + addPrice);
-                        bsd_mrkx_zongjia.setText(billEntiy.getXche_hjje() + "元");
-                    }
+                    //在上面refreashData已经计算了总金额了
+//                    // 2.计算维修单的总金额
+//                    double addPrice = 0;
+//                    for (BSD_WeiXiuJieDan_CL_Entity item : needAddList) {
+//                        addPrice = addPrice + item.getPeij_je();
+//                    }
+//                    // 如果不等于0，则更新到总金额
+//                    if (addPrice != 0) {
+//                        billEntiy.setXche_hjje(billEntiy.getXche_hjje() + addPrice);
+//                        bsd_mrkx_zongjia.setText(billEntiy.getXche_hjje() + "元");
+//                    }
                 }
                 bsd_zcduxq_cl_pop.dismiss();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
@@ -2819,15 +2829,15 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                     list_XM.addAll(needAddList);
                     BSD_wxxm.refreashData();
                     // 2.计算维修单的总金额
-                    double addPrice = 0;
-                    for (BSD_WeiXiuJieDan_XM_Entity item : needAddList) {
-                        addPrice = addPrice + item.getWxxm_je();
-                    }
-                    // 如果不等于0，则更新到总金额
-                    if (addPrice != 0) {
-                        billEntiy.setXche_hjje(billEntiy.getXche_hjje() + addPrice);
-                        bsd_mrkx_zongjia.setText(billEntiy.getXche_hjje() + "元");
-                    }
+//                    double addPrice = 0;
+//                    for (BSD_WeiXiuJieDan_XM_Entity item : needAddList) {
+//                        addPrice = addPrice + item.getWxxm_je();
+//                    }
+//                    // 如果不等于0，则更新到总金额
+//                    if (addPrice != 0) {
+//                        billEntiy.setXche_hjje(billEntiy.getXche_hjje() + addPrice);
+//                        bsd_mrkx_zongjia.setText(billEntiy.getXche_hjje() + "元");
+//                    }
                 }
                 bsd_zcduxq_xm_pop.dismiss();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);

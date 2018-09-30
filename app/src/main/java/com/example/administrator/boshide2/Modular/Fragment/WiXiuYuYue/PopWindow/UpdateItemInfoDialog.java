@@ -4,18 +4,20 @@ import android.app.Dialog;
 import android.content.Context;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.DownJianPan;
 
 
 public class UpdateItemInfoDialog extends Dialog implements View.OnClickListener {
-    public static final int CHANGE_GS = 0;
-    public static final int CHANGE_NAME = 1;
+    public static final int CHANGE_WXXMGS = 0;
+    public static final int CHANGE_WXXMNAME = 1;
+    public static final int CHANGE_PEIJSL = 2;
+    public static final int CHANGE_PEIJYDJ = 3;
     private View view;
     private TextView tv_confirm;
     private TextView tv_cancel;
@@ -27,7 +29,7 @@ public class UpdateItemInfoDialog extends Dialog implements View.OnClickListener
     private int changeType;
     private final TextView tv_title;
 
-    public UpdateItemInfoDialog(Context context, int changeType, double wxxmGsf, String wxxmMc) {
+    public UpdateItemInfoDialog(Context context, int changeType, double slOrJe, String wxxmMc) {
         super(context, R.style.mydialog);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         this.changeType = changeType;
@@ -40,15 +42,25 @@ public class UpdateItemInfoDialog extends Dialog implements View.OnClickListener
         tv_title.setText(wxxmMc);
         tv_changetype = (TextView) view.findViewById(R.id.tv_changetype);
         et_changcontent = (EditText) view.findViewById(R.id.et_changcontent);
-        if (changeType == CHANGE_GS) {
+        if (changeType == CHANGE_WXXMGS) {
             tv_changetype.setText("修改项目金额:");
-            et_changcontent.setInputType(InputType.TYPE_CLASS_NUMBER);
-            et_changcontent.setText("" + wxxmGsf);
+            et_changcontent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            et_changcontent.setText("" + slOrJe);
             et_changcontent.setSelection(et_changcontent.getText().length());
-        } else if (changeType == CHANGE_NAME) {
+        } else if (changeType == CHANGE_WXXMNAME) {
             tv_changetype.setText("修改项目名称:");
             et_changcontent.setInputType(InputType.TYPE_CLASS_TEXT);
             et_changcontent.setText(wxxmMc);
+            et_changcontent.setSelection(et_changcontent.getText().length());
+        } else if (changeType == CHANGE_PEIJSL) {
+            tv_changetype.setText("修改配件数量:");
+            et_changcontent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            et_changcontent.setText("" + slOrJe);
+            et_changcontent.setSelection(et_changcontent.getText().length());
+        } else if (changeType == CHANGE_PEIJYDJ) {
+            tv_changetype.setText("修改配件原单价:");
+            et_changcontent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            et_changcontent.setText("" + slOrJe);
             et_changcontent.setSelection(et_changcontent.getText().length());
         }
         setContentView(view);
@@ -60,18 +72,19 @@ public class UpdateItemInfoDialog extends Dialog implements View.OnClickListener
     }
 
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_confirm:
-                if(changeType == CHANGE_NAME){
+                if(changeType == CHANGE_WXXMNAME){
                     if (toopromtXmmc != null) {
-                            toopromtXmmc.onYesClick(et_changcontent.getText().toString().trim());
+                        DownJianPan.hide(getContext(), et_changcontent);
+                        toopromtXmmc.onYesClick(et_changcontent.getText().toString().trim());
                     }
 
-                }else  if(changeType == CHANGE_GS){
+                }else  if(changeType == CHANGE_WXXMGS || changeType == CHANGE_PEIJSL || changeType == CHANGE_PEIJYDJ){
                     if (toopromtOnClickListener != null) {
+                        DownJianPan.hide(getContext(), et_changcontent);
                         if (!TextUtils.isEmpty(et_changcontent.getText().toString().trim())) {
                             toopromtOnClickListener.onYesClick(Double.parseDouble(et_changcontent.getText().toString().trim()));
                         } else if (et_changcontent.getText().toString().length() == 0) {
@@ -81,6 +94,7 @@ public class UpdateItemInfoDialog extends Dialog implements View.OnClickListener
                 }
                 break;
             case R.id.tv_cancel:
+                DownJianPan.hide(getContext(), et_changcontent);
                 this.dismiss();
                 break;
         }

@@ -15,13 +15,15 @@
         android:id="@+id/bsd_kxbj_bzsj"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="数量" />
+        android:text="数量"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
     <TextView
         android:id="@+id/bsd_kxbj_gsdj"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="原单价" />
+        android:text="原单价"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
 
     <TextView

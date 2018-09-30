@@ -2,6 +2,7 @@ package com.example.administrator.boshide2.Tools;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
@@ -27,5 +28,15 @@ public class DownJianPan {
                 }
             }
         });
+    }
+
+    /**
+     * 强制隐藏键盘，用这种方式可以，用上面的不行
+     * @param context
+     * @param view  接受软键盘输入的视图
+     */
+    public static void hide(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

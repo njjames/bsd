@@ -9,7 +9,8 @@
         android:id="@+id/bsd_xsbj_name"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="项目名称" />
+        android:text="项目名称"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
     <TextView
         android:id="@+id/bsd_kxbj_bzsj"
@@ -27,7 +28,8 @@
         android:id="@+id/tv_ygsf"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="原工时费" />
+        android:text="原工时费"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
     <TextView
         android:id="@+id/bsd_kxbj_hyzk"

@@ -128,7 +128,9 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
         holder.bsd_xsbj_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uPmc.onYesClick(list.get(i).getReco_no(), list.get(i).getWxxm_gs(), list.get(i).getWxxm_yje(),list.get(i).getWxxm_mc());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateWxxmMc(list.get(i).getWxxm_no(), list.get(i).getWxxm_mc(), i);
+                }
             }
         });
 
@@ -236,6 +238,8 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
         void onDelete(String wxxmNo, int position);
 
         void onUpdateYgsf(String wxxmNo, double wxxmGs, double wxxmYje, String wxxmMc, int position);
+
+        void onUpdateWxxmMc(String wxxmNo, String wxxmMc, int position);
     }
 
     public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {

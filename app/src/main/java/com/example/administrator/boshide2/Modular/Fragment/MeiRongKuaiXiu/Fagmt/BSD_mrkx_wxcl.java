@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
@@ -24,6 +25,7 @@ import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialog
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
+import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
@@ -44,6 +46,7 @@ public class BSD_mrkx_wxcl extends Fragment {
     CL_ZJ cl_zj;
     BSD_MeiRongKuaiXiu_Fragment    BSD_mrkx;
     private TextView tv_recordNum;
+    private UpdateItemInfoDialog updateItemInfoDialog;
 
     public void setCl_zj(CL_ZJ cl_zj) {
         this.cl_zj = cl_zj;
@@ -82,25 +85,22 @@ public class BSD_mrkx_wxcl extends Fragment {
     /**
      * 计算维修材料的总价
      */
-    double a = 0;
     public void wxclPrice() {
-        double jg = 0;
+        double wxclZje = 0;
         for (int i = 0; i < list_CL.size(); i++) {
-            jg = jg + (list_CL.get(i).getPeij_je());
+            wxclZje = wxclZje + (list_CL.get(i).getPeij_je());
         }
-        a = jg;
-        double v = (Math.round(jg* 100) / 100.0);
+        double v = (Math.round(wxclZje* 100) / 100.0);
         tv_wxxm_money.setText( v  + "元");
-        Log.i("cjn", "CL的总价：" + jg);
-        if (list_CL.size()>0){
-            cl_zj.onYesClick(jg);
-        }else {
-            cl_zj.onYesClick(0);
-        }
         if (list_CL.size() > 0) {
             tv_recordNum.setText("(共" + list_CL.size() + "条记录)");
         } else {
             tv_recordNum.setText("");
+        }
+        if (list_CL.size() > 0) {
+            cl_zj.onYesClick(wxclZje);
+        } else {
+            cl_zj.onYesClick(0);
         }
     }
 
@@ -110,7 +110,6 @@ public class BSD_mrkx_wxcl extends Fragment {
         for (int i = 0; i < list_CL.size(); i++) {
             jg = jg + (list_CL.get(i).getPeij_je());
         }
-        a = jg;
         double v = (Math.round(jg* 100) / 100.0);
 
 
@@ -142,32 +141,38 @@ public class BSD_mrkx_wxcl extends Fragment {
                 });
                 promptdiaog.show();
             }
-        });
-//        删除
-        adapter.setDeletCL(new BSD_mrkx_wxcl_adp.DeletCL() {
-            @Override
-            public void onYesClick(final int i) {
-                promptdiaog = new TooPromptdiaog(getContext(), "是否删除");
-                promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
 
-
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-                promptdiaog.show();
-            }
-        });
-        //查看库存
-        adapter.setKuCun(new BSD_mrkx_wxcl_adp.KuCun() {
             @Override
-            public void query_kc(String peij_no) {
-                //弹出配件库存明细界面；
+            public void onSearchStock(String peij_no) {
                 BSD_MeiRongKuaiXiu_KuCun_Fragment  kcDialog = BSD_MeiRongKuaiXiu_KuCun_Fragment.newInstance(peij_no);
                 kcDialog.show(getFragmentManager(),"kcDialog");
             }
+
+            @Override
+            public void onUpdateSl(final String peij_no, String peij_mc, final double peij_sl, final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PEIJSL, peij_sl, peij_mc);
+                updateItemInfoDialog.show();
+                updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick(double newPeijSl) {
+                        updatePeijSl(peij_no, newPeijSl, position);
+                    }
+                });
+            }
+
+            @Override
+            public void onUpdateYDj(final String peij_no, String peij_mc, double peij_ydj, final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PEIJYDJ, peij_ydj, peij_mc);
+                updateItemInfoDialog.show();
+                updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick(double newPeijYdj) {
+                        updatePeijYdj(peij_no, newPeijYdj, position);
+                    }
+                });
+            }
         });
+
         //修改数量
         adapter.setuPsl(new BSD_mrkx_wxcl_adp.UPsl() {
             @Override
@@ -177,7 +182,7 @@ public class BSD_mrkx_wxcl extends Fragment {
                 bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick(double gongshi) {
-                        upxl(i, gongshi, dj);
+//                        updatePeijSl(i, gongshi, dj);
 
                         bsd_xiuGaiGongShi.dismiss();
                     }
@@ -194,7 +199,7 @@ public class BSD_mrkx_wxcl extends Fragment {
                 bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick(double gongshi) {
-                        upxl(i, sl, gongshi);
+//                        updatePeijSl(i, sl, gongshi);
                         bsd_xiuGaiGongShi.dismiss();
                     }
                 });
@@ -210,19 +215,26 @@ public class BSD_mrkx_wxcl extends Fragment {
         tv_recordNum = (TextView) view.findViewById(R.id.tv_record_num);
     }
 
-    public void upxl(int i, double sl, double dj) {
+    private void updatePeijYdj(String peij_no, final double newPeijYdj, final int position) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("id", i);
-        params.put("sl", sl + "");
-        params.put("jg", dj + "");
-        params.put("peij_dj", dj * +Conts.MRKX_CL_ZK + "");
-        params.put("peij_je", (dj * +Conts.MRKX_CL_ZK) * sl + "");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_meirongxiugai, params, new AbStringHttpResponseListener() {
+        params.put("work_no", Conts.work_no);
+        params.put("peij_no", peij_no);
+        params.put("ydj", newPeijYdj + "");
+        params.put("zk", Conts.MRKX_CL_ZK + "");
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_update_peijydj, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                Log.i("cjn", "成功" + s);
-                cldata();
-
+                list_CL.get(position).setPeij_ydj(newPeijYdj);
+                list_CL.get(position).setPeij_yje(newPeijYdj * list_CL.get(position).getPeij_sl());
+                list_CL.get(position).setPeij_dj(newPeijYdj * Conts.MRKX_CL_ZK);
+                list_CL.get(position).setPeij_je(newPeijYdj * Conts.MRKX_CL_ZK * list_CL.get(position).getPeij_sl());
+                int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
+                adapter.notifyDataSetChanged();
+                bsd_lsbj_lv.setSelection(firstVisiblePosition);
+                wxclPrice();
+                updateItemInfoDialog.dismiss();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -237,7 +249,48 @@ public class BSD_mrkx_wxcl extends Fragment {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "失败" + s);
+                Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    public void updatePeijSl(String peijNo, final double peijSl, final int position) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", Conts.work_no);
+        params.put("peij_no", peijNo);
+        params.put("sl", peijSl + "");
+        params.put("zk", Conts.MRKX_CL_ZK + "");
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_meirongxiugai, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+                list_CL.get(position).setPeij_sl(peijSl);
+                list_CL.get(position).setPeij_yje(peijSl * list_CL.get(position).getPeij_ydj());
+                list_CL.get(position).setPeij_dj(Conts.MRKX_CL_ZK * list_CL.get(position).getPeij_ydj());
+                list_CL.get(position).setPeij_je(peijSl * Conts.MRKX_CL_ZK * list_CL.get(position).getPeij_ydj());
+                int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
+                adapter.notifyDataSetChanged();
+                bsd_lsbj_lv.setSelection(firstVisiblePosition);
+                wxclPrice();
+                updateItemInfoDialog.dismiss();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
     }
@@ -307,6 +360,7 @@ public class BSD_mrkx_wxcl extends Fragment {
             public void onSuccess(int a, String s) {
                 list_CL.remove(position);
                 adapter.notifyDataSetChanged();
+                wxclPrice();
                 promptdiaog.dismiss();
             }
 
