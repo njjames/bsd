@@ -576,9 +576,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BSD_wxcl = null;
-                BSD_wxxm = null;
-                ((MainActivity) getActivity()).upBSD_mrkx_log();
+                saveBillInfoBeforeBack();
             }
         });
         title = (TextView) view.findViewById(R.id.tv_title);
@@ -1868,6 +1866,74 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         });
     }
 
+    /**
+     * 返回时的保存，防止返回丢失数据
+     */
+    public void saveBillInfoBeforeBack() {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");
+        danhao = billEntiy.getWork_no();
+        chepai = bsd_ywwwdd_cp.getText().toString();
+        pinpai = bsd_mrkx_tv_pp.getText().toString();
+        chexi = bsd_mrkx_tv_chexi.getText().toString();
+        chezu = bsd_mrkx_tv_chezu.getText().toString();
+        chexing = bsd_mrkx_tv_chexing.getText().toString();
+        if (bsd_mrkx_tv_pp.getText().toString().equals("") ||
+                bsd_mrkx_tv_chexi.getText().toString().equals("") ||
+                bsd_mrkx_tv_chezu.getText().toString().equals("") ||
+                bsd_mrkx_tv_chexing.getText().toString().equals("")) {
+            che_cx = "";
+        } else {
+            che_cx = pinpai + "|" + chexi + "|" + chezu + "|" + chexing;
+        }
+        VIN = bsd_mrkx_et_vin.getText().toString().trim();
+        jinchanglicheng = bsd_mrkx_ed_lc.getText().toString().trim();
+        chezhu = bsd_mrkx_ed_lianxiren.getText().toString().trim();
+        dinahua = bsd_mrkx_lianxifangshi.getText().toString().trim();
+        HYKH = bsd_mrkx_et_huiyuankahao.getText().toString().trim();
+        AbRequestParams params = new AbRequestParams();
+        params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
+        params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
+        params.put("che_no", chepai);
+        params.put("work_no", Conts.work_no);
+        params.put("che_cx", che_cx);
+        params.put("che_vin", VIN);
+        params.put("xche_lc", jinchanglicheng);
+        params.put("kehu_mc", chezhu);
+        params.put("kehu_dh", dinahua);
+        params.put("card_no", HYKH);
+        params.put("kehu_no", Conts.kehu_no);
+        params.put("cangk_dm", ckid);
+        params.put("xche_sfbz", gongshifeili_id);
+        params.put("gcsj", bsd_mrxk_tv_djtime.getText().toString());
+        params.put("xche_bz", bsd_mrkx_et_miaoshu.getText().toString().trim());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_UP, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+                boolean status = data.contains("保存成功");
+                // 保存成功则跳转fragment，应该没有失败的情况，有再添加
+                if (status) {
+                    BSD_wxcl = null;
+                    BSD_wxxm = null;
+                    ((MainActivity) getActivity()).upBSD_mrkx_log();
+                }
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+                Toast.makeText(getHostActicity(), "网络连接失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     public void saveBillInfo() {
         if (isSaveBill) {
             mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");

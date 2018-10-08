@@ -49,7 +49,6 @@ public class BSD_KSBJ_PinPai_delo extends Dialog  {
     Context   context;
 
 	URLS url;
-    private final ImageView iv_empty;
 
     public BSD_KSBJ_PinPai_delo(final Context context) {
 		super(context, R.style.mydialog);
@@ -61,7 +60,6 @@ public class BSD_KSBJ_PinPai_delo extends Dialog  {
 		this.context=context;
 		but_pp_query= (RelativeLayout) view.findViewById(R.id.but_pp_query);
 		et_pp_query= (EditText) view.findViewById(R.id.et_pp_query);
-        iv_empty = (ImageView) view.findViewById(R.id.iv_empty);
         but_pp_query.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -173,12 +171,10 @@ public class BSD_KSBJ_PinPai_delo extends Dialog  {
                         }
                     }
                     ksbjPpAdp.notifyDataSetChanged();
-                    if (data.size() > 0) {
-                        iv_empty.setVisibility(View.GONE);
-                    } else {
-                        iv_empty.setVisibility(View.VISIBLE);
-                    }
                     DownJianPan.hide(context, et_pp_query);
+                    if (data.size() == 0) {
+                        Toast.makeText(context, "没有搜索到相关的品牌", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

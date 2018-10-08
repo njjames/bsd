@@ -1,344 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F1F1">
+    android:background="#F1F1F1"
+    android:orientation="vertical">
 
-    <!-- 头部 -->
-    <RelativeLayout
-        android:id="@+id/relativeLayout23"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y55"
-        android:background="#FFFFFF">
+    <include layout="@layout/content_title_back_layout" />
 
-        <RelativeLayout
-            android:id="@+id/bsd_lsbj_fanhui"
-            android:layout_width="@dimen/x60"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/x5">
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="@dimen/x5"
-                android:layout_height="@dimen/y25"
-                android:scaleType="fitXY"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/bsd_fanhui" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/x2"
-                android:layout_toEndOf="@+id/imageView5"
-                android:text="返回"
-                android:textColor="#636364"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="历史维修"
-            android:textColor="#636364"
-            android:textSize="20sp" />
-
-    </RelativeLayout>
-    <!-- 头部 结束-->
-    <!--中间开始-->
-    <RelativeLayout
-        android:layout_below="@+id/relativeLayout23"
+    <LinearLayout
         android:id="@+id/bsd_lsbj_zhong"
-        android:layout_above="@+id/bsd_lsbj_di"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/y30"
-        android:layout_marginLeft="@dimen/x5"
-        android:layout_marginRight="@dimen/x5"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@drawable/bsd_lsbj_body"
-        android:paddingLeft="@dimen/x5"
-        android:paddingRight="@dimen/x5"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:paddingLeft="@dimen/qb_px_4"
+        android:paddingRight="@dimen/qb_px_4"
+        android:paddingTop="@dimen/qb_px_6"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/bsd_on_top"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y70">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/relativeLayout7"
-                android:layout_width="@dimen/x100"
-                android:layout_height="@dimen/y45"
-                android:background="@drawable/bsd_chepaiyuan"
-                android:layout_centerVertical="true">
+                android:layout_width="@dimen/qb_px_200"
+                android:layout_height="@dimen/qb_px_32"
+                style="@style/myconditionboxstyle">
 
                 <TextView
                     android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/x3"
-                    android:singleLine="true"
+                    style="@style/myconditionname"
                     android:text="车牌:" />
 
                 <EditText
                     android:id="@+id/et_wx_chepai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/x2"
-                    android:layout_toRightOf="@+id/textView7"
-                    android:background="@null"
-                    android:hint="请输入车牌号"
-                    android:textColorHint="#B1B0B0"
-                    android:textSize="13sp" />
-
-            </RelativeLayout>
+                    style="@style/myconditionvalue"
+                    android:hint="请输入车牌号" />
+            </LinearLayout>
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/relat_guwen"
-                android:layout_width="160dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="900dp"
-                android:visibility="gone"
-                android:layout_marginStart="17dp"
-                android:background="@drawable/bsd_chepaiyuan"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/relativeLayout8">
+                android:layout_width="@dimen/qb_px_150"
+                android:layout_height="@dimen/qb_px_32"
+                style="@style/myconditionboxstyle"
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
+                    style="@style/myconditionname"
                     android:text="服务顾问:" />
 
                 <TextView
-
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/textView11"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/textView11"
-                    android:background="@null"
-                    android:hint="               "
-                    android:numeric="integer"
-                    android:textColorHint="#B1B0B0"
-                    android:textSize="13sp"
-                    android:id="@+id/tv_lswx_gw" />
-                <ImageView
-                    android:id="@+id/imageView15"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                   android:layout_marginRight="5dp"
-                    android:src="@mipmap/bsd_duoxuan"
-                    android:layout_alignTop="@+id/tv_lswx_gw"
-                    android:layout_alignParentEnd="true" />
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/relativeLayout13"
-                android:layout_width="@dimen/x30"
-                android:layout_height="@dimen/y45"
-                android:layout_marginStart="@dimen/x10"
-                android:background="@drawable/cundang"
-                android:layout_alignBaseline="@+id/relativeLayout7"
-                android:layout_alignBottom="@+id/relativeLayout7"
-                android:layout_toEndOf="@+id/relativeLayout7">
-
-                <TextView
-                    android:id="@+id/tv_wx_chaxun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="查询"
-                    android:textColor="#FFFFFF" />
-            </RelativeLayout>
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="14sp"
+                    android:id="@+id/tv_lswx_gw" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/imageView15"
+                    style="@style/myeditdowimgstyle" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_wx_chaxun"
+                android:layout_width="@dimen/qb_px_60"
+                android:layout_height="@dimen/qb_px_30"
+                android:gravity="center"
+                android:text="查询"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/cundang"
+                android:textSize="16sp"
+                android:layout_marginLeft="@dimen/qb_px_10"/>
+        </LinearLayout>
 
         <View
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/bsd_on_top"
-            android:background="#F7714C" />
+            android:layout_height="@dimen/qb_px_1"
+            android:background="#F7714C"
+            android:layout_marginTop="@dimen/qb_px_4"/>
 
         <LinearLayout
             android:id="@+id/bsd_lsbj_toubuju"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y45"
-            android:layout_below="@+id/bsd_on_xian"
+            android:layout_height="@dimen/qb_px_32"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/y10">
+            android:layout_marginTop="@dimen/qb_px_2">
 
-            <LinearLayout
-                android:id="@+id/bsd_xm12"
-                android:layout_width="0dp"
+            <TextView
                 android:layout_weight="1.2"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
+                style="@style/mysearchtitlestyle"
+                android:text="单据号" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="单据号" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm22"
-                android:layout_width="0dp"
+            <TextView
                 android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="@drawable/biankuang_title_bg">
+                style="@style/mysearchtitlestyle"
+                android:text="客户名称" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="客户名称" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm33"
-                android:layout_width="0dp"
-                android:gravity="center"
+            <TextView
                 android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
+                style="@style/mysearchtitlestyle"
+                android:text="车牌号" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="车牌号" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm44"
-                android:layout_width="0dp"
+            <TextView
                 android:layout_weight="1.2"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="@drawable/biankuang_title_bg">
+                style="@style/mysearchtitlestyle"
+                android:text="接待日期" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="接待日期" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm55"
-                android:layout_width="0dp"
+            <TextView
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="40dp"
-                android:visibility="gone"
-                android:background="@drawable/biankuang_title_bg">
+                style="@style/mysearchtitlestyle"
+                android:text="服务顾问" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="服务顾问" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm66"
-                android:layout_width="0dp"
+            <TextView
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
+                style="@style/mysearchtitlestyle"
+                android:text="联系方式" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="联系方式" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm77"
-                android:layout_width="0dp"
+            <TextView
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
+                style="@style/mysearchtitlestyle"
+                android:text="合计金额" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="合计金额" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm88"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="@drawable/biankuang_title_bg">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="查看详情" />
-
-            </LinearLayout>
+            <TextView
+                android:layout_weight="0.8"
+                style="@style/mysearchtitlestyle"
+                android:text="查看详情" />
 
         </LinearLayout>
         <com.ab.view.pullview.AbPullToRefreshView
             android:id="@+id/wx_rfview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/bsd_lsbj_toubuju"
             android:baselineAligned="false"
-            android:layout_alignStart="@+id/bsd_lsbj_toubuju"
             android:orientation="vertical">
-
 
             <ListView
                 android:id="@+id/bsd_lsbj_lv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
         </com.ab.view.pullview.AbPullToRefreshView>
+    </LinearLayout>
 
-    </RelativeLayout>
-    <!--中间结束-->
-
-    <!--最下面的小文字 -->
-    <RelativeLayout
-        android:id="@+id/bsd_lsbj_di"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:layout_alignParentBottom="true">
-
-        <TextView
-            android:id="@+id/bsd_09_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_alignParentBottom="true"
-            android:text="售后服务电话: 0311-83998032      保修 (非工作时间) : 15176436937   13930122976" />
-    </RelativeLayout>
-</RelativeLayout>
+    <include layout="@layout/content_footer_layout" />
+</LinearLayout>
