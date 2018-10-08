@@ -17,9 +17,9 @@ import java.util.List;
  */
 
 public class BSD_lswx_adp extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
-    List<BSD_LSWX_ety> list;
+    private LayoutInflater layoutInflater;
+    private Context context;
+    private List<BSD_LSWX_ety> list;
 
     public BSD_lswx_adp(Context context, List<BSD_LSWX_ety> list) {
         this.context = context;
@@ -42,8 +42,14 @@ public class BSD_lswx_adp extends BaseAdapter {
         return 0;
     }
 
-    class Holder {
-        TextView bsd_kxbj_qian1, bsd_xsbj_name, bsd_kxbj_bzsj, bsd_kxbj_gsdj, bsd_kxbj_je, bsd_kxbj_qian, bsd_kxbj_cz;
+    public final class Holder {
+        TextView bsd_kxbj_qian1;
+        TextView bsd_xsbj_name;
+        TextView bsd_kxbj_bzsj;
+        TextView bsd_kxbj_gsdj;
+        TextView bsd_kxbj_je;
+        TextView bsd_kxbj_qian;
+        TextView bsd_kxbj_cz;
     }
 
     @Override
@@ -64,7 +70,6 @@ public class BSD_lswx_adp extends BaseAdapter {
             holder = (Holder) contetview.getTag();
         }
         final BSD_LSWX_ety item = list.get(i);
-
         holder.bsd_xsbj_name.setText(item.getWork_no());//单据号
         holder.bsd_kxbj_bzsj.setText(item.getKehu_mc());//客户名称
         holder.bsd_kxbj_gsdj.setText(item.getChe_no());//车牌
@@ -72,7 +77,6 @@ public class BSD_lswx_adp extends BaseAdapter {
         holder.bsd_kxbj_cz.setText(item.getXche_hjje());//合计金额
         holder.bsd_kxbj_qian.setText(item.getKehu_bxno());//联系方式
         holder.bsd_kxbj_qian1.setText(item.getXche_hjje());//合计金额
-
         return contetview;
     }
 }

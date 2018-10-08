@@ -40,17 +40,11 @@
         android:id="@+id/bsd_kxbj_qian"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="合计金额" />
+        android:text="联系方式" />
 
     <TextView
         android:id="@+id/bsd_kxbj_qian1"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="经办人" />
-
-    <TextView
-        android:id="@+id/bsd_kxbj_qian2"
-        android:layout_weight="0.8"
-        style="@style/mysearchinfostyle"
-        android:text="查看详情" />
+        android:text="合计金额" />
 </LinearLayout>

@@ -97,7 +97,7 @@
             <TextView
                 android:layout_weight="1.2"
                 style="@style/mysearchtitlestyle"
-                android:text="单据号" />
+                android:text="维修单号" />
 
             <TextView
                 android:layout_weight="1"
@@ -128,12 +128,6 @@
                 android:layout_weight="1"
                 style="@style/mysearchtitlestyle"
                 android:text="合计金额" />
-
-            <TextView
-                android:layout_weight="0.8"
-                style="@style/mysearchtitlestyle"
-                android:text="查看详情" />
-
         </LinearLayout>
         <com.ab.view.pullview.AbPullToRefreshView
             android:id="@+id/wx_rfview"

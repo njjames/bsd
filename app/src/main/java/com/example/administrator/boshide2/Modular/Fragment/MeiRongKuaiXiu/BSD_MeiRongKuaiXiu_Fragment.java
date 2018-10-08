@@ -186,9 +186,9 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     private String gongshifeili_name;
     private String gongshifeili_id;
-    double xm_zj;
-    double cl_zj;
-    double zong_zj;
+    private double xm_zj;
+    private double cl_zj;
+    private double zong_zj;
     private TextView bsd_mrkx_zongjia;
     private LinearLayout bsd_mrkx_rl_hukx;
     private String Car;

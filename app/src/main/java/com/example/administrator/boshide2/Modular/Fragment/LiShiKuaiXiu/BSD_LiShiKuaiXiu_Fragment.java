@@ -105,8 +105,6 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
                 ((MainActivity) getActivity()).setWork_no(data.get(i).getWork_no());
                 ((MainActivity) getActivity()).setData(data.get(i));
                 ((MainActivity) getActivity()).upmrkx_xq();
