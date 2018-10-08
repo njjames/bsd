@@ -377,7 +377,8 @@
                     android:id="@+id/bsd_mrkx_lswxjy"
                     android:text="历史维修建议"
                     android:layout_weight="0.5"
-                    style="@style/myeditnormalbtnstyle"/>
+                    style="@style/myeditnormalbtnstyle"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/bsd_mrkx_cundang"

@@ -98,14 +98,19 @@ public class BSD_wxywdd_dap extends BaseAdapter {
         holder.bsd_xsbj_jiner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                up_jiaqian.onYesClick(list.get(i).get("paig_khje"), i);
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateJE(i);
+                }
+//                up_jiaqian.onYesClick(list.get(i).get("paig_khje"), i);
             }
         });
 
         holder.bsd_xsbj_gongshi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                up_gongshi.onYesClick(list.get(i).get("paig_khgs"), i);
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateGS(i);
+                }
             }
         });
 
@@ -138,6 +143,10 @@ public class BSD_wxywdd_dap extends BaseAdapter {
 
     public interface OnOperateItemListener {
         void onDelete(int reco_no, int position);
+
+        void onUpdateGS(int position);
+
+        void onUpdateJE(int position);
     }
 
     public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {

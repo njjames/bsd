@@ -91,15 +91,13 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/qb_px_1"
             android:background="@color/view" />
 
         <ListView
             android:id="@+id/lv_lishi_weixiiu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@color/view"
-            android:dividerHeight="1dp" />
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
     <LinearLayout
@@ -147,15 +145,13 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/qb_px_1"
                 android:background="@color/view" />
 
             <ListView
                 android:id="@+id/lv_danhao"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@color/view"
-                android:dividerHeight="1dp" />
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
         <LinearLayout
@@ -210,12 +206,15 @@
                     style="@style/mysearchtitlestyle" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_1"
+                android:background="@color/view" />
+
             <ListView
                 android:id="@+id/lv_yongliao"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@color/view"
-                android:dividerHeight="1dp" />
+                android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
 

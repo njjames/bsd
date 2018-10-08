@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y45"
-    android:orientation="horizontal">
+    android:layout_height="@dimen/qb_px_40"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
 
+    <ImageView
+        android:id="@+id/img_chepai1"
+        android:layout_width="@dimen/qb_px_28"
+        android:layout_height="@dimen/qb_px_28"
+        android:src="@drawable/ic_pinpai" />
 
-
-        <ImageView
-            android:id="@+id/img_chepai1"
-            android:layout_width="@dimen/x13"
-            android:layout_height="@dimen/y40"
-            android:scaleType="fitXY"
-            android:layout_gravity="center_vertical"
-            android:src="@android:drawable/btn_star_big_off" />
-
-        <TextView
-            android:id="@+id/tv_chepai_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x2"
-            android:layout_gravity="center_vertical"
-            android:text="奧迪"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
+    <TextView
+        android:id="@+id/tv_chepai_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_4"
+        android:text="奧迪"
+        android:textColor="#000000"
+        android:textSize="16sp" />
 </LinearLayout>

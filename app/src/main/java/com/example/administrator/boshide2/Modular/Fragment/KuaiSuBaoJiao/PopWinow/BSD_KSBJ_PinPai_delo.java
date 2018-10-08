@@ -1,5 +1,6 @@
 package com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWinow;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -19,6 +21,8 @@ import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Adapter.BSD_KSBJ_PP_adp;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.DensityUtil;
+import com.example.administrator.boshide2.Tools.DownJianPan;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,10 +49,11 @@ public class BSD_KSBJ_PinPai_delo extends Dialog  {
     Context   context;
 
 	URLS url;
-	public BSD_KSBJ_PinPai_delo(final Context context) {
+    private final ImageView iv_empty;
+
+    public BSD_KSBJ_PinPai_delo(final Context context) {
 		super(context, R.style.mydialog);
-		getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-		// TODO Auto-generated constructor stub
+		getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		view = getLayoutInflater().inflate(R.layout.bad_ksbj_pinpai_pop, null, false);
 		url=new URLS();//data();
 		setContentView(view);
@@ -56,17 +61,13 @@ public class BSD_KSBJ_PinPai_delo extends Dialog  {
 		this.context=context;
 		but_pp_query= (RelativeLayout) view.findViewById(R.id.but_pp_query);
 		et_pp_query= (EditText) view.findViewById(R.id.et_pp_query);
+        iv_empty = (ImageView) view.findViewById(R.id.iv_empty);
         but_pp_query.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(et_pp_query.getText().toString()==null){
-					Toast.makeText(context,"请输入查询条件",Toast.LENGTH_SHORT).show();
-				}else{
-					queryPinpai();
-				}
+			    queryPinpai();
 			}
 		});
-
 
 		gridView= (GridView) view.findViewById(R.id.grid_pinpai);
 		gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,12 +78,12 @@ public class BSD_KSBJ_PinPai_delo extends Dialog  {
 
             }
         });
-        ksbjPpAdp=new BSD_KSBJ_PP_adp(context,data);
+		ksbjPpAdp = new BSD_KSBJ_PP_adp(context, data);
 		gridView.setAdapter(ksbjPpAdp);
         WindowManager.LayoutParams params =
                 this.getWindow().getAttributes();
-        params.width = (int) getContext().getResources().getDimension(R.dimen.x500);
-        params.height = (int) getContext().getResources().getDimension(R.dimen.y600) ;
+        params.width = (int) getContext().getResources().getDimension(R.dimen.qb_px_500);
+        params.height = DensityUtil.getScreenHeight((Activity) context);
         this.getWindow().setAttributes(params);
 		pinpai();
 	}
@@ -148,60 +149,57 @@ public class BSD_KSBJ_PinPai_delo extends Dialog  {
 	});
 }
 
-	/**
-	 * 根据名称进行模糊查询品牌
-	 */
-	public  void  queryPinpai(){
-		data.clear();
-		Log.i("mh", "刚进来时data的长度=="+data.size());
-		AbRequestParams params = new AbRequestParams();
-		params.put("pinpai",et_pp_query.getText().toString().trim());
-		Log.i("mh", "模糊查询：pinpai=="+et_pp_query.getText().toString().trim());
-		Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_PINPAI_1, params, new AbStringHttpResponseListener() {
-			@Override
-			public void onSuccess(int statusCode, String s) {
-				try {
-					JSONObject jsonObject = new JSONObject(s);
-					Log.i("mh", "模糊查询返回=="+s);
-					if(jsonObject.get("status").toString().equals("1")){
-						JSONArray jsonarray = jsonObject.getJSONArray("data");
-						for(int i=0;i<jsonarray.length();i++){
-							HashMap<String, String> map = new HashMap<>();
-							JSONObject json = jsonarray.getJSONObject(i);
-							Log.i("mh", "查询返回的i=="+i+"===名字："+ json.getString("chex_mc"));
-							map.put("bianhao",json.getString("chex_dm"));
-							map.put("chepainame",json.getString("chex_mc"));
-							data.add(map);
-						}
-						Log.i("mh", "长度=="+data.size());
-						Log.i("mh", "模糊查询返回结束");
-						ksbjPpAdp.notifyDataSetChanged();
-					}
+    /**
+     * 根据名称进行模糊查询品牌
+     */
+    public void queryPinpai() {
+        data.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("pinpai", et_pp_query.getText().toString().trim());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_PINPAI_1, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int statusCode, String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+//					if(jsonObject.get("status").toString().equals("1")){
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            HashMap<String, String> map = new HashMap<>();
+                            JSONObject json = jsonarray.getJSONObject(i);
+                            map.put("bianhao", json.getString("chex_dm"));
+                            map.put("chepainame", json.getString("chex_mc"));
+                            data.add(map);
+                        }
+                    }
+                    ksbjPpAdp.notifyDataSetChanged();
+                    if (data.size() > 0) {
+                        iv_empty.setVisibility(View.GONE);
+                    } else {
+                        iv_empty.setVisibility(View.VISIBLE);
+                    }
+                    DownJianPan.hide(context, et_pp_query);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
+            @Override
+            public void onStart() {
+            }
 
-			@Override
-			public void onStart() {
+            @Override
+            public void onFinish() {
+            }
 
-			}
-
-			@Override
-			public void onFinish() {
-
-			}
-
-			@Override
-			public void onFailure(int i, String s, Throwable throwable) {
-				Log.i("mh", "模糊查询失败了");
-				Toast.makeText(context,"网络不佳，请稍后重试",Toast.LENGTH_SHORT).show();
-			}
-		});
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(context, "网络不佳，请稍后重试", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
-	}
+    }
 
 
 }

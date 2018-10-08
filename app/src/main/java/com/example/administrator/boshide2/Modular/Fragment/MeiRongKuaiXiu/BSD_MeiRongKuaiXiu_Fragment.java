@@ -51,6 +51,7 @@ import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.f
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_xm_pop_entiy;
+import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
 import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
 import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.CustomDialog;
@@ -80,8 +81,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private static final String PARAM_KEY = "param_key";
     private LinearLayout bsd_lsbj_fanhui;
     private TextView tv_wxxmAdd, tv_wxllAdd;
-    private TextView[] arr_tv;// 图标的数组
-    private int[] arr_id_box = {R.id.tv_wxxm_add, R.id.tv_wxll_add};
     private ListView bsd_wxywdd_you_lv;
     private BSD_wxywdd_dap paiGongInfoAdapter;
     private List<HashMap<String, String>> data = new ArrayList<>();
@@ -244,6 +243,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private List<BSD_WeiXiuJieDan_XM_Entity> list_XM;
     private List<BSD_WeiXiuJieDan_CL_Entity> list_CL;
     private TextView tv_paigongAll;
+    private UpdateItemInfoDialog updateItemInfoDialog;
 
     public static BSD_MeiRongKuaiXiu_Fragment newInstance(String params) {
         BSD_MeiRongKuaiXiu_Fragment fragment = new BSD_MeiRongKuaiXiu_Fragment();
@@ -529,108 +529,21 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             public void onDelete(int reco_no, int position) {
                 deletePaigongInfo(reco_no, position);
             }
-        });
 
-        paiGongInfoAdapter.setUp_gongshi(new BSD_wxywdd_dap.UP_gongshi() {
             @Override
-            public void onYesClick(String gongshi, final int i) {
-
-                double gs = Double.parseDouble(gongshi);
-                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), "修改工时", 0, gs, "", "修改工时");
-                bsd_xiuGaiGongShi.show();
-                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick(double gongshi) {
-
-//                        BSD_GsDj_xiugai
-                        int a;
-                        Double je;
-                        Double gs;
-                        a = Integer.parseInt(listPGrenyuan.get(i).get("reco_no"));
-                        double aa = Double.parseDouble(listPGrenyuan.get(i).get("paig_khje"));
-                        je = aa;
-                        gs = gongshi;
-                        renyuangongshi = 0.0;
-                        for (int j = 0; j < listPGrenyuan.size(); j++) {
-                            renyuangongshi = renyuangongshi + Double.parseDouble(listPGrenyuan.get(j).get("paig_khgs"));
-                            if (j == i) {
-                                renyuangongshi = renyuangongshi - Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
-                            }
-                        }
-                        Log.i("cjn", "可以写入" + "查看总工时===" + Conts.wxxm_gs + "查看人员所有工时===" + renyuangongshi + "查看输入完工时" + gongshi);
-                        BigDecimal gsA = BigDecimal.valueOf(Conts.wxxm_gs);
-                        BigDecimal gsB = BigDecimal.valueOf(renyuangongshi);
-                        Double gsC = gsA.subtract(gsB).doubleValue();
-                        if (gsC >= gongshi) {
-                            Log.i("cjn", "成功工时");
-                            xiugaigongshi(a, je, gs);
-                            listPGrenyuan.get(i).put("paig_khgs", String.valueOf(gongshi));
-                            paiGongInfoAdapter.notifyDataSetChanged();
-                            bsd_xiuGaiGongShi.dismiss();
-                            renyuangongshi = renyuangongshi + gongshi;
-                        } else {
-                            Log.i("cjn", "总工时-集合所有工时小于输入工时不可以输入");
-                            Toast.makeText(getActivity(), "派工工时不能大于总工时", Toast.LENGTH_SHORT).show();
-                            bsd_xiuGaiGongShi.dismiss();
-                        }
-
-
-                    }
-                });
-
+            public void onUpdateGS(int position) {
+                updatePaigongGS(position);
             }
-        });
-        paiGongInfoAdapter.setUp_jiaqian(new BSD_wxywdd_dap.UP_jiaqian() {
-            @Override
-            public void onYesClick(String gongshi, final int i) {
-                double gs = Double.parseDouble(gongshi);
-                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), "修改价钱", 0, gs, "", "修改价钱");
-                bsd_xiuGaiGongShi.show();
-                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick(double gongshi) {
-                        int a;
-                        Double je;
-                        Double gs;
-                        a = Integer.parseInt(listPGrenyuan.get(i).get("reco_no"));
-                        double aa = Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
-                        je = gongshi;
-                        gs = aa;
-                        renyuangongshi = 0.0;
-                        for (int j = 0; j < listPGrenyuan.size(); j++) {
-                            renyuangongshi = (renyuangongshi + Double.parseDouble(listPGrenyuan.get(j).get("paig_khje")));
-                            if (j == i) {
-                                renyuangongshi = renyuangongshi - Double.parseDouble(listPGrenyuan.get(i).get("paig_khje"));
-                            }
-                        }
-                        Log.i("cjn", "可以写入" + "查看总金额===" + Conts.wxxm_je + "查看人员所有工时===" + renyuangongshi + "查看输入完工时" + gongshi);
 
-                        BigDecimal gsA = BigDecimal.valueOf(Conts.wxxm_je);
-                        BigDecimal gsB = BigDecimal.valueOf(renyuangongshi);
-                        Double gsC = gsA.subtract(gsB).doubleValue();
-                        if (gsC >= gongshi) {
-                            Log.i("cjn", "成功工时");
-                            xiugaigongshi(a, je, gs);
-                            listPGrenyuan.get(i).put("paig_khje", String.valueOf(gongshi));
-                            paiGongInfoAdapter.notifyDataSetChanged();
-                            bsd_xiuGaiGongShi.dismiss();
-                            renyuangongshi = renyuangongshi + gongshi;
-                        } else {
-                            Log.i("cjn", "总工时-集合所有工时小于输入工时不可以输入");
-                            Toast.makeText(getActivity(), "派工金额不能大于总金额", Toast.LENGTH_SHORT).show();
-                            bsd_xiuGaiGongShi.dismiss();
-                        }
-                    }
-                });
+            @Override
+            public void onUpdateJE(int position) {
+                updatePaigongJE(position);
             }
         });
         bsd_wxywdd_you_lv.setAdapter(paiGongInfoAdapter);
 
         tv_wxxmAdd = (TextView) view.findViewById(R.id.tv_wxxm_add);
         tv_wxllAdd = (TextView) view.findViewById(R.id.tv_wxll_add);
-        arr_tv = new TextView[2];
-        arr_tv[0] = tv_wxxmAdd;
-        arr_tv[1] = tv_wxllAdd;
         tv_wxxmAdd.setOnClickListener(this);
         tv_wxllAdd.setOnClickListener(this);
 
@@ -701,6 +614,84 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         bsd_mrkx_et_huiyuankahao.requestFocus();
     }
 
+    /**
+     * 修改派工金额
+     * @param position
+     */
+    private void updatePaigongJE(final int position) {
+        final int reco_no = Integer.parseInt(listPGrenyuan.get(position).get("reco_no"));
+        final double paig_khgs = Double.parseDouble(listPGrenyuan.get(position).get("paig_khgs"));
+        final double paig_khje = Double.parseDouble(listPGrenyuan.get(position).get("paig_khje"));
+        String reny_mc = listPGrenyuan.get(position).get("reny_mc");
+        updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PGJE, paig_khje, reny_mc);
+        updateItemInfoDialog.show();
+        updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
+            @Override
+            public void onYesClick(double gongshif) {
+                double jeNow = 0.0;
+                for (int i = 0; i < listPGrenyuan.size(); i++) {
+                    if (i != position) {
+                        jeNow = jeNow + Double.parseDouble(listPGrenyuan.get(i).get("paig_khje"));
+                    } else {
+                        jeNow = jeNow + gongshif;
+                    }
+                }
+                double jeAll = 0.0;
+                list_XM = BSD_wxxm.getList_XM();
+                for (BSD_WeiXiuJieDan_XM_Entity entity : list_XM) {
+                    jeAll = jeAll + entity.getWxxm_je();
+                }
+                BigDecimal gsAll = BigDecimal.valueOf(jeAll);
+                BigDecimal gsNow = BigDecimal.valueOf(jeNow);
+                Double gsRemain = gsAll.subtract(gsNow).doubleValue();
+                if (gsRemain >= 0) {
+                    updatePaigongInfoToDB(reco_no, gongshif, paig_khgs, position);
+                } else {
+                    Toast.makeText(getActivity(), "派工金额不能大于总金额", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /**
+     * 更新派工工时
+     * @param position
+     */
+    private void updatePaigongGS(final int position) {
+        final int reco_no = Integer.parseInt(listPGrenyuan.get(position).get("reco_no"));
+        final double paig_khgs = Double.parseDouble(listPGrenyuan.get(position).get("paig_khgs"));
+        final double paig_khje = Double.parseDouble(listPGrenyuan.get(position).get("paig_khje"));
+        String reny_mc = listPGrenyuan.get(position).get("reny_mc");
+        updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PGGS, paig_khgs, reny_mc);
+        updateItemInfoDialog.show();
+        updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
+            @Override
+            public void onYesClick(double gongshif) {
+                double gongshiNow = 0.0;
+                for (int i = 0; i < listPGrenyuan.size(); i++) {
+                    if (i != position) {
+                        gongshiNow = gongshiNow + Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
+                    } else {
+                        gongshiNow = gongshiNow + gongshif;
+                    }
+                }
+                double gongshiAll = 0.0;
+                list_XM = BSD_wxxm.getList_XM();
+                for (BSD_WeiXiuJieDan_XM_Entity entity : list_XM) {
+                    gongshiAll = gongshiAll + entity.getWxxm_khgs();
+                }
+                BigDecimal gsAll = BigDecimal.valueOf(gongshiAll);
+                BigDecimal gsNow = BigDecimal.valueOf(gongshiNow);
+                Double gsRemain = gsAll.subtract(gsNow).doubleValue();
+                if (gsRemain >= 0) {
+                    updatePaigongInfoToDB(reco_no, paig_khje, gongshif, position);
+                } else {
+                    Toast.makeText(getActivity(), "派工工时不能大于总工时", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     @Override
     public void initData() {
         url = new URLS();
@@ -718,6 +709,9 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         change_XM();
     }
 
+    /**
+     * 根据传入的参数，获取到单据中的信息
+     */
     private void getBillInfoFromParam() {
         JSONObject jsonObject = null;
         try {
@@ -2237,12 +2231,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -2297,21 +2289,23 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 修改工时
-     *
-     * @param id
+     *  @param reco_no
      * @param je
      * @param gs
+     * @param position
      */
-    public void xiugaigongshi(int id, double je, double gs) {
+    public void updatePaigongInfoToDB(int reco_no, final double je, final double gs, final int position) {
         AbRequestParams params = new AbRequestParams();
-        params.put("id", id);
+        params.put("id", reco_no);
         params.put("je", je + "");
         params.put("gs", gs + "");
-        Log.i("aaaaa", "je==" + je + ",///////gs==" + gs);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_GsDj_xiugai, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                Log.i("cjn", "成功的显示" + s);
+                listPGrenyuan.get(position).put("paig_khgs", gs + "");
+                listPGrenyuan.get(position).put("paig_khje", je + "");
+                paiGongInfoAdapter.notifyDataSetChanged();
+                updateItemInfoDialog.dismiss();
             }
 
             @Override
@@ -2326,8 +2320,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-
-                Log.i("cjn", "失败的显示" + s);
+                Toast.makeText(getActivity(), "修改失败", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -2385,12 +2378,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -2398,8 +2389,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
-
-
     }
 
 
@@ -2561,16 +2550,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 //                   index=1;
 //                }
 //        Log.i("wxcl", "change方法=="+f);
-    }
-
-
-    //选中项的变色
-    private void checkHighLight(int index) {
-        for (int i = 0; i < arr_tv.length; i++) {
-            arr_tv[i].setTextColor(this.getResources().getColor(R.color.transparent_background));
-        }
-        arr_tv[index].setTextColor(this.getResources().getColor(R.color.bsd_xz_yes));
-
     }
 
     /**
