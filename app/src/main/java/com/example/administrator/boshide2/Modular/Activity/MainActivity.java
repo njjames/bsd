@@ -878,10 +878,11 @@ public class MainActivity extends FragmentActivity {
 
     /**
      * 显示手动输入的Fragment
+     * @param billType
      */
-    public void showManualInputFragment() {
+    public void showManualInputFragment(String billType) {
         DownJianPan.DJP(this);
-        change(new ManualInputFragment());
+        change(ManualInputFragment.newInstance(billType));
     }
 
     /**
@@ -986,5 +987,14 @@ public class MainActivity extends FragmentActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK)
             return true;//不执行父类点击事件
         return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
+    }
+
+    /**
+     * 显示美容快修单历史详情
+     * @param params
+     */
+    public void showMrkxXqFragment(String params) {
+        DownJianPan.DJP(this);
+        change(BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment.newInstance(params));
     }
 }

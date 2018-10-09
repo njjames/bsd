@@ -13,12 +13,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -103,7 +100,7 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
         bsd_im_sdsr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).showManualInputFragment();
+                ((MainActivity) getActivity()).showManualInputFragment(Conts.BILLTYPE_KSBJ);
             }
         });
         bsd_im_zdsb.setOnClickListener(new View.OnClickListener() {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.view.pullview.AbPullToRefreshView;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
@@ -46,7 +47,6 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
     private int pageIndex = 1;//分页
     private EditText et_wx_chepai;
     private TextView tv_wx_chaxun;
-    private String wx_chepai;
     private LinearLayout relat_guwen;
     //转圈
     private Dialog mWeiboDialog;
@@ -62,6 +62,7 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
     private LinearLayout bsd_lsbj_fanhui;
     private TextView title;
     private TextView footerText;
+    private String cheNo = ""; // 设置为成员变量，用来保存查询条件，否则查询条件会丢失
 
     @Override
     protected int getLayoutId() {
@@ -89,11 +90,13 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
         });
 
         wx_rfview = (AbPullToRefreshView) view.findViewById(R.id.wx_rfview);
+        // 查询
         tv_wx_chaxun = (TextView) view.findViewById(R.id.tv_wx_chaxun);
         tv_wx_chaxun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pageIndex = 1;
+                cheNo = et_wx_chepai.getText().toString();
                 searchWXLS();
             }
         });
@@ -105,9 +108,7 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ((MainActivity) getActivity()).setWork_no(data.get(i).getWork_no());
-                ((MainActivity) getActivity()).setData(data.get(i));
-                ((MainActivity) getActivity()).upmrkx_xq();
+                ((MainActivity) getActivity()).showMrkxXqFragment(JSON.toJSON(data.get(i)).toString());
             }
         });
 
@@ -145,7 +146,7 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
         params.put("pageNumber", pageIndex);
-        params.put("che_no", et_wx_chepai.getText().toString());
+        params.put("che_no", cheNo);
         params.put("type", 1);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_LSWX, params, new AbStringHttpResponseListener() {
             @Override

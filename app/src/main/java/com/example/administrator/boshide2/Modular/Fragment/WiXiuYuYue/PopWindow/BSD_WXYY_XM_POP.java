@@ -128,24 +128,6 @@ public class BSD_WXYY_XM_POP extends PopupWindow implements AbPullToRefreshView.
         this.update();
 // 设置SelectPicPopupWindow弹出窗体动画效果
 
-        bsd_tou = (RelativeLayout) contentView.findViewById(R.id.bsd_tou);
-        bsd_tou.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (BSD_WXYY_XM_POP.this != null)
-                    BSD_WXYY_XM_POP.this.dismiss();
-                gb.guanbi();
-            }
-        });
-        bsd_di = (RelativeLayout) contentView.findViewById(R.id.bsd_di);
-        bsd_di.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (BSD_WXYY_XM_POP.this != null)
-                    BSD_WXYY_XM_POP.this.dismiss();
-                gb.guanbi();
-            }
-        });
 //        bsd_wexyy_tjxiangmu = (RelativeLayout) contentView.findViewById(R.id.bsd_wexyy_tjxiangmu);
 //        bsd_wexyy_tjxiangmu.setOnClickListener(this);
         bsd_lv = (ListView) contentView.findViewById(R.id.bsd_lv);

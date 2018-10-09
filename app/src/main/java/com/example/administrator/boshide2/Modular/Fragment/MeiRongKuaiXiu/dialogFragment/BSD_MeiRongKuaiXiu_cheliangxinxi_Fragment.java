@@ -57,7 +57,8 @@ import java.util.Map;
  */
 
 public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
-    private static final String PARAM_KEY = "param_key";
+    private static final String PARAM_BILLTYPE = "param_billtype";
+    private static final String PARAM_BILLNO = "param_billno";
     private MainActivity mainActivity;
     private TextView confirm;
     private TextView cancel;
@@ -125,17 +126,20 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     View view;
     private ImageView isNewCar;
     private boolean isnew;
-    private String param;
+    private String paramBillType;
+    private String paramBillNo;
 
     /**
      * 初始化
-     * @param params  维修单号
+     * @param billType  单据类型
+     * @param billNo  维修单号
      * @return
      */
-    public static BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment newInstance(String params) {
+    public static BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment newInstance(String billType, String billNo) {
         BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment dialogFragment = new BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment();
         Bundle bundle = new Bundle();
-        bundle.putString(PARAM_KEY, params);
+        bundle.putString(PARAM_BILLTYPE, billType);
+        bundle.putString(PARAM_BILLNO, billNo);
         dialogFragment.setArguments(bundle);
         return dialogFragment;
     }
@@ -143,7 +147,8 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        param = getArguments().getString(PARAM_KEY);
+        paramBillType = getArguments().getString(PARAM_BILLTYPE);
+        paramBillNo = getArguments().getString(PARAM_BILLNO);
     }
 
     @Override
@@ -493,7 +498,7 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             @Override
             public void onSuccess(int code, String data) {
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-                showDraftBill(param);
+                showDraftBill(paramBillNo);
             }
 
             @Override
@@ -522,29 +527,37 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
      * @param billNo
      */
     private void showDraftBill(String billNo) {
-        if ("mrkx".equals(type)) {
-            // 去获取草稿单句
-            data_mrkx(Conts.cp, billNo);
-//            //打开美容快修单据
-//            mainActivity.upBSD_mrkx();
+        switch (paramBillType) {
+            case Conts.BILLTYPE_MRKX:
+                data_mrkx(Conts.cp, billNo);
+                break;
+            case Conts.BILLTYPE_KSBJ:
+                data_ksbj(Conts.cp, view);
+                break;
         }
-        if ("ksbj".equals(type)) {
-            //打开快速单据
-            data_ksbj(Conts.cp, view);
-        }
-        if ("wxyy".equals(type)) {
-            //打开维修预约单据
-            data_wxyy(Conts.cp, view);
-        }
-        if ("wxjd".equals(type)) {
-            //打开维修接待单据
-            data_wxjd(Conts.cp, view);
-        }
-        if ("wxywdd".equals(type)) {
-            Log.i("wxywdd", "走wxywdd了");
-            //打开维修业务调度单据
-            ((MainActivity) getActivity()).upwxywdd(view);
-        }
+//        if ("mrkx".equals(paramBillType)) {
+//            // 去获取草稿单据
+//            data_mrkx(Conts.cp, billNo);
+////            //打开美容快修单据
+////            mainActivity.upBSD_mrkx();
+//        }
+//        if ("ksbj".equals(type)) {
+//            //打开快速单据
+//            data_ksbj(Conts.cp, view);
+//        }
+//        if ("wxyy".equals(type)) {
+//            //打开维修预约单据
+//            data_wxyy(Conts.cp, view);
+//        }
+//        if ("wxjd".equals(type)) {
+//            //打开维修接待单据
+//            data_wxjd(Conts.cp, view);
+//        }
+//        if ("wxywdd".equals(type)) {
+//            Log.i("wxywdd", "走wxywdd了");
+//            //打开维修业务调度单据
+//            ((MainActivity) getActivity()).upwxywdd(view);
+//        }
         dismiss();
     }
 
@@ -596,13 +609,11 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     /*
     *根据车牌获取数据，打开快速报价
     */
-    public void data_ksbj(final String carp, final View view) {
+    public void data_ksbj(final String cardNo, final View view) {
         list_ksbj.clear();
-        mWeiboDialog = WeiboDialogUtils.createLoadingDialog
-                (getActivity(), "加载中...");
-
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("pai", carp);
+        params.put("pai", cardNo);
         params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_jbxx, params, new AbStringHttpResponseListener() {
@@ -660,11 +671,11 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                            mainActivity.upksbj(view);
                         }
                         Conts.zt = 1;
-                        Conts.cp = carp;
+                        Conts.cp = cardNo;
 
                     } else if (jsonObject.get("total").toString().equals("0")) {
                         ((MainActivity) getActivity()).upksbj(view);
-                        Conts.cp = carp;
+                        Conts.cp = cardNo;
                         Conts.zt = 0;
 
                     } else {
@@ -674,7 +685,7 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
 //
                         mainActivity.upksbj(view);
                         Conts.zt = 1;
-                        Conts.cp = carp;
+                        Conts.cp = cardNo;
                     }
                     //在这里请求
 

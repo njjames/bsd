@@ -75,8 +75,6 @@ public class BSD_WeiXiuXiangQing_Fragment extends Fragment {
         url = new URLS();
         // data();
         danhao = ((MainActivity) getActivity()).getWork_no();
-
-        bsdtext(view);
         init(view);
         lswx_wxxm();
         lswx_wxcl();
@@ -138,7 +136,6 @@ public class BSD_WeiXiuXiangQing_Fragment extends Fragment {
         });
         tv_wxxq_wxcl_jine = (TextView) view.findViewById(R.id.tv_wxxq_wxcl_jine);
         tv_xq_xm = (TextView) view.findViewById(R.id.tv_xq_xm);
-        tv_xq_zj = (TextView) view.findViewById(R.id.tv_xq_zj);
         beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
 
 
@@ -392,13 +389,5 @@ public class BSD_WeiXiuXiangQing_Fragment extends Fragment {
             }
         });
 
-    }
-
-    TextView bsd_01_text;
-
-    public void bsdtext(View view) {
-        bsd_01_text = (TextView) view.findViewById(R.id.bsd_13_text);
-        bsd_01_text.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
-                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
     }
 }

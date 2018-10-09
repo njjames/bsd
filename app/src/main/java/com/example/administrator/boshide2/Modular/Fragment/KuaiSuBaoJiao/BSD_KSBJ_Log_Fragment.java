@@ -109,7 +109,7 @@ public class BSD_KSBJ_Log_Fragment extends BaseFragment {
         bsd_im_sdsr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).showManualInputFragment();
+                ((MainActivity) getActivity()).showManualInputFragment(Conts.BILLTYPE_KSBJ);
             }
         });
 

@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,6 +44,7 @@ import java.util.List;
 public class ManualInputFragment extends BaseFragment {
     public static final String INPUT_LICENSE_COMPLETE = "me.kevingo.licensekeyboard.input.comp";
     public static final String INPUT_LICENSE_KEY = "LICENSE";
+    private static final String PARAM_KEY = "param_key";
 
     private EditText inputbox1;
     private EditText inputbox2;
@@ -65,6 +67,21 @@ public class ManualInputFragment extends BaseFragment {
     private int currentEditText;//当前光标
     private TextView footerText;
     private TextView title;
+    private String billType; // 单据类型
+
+    public static ManualInputFragment newInstance(String type) {
+        ManualInputFragment fragment = new ManualInputFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY, type);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        billType = getArguments().getString(PARAM_KEY);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -161,7 +178,7 @@ public class ManualInputFragment extends BaseFragment {
                     boolean canUsedType = jsonObject.getBoolean("data");
                     if (canUsedType) {
                         //跳转到编辑车辆、客户信息对话框
-                        BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance("")
+                        BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(billType,"")
                                 .show(getFragmentManager(), "dialog_fragment");
                     } else {   // 这种情况是有这个车，但是没有权限
                         showTipsDialog("此车已存在，但是您没有查询权限");

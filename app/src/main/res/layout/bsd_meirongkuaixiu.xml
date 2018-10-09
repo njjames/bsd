@@ -53,12 +53,12 @@
                         android:background="@null"
                         android:text=""
                         android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/bsd_mrkx_chaxin"
-                            android:text="读取"
-                            style="@style/myeditreadbtnstyle" />
+                    <TextView
+                        android:id="@+id/bsd_mrkx_chaxin"
+                        android:text="读取"
+                        style="@style/myeditreadbtnstyle" />
                 </LinearLayout>
 
 
@@ -370,7 +370,7 @@
                 <TextView
                     android:id="@+id/tv_repairhistory"
                     android:text="历史维修"
-                    android:layout_weight="0.5"
+                    android:layout_weight="1"
                     style="@style/myeditnormalbtnstyle"/>
 
                 <TextView
@@ -383,18 +383,18 @@
                 <TextView
                     android:id="@+id/bsd_mrkx_cundang"
                     android:text="存档"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.8"
                     style="@style/myeditnormalbtnstyle"/>
 
                 <TextView
                     android:id="@+id/bsd_zadd_wg"
                     android:text="结算"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.8"
                     style="@style/myeditnormalbtnstyle"/>
 
                 <LinearLayout
                     style="@style/myeditlinearlayoutstyle"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1"
                     android:layout_marginLeft="@dimen/qb_px_8">
 
                     <TextView

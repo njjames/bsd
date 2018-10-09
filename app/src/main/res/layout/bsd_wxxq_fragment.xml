@@ -26,7 +26,7 @@
                 android:id="@+id/relativeLayout7"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_34"
+                android:layout_height="@dimen/qb_px_32"
                 android:layout_weight="1.5">
 
                 <TextView
@@ -43,8 +43,8 @@
                 android:id="@+id/relativeLayout9"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_34"
-                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_8"
                 android:layout_weight="1">
 
                 <TextView
@@ -61,8 +61,8 @@
                 android:id="@+id/relativeLayout10"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_34"
-                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_8"
                 android:layout_weight="1">
 
                 <TextView
@@ -79,8 +79,8 @@
                 android:id="@+id/relativeLayout11"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_34"
-                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_8"
                 android:layout_weight="1">
 
                 <TextView
@@ -97,8 +97,8 @@
                 android:id="@+id/relativeLayout12"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_34"
-                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_8"
                 android:layout_weight="1">
 
                 <TextView
@@ -123,8 +123,8 @@
                 android:id="@+id/relativeLayout13"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_34"
-                android:layout_weight="2">
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_weight="1.8">
 
                 <TextView
                     android:id="@+id/textView13"
@@ -140,9 +140,9 @@
                 android:id="@+id/relativeLayout14"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_34"
-                android:layout_marginLeft="@dimen/qb_px_10"
-                android:layout_weight="2">
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_8"
+                android:layout_weight="1.5">
 
                 <TextView
                     android:id="@+id/textView14"
@@ -158,8 +158,8 @@
                 android:id="@+id/relativeLayout15"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_34"
-                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_8"
                 android:layout_weight="2">
 
                 <TextView
@@ -176,15 +176,14 @@
                 android:id="@+id/relativeLayout16"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_34"
-                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_8"
                 android:layout_weight="1.5">
 
                 <CheckBox
                     android:id="@+id/bsd_lswx_jiesuanbiaozhi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/qb_px_4"
                     android:clickable="false" />
 
                 <TextView
@@ -196,9 +195,9 @@
                 android:id="@+id/relativeLayout17"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_34"
-                android:layout_marginLeft="@dimen/qb_px_10"
-                android:layout_weight="1.5">
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_8"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textView17"
@@ -207,6 +206,22 @@
 
                 <TextView
                     android:id="@+id/bsd_lswx_buxianjin"
+                    style="@style/myinfovaluestyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/myconditionboxstyle"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_8"
+                android:layout_weight="1">
+
+                <TextView
+                    style="@style/myinfonamestyle"
+                    android:text="合计:" />
+
+                <TextView
+                    android:id="@+id/tv_total_je"
                     style="@style/myinfovaluestyle" />
             </LinearLayout>
 
@@ -291,10 +306,19 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tv_wxxm_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="(共0条记录)"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="@dimen/qb_px_4"/>
+
+                    <TextView
                         android:id="@+id/tv_xq_xm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/qb_px_10"
+                        android:layout_marginRight="@dimen/qb_px_10"
                         android:text="元"
                         android:textColor="#F7714C"
                         android:textSize="16sp" />
@@ -372,10 +396,19 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tv_wxcl_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="(共0条记录)"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="@dimen/qb_px_4"/>
+
+                    <TextView
                         android:id="@+id/tv_wxxq_wxcl_jine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/qb_px_10"
+                        android:layout_marginRight="@dimen/qb_px_10"
                         android:text="元"
                         android:textColor="#F7714C"
                         android:textSize="16sp" />

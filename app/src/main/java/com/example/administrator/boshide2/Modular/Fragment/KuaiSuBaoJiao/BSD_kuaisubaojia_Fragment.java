@@ -77,7 +77,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
     // 切换碎片页
     LinearLayout bsd_lsbj;
     TextView tv_shibie, tv_chepai, tv_wxxm_money, tv_wxcl_money;//自動識別,维修项目金额，维修材料金额
-    RelativeLayout rea_pinpai;
+    LinearLayout rea_pinpai;
     //当前选中的列表项位置
     int clickPsition = -1;
     private Dialog mWeiboDialog;
@@ -105,8 +105,8 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
     BSD_WXYY_XM_POP bsd_ksbj_xm_pop;
     BSD_KSBJ_CL_POP bsd_ksbj_cl_pop;
 
-    RelativeLayout bsd_ksbj_cd;
-    RelativeLayout bsd_ksbj_jc;
+    TextView bsd_ksbj_cd;
+    TextView bsd_ksbj_jc;
     public int cd_or_jc;
     QueRen queRen;
     @SuppressLint("HandlerLeak")
@@ -131,7 +131,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
     String cxbianhao;
     String pinpaiming;
     //这是车系
-    RelativeLayout bsd_ksbj_rl_cx;
+    LinearLayout bsd_ksbj_rl_cx;
     List<Map<String, String>> listjbcx = new ArrayList<Map<String, String>>();
     private List<CustemObject> nameList = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter;
@@ -139,14 +139,14 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 
     String chexiid;
     //车组
-    RelativeLayout bsd_ksbj_rl_cz;
+    LinearLayout bsd_ksbj_rl_cz;
     List<Map<String, String>> listjbcz = new ArrayList<Map<String, String>>();
     String chezuid;
     private List<CustemObject> nameList1 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter1;
     private SpinerPopWindow mSpinerPopWindow1;
     //车型
-    RelativeLayout bsd_ksbj_chexing;
+    LinearLayout bsd_ksbj_chexing;
     List<Map<String, String>> listjbchexing = new ArrayList<Map<String, String>>();
     String chexingid;
     private List<CustemObject> nameList2 = new ArrayList<CustemObject>();
@@ -158,12 +158,10 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 
 
     //车辆信息、历史维修、历史维修建议
-    private  RelativeLayout  bsd_ksbj_clxx,bsd_ksbj_lswxjy,bsd_ksbj_lswx;
-
-
+    private  TextView  bsd_ksbj_clxx,bsd_ksbj_lswxjy,bsd_ksbj_lswx;
 
     //工时费率
-    RelativeLayout bsd_ksbj_rl_gsfl;
+    LinearLayout bsd_ksbj_rl_gsfl;
     TextView bsd_ksbj_tv_gsfl;
     List<Map<String, String>> listgslv = new ArrayList<Map<String, String>>();
 
@@ -174,10 +172,10 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
     String gongshifeili_id;
 
     //保养数据
-    RelativeLayout bsd_ksbj_rl_gcsj;//日期选择
+    LinearLayout bsd_ksbj_rl_gcsj;//日期选择
     TimePickerShow timePickerShow;
     TextView bsd_ksbj_tv_gcsj;
-    RelativeLayout bsd_ksbj_rl_bycx;//保养查询
+    TextView bsd_ksbj_rl_bycx;//保养查询
     RelativeLayout bsd_rl_money;//点击
 
     URLS url;
@@ -188,7 +186,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
     //根据VIN返回车型信息
     List<Map<String, String>> listvincx = new ArrayList<>();
     String   cxnm;      //车型内码
-    RelativeLayout  rl_duqu;
+    TextView  rl_duqu;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bsd_ksbj_fragment, null);
@@ -203,7 +201,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
         inin(view);
 
         bsdtext(view);
-        POP(view);
+//        POP(view);
 
         return view;
     }
@@ -602,10 +600,9 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 
 
     public void inin(View view) {
-        bsd_ksbj_rl_bycx = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_rl_bycx);
-
+        bsd_ksbj_rl_bycx = (TextView) view.findViewById(R.id.bsd_ksbj_rl_bycx);
         bsd_ksbj_tv_gcsj = (TextView) view.findViewById(R.id.bsd_ksbj_tv_gcsj);
-        bsd_ksbj_rl_gcsj = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_rl_gcsj);
+        bsd_ksbj_rl_gcsj = (LinearLayout) view.findViewById(R.id.bsd_ksbj_rl_gcsj);
         bsd_ksbj_rl_gcsj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -615,7 +612,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 
 
         //工时费率
-        bsd_ksbj_rl_gsfl = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_rl_gsfl);
+        bsd_ksbj_rl_gsfl = (LinearLayout) view.findViewById(R.id.bsd_ksbj_rl_gsfl);
         bsd_ksbj_rl_gsfl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -629,27 +626,9 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
         tv_zong_money = (TextView) view.findViewById(R.id.tv_zong_money);
         tv_zong_money3 = (TextView) view.findViewById(R.id.tv_zong_money3);
         tv_zong_money1 = (TextView) view.findViewById(R.id.tv_zong_money1);
-        bsd_rl_money = (RelativeLayout) view.findViewById(R.id.bsd_rl_money);
-        bsd_rl_money.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), "优惠金额",0, c,"", "修改价钱");
-                bsd_xiuGaiGongShi.show();
-                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick(double gongshi) {
-                        tv_zong_money1.setText("" + gongshi);
-//                        zj();
-                        bsd_xiuGaiGongShi.dismiss();
-                    }
-                });
-
-            }
-        });
-
 
         //存档操作
-        bsd_ksbj_cd = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_cd);
+        bsd_ksbj_cd = (TextView) view.findViewById(R.id.bsd_ksbj_cd);
         bsd_ksbj_cd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -665,7 +644,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
             }
         });
         //进厂操作
-        bsd_ksbj_jc = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_jc);
+        bsd_ksbj_jc = (TextView) view.findViewById(R.id.bsd_ksbj_jc);
         bsd_ksbj_jc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -687,51 +666,6 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
         listxm = (ListView) view.findViewById(R.id.bsd_lv);
         //维修材料
         listcl = (ListView) view.findViewById(R.id.bsd_lv1);
-        scrollview = (ScrollView) view.findViewById(R.id.scrollview);
-
-        listcl.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                try {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            scrollview.requestDisallowInterceptTouchEvent(true); //禁止scrollview拦截事件，让listview可滑动
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            scrollview.requestDisallowInterceptTouchEvent(false);
-                            break;
-                        default:
-                            break;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return false;
-            }
-        });
-
-
-        //解决滑动问题。
-        listxm.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                try {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            scrollview.requestDisallowInterceptTouchEvent(true); //禁止scrollview拦截事件，让listview可滑动
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            scrollview.requestDisallowInterceptTouchEvent(false);
-                            break;
-                        default:
-                            break;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return false;
-            }
-        });
         adpxm = new BSD_wxxm_adp(getActivity());
         adpxm.setUp_ksbj_gs(new BSD_wxxm_adp.Up_ksbj_gs() {
             @Override
@@ -831,7 +765,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
         bsd_ksbj_dh = (TextView) view.findViewById(R.id.bsd_ksbj_dh);
         bsd_ksbj_vin = (TextView) view.findViewById(R.id.bsd_ksbj_vin);
         //读取vin码
-        rl_duqu = (RelativeLayout) view.findViewById(R.id.tv_readvin);
+        rl_duqu = (TextView) view.findViewById(R.id.tv_readvin);
         rl_duqu .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -863,10 +797,10 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 //        relat_cx = (RelativeLayout) view.findViewById(R.id.relat_cx);
         //品牌
         bsd_ksbj_pinPai_delo = new BSD_KSBJ_PinPai_delo(getActivity());
-        rea_pinpai = (RelativeLayout) view.findViewById(R.id.rea_pinpai);
-        bsd_ksbj_rl_cx = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_rl_cx);
-        bsd_ksbj_rl_cz = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_rl_cz);
-        bsd_ksbj_chexing = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_chexing);
+        rea_pinpai = (LinearLayout) view.findViewById(R.id.rea_pinpai);
+        bsd_ksbj_rl_cx = (LinearLayout) view.findViewById(R.id.bsd_ksbj_rl_cx);
+        bsd_ksbj_rl_cz = (LinearLayout) view.findViewById(R.id.bsd_ksbj_rl_cz);
+        bsd_ksbj_chexing = (LinearLayout) view.findViewById(R.id.bsd_ksbj_chexing);
         //品牌监听，弹出框
         rea_pinpai.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -959,7 +893,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
         });
 
         //车辆信息、历史维修、历史维修建议
-        bsd_ksbj_clxx = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_clxx);
+        bsd_ksbj_clxx = (TextView) view.findViewById(R.id.bsd_ksbj_clxx);
         bsd_ksbj_clxx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -971,7 +905,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 
             }
         });
-        bsd_ksbj_lswx= (RelativeLayout) view.findViewById(R.id.bsd_ksbj_lswx);
+        bsd_ksbj_lswx= (TextView) view.findViewById(R.id.bsd_ksbj_lswx);
         bsd_ksbj_lswx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -981,7 +915,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
                         show(getFragmentManager(),"mrkx_lswx");
             }
         });
-        bsd_ksbj_lswxjy= (RelativeLayout) view.findViewById(R.id.bsd_ksbj_lswxjy);
+        bsd_ksbj_lswxjy= (TextView) view.findViewById(R.id.bsd_ksbj_lswxjy);
         bsd_ksbj_lswxjy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

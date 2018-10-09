@@ -1,11 +1,8 @@
 package com.example.administrator.boshide2.Modular.Fragment.LiShiKuaiXiu;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,6 +15,7 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
+import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiWeiXiu.Entity.BSD_LSWX_ety;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuXiangQing.Adapter.BSD_WXXQ_CL_adp;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuXiangQing.Adapter.BSD_WXXQ_XM_adp;
@@ -36,10 +34,10 @@ import java.util.List;
  * 历史维修详情
  */
 
-public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends Fragment {
+public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends BaseFragment {
+    private static final String PARAM_KEY = "param_key";
     private ListView listViewXM;//维修项目
     private ListView listViewCL;//维修材料
-    private RelativeLayout beijing;
     private LinearLayout bsd_lsbj_fanhui;
     //维修项目
     private BSD_WXXQ_XM_adp adp_xm;
@@ -50,10 +48,8 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends Fragment {
 
     private TextView tv_clZje;
     private TextView tv_xmZje;
-    private String danhao;
     private int page = 1;
     private URLS url;
-    private BSD_LSWX_ety entatydata;
 
     private TextView bsd_lswx_danhao;//维修单号
     private TextView bsd_lswx_chepaihao;//车牌号
@@ -65,41 +61,39 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends Fragment {
     private TextView bsd_lswx_chuzhikahao;//储值卡号
     private CheckBox bsd_lswx_jiesuanbiaozhi;//储值卡结算标志
     private TextView bsd_lswx_buxianjin;//补现金
+    private String params;
+    private BSD_LSWX_ety billEntiy;
+    private TextView title;
+    private TextView footerText;
+    private TextView tv_wxclCount;
+    private TextView tv_wxxmCount;
+    private TextView tv_totalJE;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bsd_wxxq_fragment, null);
-        url = new URLS();
-        // data();
-        danhao = ((MainActivity) getActivity()).getWork_no();
-        init(view);
-        lswx_wxxm();
-        lswx_wxcl();
-        return view;
+    private double xmZJe = 0;
+    private double clZje = 0;
+
+
+    public static BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment newInstance(String params) {
+        BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment fragment = new BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY, params);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        data111();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        params = getArguments().getString(PARAM_KEY);
     }
 
-    public void data111(){
-        bsd_lswx_danhao.setText(entatydata.getWork_no());
-        bsd_lswx_chepaihao.setText(entatydata.getChe_no());
-        bsd_lswx_kehu.setText(entatydata.getKehu_mc());
-        bsd_lswx_riqi.setText(entatydata.getXche_jsrq());
-        bsd_lswx_dianhua.setText(entatydata.getKehu_dh());
-        bsd_lswx_huiyuankahao.setText(entatydata.getCard_no());
-        bsd_lswx_huiyuankazhifujine.setText(entatydata.getZhifu_card_je());
-        bsd_lswx_chuzhikahao.setText(entatydata.getZhifu_card_no());
-        bsd_lswx_jiesuanbiaozhi.setChecked(entatydata.isFlag_cardjs());
-        bsd_lswx_buxianjin.setText(entatydata.getZhifu_card_xj());
-
+    @Override
+    protected int getLayoutId() {
+        return R.layout.bsd_wxxq_fragment;
     }
-    private void init(View view) {
-        entatydata = new BSD_LSWX_ety();
-        entatydata = ((MainActivity) getActivity()).getData();
+
+    @Override
+    public void initView() {
         bsd_lswx_danhao = (TextView) view.findViewById(R.id.bsd_lswx_danhao);
         bsd_lswx_chepaihao = (TextView) view.findViewById(R.id.bsd_lswx_chepaihao);
         bsd_lswx_kehu = (TextView) view.findViewById(R.id.bsd_lswx_kehu);
@@ -128,12 +122,52 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends Fragment {
         });
         tv_clZje = (TextView) view.findViewById(R.id.tv_wxxq_wxcl_jine);
         tv_xmZje = (TextView) view.findViewById(R.id.tv_xq_xm);
-        beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
 
-        //滑动
-//        scrollview = (ScrollView) view.findViewById(R.id.scrollview);
-        //解决滑动问题
-//        huadong();
+        title = (TextView) view.findViewById(R.id.tv_title);
+        footerText = (TextView) view.findViewById(R.id.tv_footertext);
+        tv_wxxmCount = (TextView) view.findViewById(R.id.tv_wxxm_count);
+        tv_wxclCount = (TextView) view.findViewById(R.id.tv_wxcl_count);
+        tv_totalJE = (TextView) view.findViewById(R.id.tv_total_je);
+    }
+
+    @Override
+    public void initData() {
+        url = new URLS();
+        title.setText("维修详情");
+        footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
+                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
+        getBillInfoFromParam();
+        bsd_lswx_danhao.setText(billEntiy.getWork_no());
+        bsd_lswx_chepaihao.setText(billEntiy.getChe_no());
+        bsd_lswx_kehu.setText(billEntiy.getKehu_mc());
+        bsd_lswx_riqi.setText(billEntiy.getXche_jsrq());
+        bsd_lswx_dianhua.setText(billEntiy.getKehu_dh());
+        bsd_lswx_huiyuankahao.setText(billEntiy.getCard_no());
+        bsd_lswx_huiyuankazhifujine.setText(billEntiy.getZhifu_card_je());
+        bsd_lswx_chuzhikahao.setText(billEntiy.getZhifu_card_no());
+        bsd_lswx_jiesuanbiaozhi.setChecked(billEntiy.isFlag_cardjs());
+        bsd_lswx_buxianjin.setText(billEntiy.getZhifu_card_xj());
+        lswx_wxxm();
+        lswx_wxcl();
+    }
+
+    private void getBillInfoFromParam() {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(params);
+            billEntiy = new BSD_LSWX_ety();
+            billEntiy.setWork_no(jsonObject.getString("work_no"));
+            billEntiy.setChe_no(jsonObject.getString("che_no"));
+            billEntiy.setKehu_mc(jsonObject.getString("kehu_mc"));
+            billEntiy.setXche_jsrq(jsonObject.getString("xche_jsrq"));
+            billEntiy.setKehu_dh(jsonObject.getString("kehu_dh"));
+            billEntiy.setCard_no(jsonObject.getString("card_no"));
+            billEntiy.setZhifu_card_je(jsonObject.getString("zhifu_card_je"));
+            billEntiy.setFlag_IsCheck(jsonObject.getBoolean("flag_cardjs"));
+            billEntiy.setZhifu_card_xj(jsonObject.getString("zhifu_card_xj"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -141,7 +175,7 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends Fragment {
      */
     private void lswx_wxxm() {
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", danhao);
+        params.put("work_no", billEntiy.getWork_no());
         params.put("pageNumber", page);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_lswx_wxxm, params, new AbStringHttpResponseListener() {
             @Override
@@ -187,34 +221,33 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends Fragment {
     /**
      * 项目的金额
      */
-    double b = 0;
-
     public void xq_xm() {
-        double xmZje = 0;
+        tv_wxxmCount.setText("(共" + xmLists.size() + "条记录)");
+        double _xmZje = 0;
         for (int i = 0; i < xmLists.size(); i++) {
-            xmZje = xmZje + Double.parseDouble((xmLists.get(i).getWxxm_je()));
+            _xmZje = _xmZje + Double.parseDouble((xmLists.get(i).getWxxm_je()));
         }
-        tv_xmZje.setText(xmZje + "元");
-        b = xmZje;
+        tv_xmZje.setText(_xmZje + "元");
+        xmZJe = _xmZje;
         zongjia();
     }
 
     /**
      * 材料的金额
      */
-    double a = 0;
-
     public void xq_cl() {
-        double clZje = 0;
+        tv_wxclCount.setText("(共" + clLists.size() + "条记录)");
+        double _clZje = 0;
         for (int i = 0; i < clLists.size(); i++) {
-            clZje = clZje + (clLists.get(i).getPeij_dj() * clLists.get(i).getPeij_sl());
+            _clZje = _clZje + (clLists.get(i).getPeij_dj() * clLists.get(i).getPeij_sl());
         }
-        tv_clZje.setText(clZje + "元");
-        a = clZje;
+        tv_clZje.setText(_clZje + "元");
+        clZje = _clZje;
         zongjia();
     }
 
     public void zongjia() {
+        tv_totalJE.setText(clZje + xmZJe + "");
     }
 
     /**
@@ -222,7 +255,7 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends Fragment {
      */
     private void lswx_wxcl() {
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", danhao);
+        params.put("work_no", billEntiy.getWork_no());
         params.put("pageNumber", page);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_lswx_wxcl, params, new AbStringHttpResponseListener() {
             @Override
@@ -267,56 +300,5 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends Fragment {
             }
         });
     }
-
-    /**
-     * 解决滑动问题
-     */
-//    public void huadong() {
-//        //解决滑动问题
-//        listViewCL.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                try {
-//                    switch (event.getAction()) {
-//                        case MotionEvent.ACTION_DOWN:
-//                            scrollview.requestDisallowInterceptTouchEvent(true); //禁止scrollview拦截事件，让listview可滑动
-//                            break;
-//                        case MotionEvent.ACTION_UP:
-//                            scrollview.requestDisallowInterceptTouchEvent(false);
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                return false;
-//            }
-//        });
-//
-//
-//        //解决滑动问题。
-//        listViewXM.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                try {
-//                    switch (event.getAction()) {
-//                        case MotionEvent.ACTION_DOWN:
-//                            scrollview.requestDisallowInterceptTouchEvent(true); //禁止scrollview拦截事件，让listview可滑动
-//                            break;
-//                        case MotionEvent.ACTION_UP:
-//                            scrollview.requestDisallowInterceptTouchEvent(false);
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                return false;
-//            }
-//        });
-//
-//    }
 
 }

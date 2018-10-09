@@ -108,4 +108,7 @@ public class Conts {
 
     public static int BSD_xmshuliang=0;
     public static int BSD_clshuliang=0;
+
+    public static final String BILLTYPE_MRKX = "mrkx";
+    public static final String BILLTYPE_KSBJ = "ksbj";
 }

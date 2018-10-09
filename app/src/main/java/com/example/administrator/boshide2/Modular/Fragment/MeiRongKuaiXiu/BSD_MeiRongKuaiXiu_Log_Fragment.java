@@ -116,7 +116,7 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
         bsd_im_sdsr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upBSD_mrkx_jpsr();
+                ((MainActivity) getActivity()).showManualInputFragment(Conts.BILLTYPE_MRKX);
             }
         });
         bsd_im_zdsb.setOnClickListener(new View.OnClickListener() {
