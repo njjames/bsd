@@ -58,9 +58,7 @@ public class BSD_lsbj_adp extends BaseAdapter {
         Holder holder=null;
         if (contetview == null) {
             holder = new Holder();
-
             contetview=layoutInflater.inflate(R.layout.bsd_lsbj_item,null);
-
             holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_cheno= (TextView) contetview.findViewById(R.id.bsd_kxbj_cheno);
@@ -76,7 +74,7 @@ public class BSD_lsbj_adp extends BaseAdapter {
         holder.bsd_kxbj_bzsj.setText(list.get(i).getKehu_mc());
         holder.bsd_kxbj_cheno.setText(list.get(i).getChe_no());
         holder.bsd_kxbj_je.setText(list.get(i).getList_czy());
-        holder.bsd_kxbj_cz.setText(""+list.get(i).getList_hjje());
+        holder.bsd_kxbj_cz.setText("" + list.get(i).getList_hjje());
         holder.bsd_kxbj_qian.setText(list.get(i).getKehu_dh());
         holder.bsd_xm6.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -21,7 +21,8 @@
         <LinearLayout
             android:id="@+id/bsd_on_top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
 
             <LinearLayout
                 android:id="@+id/relativeLayout7"

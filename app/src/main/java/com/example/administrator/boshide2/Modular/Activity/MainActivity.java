@@ -595,7 +595,6 @@ public class MainActivity extends FragmentActivity {
      * @param view
      */
     public void upqhf(View view) {
-
         DownJianPan.DJP(MainActivity.this);
         change(BSD_lsbj);
     }

@@ -2,17 +2,12 @@ package com.example.administrator.boshide2.Modular.Fragment.LiShiBaoJia;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +18,7 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
+import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_ety;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiBaoJia.Adapter.BSD_lsbj_adp;
 import com.example.administrator.boshide2.R;
@@ -40,39 +36,30 @@ import static android.content.Context.TELEPHONY_SERVICE;
  * @历史报价碎片页 Created by Administrator on 2017-4-13.
  */
 
-public class BSD_lishibaojia_Fragment extends Fragment {
-    RelativeLayout bsd_lsbj_fanhui;
-    ListView bsd_lsbj_lv;
-    List<BSD_KuaiSuBaoJia_ety> data = new ArrayList<>();
-    BSD_lsbj_adp adapter;
-    EditText bsd_lsbj_cp, bsd_lsbj_cz;
-    RelativeLayout chaxun;
-    int num;
-    URLS url;
+public class BSD_lishibaojia_Fragment extends BaseFragment {
+    private LinearLayout bsd_lsbj_fanhui;
+    private ListView bsd_lsbj_lv;
+    private List<BSD_KuaiSuBaoJia_ety> data = new ArrayList<>();
+    private BSD_lsbj_adp adapter;
+    private EditText bsd_lsbj_cp, bsd_lsbj_cz;
+    private TextView tv_search;
+    private int num;
+    private URLS url;
+    private TextView title;
+    private TextView footerText;
+    private String cardNo = "";
+    private String kehuMc = "";
+
     @Override
-    public void onResume() {
-        super.onResume();
-        bsd_lsbj_cp.setText("");
-        bsd_lsbj_cz.setText("");
+    protected int getLayoutId() {
+        return R.layout.bsd_lsbj_fragment;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bsd_lsbj_fragment, null);
+    public void initView() {
         bsd_lsbj_cp = (EditText) view.findViewById(R.id.bsd_lsbj_cp);
         bsd_lsbj_cz = (EditText) view.findViewById(R.id.bsd_lsbj_cz);
-        url = new URLS();  //  data();
-        bsdtext(view);
-        init(view);
-        LSBJ(bsd_lsbj_cp.getText().toString(), bsd_lsbj_cz.getText().toString());
-
-        return view;
-    }
-
-    public void init(View view) {
-
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
-
         adapter = new BSD_lsbj_adp(getActivity(), data);
         bsd_lsbj_lv.setAdapter(adapter);
         adapter.setPhoto(new BSD_lsbj_adp.Photo() {
@@ -89,15 +76,6 @@ public class BSD_lishibaojia_Fragment extends Fragment {
                 }
             }
         });
-        bsd_lsbj_fanhui = (RelativeLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
-        bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity) getActivity()).upksbjlog();
-
-
-            }
-        });
 
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -110,32 +88,48 @@ public class BSD_lishibaojia_Fragment extends Fragment {
                 ((MainActivity) getActivity()).upksbjxiangqing();
             }
         });
-        chaxun = (RelativeLayout) view.findViewById(R.id.relativeLayout13);
-        chaxun.setOnClickListener(new View.OnClickListener() {
+        // 返回
+        bsd_lsbj_fanhui = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
+        bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("cjn", "点击事件");
-                LSBJ(bsd_lsbj_cp.getText().toString(), bsd_lsbj_cz.getText().toString());
-                adapter.notifyDataSetChanged();
+                ((MainActivity) getActivity()).upksbjlog();
             }
         });
+        // 查询
+        tv_search = (TextView) view.findViewById(R.id.tv_search);
+        tv_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cardNo = bsd_lsbj_cp.getText().toString();
+                kehuMc = bsd_lsbj_cz.getText().toString();
+                searchLSBJ();
+            }
+        });
+        title = (TextView) view.findViewById(R.id.tv_title);
+        footerText = (TextView) view.findViewById(R.id.tv_footertext);
     }
 
-    /***
-     * 历史报价
-     * @param
-     */
+    @Override
+    public void initData() {
+        url = new URLS();
+        title.setText("美容快修");
+        footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
+                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
+        searchLSBJ();
+    }
 
-    public void LSBJ(String cp, String cz) {
-        data.clear();
+    /**
+     * 历史报价
+     */
+    public void searchLSBJ() {
         AbRequestParams params = new AbRequestParams();
-        params.put("che_no", bsd_lsbj_cp.getText().toString());
-        params.put("kehu_mc", bsd_lsbj_cz.getText().toString());
-        Log.i("cjn", "cp" + cp + "====cz" + cz);
+        params.put("che_no", cardNo);
+        params.put("kehu_mc", kehuMc);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CL_WX2, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int statusCode, String s) {
-                Log.i("cjn", "查看是否请求成功里" + s);
+            public void onSuccess(int code, String s) {
+                data.clear();
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
@@ -163,44 +157,26 @@ public class BSD_lishibaojia_Fragment extends Fragment {
                             entity.setList_hjje(item.getDouble("List_hjje"));
                             data.add(entity);
                         }
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        adapter.notifyDataSetChanged();
-//                        Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }
-                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
                 Toast.makeText(getContext(), "网络连接超时", Toast.LENGTH_SHORT).show();
-                adapter.notifyDataSetChanged();
             }
         });
-
-
-    }
-
-
-    TextView bsd_01_text;
-
-    public void bsdtext(View view) {
-        bsd_01_text = (TextView) view.findViewById(R.id.bsd_07_text);
-        bsd_01_text.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
-                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
     }
 
 
