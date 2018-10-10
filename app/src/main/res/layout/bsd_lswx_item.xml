@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/bsd_xsbj_name"
+        android:id="@+id/bsd_xsbj_rq"
         android:layout_weight="1.2"
         style="@style/mysearchinfostyle"
         android:text="单据号" />
@@ -25,19 +25,19 @@
         android:text="车牌号" />
 
     <TextView
-        android:id="@+id/tv_ygsf"
+        android:id="@+id/bsd_kxbj_fwgw"
         android:layout_weight="1.2"
         style="@style/mysearchinfostyle"
         android:text="接待日期" />
 
     <TextView
-        android:id="@+id/bsd_kxbj_cz"
+        android:id="@+id/bsd_kxbj_je"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
         android:text="联系方式" />
 
     <TextView
-        android:id="@+id/bsd_kxbj_qian"
+        android:id="@+id/bsd_kxbj_phone"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
         android:text="联系方式" />

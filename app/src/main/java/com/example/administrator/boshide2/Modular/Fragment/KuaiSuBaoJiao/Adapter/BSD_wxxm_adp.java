@@ -1,7 +1,6 @@
 package com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,10 +79,10 @@ public class BSD_wxxm_adp extends BaseAdapter {
         if (contetview == null) {
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_wxxm_item,null);
-            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
+            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_rq);
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.tv_ygsf);
+            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_fwgw);
             holder.bsd_kxbj_xmsc= (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_ksbj_tv_zt= (TextView) contetview.findViewById(R.id.bsd_ksbj_tv_zt);
             contetview.setTag(holder);

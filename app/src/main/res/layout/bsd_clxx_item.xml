@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/bsd_xsbj_name"
+        android:id="@+id/bsd_xsbj_rq"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
         android:text="车主"/>
@@ -27,20 +27,20 @@
         android:text="日期" />
 
     <TextView
-        android:id="@+id/tv_ygsf"
+        android:id="@+id/bsd_kxbj_fwgw"
         style="@style/mysearchinfostyle"
         android:layout_weight="1"
         android:text="车牌" />
 
     <TextView
-        android:id="@+id/bsd_kxbj_qian"
+        android:id="@+id/bsd_kxbj_phone"
         style="@style/mysearchinfostyle"
         android:layout_weight="1"
         android:text="服务"
         android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/bsd_kxbj_cz"
+        android:id="@+id/bsd_kxbj_je"
         style="@style/mysearchinfostyle"
         android:layout_weight="1.8"
         android:text="车型" />

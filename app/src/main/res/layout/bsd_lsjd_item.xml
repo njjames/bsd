@@ -14,7 +14,7 @@
         android:background="@drawable/biankuang_info_bg">
 
         <TextView
-            android:id="@+id/bsd_xsbj_name"
+            android:id="@+id/bsd_xsbj_rq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -66,7 +66,7 @@
         android:background="@drawable/biankuang_info_bg">
 
         <TextView
-            android:id="@+id/tv_ygsf"
+            android:id="@+id/bsd_kxbj_fwgw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -83,7 +83,7 @@
         android:background="@drawable/biankuang_info_bg">
 
         <TextView
-            android:id="@+id/bsd_kxbj_cz"
+            android:id="@+id/bsd_kxbj_je"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -100,7 +100,7 @@
         android:background="@drawable/biankuang_info_bg">
 
         <TextView
-            android:id="@+id/bsd_kxbj_qian"
+            android:id="@+id/bsd_kxbj_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

@@ -1,7 +1,6 @@
 package com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +83,7 @@ public class BSD_wxywdd_dap extends BaseAdapter {
         if (contetview == null) {
             holder = new Holder();
             contetview = LayoutInflater.from(context).inflate(R.layout.bsd_wxywdd_adp_item, null);
-            holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
+            holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_rq);
             holder.iv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_xsbj_gongshi = (TextView) contetview.findViewById(R.id.bsd_xsbj_gongshi);
             holder.bsd_xsbj_jiner = (TextView) contetview.findViewById(R.id.bsd_xsbj_jiner);

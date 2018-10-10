@@ -688,7 +688,7 @@
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
                         <TextView
-                            android:id="@+id/bsd_xsbj_name"
+                            android:id="@+id/bsd_xsbj_rq"
                             android:gravity="center"
                             android:layout_width="0dp"
                             android:layout_weight="1"

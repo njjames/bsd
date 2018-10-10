@@ -49,12 +49,12 @@ public class BSD_CheLiangLiShiWeiXiu_adp extends BaseAdapter {
         if (contetview == null) {
             holder = new Holder();
             contetview=layoutInflater.inflate(R.layout.bsd_clxq_item,null);
-            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
+            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_rq);
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.tv_ygsf);
-            holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_cz);
-            holder.bsd_kxbj_qian= (TextView) contetview.findViewById(R.id.bsd_kxbj_qian);
+            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_fwgw);
+            holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
+            holder.bsd_kxbj_qian= (TextView) contetview.findViewById(R.id.bsd_kxbj_phone);
             holder.bsd_kxbj_qian1= (TextView) contetview.findViewById(R.id.bsd_kxbj_qian1);
             holder.chezhu = (TextView) contetview.findViewById(R.id.tv_chezhu);
             contetview.setTag(holder);
