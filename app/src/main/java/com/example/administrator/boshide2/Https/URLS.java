@@ -370,10 +370,22 @@ public class URLS {
      * 快速报价添加材料
      */
     public String BSD_ksbj_tjcl = "offer/addcail";
+
+    /**
+     * 快速报价添加材料
+     */
+    public String BSD_ksbj_newcl = "offer/addnewcail";
+
     /**
      * 快速报价添加项目
      */
     public String BSD_ksbj_tjxm = "offer/addwxxm";
+
+    /**
+     * 快速报价添加项目
+     */
+    public String BSD_ksbj_newxm = "offer/addnewwxxm";
+
     /**
      * 快速报价添加项目
      */

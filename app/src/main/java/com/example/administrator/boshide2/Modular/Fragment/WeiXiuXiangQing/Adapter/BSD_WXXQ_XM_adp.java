@@ -61,7 +61,7 @@ public class BSD_WXXQ_XM_adp extends BaseAdapter {
             holder.bsd_xzcl_name = (TextView) contetview.findViewById(R.id.bsd_xzcl_name);
             holder.bsd_xzcl_shuliang = (TextView) contetview.findViewById(R.id.bsd_xzcl_shuliang);
             holder.bsd_xzcl_danjia = (TextView) contetview.findViewById(R.id.bsd_xzcl_danjia);
-            holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_tuhao);
+            holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
            holder.bsd_xzcl_yuangongshifei= (TextView) contetview.findViewById(R.id.bsd_xzcl_yuangongshifei);
            holder.bsd_xzcl_huiyuanzhekou= (TextView) contetview.findViewById(R.id.bsd_xzcl_huiyuanzhekou);
             contetview.setTag(holder);

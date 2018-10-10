@@ -62,8 +62,8 @@ public class BSD_hygl_adp extends BaseAdapter {
             holder.bsd_xzcl_name = (TextView) contetview.findViewById(R.id.bsd_xzcl_name);
             holder.bsd_xzcl_shuliang = (TextView) contetview.findViewById(R.id.bsd_xzcl_shuliang);
             holder.bsd_xzcl_danjia = (TextView) contetview.findViewById(R.id.bsd_xzcl_danjia);
-            holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_tuhao);
-            holder.bsd_xzcl_pinpai = (TextView) contetview.findViewById(R.id.bsd_xzcl_pinpai);
+            holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
+            holder.bsd_xzcl_pinpai = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
 //            holder.bsd_xzcl_danxi = (TextView) contetview.findViewById(R.id.bsd_xzcl_danxi);
             holder.bsd_xzcl_qingxi = (TextView) contetview.findViewById(R.id.bsd_xzcl_qingxi);
             holder.bsd_xzcl_peijian = (TextView) contetview.findViewById(R.id.bsd_xzcl_peijian);

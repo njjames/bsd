@@ -33,8 +33,6 @@ public class BSD_wxxm_adp extends BaseAdapter {
 
     List<BSD_KuaiSuBaoJia_XM_entity> list;
     TooPromptdiaog promptdiaog;
-
-
     Up_ksbj_gs up_ksbj_gs;
     Up_ksbj_gsdj up_ksbj_gsdj;
     Up_ksbj_gsdj_shanchu up_ksbj_sc;
@@ -50,10 +48,10 @@ public class BSD_wxxm_adp extends BaseAdapter {
         this.up_ksbj_sc = up_ksbj_sc;
     }
 
-    public BSD_wxxm_adp(Context context) {
+    public BSD_wxxm_adp(Context context, List<BSD_KuaiSuBaoJia_XM_entity> list) {
         this.context = context;
-
         this.layoutInflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     @Override
@@ -74,12 +72,11 @@ public class BSD_wxxm_adp extends BaseAdapter {
     class Holder {
         TextView bsd_xsbj_name,bsd_kxbj_bzsj,bsd_kxbj_gsdj,bsd_kxbj_je,bsd_ksbj_tv_zt;
         ImageView bsd_kxbj_xmsc;
-
     }
 
     @Override
     public View getView( final int i, View contetview, ViewGroup viewGroup) {
-        Holder holder=null;
+        Holder holder = null;
         if (contetview == null) {
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_wxxm_item,null);
@@ -87,7 +84,7 @@ public class BSD_wxxm_adp extends BaseAdapter {
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
             holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.tv_ygsf);
-            holder.bsd_kxbj_xmsc= (ImageView) contetview.findViewById(R.id.bsd_kxbj_xmsc);
+            holder.bsd_kxbj_xmsc= (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_ksbj_tv_zt= (TextView) contetview.findViewById(R.id.bsd_ksbj_tv_zt);
             contetview.setTag(holder);
         } else {
@@ -117,10 +114,7 @@ public class BSD_wxxm_adp extends BaseAdapter {
         DecimalFormat df=new DecimalFormat("#.##");
         String    gs=df.format(list.get(i).getWxxm_je() / list.get(i).getWxxm_gs());
         holder.bsd_kxbj_gsdj.setText(gs);
-//        Toast.makeText(context,"adapter的单价是"+list.get(i).getWxxm_dj()+"",Toast.LENGTH_SHORT).show();
 
-
-        Log.i("cjn","这个是适配器的单价"+list.get(i).getWxxm_je());
         holder.bsd_kxbj_je.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,20 +130,15 @@ public class BSD_wxxm_adp extends BaseAdapter {
                 promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick() {
-
                         list.remove(i);
                         notifyDataSetChanged();
                         promptdiaog.dismiss();
                         up_ksbj_sc.onYesClick();
-
                     }
                 });
-
                 promptdiaog.show();
             }
         });
-
-
         return contetview;
     }
 

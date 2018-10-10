@@ -618,81 +618,49 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_jbxx, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int a, String s) {
-                Log.i("cjn", "查看返回的json=" + s.toString());
+            public void onSuccess(int code, String data) {
                 try {
-                    JSONObject jsonObject = new JSONObject(s.toString());
+                    JSONObject jsonObject = new JSONObject(data);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            BSD_KuaiSuBaoJia_ety entity = new BSD_KuaiSuBaoJia_ety();
-                            entity.setReco_no(item.getDouble("reco_no"));
-                            entity.setList_no(item.getString("list_no"));
-                            entity.setList_sfbz(item.getString("List_sfbz"));
-                            entity.setList_sffl(item.getDouble("List_sffl"));
-                            entity.setKehu_no(item.getString("kehu_no"));
-                            entity.setKehu_mc(item.getString("kehu_mc"));
-                            entity.setKehu_xm(item.getString("kehu_xm"));
-                            entity.setKehu_dh(item.getString("kehu_dh"));
-                            entity.setChe_no(item.getString("che_no"));
-                            entity.setChe_vin(item.getString("che_vin"));
-                            entity.setChe_cx(item.getString("che_cx"));
-                            entity.setList_czy(item.getString("List_czy"));
-                            entity.setGongSiNo(item.getString("GongSiNo"));
-                            entity.setGongSiMc(item.getString("GongSiMc"));
-                            entity.setWork_no(item.getString("work_no"));
-                            entity.setList_jlrq(item.getString("List_jlrq"));
-                            entity.setList_yjjclc(item.getInt("List_yjjclc"));
-                            entity.setList_hjje(item.getDouble("List_hjje"));
-                            entity.setGcsj(item.getString("che_gcrq"));
-                            entity.setList_lc(Double.parseDouble(item.getString("List_lc")));
-
-
-                            list_ksbj.add(entity);
-                            Log.i("cjn", "查看这个的编号" + item.getString("list_no"));
-                        }
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
+                        mainActivity.showKSBJFragment(data);
                     } else {
                         Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }
-                    if (jsonObject.get("total").toString().equals("1")) {
-
+//                    if (jsonObject.get("total").toString().equals("1")) {
+//
+////                        BSD_KuaiSuBaoJia_ety entiy = new BSD_KuaiSuBaoJia_ety();
+////                        entiy = list_ksbj.get(0);
+//                        BSD_KuaiSuBaoJia_ety  entiy = list_ksbj.get(0);
+//                        mainActivity.setKsbjenity(entiy);
+//
+////                        ((MainActivity) getActivity()).setKsbjenity(entiy);//传了个实体
+////
+//                        if (null == entiy.getList_no() || entiy.getList_no().equals("") || entiy.getList_no().equals("null")) {
+//                            Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                           mainActivity.upksbj(view);
+//                        }
+//                        Conts.zt = 1;
+//                        Conts.cp = cardNo;
+//
+//                    } else if (jsonObject.get("total").toString().equals("0")) {
+//                        ((MainActivity) getActivity()).upksbj(view);
+//                        Conts.cp = cardNo;
+//                        Conts.zt = 0;
+//
+//                    } else {
 //                        BSD_KuaiSuBaoJia_ety entiy = new BSD_KuaiSuBaoJia_ety();
 //                        entiy = list_ksbj.get(0);
-                        BSD_KuaiSuBaoJia_ety  entiy = list_ksbj.get(0);
-                        mainActivity.setKsbjenity(entiy);
-
-//                        ((MainActivity) getActivity()).setKsbjenity(entiy);//传了个实体
-//
-                        if (null == entiy.getList_no() || entiy.getList_no().equals("") || entiy.getList_no().equals("null")) {
-                            Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
-                        } else {
-                           mainActivity.upksbj(view);
-                        }
-                        Conts.zt = 1;
-                        Conts.cp = cardNo;
-
-                    } else if (jsonObject.get("total").toString().equals("0")) {
-                        ((MainActivity) getActivity()).upksbj(view);
-                        Conts.cp = cardNo;
-                        Conts.zt = 0;
-
-                    } else {
-                        BSD_KuaiSuBaoJia_ety entiy = new BSD_KuaiSuBaoJia_ety();
-                        entiy = list_ksbj.get(0);
-                        mainActivity.setKsbjenity(entiy);//传了个实体
-//
-                        mainActivity.upksbj(view);
-                        Conts.zt = 1;
-                        Conts.cp = cardNo;
-                    }
-                    //在这里请求
-
-
+//                        mainActivity.setKsbjenity(entiy);//传了个实体
+////
+//                        mainActivity.upksbj(view);
+//                        Conts.zt = 1;
+//                        Conts.cp = cardNo;
+//                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override

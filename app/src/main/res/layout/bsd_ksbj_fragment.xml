@@ -24,11 +24,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <LinearLayout
                 android:id="@+id/relativeLayout7"
-                style="@style/myeditlinearlayoutstyle">
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_weight="0.8">
 
                 <TextView
                     android:id="@+id/textView7"
@@ -44,7 +46,8 @@
             <LinearLayout
                 android:id="@+id/rea_pinpai"
                 style="@style/myeditlinearlayoutstyle"
-                android:layout_marginLeft="@dimen/qb_px_8">
+                android:layout_marginLeft="@dimen/qb_px_8"
+                android:layout_weight="0.8">
 
                 <TextView
                     android:id="@+id/textView14"
@@ -121,11 +124,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_4"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <LinearLayout
                 android:id="@+id/relativeLayout20"
-                style="@style/myeditlinearlayoutstyle">
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_weight="1.2">
 
                 <TextView
                     android:id="@+id/textView13"
@@ -152,7 +157,8 @@
             <LinearLayout
                 android:id="@+id/relativeLayout9"
                 style="@style/myeditlinearlayoutstyle"
-                android:layout_marginLeft="@dimen/qb_px_8">
+                android:layout_marginLeft="@dimen/qb_px_8"
+                android:layout_weight="0.8">
 
                 <TextView
                     android:id="@+id/textView8"
@@ -220,13 +226,13 @@
             <TextView
                 android:id="@+id/bsd_ksbj_tv_bycx"
                 style="@style/myeditnormalbtnstyle"
-                android:layout_weight="0.5"
+                android:layout_weight="0.4"
                 android:text="保养查询" />
 
             <TextView
                 android:id="@+id/bsd_ksbj_clxx"
                 style="@style/myeditnormalbtnstyle"
-                android:layout_weight="0.5"
+                android:layout_weight="0.4"
                 android:text="车辆信息" />
         </LinearLayout>
 
@@ -235,7 +241,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_4"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <LinearLayout
                 android:id="@+id/bsd_ksbj_rl_gsfl"
@@ -263,19 +270,19 @@
             <TextView
                 android:id="@+id/bsd_ksbj_lswx"
                 style="@style/myeditnormalbtnstyle"
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:text="历史维修" />
 
             <TextView
                 android:id="@+id/tv_add_wxxm"
                 style="@style/myeditnormalbtnstyle"
-                android:layout_weight="0.8"
+                android:layout_weight="1"
                 android:text="添加维修项目" />
 
             <TextView
                 android:id="@+id/tv_add_wxcl"
                 style="@style/myeditnormalbtnstyle"
-                android:layout_weight="0.8"
+                android:layout_weight="1"
                 android:text="添加维修用料" />
 
             <TextView
@@ -288,13 +295,13 @@
             <TextView
                 android:id="@+id/bsd_ksbj_cd"
                 style="@style/myeditnormalbtnstyle"
-                android:layout_weight="0.8"
+                android:layout_weight="0.5"
                 android:text="存档" />
 
             <TextView
                 android:id="@+id/bsd_ksbj_jc"
                 style="@style/myeditnormalbtnstyle"
-                android:layout_weight="0.8"
+                android:layout_weight="0.5"
                 android:text="进厂" />
 
             <LinearLayout
@@ -320,7 +327,7 @@
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_1"
-            android:layout_marginTop="@dimen/qb_px_4"
+            android:layout_marginTop="@dimen/qb_px_2"
             android:background="#F7714C" />
 
         <LinearLayout
@@ -328,7 +335,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/bsd_xiamianyuan">
 
             <LinearLayout
                 android:id="@+id/bsd_rl_xuanxiang"
@@ -358,13 +366,13 @@
 
                 <TextView
                     style="@style/mysearchtitlestyle"
-                    android:layout_weight="1"
+                    android:layout_weight="0.8"
                     android:text="状态" />
 
                 <TextView
                     style="@style/mysearchtitlestyle"
-                    android:layout_weight="1"
-                    android:text="操作" />
+                    android:layout_weight="0.5"
+                    android:text="删除" />
             </LinearLayout>
 
             <ListView
@@ -403,14 +411,15 @@
             android:id="@+id/bsd_onzhongjian"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_1"
-            android:layout_marginTop="@dimen/qb_px_2"
+            android:layout_marginTop="@dimen/qb_px_1"
             android:background="#F7714C" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/bsd_xiamianyuan">
 
             <LinearLayout
                 android:id="@+id/bsd_rl_xuanxiang1"
@@ -445,12 +454,12 @@
 
                 <TextView
                     style="@style/mysearchtitlestyle"
-                    android:layout_weight="1"
-                    android:text="操作" />
+                    android:layout_weight="0.5"
+                    android:text="删除" />
 
                 <TextView
                     style="@style/mysearchtitlestyle"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:text="查看库存" />
             </LinearLayout>
 

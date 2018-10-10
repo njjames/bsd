@@ -2,13 +2,14 @@ package com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
@@ -31,6 +33,7 @@ import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
+import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Adapter.BSD_wxxm_adp;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Adapter.BSD_xzcl_adp;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_CL_entity;
@@ -42,6 +45,10 @@ import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialog
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_XM_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_WXYY_XM_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
@@ -62,6 +69,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -69,7 +77,8 @@ import java.util.Map;
  * @快速报价碎片页 Created by Administrator on 2017-4-13.
  */
 
-public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickListener {
+public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnClickListener {
+    private static final String PARAM_KEY = "param_key";
     ScrollView scrollview;
     //弹出popwin
     RelativeLayout bsd_wxxm, bsd_wxcl;
@@ -83,24 +92,22 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
     private Dialog mWeiboDialog;
     private MarqueeView marqueeView;
 
-    /////////////////
-
     //车牌号
     String Car;
     TextView bsd_ksbj_cp;
     BSD_KuaiSuBaoJia_ety entity;//快速报价实体类
     String danhao;//单号
     TextView bsd_ksbj_lc, bsd_ksbj_cezhu, bsd_ksbj_dh, bsd_ksbj_vin, bsd_ksbj_pp, bsd_ksbj_cx,
-            bsd_ksbj_cz, bsd_ksbj_cxing, tv_zong_money, tv_zong_money1, tv_zong_money3;
-    List<BSD_KuaiSuBaoJia_XM_entity> listXM = new ArrayList<BSD_KuaiSuBaoJia_XM_entity>();
-    BSD_wxxm_adp adpxm;
-    ListView listxm;//维修项目
+            bsd_ksbj_cz, bsd_ksbj_cxing, tv_zong_money;
+    private List<BSD_KuaiSuBaoJia_XM_entity> listXM = new ArrayList<BSD_KuaiSuBaoJia_XM_entity>();
+    private BSD_wxxm_adp adpxm;
+    private ListView listViewXM;//维修项目
     //修改工时弹框
     BSD_XiuGaiGongShi bsd_xiuGaiGongShi;
     int choufutianjia = 0;
     List<BSD_KuaiSuBaoJia_CL_entity> listCL = new ArrayList<BSD_KuaiSuBaoJia_CL_entity>();
     private BSD_xzcl_adp adpcl;//车系适配器
-    ListView listcl;//维修材料
+    ListView listViewCL;//维修材料
     //popwin
     BSD_WXYY_XM_POP bsd_ksbj_xm_pop;
     BSD_KSBJ_CL_POP bsd_ksbj_cl_pop;
@@ -122,10 +129,8 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
     };
     int sl;
     double zj;
-
     //四个弹框那块
     //品牌返回的车名和编号
-
     //品牌diagle
     BSD_KSBJ_PinPai_delo bsd_ksbj_pinPai_delo;
     String cxbianhao;
@@ -136,7 +141,6 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
     private List<CustemObject> nameList = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter;
     private SpinerPopWindow mSpinerPopWindow;
-
     String chexiid;
     //车组
     LinearLayout bsd_ksbj_rl_cz;
@@ -152,13 +156,9 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
     private List<CustemObject> nameList2 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter2;
     private SpinerPopWindow mSpinerPopWindow2;
-    //单号
-    TextView bsd_ksbj_tv_dh;
-    TextView bsd_ksbj_tv_sj;
-
 
     //车辆信息、历史维修、历史维修建议
-    private  TextView  bsd_ksbj_clxx,bsd_ksbj_lswxjy,bsd_ksbj_lswx;
+    private  TextView bsd_ksbj_clxx,bsd_ksbj_lswxjy,bsd_ksbj_lswx;
 
     //工时费率
     LinearLayout bsd_ksbj_rl_gsfl;
@@ -176,431 +176,50 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
     TimePickerShow timePickerShow;
     TextView bsd_ksbj_tv_gcsj;
     TextView bsd_ksbj_rl_bycx;//保养查询
-    RelativeLayout bsd_rl_money;//点击
 
     URLS url;
     Queding_Quxiao queRen_quxiao;
     TimeDialog timeShow;
 
-
     //根据VIN返回车型信息
     List<Map<String, String>> listvincx = new ArrayList<>();
     String   cxnm;      //车型内码
     TextView  rl_duqu;
+    private TextView title;
+    private TextView footerText;
+    private String param;
+    private BSD_KuaiSuBaoJia_ety billEntiy;
+    private TextView tv_billNo;
+    private LinearLayout ll_back;
+    private TextView addWxxm;
+    private BSD_ZCDUXQ_XM_POP bsd_zcduxq_xm_pop;
+    private TextView addWxcl;
+    private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bsd_ksbj_fragment, null);
-
-        url = new URLS();
-        beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
-        entity = new BSD_KuaiSuBaoJia_ety();
-        entity = ((MainActivity) getActivity()).getKsbjenity();
-        timePickerShow = new TimePickerShow(getActivity());
-        timeShow = new TimeDialog(getActivity());
-        gsfldata();
-        inin(view);
-
-        bsdtext(view);
-//        POP(view);
-
-        return view;
+    public static BSD_kuaisubaojia_Fragment newInstance(String params) {
+        BSD_kuaisubaojia_Fragment fragment = new BSD_kuaisubaojia_Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY, params);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        Log.i("jslm", "onStart:00000000000 ");
-
-
-        if (Conts.QX_baoyangxinxii ==1){
-            bsd_ksbj_rl_bycx.setVisibility(View.VISIBLE);
-        }else {
-            bsd_ksbj_rl_bycx.setVisibility(View.INVISIBLE);
-        }
-        a = 0;
-        b = 0;
-        tv_zong_money.setText("");
-        tv_zong_money1.setText("");
-        if (Conts.bycx_fanhuitype == 1) {
-            Conts.bycx_fanhuitype = 0;
-            bsd_ksbj_pp.setText(Conts.bycx_pinpai);
-            bsd_ksbj_cx.setText(Conts.bycx_chexi);
-            bsd_ksbj_cz.setText(Conts.bycx_chezu);
-            bsd_ksbj_cxing.setText(Conts.bycx_cxing);
-            bsd_ksbj_lc.setText(Conts.bycx_licheng);
-            bsd_ksbj_tv_gcsj.setText(Conts.bycx_time);
-            bsd_ksbj_vin.setText(Conts.bycx_VIN);
-            bsd_ksbj_cezhu.setText(Conts.bycx_CarName);
-            bsd_ksbj_dh.setText(Conts.bycx_Shouji);
-            initdata2();
-            adpcl.setList(listCL);
-            adpcl.notifyDataSetChanged();
-            adpxm.setList(listXM);
-            adpxm.notifyDataSetChanged();
-
-            wxclPrice();
-            jisuanzongjia();
-
-        }else {
-            initdata();
-        }
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        param = getArguments().getString(PARAM_KEY);
     }
 
-    /**
-     * 材料拉数据
-     */
-    public void cldata() {
-        listCL.clear();
-        AbRequestParams params = new AbRequestParams();
-        Log.i("cjn", "看看单号" + entity.getList_no());
-        params.put("list_no", entity.getList_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_wxcl, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            BSD_KuaiSuBaoJia_CL_entity entity = new BSD_KuaiSuBaoJia_CL_entity();
-                            entity.setReco_no(item.getDouble("reco_no"));
-                            entity.setList_no(item.getString("list_no"));
-                            entity.setPeij_no(item.getString("peij_no"));
-                            entity.setPeij_th(item.getString("peij_th"));
-                            entity.setPeij_mc(item.getString("peij_mc"));
-                            entity.setPeij_dw(item.getString("peij_dw"));
-                            entity.setPeij_sl(item.getDouble("peij_sl"));
-                            entity.setPeij_dj(item.getDouble("peij_dj"));
-                            entity.setPeij_je(item.getDouble("peij_je"));
-                            entity.setPeij_jk(item.getString("peij_jk"));
-                            entity.setPeij_zt(item.getString("peij_zt"));
-                            listCL.add(entity);
-                        }
-                        adpcl.setList(listCL);
-                        adpcl.notifyDataSetChanged();
-                    }else {
-//                        Show.show(getContext(),"无材料");
-                    }
-
-                    wxclPrice();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-
-            }
-        });
-
-
+    @Override
+    protected int getLayoutId() {
+        return R.layout.bsd_ksbj_fragment;
     }
 
-    private void showGongSi3() {
-        mSpinerPopWindow3.setWidth(bsd_ksbj_rl_gsfl.getWidth());
-        mSpinerPopWindow3.showAsDropDown(bsd_ksbj_rl_gsfl);
-    }
-
-//
-    /**
-     * 工时费率数据
-     */
-    /**
-     * //     * 基本信息车组接口
-     * //
-     */
-    public void bumen3() {
-
-        nameList3.clear();
-        for (int i = 0; i < listgslv.size(); i++) {
-            CustemObject object = new CustemObject();
-            object.data = listgslv.get(i).get("feil_mc");
-            nameList3.add(object);
-        }
-        mAdapter3 = new CustemSpinerAdapter(getActivity());
-        mAdapter3.refreshData(nameList3, 0);
-
-        mSpinerPopWindow3 = new SpinerPopWindow(getActivity());
-        mSpinerPopWindow3.setAdatper(mAdapter3, 310);
-        mSpinerPopWindow3.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
-            @Override
-            public void onItemClick(int pos) {
-                String value = nameList3.get(pos).toString();
-
-                Log.i("cjn", "看看是不是这里的问题" + value);
-                if (!bsd_ksbj_tv_gsfl.getText().toString().equals(value)) {
-                    bsd_ksbj_tv_gsfl.setText(value);
-                    gongshifeili_name = listgslv.get(pos).get("feil_mc");
-                    gongshifeili_id = listgslv.get(pos).get("feil_fl");
-                    Conts.feilv_name=gongshifeili_name;
-                }
-            }
-        });
-
-
-    }
-
-    public void gsfldata() {
-        listgslv.clear();
-        AbRequestParams params = new AbRequestParams();
-        params.put("type", "ITGongShi");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("1")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("id", item.getString("id"));
-                            map.put("feil_mc", item.getString("feil_mc"));
-                            map.put("feil_fl", item.getString("feil_fl"));
-                            map.put("feil_sy", item.getString("feil_sy"));
-                            listgslv.add(map);
-                        }
-                    }
-                    bumen3();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-
-            }
-        });
-
-
-    }
-
-
-    /**
-     * 项目拉数据
-     */
-    public void xmdata() {
-        listXM.clear();
-        AbRequestParams params = new AbRequestParams();
-        Log.i("cjn", "看看单号" + entity.getList_no());
-        params.put("list_no", entity.getList_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_wxxm, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    Log.i("cjn", "查看快速报价进来的数据" + jsonObject.toString());
-                    if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            BSD_KuaiSuBaoJia_XM_entity entity = new BSD_KuaiSuBaoJia_XM_entity();
-                            entity.setReco_no(item.getDouble("reco_no"));
-                            entity.setList_no(item.getString("list_no"));
-                            entity.setWxxm_no(item.getString("wxxm_no"));
-                            entity.setWxxm_mc(item.getString("wxxm_mc"));
-                            entity.setWxxm_gs(item.getDouble("wxxm_gs"));
-                            entity.setWxxm_khgs(item.getDouble("wxxm_khgs"));
-                            entity.setWxxm_cb(item.getDouble("wxxm_cb"));
-                            entity.setWxxm_je(item.getDouble("wxxm_je"));
-                            entity.setWxxm_yje(item.getDouble("wxxm_yje"));
-                            entity.setWxxm_mxcx(item.getString("wxxm_mxcx"));
-                            entity.setWxxm_zt(item.getString("wxxm_zt"));
-                            entity.setWxxm_bz(item.getString("wxxm_bz"));
-                            entity.setWxxm_dj(item.getDouble("wxxm_dj"));
-                            listXM.add(entity);
-                        }
-                        Log.i("cjn", "listXM.size" + listXM.size());
-                        adpxm.setList(listXM);
-                        adpxm.notifyDataSetChanged();
-                    } else {
-//                        Show.showTime(getActivity(), jsonObject.get("message").toString());
-//                        Show.show(getContext(),"无项目");
-                    }
-
-                    jisuanzongjia();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Show.showTime(getActivity(), "网络连接超时");
-            }
-        });
-
-
-    }
-
-    /*
-     *判断是怎me进来的
-     */
-    public void initdata2() {
-        if (Conts.zt == 0) {
-            //没有数据的时候跳转过来的
-            if (Conts.cp == null || Conts.cp.equals("")) {
-                Car = "没有获取车牌";
-                bsd_ksbj_cp.setText(Car);
-            } else {
-                Car = Conts.cp;
-                bsd_ksbj_cp.setText(Car);
-            }
-
-        } else if (Conts.zt == 1) {
-//            有一个条数据跳转过来的
-            ArrayList arr = new ArrayList();
-            Car = entity.getChe_no();
-            bsd_ksbj_cp.setText(Car);
-            String che = Conts.bycx_cheliangmingcheng;
-            Conts.list_no = entity.getList_no();
-            Conts.chexing = Conts.bycx_cheliangmingcheng;
-            danhao = entity.getList_no();
-
-            String[] s1 = che.split("\\|");
-            for (int j = 0; j < s1.length; j++) {
-                arr.add(j, s1[j]);
-            }
-            if (arr.size() < 4) {
-            } else {
-                bsd_ksbj_pp.setText(arr.get(0).toString());
-                bsd_ksbj_cx.setText(arr.get(1).toString());
-                bsd_ksbj_cz.setText(arr.get(2).toString());
-                bsd_ksbj_cxing.setText(arr.get(3).toString());
-                //车系
-                bsdcx(arr.get(0).toString());
-                //车组
-                bsdcz(arr.get(1).toString());
-                //车行
-                bsd_chexingdata(arr.get(2).toString());
-
-            }
-            bsd_ksbj_tv_dh.setText("单号:" + entity.getList_no());
-            bsd_ksbj_tv_sj.setText("日期:" + entity.getList_jlrq());
-            bsd_ksbj_tv_gsfl.setText(entity.getList_sfbz());
-            gongshifeili_name=entity.getList_sfbz();
-            Conts.feilv_name=gongshifeili_name;
-
-            tv_zong_money.setText(a + b + "");
-            tv_zong_money1.setText(a + b + "");
-            gongshifeili_name = entity.getList_sfbz();
-            gongshifeili_id = entity.getList_gdfl();
-
-        }    }
-
-    public void initdata() {
-        if (Conts.zt == 0) {
-            //没有数据的时候跳转过来的
-            if (Conts.cp == null || Conts.cp.equals("")) {
-                Car = "没有获取车牌";
-                bsd_ksbj_cp.setText(Car);
-            } else {
-                Car = Conts.cp;
-                bsd_ksbj_cp.setText(Car);
-            }
-
-        } else if (Conts.zt == 1) {
-//            有一个条数据跳转过来的
-            ArrayList arr = new ArrayList();
-            Car = entity.getChe_no();
-            bsd_ksbj_cp.setText(Car);
-            String che = entity.getChe_cx();
-
-            Conts.bycx_cheliangmingcheng=entity.getChe_cx();
-            Conts.list_no = entity.getList_no();
-            Conts.chexing = entity.getChe_cx();
-            danhao = entity.getList_no();
-
-            String[] s1 = che.split("\\|");
-            for (int j = 0; j < s1.length; j++) {
-                arr.add(j, s1[j]);
-            }
-            if (arr.size() < 4) {
-            } else {
-                bsd_ksbj_pp.setText(arr.get(0).toString());
-                bsd_ksbj_cx.setText(arr.get(1).toString());
-                bsd_ksbj_cz.setText(arr.get(2).toString());
-                bsd_ksbj_cxing.setText(arr.get(3).toString());
-                //车系
-                bsdcx(arr.get(0).toString());
-                //车组
-                bsdcz(arr.get(1).toString());
-                //车行
-                bsd_chexingdata(arr.get(2).toString());
-
-            }
-            if (entity.getChe_vin().toString().trim().length() < 2) {
-                bsd_ksbj_vin.setText(Conts.VIN);
-            } else {
-                bsd_ksbj_vin.setText(entity.getChe_vin());
-            }
-
-////            bsd_wxyy_top_daochangshijian.setText(entiy.etYuyue_yjjcrq());
-
-            bsd_ksbj_lc.setText("" + entity.getList_lc());
-            bsd_ksbj_cezhu.setText(entity.getKehu_mc());
-            bsd_ksbj_dh.setText(entity.getKehu_dh());
-            bsd_ksbj_tv_dh.setText("单号:" + entity.getList_no());
-            bsd_ksbj_tv_sj.setText("日期:" + entity.getList_jlrq());
-            bsd_ksbj_tv_gsfl.setText(entity.getList_sfbz());
-            tv_zong_money.setText(a + b + "");
-            tv_zong_money1.setText(a + b + "");
-            bsd_ksbj_tv_gcsj.setText(entity.getGcsj());
-            gongshifeili_name = entity.getList_sfbz();
-            gongshifeili_id = entity.getList_gdfl();
-            //维修项目查询
-            xmdata();
-            //维修单号查询a
-            cldata();
-
-
-        } else if (Conts.zt == 2) {
-
-
-        }
-
-
-    }
-
-
-    public void inin(View view) {
-        bsd_ksbj_rl_bycx = (TextView) view.findViewById(R.id.bsd_ksbj_rl_bycx);
+    @Override
+    public void initView() {
+        beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
+        timePickerShow = new TimePickerShow(getActivity());
+        timeShow = new TimeDialog(getActivity());
         bsd_ksbj_tv_gcsj = (TextView) view.findViewById(R.id.bsd_ksbj_tv_gcsj);
         bsd_ksbj_rl_gcsj = (LinearLayout) view.findViewById(R.id.bsd_ksbj_rl_gcsj);
         bsd_ksbj_rl_gcsj.setOnClickListener(new View.OnClickListener() {
@@ -609,8 +228,6 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
                 timeShow.timePickerAlertDialog(bsd_ksbj_tv_gcsj);
             }
         });
-
-
         //工时费率
         bsd_ksbj_rl_gsfl = (LinearLayout) view.findViewById(R.id.bsd_ksbj_rl_gsfl);
         bsd_ksbj_rl_gsfl.setOnClickListener(new View.OnClickListener() {
@@ -620,13 +237,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
             }
         });
         bsd_ksbj_tv_gsfl = (TextView) view.findViewById(R.id.bsd_ksbj_tv_gsfl);
-
-        bsd_ksbj_tv_dh = (TextView) view.findViewById(R.id.bsd_ksbj_tv_dh);
-        bsd_ksbj_tv_sj = (TextView) view.findViewById(R.id.bsd_ksbj_tv_sj);
         tv_zong_money = (TextView) view.findViewById(R.id.tv_zong_money);
-        tv_zong_money3 = (TextView) view.findViewById(R.id.tv_zong_money3);
-        tv_zong_money1 = (TextView) view.findViewById(R.id.tv_zong_money1);
-
         //存档操作
         bsd_ksbj_cd = (TextView) view.findViewById(R.id.bsd_ksbj_cd);
         bsd_ksbj_cd.setOnClickListener(new View.OnClickListener() {
@@ -663,10 +274,8 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
         });
 
         //维修项目
-        listxm = (ListView) view.findViewById(R.id.bsd_lv);
-        //维修材料
-        listcl = (ListView) view.findViewById(R.id.bsd_lv1);
-        adpxm = new BSD_wxxm_adp(getActivity());
+        listViewXM = (ListView) view.findViewById(R.id.bsd_lv);
+        adpxm = new BSD_wxxm_adp(getActivity(), listXM);
         adpxm.setUp_ksbj_gs(new BSD_wxxm_adp.Up_ksbj_gs() {
             @Override
             public void onYesClick(final int i, String name, double gongshi) {
@@ -703,17 +312,17 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
             }
         });
         adpxm.setUp_ksbj_gsdj_shanchu(new BSD_wxxm_adp.Up_ksbj_gsdj_shanchu() {
-
             @Override
             public void onYesClick() {
                 jisuanzongjia();
                 adpxm.notifyDataSetChanged();
             }
         });
-        listxm.setAdapter(adpxm);
-        adpcl = new BSD_xzcl_adp(getActivity(), handler);
+        listViewXM.setAdapter(adpxm);
+        //维修材料
+        listViewCL = (ListView) view.findViewById(R.id.bsd_lv1);
+        adpcl = new BSD_xzcl_adp(getActivity(), listCL);
         adpcl.setKuCun(new  BSD_xzcl_adp.KuCun(){
-
             @Override
             public void query_kc(String peij_no) {
                 //弹出配件库存明细界面；
@@ -757,9 +366,9 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
                 wxclPrice();
             }
         });
-        listcl.setAdapter(adpcl);
-        bsd_ksbj_cp = (TextView) view.findViewById(R.id.bsd_ksbj_cp);
+        listViewCL.setAdapter(adpcl);
 
+        bsd_ksbj_cp = (TextView) view.findViewById(R.id.bsd_ksbj_cp);
         bsd_ksbj_lc = (TextView) view.findViewById(R.id.bsd_ksbj_lc);
         bsd_ksbj_cezhu = (TextView) view.findViewById(R.id.bsd_ksbj_cezhu);
         bsd_ksbj_dh = (TextView) view.findViewById(R.id.bsd_ksbj_dh);
@@ -778,23 +387,14 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
             }
         });
 
-
-
-
-
-
         bsd_ksbj_pp = (TextView) view.findViewById(R.id.bsd_ksbj_pp);
         bsd_ksbj_cx = (TextView) view.findViewById(R.id.bsd_ksbj_cx);
         bsd_ksbj_cz = (TextView) view.findViewById(R.id.bsd_ksbj_cz);
         bsd_ksbj_cxing = (TextView) view.findViewById(R.id.bsd_ksbj_cxing);
 
-
         tv_shibie = (TextView) view.findViewById(R.id.tv_shibie);
         tv_wxxm_money = (TextView) view.findViewById(R.id.tv_wxxm_money);
         tv_wxcl_money = (TextView) view.findViewById(R.id.tv_wxcl_money);
-
-
-//        relat_cx = (RelativeLayout) view.findViewById(R.id.relat_cx);
         //品牌
         bsd_ksbj_pinPai_delo = new BSD_KSBJ_PinPai_delo(getActivity());
         rea_pinpai = (LinearLayout) view.findViewById(R.id.rea_pinpai);
@@ -822,8 +422,6 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
             }
         });
         //车系
-
-
         bsd_ksbj_rl_cx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -837,22 +435,15 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
                     } else {
                         Show.showTime(getActivity(), "数据加载中请稍后");
                     }
-
                 }
-
-                //车组信息1
-
-
             }
         });
         //车组
-
         bsd_ksbj_rl_cz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (bsd_ksbj_cx.getText().toString().equals("")) {
                     Show.showTime(getActivity(), "请选择车系");
-
                 } else {
                     if (listjbcz.size() > 0) {
                         showGongSi1();
@@ -862,9 +453,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
                 }
             }
         });
-
         //车行
-
         bsd_ksbj_chexing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -879,6 +468,8 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
                 }
             }
         });
+
+        bsd_ksbj_rl_bycx = (TextView) view.findViewById(R.id.bsd_ksbj_tv_bycx);
         bsd_ksbj_rl_bycx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -923,11 +514,506 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
                         show(getFragmentManager(),"mrkx_lswxjy");
             }
         });
+        title = (TextView) view.findViewById(R.id.tv_title);
+        footerText = (TextView) view.findViewById(R.id.tv_footertext);
+        tv_billNo = (TextView) view.findViewById(R.id.tv_billNo);
+        // 返回
+        ll_back = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
+        ll_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        // 添加项目
+        addWxxm = (TextView) view.findViewById(R.id.tv_add_wxxm);
+        addWxxm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showWxxm();
+            }
+        });
+        // 添加用料
+        addWxcl = (TextView) view.findViewById(R.id.tv_add_wxcl);
+        addWxcl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showWxcl();
+            }
+        });
+    }
+
+    private void showWxcl() {
+        bsd_zcduxq_cl_pop = new BSD_ZCDUXQ_CL_POP(getActivity());
+        bsd_zcduxq_cl_pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        List<BSD_wxyy_cl_pop_entity> tempLists = new ArrayList<>();
+        if (listCL != null) {
+            for (BSD_KuaiSuBaoJia_CL_entity item : listCL) {
+                BSD_wxyy_cl_pop_entity tempItem = new BSD_wxyy_cl_pop_entity();
+                tempItem.setPeij_no(item.getPeij_no());
+                tempItem.setPeij_sl(item.getPeij_sl());
+                tempItem.setPeij_ydj(item.getPeij_dj());
+                tempLists.add(tempItem);
+            }
+        }
+        bsd_zcduxq_cl_pop.setTempLists(tempLists);
+        bsd_zcduxq_cl_pop.gb(new BSD_ZCDUXQ_CL_POP.Guanbi() {
+            @Override
+            public void guanbi() {
+
+            }
+
+            @Override
+            public void onGuanBi(List<BSD_wxyy_cl_pop_entity> tempList) {
+                List<BSD_KuaiSuBaoJia_CL_entity> needAddList = new ArrayList<>();
+                // 循环返回的数据，找不需要新添加的
+                for (BSD_wxyy_cl_pop_entity item : tempList) {
+                    boolean hasAdd = false;
+                    double addPeijSl = item.getPeij_sl();
+                    for (BSD_KuaiSuBaoJia_CL_entity listCLItem : listCL) {
+                        if (listCLItem.getPeij_no().equals(item.getPeij_no())) {
+                            if (listCLItem.getPeij_sl() == item.getPeij_sl()) {
+                                // 如果相等，则表示存在，直接退出，否则继续循环
+                                hasAdd = true;
+                            } else {
+                                addPeijSl = item.getPeij_sl() - listCLItem.getPeij_sl();
+                            }
+                            break;
+                        }
+                    }
+                    // 如果没有找到，则是需要添加的集合
+                    if (!hasAdd) {
+                        BSD_KuaiSuBaoJia_CL_entity wxclItem = new BSD_KuaiSuBaoJia_CL_entity();
+                        wxclItem.setList_no(billEntiy.getList_no());
+                        wxclItem.setPeij_no(item.getPeij_no());
+                        wxclItem.setPeij_mc(item.getPeij_mc());
+                        wxclItem.setPeij_sl(addPeijSl);
+                        wxclItem.setPeij_dj(item.getPeij_ydj());
+                        wxclItem.setPeij_je(addPeijSl * item.getPeij_ydj());
+                        wxclItem.setPeij_dw(item.getPeij_dw());
+                        wxclItem.setPeij_th(item.getPeij_th());
+                        wxclItem.setPeij_zt("正常");
+                        needAddList.add(wxclItem);
+                    }
+                }
+                // 请求接口，把数据添加到数据库中
+                if (needAddList.size() > 0) {
+                    saveNewWxclToDB(needAddList);
+                }
+            }
+        });
+        bsd_zcduxq_cl_pop.showAtLocation(beijing, Gravity.TOP, 0, 0);
+    }
+
+    private void saveNewWxclToDB(final List<BSD_KuaiSuBaoJia_CL_entity> needAddList) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");
+        AbRequestParams params = new AbRequestParams();
+        Object json = JSON.toJSON(needAddList);
+        params.put("addLists", json.toString());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_newcl, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                // 保存成功
+                if (data.equals("success")) {
+                    boolean isAdd = true;
+                    for (BSD_KuaiSuBaoJia_CL_entity item : needAddList) {
+                        for (BSD_KuaiSuBaoJia_CL_entity listClItem : listCL) {
+                            if (listClItem.getPeij_no().equals(item.getPeij_no())) {
+                                isAdd = false;
+                                listClItem.setPeij_sl(listClItem.getPeij_sl() + item.getPeij_sl());
+                                listClItem.setPeij_je(listClItem.getPeij_je() + item.getPeij_je());
+                                break;
+                            }
+                        }
+                        if (isAdd) {
+                            listCL.add(item);
+                        }
+                    }
+                    // 循环遍历一下集合，删除数量为0的
+                    Iterator<BSD_KuaiSuBaoJia_CL_entity> iterator = listCL.iterator();
+                    while (iterator.hasNext()) {
+                        BSD_KuaiSuBaoJia_CL_entity next = iterator.next();
+                        if (next.getPeij_sl() == 0) {
+                            iterator.remove();
+                        }
+                    }
+                    adpcl.notifyDataSetChanged();
+                }
+                bsd_zcduxq_cl_pop.dismiss();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    private void showWxxm() {
+        bsd_zcduxq_xm_pop = new BSD_ZCDUXQ_XM_POP(getActivity());
+        bsd_zcduxq_xm_pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        // 将当前已经添加的维修项目，放到popwindow的临时表中，表示这些项目已经添加
+        List<BSD_wxyy_xm_pop_entiy> tempLists = new ArrayList<>();
+        if (listXM != null) {
+            for (BSD_KuaiSuBaoJia_XM_entity item : listXM) {
+                BSD_wxyy_xm_pop_entiy tempItem = new BSD_wxyy_xm_pop_entiy();
+                tempItem.setWxxm_no(item.getWxxm_no());
+                tempLists.add(tempItem);
+            }
+        }
+        bsd_zcduxq_xm_pop.setTempLists(tempLists);
+        // 设置点击返回的回调
+        bsd_zcduxq_xm_pop.gb(new BSD_ZCDUXQ_XM_POP.Guanbi() {
+            @Override
+            public void guanbi() {
+
+            }
+
+            @Override
+            public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList) {
+                List<BSD_KuaiSuBaoJia_XM_entity> needAddList = new ArrayList<>();
+                // 循环返回的数据，找不需要新添加的
+                for (BSD_wxyy_xm_pop_entiy item : tempList) {
+                    boolean hasAdd = false;
+                    for (BSD_KuaiSuBaoJia_XM_entity listXMItem : listXM) {
+                        if (listXMItem.getWxxm_no().equals(item.getWxxm_no())) {
+                            // 如果相等，则表示存在，直接退出，否则继续循环
+                            hasAdd = true;
+                            break;
+                        }
+                    }
+                    // 如果没有找到，则是需要添加的集合
+                    if (!hasAdd) {
+                        BSD_KuaiSuBaoJia_XM_entity wxxmItem = new BSD_KuaiSuBaoJia_XM_entity();
+                        wxxmItem.setList_no(billEntiy.getList_no());
+                        wxxmItem.setWxxm_no(item.getWxxm_no());
+                        wxxmItem.setWxxm_mc(item.getWxxm_mc());
+                        wxxmItem.setWxxm_gs(item.getWxxm_gs());
+                        wxxmItem.setWxxm_dj(item.getWxxm_dj());
+                        wxxmItem.setWxxm_cb(item.getWxxm_cb());
+                        wxxmItem.setWxxm_je(item.getWxxm_zddj());
+                        wxxmItem.setWxxm_zt("正常");
+                        needAddList.add(wxxmItem);
+                    }
+                }
+                // 请求接口，把数据添加到数据库中
+                if (needAddList.size() > 0) {
+                    saveNewWxxmToDB(needAddList);
+                }
+            }
+        });
+        bsd_zcduxq_xm_pop.showAtLocation(beijing, Gravity.TOP, 0, 0);
+    }
+
+    private void saveNewWxxmToDB(final List<BSD_KuaiSuBaoJia_XM_entity> needAddList) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");
+        AbRequestParams params = new AbRequestParams();
+        Object json = JSON.toJSON(needAddList);
+        params.put("addLists", json.toString());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_newxm, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                // 保存成功
+                if (data.equals("success")) {
+                    // 1.将新维修项目添加到work_ll_gz的集合中;
+                    listXM.addAll(needAddList);
+                    adpxm.notifyDataSetChanged();
+                }
+                bsd_zcduxq_xm_pop.dismiss();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+        url = new URLS();
+        title.setText("快速报价");
+        footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
+                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
+        getBillInfoFromParam();
+        updateBillInfo();
+        getGSFLdata();
+        getWxxmData();
+        getWxclData();
+    }
+
+    private void updateBillInfo() {
+        tv_billNo.setText(billEntiy.getList_no());
+        Conts.list_no = billEntiy.getList_no();
+        bsd_ksbj_cp.setText(billEntiy.getChe_no());
+        Conts.chexing = billEntiy.getChe_cx();
+        String che = billEntiy.getChe_cx();
+        String[] cheCxs = che.split("\\|");
+        if (cheCxs.length >= 4) {
+            bsd_ksbj_pp.setText(cheCxs[0]);
+            bsd_ksbj_cx.setText(cheCxs[1]);
+            bsd_ksbj_cz.setText(cheCxs[2]);
+            bsd_ksbj_cxing.setText(cheCxs[3]);
+            //车系
+            bsdcx(cheCxs[0]);
+            //车组
+            bsdcz(cheCxs[1]);
+            //车行
+            bsd_chexingdata(cheCxs[2]);
+        }
+        if (TextUtils.isEmpty(billEntiy.getChe_vin()) || billEntiy.getChe_vin().length() < 2) {
+            bsd_ksbj_vin.setText(Conts.VIN);
+        } else {
+            bsd_ksbj_vin.setText(billEntiy.getChe_vin());
+        }
+        bsd_ksbj_lc.setText("" + billEntiy.getList_lc());
+        bsd_ksbj_cezhu.setText(billEntiy.getKehu_mc());
+        bsd_ksbj_dh.setText(billEntiy.getKehu_dh());
+        bsd_ksbj_tv_gsfl.setText(billEntiy.getList_sfbz());
+        bsd_ksbj_tv_gcsj.setText(billEntiy.getGcsj());
+        Conts.feilv_name = billEntiy.getList_sfbz();
+        gongshifeili_name = billEntiy.getList_sfbz();
+        gongshifeili_id = billEntiy.getList_gdfl();
+    }
+
+    private void getBillInfoFromParam() {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(param);
+            JSONObject item = jsonObject.getJSONObject("data");
+            billEntiy = new BSD_KuaiSuBaoJia_ety();
+            billEntiy.setReco_no(item.getDouble("reco_no"));
+            billEntiy.setList_no(item.getString("list_no"));
+            billEntiy.setList_sfbz(item.getString("List_sfbz"));
+            billEntiy.setList_sffl(item.getDouble("List_sffl"));
+            billEntiy.setKehu_no(item.getString("kehu_no"));
+            billEntiy.setKehu_mc(item.getString("kehu_mc"));
+            billEntiy.setKehu_xm(item.getString("kehu_xm"));
+            billEntiy.setKehu_dh(item.getString("kehu_dh"));
+            billEntiy.setChe_no(item.getString("che_no"));
+            billEntiy.setChe_vin(item.getString("che_vin"));
+            billEntiy.setChe_cx(item.getString("che_cx"));
+            billEntiy.setList_czy(item.getString("List_czy"));
+            billEntiy.setGongSiNo(item.getString("GongSiNo"));
+            billEntiy.setGongSiMc(item.getString("GongSiMc"));
+            billEntiy.setWork_no(item.getString("work_no"));
+            billEntiy.setList_jlrq(item.getString("List_jlrq"));
+            billEntiy.setList_yjjclc(item.getInt("List_yjjclc"));
+            billEntiy.setList_hjje(item.getDouble("List_hjje"));
+            billEntiy.setGcsj(item.getString("che_gcrq"));
+            billEntiy.setList_lc(Double.parseDouble(item.getString("List_lc")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 材料拉数据
+     */
+    public void getWxclData() {
+        listCL.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("list_no", billEntiy.getList_no());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_wxcl, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            BSD_KuaiSuBaoJia_CL_entity entity = new BSD_KuaiSuBaoJia_CL_entity();
+                            entity.setReco_no(item.getDouble("reco_no"));
+                            entity.setList_no(item.getString("list_no"));
+                            entity.setPeij_no(item.getString("peij_no"));
+                            entity.setPeij_th(item.getString("peij_th"));
+                            entity.setPeij_mc(item.getString("peij_mc"));
+                            entity.setPeij_dw(item.getString("peij_dw"));
+                            entity.setPeij_sl(item.getDouble("peij_sl"));
+                            entity.setPeij_dj(item.getDouble("peij_dj"));
+                            entity.setPeij_je(item.getDouble("peij_je"));
+                            entity.setPeij_jk(item.getString("peij_jk"));
+                            entity.setPeij_zt(item.getString("peij_zt"));
+                            listCL.add(entity);
+                        }
+                    }
+                    wxclPrice();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                adpcl.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+
+            }
+        });
 
 
+    }
 
+    private void showGongSi3() {
+        mSpinerPopWindow3.setWidth(bsd_ksbj_rl_gsfl.getWidth());
+        mSpinerPopWindow3.showAsDropDown(bsd_ksbj_rl_gsfl);
+    }
 
+    /**
+     * 工时费率数据
+     */
+    public void updateGSFLData() {
+        nameList3.clear();
+        for (int i = 0; i < listgslv.size(); i++) {
+            CustemObject object = new CustemObject();
+            object.data = listgslv.get(i).get("feil_mc");
+            nameList3.add(object);
+        }
+        mAdapter3 = new CustemSpinerAdapter(getActivity());
+        mAdapter3.refreshData(nameList3, 0);
+        mSpinerPopWindow3 = new SpinerPopWindow(getActivity());
+        mSpinerPopWindow3.setAdatper(mAdapter3, 310);
+        mSpinerPopWindow3.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
+            @Override
+            public void onItemClick(int pos) {
+                String clickValue = nameList3.get(pos).toString();
+                if (!bsd_ksbj_tv_gsfl.getText().toString().equals(clickValue)) {
+                    bsd_ksbj_tv_gsfl.setText(clickValue);
+                    gongshifeili_name = listgslv.get(pos).get("feil_mc");
+                    gongshifeili_id = listgslv.get(pos).get("feil_fl");
+                    Conts.feilv_name = gongshifeili_name;
+                }
+            }
+        });
+    }
 
+    public void getGSFLdata() {
+        listgslv.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("type", "ITGongShi");
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.get("status").toString().equals("1")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("id", item.getString("id"));
+                            map.put("feil_mc", item.getString("feil_mc"));
+                            map.put("feil_fl", item.getString("feil_fl"));
+                            map.put("feil_sy", item.getString("feil_sy"));
+                            listgslv.add(map);
+                        }
+                    }
+                    updateGSFLData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+
+            }
+        });
+    }
+
+    /**
+     * 项目拉数据
+     */
+    public void getWxxmData() {
+        listXM.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("list_no", billEntiy.getList_no());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_wxxm, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            BSD_KuaiSuBaoJia_XM_entity entity = new BSD_KuaiSuBaoJia_XM_entity();
+                            entity.setReco_no(item.getDouble("reco_no"));
+                            entity.setList_no(item.getString("list_no"));
+                            entity.setWxxm_no(item.getString("wxxm_no"));
+                            entity.setWxxm_mc(item.getString("wxxm_mc"));
+                            entity.setWxxm_gs(item.getDouble("wxxm_gs"));
+                            entity.setWxxm_khgs(item.getDouble("wxxm_khgs"));
+                            entity.setWxxm_cb(item.getDouble("wxxm_cb"));
+                            entity.setWxxm_je(item.getDouble("wxxm_je"));
+                            entity.setWxxm_yje(item.getDouble("wxxm_yje"));
+                            entity.setWxxm_mxcx(item.getString("wxxm_mxcx"));
+                            entity.setWxxm_zt(item.getString("wxxm_zt"));
+                            entity.setWxxm_bz(item.getString("wxxm_bz"));
+                            entity.setWxxm_dj(item.getDouble("wxxm_dj"));
+                            listXM.add(entity);
+                        }
+                    }
+                    jisuanzongjia();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                adpxm.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Show.showTime(getActivity(), "网络连接超时");
+            }
+        });
     }
 
 
@@ -1087,7 +1173,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 
             @Override
             public View getView(final int position, View convertView, ViewGroup parent) {
-                View   layout= LayoutInflater.from(getActivity()).inflate(R.layout.select_cx_dialog_item,null);
+                View layout = LayoutInflater.from(getActivity()).inflate(R.layout.select_cx_dialog_item, null);
                 TextView   tv_mc= (TextView) layout.findViewById(R.id.tv_cxmc);
                 TextView  tv_nbmc= (TextView) layout.findViewById(R.id.tv_cx_nbmc);
                 tv_mc.setText(listvincx.get(position).get("cxMc"));     //车辆名称
@@ -1494,7 +1580,6 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 
         c = a + b;
         tv_zong_money.setText(a + b + "");
-        tv_zong_money1.setText(a + b + "");
     }
 
     public void POP(View view) {
@@ -1574,7 +1659,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
                 }
 
                 adpxm.setList(listXM);
-                listxm.setAdapter(adpxm);
+                listViewXM.setAdapter(adpxm);
                 Log.i("123", "===========================" + listXM.size());
                 jisuanzongjia();
                 adpxm.notifyDataSetChanged();
@@ -1619,8 +1704,6 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 //                            item.setPeij_dw(entity.getWaib_dw());
                         listCL.add(item);
                         Show.showTime(getActivity(), "成功");
-
-
                     }
 
 
@@ -1649,7 +1732,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
                 }
 
                 adpcl.setList(listCL);
-                listcl.setAdapter(adpcl);
+                listViewCL.setAdapter(adpcl);
                 adpcl.notifyDataSetChanged();
             }
         });
@@ -1889,7 +1972,6 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
         params.put("kehu_no", Conts.kehu_no);//客户名称
         params.put("gcsj", bsd_ksbj_tv_gcsj.getText().toString().trim());
         params.put("list_hjje", tv_zong_money.getText().toString());
-        params.put("list_hjje_yh", tv_zong_money1.getText().toString());
         params.put("gcsj", bsd_ksbj_tv_gcsj.getText().toString());
 
         Log.i("cjn", "查看这些参数"
@@ -2169,15 +2251,6 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 
     }
 
-
-    TextView bsd_02_text;
-
-    public void bsdtext(View view) {
-        bsd_02_text = (TextView) view.findViewById(R.id.bsd_02_text);
-        bsd_02_text.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
-                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
-    }
-
     String getCar;
 
     public void bsd_cexifansuan() {
@@ -2243,6 +2316,7 @@ public class BSD_kuaisubaojia_Fragment extends Fragment implements View.OnClickL
 
 
     }
+
 
 
 }

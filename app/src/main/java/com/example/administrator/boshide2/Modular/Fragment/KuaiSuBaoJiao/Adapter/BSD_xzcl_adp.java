@@ -2,7 +2,6 @@ package com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Adapte
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_CL_entity;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.fagmt_adp.BSD_mrkx_wxcl_adp;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
 
@@ -27,17 +25,17 @@ import java.util.List;
  * 博士德维修cailiao适配器
  */
 public class BSD_xzcl_adp extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
-    List<BSD_KuaiSuBaoJia_CL_entity> list;
-    TooPromptdiaog promptdiaog;
-    double zongjia;
+    private LayoutInflater layoutInflater;
+    private Context context;
+    private List<BSD_KuaiSuBaoJia_CL_entity> list;
+    private TooPromptdiaog promptdiaog;
 
     int shuliangs[];
     public int shuliang = 1;
-    Updanjia updanjia;//加
-    Delete delete;//删除
+    private Updanjia updanjia;//加
+    private Delete delete;//删除
     private KuCun kuCun;
+
     public void setDelete(Delete delete) {
         this.delete = delete;
     }
@@ -46,10 +44,9 @@ public class BSD_xzcl_adp extends BaseAdapter {
         this.updanjia = updanjia;
     }
 
-    public  void  setKuCun(KuCun   kuCun){
-        this.kuCun=kuCun;
+    public void setKuCun(KuCun kuCun) {
+        this.kuCun = kuCun;
     }
-
 
     public void setList(List<BSD_KuaiSuBaoJia_CL_entity> list) {
         this.list = list;
@@ -62,10 +59,7 @@ public class BSD_xzcl_adp extends BaseAdapter {
 
             }
         }
-
-
     }
-    private Handler mHandler;
 
     public shuliangzongjia getShuliangzongjia() {
         return shuliangzongjia;
@@ -77,34 +71,33 @@ public class BSD_xzcl_adp extends BaseAdapter {
 
     shuliangzongjia shuliangzongjia;
 
-    public BSD_xzcl_adp(Context context, Handler mHandler) {
-        this.mHandler = mHandler;
+    public BSD_xzcl_adp(Context context, List<BSD_KuaiSuBaoJia_CL_entity> list) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     @Override
     public int getCount() {
-        return (list==null)?0:list.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return list.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
-
-    class Holder {
-        TextView bsd_xzcl_name, bsd_xzcl_shuliang, bsd_xzcl_danjia, bsd_xzcl_tuhao, bsd_xzcl_pinpai, bsd_xzcl_caozuo;
-        RelativeLayout bsd_wxyy_cl_delet;
-        ImageView bsd_scl_iv_jian, bsd_scl_iv_jia;
-        LinearLayout  bsd_wxcl_kc;
+    public final class Holder {
+        TextView bsd_xzcl_name, bsd_xzcl_shuliang, bsd_xzcl_danjia, bsd_xzcl_dw, bsd_xzcl_je, bsd_xzcl_caozuo;
+        ImageView iv_delete;
+        ImageView iv_stock;
     }
+
     @Override
     public View getView(final int i, View contetview, ViewGroup viewGroup) {
         Holder holder = null;
@@ -114,122 +107,64 @@ public class BSD_xzcl_adp extends BaseAdapter {
             holder.bsd_xzcl_name = (TextView) contetview.findViewById(R.id.bsd_xzcl_name);
             holder.bsd_xzcl_shuliang = (TextView) contetview.findViewById(R.id.bsd_xzcl_shuliang);
             holder.bsd_xzcl_danjia = (TextView) contetview.findViewById(R.id.bsd_xzcl_danjia);
-            holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_tuhao);
-            holder.bsd_xzcl_pinpai = (TextView) contetview.findViewById(R.id.bsd_xzcl_pinpai);
-            holder.bsd_wxyy_cl_delet = (RelativeLayout) contetview.findViewById(R.id.bsd_wxyy_cl_delet);
-            holder.bsd_scl_iv_jia = (ImageView) contetview.findViewById(R.id.bsd_scl_iv_jia);
-            holder.bsd_scl_iv_jian = (ImageView) contetview.findViewById(R.id.bsd_scl_iv_jian);
-            holder.bsd_wxcl_kc= (LinearLayout) contetview.findViewById(R.id.bsd_wxcl_kc);
-
+            holder.bsd_xzcl_dw = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
+            holder.bsd_xzcl_je = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
+            holder.iv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
+            holder.iv_stock = (ImageView) contetview.findViewById(R.id.iv_stock);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
-
-
         holder.bsd_xzcl_name.setText(list.get(i).getPeij_mc());
-
-
         holder.bsd_xzcl_shuliang.setText("" + (int) list.get(i).getPeij_sl());
-        Log.i("cjn","查看这个单价"+list.get(i).getPeij_dj()+"总价"+zongjia+"数量"+shuliangs[i]);
-        final Holder finalHolder = holder;
-        holder.bsd_scl_iv_jia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shuliangs[i]++;
-                finalHolder.bsd_xzcl_shuliang.setText("" + shuliangs[i]);
-                zongjia = shuliangs[i] * list.get(i).getPeij_dj();
-                Log.i("cjn","查看这个单价"+list.get(i).getPeij_dj()+"总价"+zongjia+"数量"+shuliangs[i]);
-                finalHolder.bsd_xzcl_pinpai.setText("" + zongjia);
-                mHandler.sendMessage(mHandler
-                        .obtainMessage(10, shuliangs[i]));
-                list.get(i).setPeij_sl(shuliangs[i]);
-                list.get(i).setPeij_je(zongjia);
-                shuliangzongjia.onYesClick(shuliangs[i], zongjia);
-
-            }
-        });
-
-        holder.bsd_scl_iv_jian.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (shuliangs[i] > 1) {
-                    shuliangs[i]--;
-                    finalHolder.bsd_xzcl_shuliang.setText("" + shuliangs[i]);
-                    zongjia = shuliangs[i] * list.get(i).getPeij_dj();
-                    finalHolder.bsd_xzcl_pinpai.setText("" + zongjia);
-                    list.get(i).setPeij_sl(shuliangs[i]);
-                    list.get(i).setPeij_je(zongjia);
-                    mHandler.sendMessage(mHandler
-                            .obtainMessage(10, shuliangs[i]));
-
-                    shuliangzongjia.onYesClick(shuliangs[i], zongjia);
-                }
-
-            }
-        });
-
-
         holder.bsd_xzcl_danjia.setText("" + list.get(i).getPeij_dj());
+        holder.bsd_xzcl_dw.setText(list.get(i).getPeij_dw());
+        holder.bsd_xzcl_je.setText("" + list.get(i).getPeij_sl() * list.get(i).getPeij_dj());
         holder.bsd_xzcl_danjia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updanjia.onYesClick(i,list.get(i).getPeij_mc(),list.get(i).getPeij_dj());
+                updanjia.onYesClick(i, list.get(i).getPeij_mc(), list.get(i).getPeij_dj());
             }
         });
-
-
-
-        holder.bsd_xzcl_tuhao.setText(list.get(i).getPeij_dw());
-
-        zongjia = shuliangs[i] * list.get(i).getPeij_dj();
-        holder.bsd_xzcl_pinpai.setText("" +list.get(i).getPeij_sl()*list.get(i).getPeij_dj());
-        holder.bsd_wxyy_cl_delet.setOnClickListener(new View.OnClickListener() {
+        holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 promptdiaog = new TooPromptdiaog(context, "是否删除");
                 promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick() {
-//                        shanchu(i);
-
                         list.remove(i);
                         notifyDataSetChanged();
                         promptdiaog.dismiss();
                         delete.onYesClick();
                     }
                 });
-
                 promptdiaog.show();
             }
         });
-//        holder.bsd_xzcl_caozuo.setText(list.get(i).get("caozuo"));
 
-        holder.bsd_wxcl_kc.setOnClickListener(new View.OnClickListener() {
+        holder.iv_stock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 kuCun.query_kc(list.get(i).getPeij_no());
             }
         });
-
-
         return contetview;
-
     }
 
-    public  interface   KuCun{
-        public  void  query_kc(String  peij_no );
+    public interface KuCun {
+        public void query_kc(String peij_no);
     }
-
 
 
     public interface shuliangzongjia {
         public void onYesClick(int shuliang, double zongjia);
     }
+
     public interface Updanjia {
-        public void onYesClick(int i,String name, double danjia);
+        public void onYesClick(int i, String name, double danjia);
     }
+
     //删除
     public interface Delete {
         public void onYesClick();

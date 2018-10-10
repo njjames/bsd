@@ -80,7 +80,7 @@
             android:background="@drawable/biankuang_info_bg">
 
             <TextView
-                android:id="@+id/bsd_xzcl_tuhao"
+                android:id="@+id/bsd_xzcl_dw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -97,7 +97,7 @@
             android:background="@drawable/biankuang_info_bg">
 
             <TextView
-                android:id="@+id/bsd_xzcl_pinpai"
+                android:id="@+id/bsd_xzcl_je"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"

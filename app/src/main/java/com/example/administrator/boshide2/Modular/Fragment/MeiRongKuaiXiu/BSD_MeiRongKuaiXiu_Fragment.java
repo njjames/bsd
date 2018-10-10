@@ -572,6 +572,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             bsd_mrkx_rl_hukx.setVisibility(View.INVISIBLE);
             tv_readCard.setVisibility(View.INVISIBLE);
         }
+        // 返回
         bsd_lsbj_fanhui = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -700,7 +701,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         getBillInfoFromParam();
         updateBillInfo();
         getStockInfo();
-        gsGSFLData();
+        getGSFLData();
         updateCheXi();
         updateCheZu();
         updateCheXing();
@@ -938,7 +939,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     /**
      * 获取工时费率
      */
-    public void gsGSFLData() {
+    public void getGSFLData() {
         listgslv.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("type", "ITGongShi");
