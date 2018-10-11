@@ -83,7 +83,7 @@ public class BSD_wxywdd_dap extends BaseAdapter {
         if (contetview == null) {
             holder = new Holder();
             contetview = LayoutInflater.from(context).inflate(R.layout.bsd_wxywdd_adp_item, null);
-            holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_rq);
+            holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.iv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_xsbj_gongshi = (TextView) contetview.findViewById(R.id.bsd_xsbj_gongshi);
             holder.bsd_xsbj_jiner = (TextView) contetview.findViewById(R.id.bsd_xsbj_jiner);

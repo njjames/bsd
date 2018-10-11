@@ -6,16 +6,23 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/bsd_xsbj_rq"
+        android:id="@+id/bsd_xsbj_no"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="项目编码" />
+
+    <TextView
+        android:id="@+id/bsd_xsbj_name"
         android:layout_weight="1.2"
         style="@style/mysearchinfostyle"
         android:text="项目名称" />
 
     <TextView
         android:id="@+id/bsd_kxbj_bzsj"
-        android:layout_weight="1"
+        android:layout_weight="0.8"
         style="@style/mysearchinfostyle"
-        android:text="标准工时" />
+        android:text="标准工时"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
     <TextView
         android:id="@+id/bsd_kxbj_gsdj"
@@ -24,14 +31,15 @@
         android:text="工时单价" />
 
     <TextView
-        android:id="@+id/bsd_kxbj_fwgw"
+        android:id="@+id/bsd_kxbj_je"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="金额" />
+        android:text="金额"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
     <TextView
         android:id="@+id/bsd_ksbj_tv_zt"
-        android:layout_weight="0.8"
+        android:layout_weight="0.5"
         style="@style/mysearchinfostyle"
         android:text="状态" />
 

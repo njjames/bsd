@@ -53,13 +53,17 @@ import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_xm_pop_entiy;
+import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
 import com.example.administrator.boshide2.Modular.View.MarqueeView;
 import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
 import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
+import com.example.administrator.boshide2.Modular.View.diaog.CustomDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
+import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.Modular.View.timepicker.TimePickerShow;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.DownJianPan;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
 
@@ -158,7 +162,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
     private SpinerPopWindow mSpinerPopWindow2;
 
     //车辆信息、历史维修、历史维修建议
-    private  TextView bsd_ksbj_clxx,bsd_ksbj_lswxjy,bsd_ksbj_lswx;
+    private TextView bsd_ksbj_clxx, bsd_ksbj_lswxjy, bsd_ksbj_lswx;
 
     //工时费率
     LinearLayout bsd_ksbj_rl_gsfl;
@@ -183,8 +187,8 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
 
     //根据VIN返回车型信息
     List<Map<String, String>> listvincx = new ArrayList<>();
-    String   cxnm;      //车型内码
-    TextView  rl_duqu;
+    String cxnm;      //车型内码
+    TextView rl_duqu;
     private TextView title;
     private TextView footerText;
     private String param;
@@ -195,6 +199,13 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
     private BSD_ZCDUXQ_XM_POP bsd_zcduxq_xm_pop;
     private TextView addWxcl;
     private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
+    private TooPromptdiaog promptdiaog;
+    private double xmZje;
+    private double clZje;
+    private double totalJe;
+    private UpdateItemInfoDialog updateItemInfoDialog;
+    private TextView tv_wxcl_count;
+    private TextView tv_wxxm_count;
 
     public static BSD_kuaisubaojia_Fragment newInstance(String params) {
         BSD_kuaisubaojia_Fragment fragment = new BSD_kuaisubaojia_Fragment();
@@ -238,23 +249,15 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         });
         bsd_ksbj_tv_gsfl = (TextView) view.findViewById(R.id.bsd_ksbj_tv_gsfl);
         tv_zong_money = (TextView) view.findViewById(R.id.tv_zong_money);
-        //存档操作
+        // 存档
         bsd_ksbj_cd = (TextView) view.findViewById(R.id.bsd_ksbj_cd);
         bsd_ksbj_cd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (danhao == null || danhao.equals("")) {
-                    cundangdata();
-                } else {
-                    Log.i("cjn", "这是点击事件");
-                    //如果有单号进行如下操作
-                    updata();
-                    //没有接口
-                    cd_or_jc = 0;
-                }
+                saveBillInfo();
             }
         });
-        //进厂操作
+        // 进厂
         bsd_ksbj_jc = (TextView) view.findViewById(R.id.bsd_ksbj_jc);
         bsd_ksbj_jc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,10 +268,8 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                 } else {
                     Log.i("cjn", "这是点击事件");
                     //如果有单号进行如下操作
-                    updata();
+                    saveBillInfo();
                     //没有接口
-
-
                 }
             }
         });
@@ -276,94 +277,89 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         //维修项目
         listViewXM = (ListView) view.findViewById(R.id.bsd_lv);
         adpxm = new BSD_wxxm_adp(getActivity(), listXM);
-        adpxm.setUp_ksbj_gs(new BSD_wxxm_adp.Up_ksbj_gs() {
+        adpxm.setOnOperateItemListener(new BSD_wxxm_adp.OnOperateItemListener() {
             @Override
-            public void onYesClick(final int i, String name, double gongshi) {
-                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), name,0, gongshi, "","修改工时");
-                bsd_xiuGaiGongShi.show();
-                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
+            public void onDelete(final String wxxmNo, final int position) {
+                promptdiaog = new TooPromptdiaog(getContext(), "是否删除");
+                promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
                     @Override
-                    public void onYesClick(double gongshi) {
-                        listXM.get(i).setWxxm_gs(gongshi);
-//                        zj();
-                        bsd_xiuGaiGongShi.dismiss();
-                        jisuanzongjia();
-                        adpxm.notifyDataSetChanged();
+                    public void onYesClick() {
+                        deleteWxxm(wxxmNo, position);
                     }
                 });
+                promptdiaog.show();
+            }
 
-            }
-        });
-        adpxm.setUp_ksbj_gsdj(new BSD_wxxm_adp.Up_ksbj_gsdj() {
             @Override
-            public void onYesClick(final int i, String name, double gongshidanjia) {
-                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), name, 0,gongshidanjia,"", "修改金额");
-                bsd_xiuGaiGongShi.show();
-                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
+            public void onUpdateGS(final String wxxmNo, final double wxxmGs, final String wxxmMc, final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_WXXMBZGS, wxxmGs, wxxmMc);
+                updateItemInfoDialog.show();
+                updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
                     @Override
-                    public void onYesClick(double gongshi) {
-                        listXM.get(i).setWxxm_je(gongshi);
-//                        zj();
-                        bsd_xiuGaiGongShi.dismiss();
-                        jisuanzongjia();
-                        adpxm.notifyDataSetChanged();
+                    public void onYesClick(double gongshif) {
+                        Conts.wxxm_je = gongshif;
+                        updateWxxmGs(wxxmNo, gongshif, position);
                     }
                 });
             }
-        });
-        adpxm.setUp_ksbj_gsdj_shanchu(new BSD_wxxm_adp.Up_ksbj_gsdj_shanchu() {
+
             @Override
-            public void onYesClick() {
-                jisuanzongjia();
-                adpxm.notifyDataSetChanged();
+            public void onUpdateJe(final String wxxmNo, double wxxmje, String wxxmMc, final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_WXXMGS, wxxmje, wxxmMc);
+                updateItemInfoDialog.show();
+                updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick(double gongshif) {
+                        updateWxxmJE(wxxmNo, gongshif, position);
+                    }
+                });
             }
         });
         listViewXM.setAdapter(adpxm);
         //维修材料
         listViewCL = (ListView) view.findViewById(R.id.bsd_lv1);
         adpcl = new BSD_xzcl_adp(getActivity(), listCL);
-        adpcl.setKuCun(new  BSD_xzcl_adp.KuCun(){
+        adpcl.setOnOperateItemListener(new BSD_xzcl_adp.OnOperateItemListener() {
             @Override
-            public void query_kc(String peij_no) {
-                //弹出配件库存明细界面；
-                Bundle   bundle=new Bundle();
-                bundle.putString("peij_no",peij_no);
-
-                BSD_MeiRongKuaiXiu_KuCun_Fragment kcDialog = new BSD_MeiRongKuaiXiu_KuCun_Fragment();
-                kcDialog.setArguments(bundle);
-                kcDialog.show(getFragmentManager(),"kcDialog");
-            }
-        });
-        adpcl.setShuliangzongjia(new BSD_xzcl_adp.shuliangzongjia() {
-            @Override
-            public void onYesClick(int shuliang, double zongjia) {
-                sl = shuliang;
-                zj = zongjia;
-                wxclPrice();
-            }
-        });
-        adpcl.setUpdanjia(new BSD_xzcl_adp.Updanjia() {
-            @Override
-            public void onYesClick(final int i, String name, double danjia) {
-                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), listCL.get(i).getPeij_mc(),0, listCL.get(i).getPeij_dj(),"", "修改单价");
-                bsd_xiuGaiGongShi.show();
-                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
+            public void onDelete(final String peijNo, final int position) {
+                promptdiaog = new TooPromptdiaog(getContext(), "是否删除");
+                promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
                     @Override
-                    public void onYesClick(double gongshi) {
-                        listCL.get(i).setPeij_dj(gongshi);
-                        listCL.get(i).setPeij_je(gongshi * listCL.get(i).getPeij_sl());
-                        wxclPrice();
-                        adpcl.notifyDataSetChanged();
-                        bsd_xiuGaiGongShi.dismiss();
+                    public void onYesClick() {
+                        deleteWxcl(peijNo, position);
                     }
                 });
-
+                promptdiaog.show();
             }
-        });
-        adpcl.setDelete(new BSD_xzcl_adp.Delete() {
+
             @Override
-            public void onYesClick() {
-                wxclPrice();
+            public void onUpdateSL(final String peijNo, double peijSL, String peijMc, final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PEIJSL, peijSL, peijMc);
+                updateItemInfoDialog.show();
+                updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick(double gongshif) {
+                        updateWxclSL(peijNo, gongshif, position);
+                    }
+                });
+            }
+
+            @Override
+            public void onUpdateDj(final String peijNo, double peijDj, String peijMc, final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PEIJDJ, peijDj, peijMc);
+                updateItemInfoDialog.show();
+                updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick(double gongshif) {
+                        updateWxclDJ(peijNo, gongshif, position);
+                    }
+                });
+            }
+
+            @Override
+            public void onSearchStock(String peij_no) {
+                BSD_MeiRongKuaiXiu_KuCun_Fragment kcDialog = BSD_MeiRongKuaiXiu_KuCun_Fragment.newInstance(peij_no);
+                kcDialog.show(getFragmentManager(), "kcDialog");
             }
         });
         listViewCL.setAdapter(adpcl);
@@ -375,7 +371,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         bsd_ksbj_vin = (TextView) view.findViewById(R.id.bsd_ksbj_vin);
         //读取vin码
         rl_duqu = (TextView) view.findViewById(R.id.tv_readvin);
-        rl_duqu .setOnClickListener(new View.OnClickListener() {
+        rl_duqu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String vin = bsd_ksbj_vin.getText().toString();
@@ -488,30 +484,30 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         bsd_ksbj_clxx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"车辆信息",Toast.LENGTH_LONG).show();
-                Conts.danju_type="ksbj";
+                Toast.makeText(getActivity(), "车辆信息", Toast.LENGTH_LONG).show();
+                Conts.danju_type = "ksbj";
                 //跳转到编辑车辆、客户信息对话框
                 new BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment()
                         .show(getFragmentManager(), "dialog_fragment");
 
             }
         });
-        bsd_ksbj_lswx= (TextView) view.findViewById(R.id.bsd_ksbj_lswx);
+        bsd_ksbj_lswx = (TextView) view.findViewById(R.id.bsd_ksbj_lswx);
         bsd_ksbj_lswx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Conts.danju_type="ksbj";
+                Conts.danju_type = "ksbj";
                 new BSD_LishiWeiXiu_DialogFragment().
-                        show(getFragmentManager(),"mrkx_lswx");
+                        show(getFragmentManager(), "mrkx_lswx");
             }
         });
-        bsd_ksbj_lswxjy= (TextView) view.findViewById(R.id.bsd_ksbj_lswxjy);
+        bsd_ksbj_lswxjy = (TextView) view.findViewById(R.id.bsd_ksbj_lswxjy);
         bsd_ksbj_lswxjy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new BSD_LiShiWeiXiuJianYi_DialogFragment().
-                        show(getFragmentManager(),"mrkx_lswxjy");
+                        show(getFragmentManager(), "mrkx_lswxjy");
             }
         });
         title = (TextView) view.findViewById(R.id.tv_title);
@@ -522,7 +518,8 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                saveBillInfoBeforeBack();
+                ((MainActivity)getHostActicity()).upksbjlog();
             }
         });
         // 添加项目
@@ -541,6 +538,294 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                 showWxcl();
             }
         });
+        tv_wxxm_count = (TextView) view.findViewById(R.id.tv_wxxm_count);
+        tv_wxcl_count = (TextView) view.findViewById(R.id.tv_wxcl_count);
+        bsd_ksbj_vin.setFocusable(true);
+        bsd_ksbj_vin.setFocusableInTouchMode(true);
+        bsd_ksbj_vin.requestFocus();
+    }
+
+    private void saveBillInfoBeforeBack() {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
+        chepai = bsd_ksbj_cp.getText().toString();
+        pinpai = bsd_ksbj_pp.getText().toString();
+        chexi = bsd_ksbj_cx.getText().toString();
+        chezx = bsd_ksbj_cz.getText().toString();
+        chexing = bsd_ksbj_cxing.getText().toString();
+
+        if (bsd_ksbj_pp.getText().toString().equals("") ||
+                bsd_ksbj_cx.getText().toString().equals("") ||
+                bsd_ksbj_cz.getText().toString().equals("") ||
+                bsd_ksbj_cxing.getText().toString().equals("")) {
+            che_cx = "";
+        } else {
+            che_cx = pinpai + "|" + chexi + "|" + chezx + "|" + chexing;
+        }
+        VIN = bsd_ksbj_vin.getText().toString();
+        jinchanglicheng = bsd_ksbj_lc.getText().toString();
+        dinahua = bsd_ksbj_dh.getText().toString();
+        chezhu = bsd_ksbj_cezhu.getText().toString();
+        AbRequestParams params = new AbRequestParams();
+        params.put("che_no", billEntiy.getChe_no());
+        params.put("list_no", billEntiy.getList_no());//预约单号
+        params.put("che_cx", che_cx);//品牌，车系，车组，车行，che_cx
+        params.put("che_vin", VIN);//VIN码
+        params.put("List_lc", jinchanglicheng);//进厂里程
+        params.put("List_yjjclc", jinchanglicheng);//进厂里程
+        params.put("kehu_mc", chezhu);//客户司机
+        params.put("kehu_dh", dinahua);//手机号
+        params.put("List_sfbz", gongshifeili_name);
+        params.put("List_sffl", gongshifeili_id);
+        params.put("kehu_no", billEntiy.getKehu_no());//客户名称
+        params.put("list_hjje", tv_zong_money.getText().toString());
+        params.put("gcsj", bsd_ksbj_tv_gcsj.getText().toString());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_bcjbxx, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+                boolean status = data.contains("保存成功");
+                // 保存成功则跳转fragment，应该没有失败的情况，有再添加
+                if (status) {
+                    ((MainActivity) getActivity()).upksbjlog();
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Show.showTime(getActivity(), "网络请求超时");
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+
+            }
+        });
+    }
+
+    private void updateWxclDJ(String peijNo, final double gongshif, final int position) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("list_no", billEntiy.getList_no());
+        params.put("peij_no", peijNo);
+        params.put("dj", gongshif + "");
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_upcldj, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                listCL.get(position).setPeij_dj(gongshif);
+                listCL.get(position).setPeij_je(gongshif * listCL.get(position).getPeij_sl());
+                int firstVisiblePosition = listViewCL.getFirstVisiblePosition();
+                adpcl.notifyDataSetChanged();
+                listViewCL.setSelection(firstVisiblePosition);
+                wxclPrice();
+                updateItemInfoDialog.dismiss();
+                DownJianPan.DJP(getContext());
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    private void updateWxclSL(String peijNo, final double gongshif, final int position) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("list_no", billEntiy.getList_no());
+        params.put("peij_no", peijNo);
+        params.put("sl", gongshif + "");
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_upclsl, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                listCL.get(position).setPeij_sl(gongshif);
+                listCL.get(position).setPeij_je(gongshif * listCL.get(position).getPeij_dj());
+                int firstVisiblePosition = listViewCL.getFirstVisiblePosition();
+                adpcl.notifyDataSetChanged();
+                listViewCL.setSelection(firstVisiblePosition);
+                wxclPrice();
+                updateItemInfoDialog.dismiss();
+                DownJianPan.DJP(getContext());
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    private void deleteWxcl(String peijNo, final int position) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("list_no", billEntiy.getList_no());
+        params.put("peij_no", peijNo);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_deletCL, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                listCL.remove(position);
+                adpxm.notifyDataSetChanged();
+                wxclPrice();
+                promptdiaog.dismiss();
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "删除失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateWxxmJE(String wxxmNo, final double gongshif, final int position) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("list_no", billEntiy.getList_no());
+        params.put("wxxm_no", wxxmNo);
+        params.put("je", gongshif + "");
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_upxmje, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                listXM.get(position).setWxxm_je(gongshif);
+                if (listXM.get(position).getWxxm_gs() == 0) {
+                    listXM.get(position).setWxxm_dj(gongshif);
+                } else {
+                    listXM.get(position).setWxxm_dj(gongshif / listXM.get(position).getWxxm_gs());
+                }
+                int firstVisiblePosition = listViewXM.getFirstVisiblePosition();
+                adpxm.notifyDataSetChanged();
+                listViewXM.setSelection(firstVisiblePosition);
+                wxxmPrice();
+                updateItemInfoDialog.dismiss();
+                DownJianPan.DJP(getContext());
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    private void updateWxxmGs(String wxxmNo, final double gongshi, final int position) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("list_no", billEntiy.getList_no());
+        params.put("wxxm_no", wxxmNo);
+        params.put("gs", gongshi + "");
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_upxmgs, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                listXM.get(position).setWxxm_gs(gongshi);
+                listXM.get(position).setWxxm_je(gongshi * listXM.get(position).getWxxm_dj());
+                int firstVisiblePosition = listViewXM.getFirstVisiblePosition();
+                adpxm.notifyDataSetChanged();
+                listViewXM.setSelection(firstVisiblePosition);
+                wxxmPrice();
+                updateItemInfoDialog.dismiss();
+                DownJianPan.DJP(getContext());
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    private void deleteWxxm(String wxxmNo, final int position) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("list_no", billEntiy.getList_no());
+        params.put("wxxm_no", wxxmNo);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_deletXM, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                listXM.remove(position);
+                adpxm.notifyDataSetChanged();
+                wxxmPrice();
+                promptdiaog.dismiss();
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "删除失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void wxxmPrice() {
+        double jg = 0;
+        for (int i = 0; i < listXM.size(); i++) {
+            jg = jg + listXM.get(i).getWxxm_je();
+        }
+        xmZje = jg;
+        tv_wxxm_money.setText(jg + "元");
+        tv_wxxm_count.setText("(共" + listXM.size() + "条记录)");
+        zoongjia();
     }
 
     private void showWxcl() {
@@ -994,7 +1279,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                             listXM.add(entity);
                         }
                     }
-                    jisuanzongjia();
+                    wxxmPrice();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1017,13 +1302,9 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
     }
 
 
-
-
-
-
     /*
-  *根据vin码获取车辆名称、代码、内部名称；
-  */
+     *根据vin码获取车辆名称、代码、内部名称；
+     */
     public void duVin() {
         listvincx.clear();
         AbRequestParams params = new AbRequestParams();
@@ -1044,24 +1325,24 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                             map.put("cxMcStd", item.getString("chex_mc_std"));   //车系
                             map.put("cxDm", item.getString("chex_dm"));     //车系代码
                             map.put("cxMc", item.getString("chex_mc"));   //车系名称
-                            Log.e("vins", "dm:"+ item.getString("chex_dm"));
+                            Log.e("vins", "dm:" + item.getString("chex_dm"));
                             listvincx.add(map);
                         }
                         if (listvincx.size() == 1) {
-                            Log.e("vin", "1条记录" );
+                            Log.e("vin", "1条记录");
                             //如果只查到一条记录，通过chex_dm查询相应的品牌、车系、车组、车型信息；
-                            cxnm=listvincx.get(0).get("cxDm");      //车型内码
+                            cxnm = listvincx.get(0).get("cxDm");      //车型内码
 //                            cxmc=listvincx.get(0).get("cxMc");      //车型名称
 //                            cxmcstd=listvincx.get(0).get("cxMcStd");   //车型内部名称；
                             getcx_by_cxdm();
                         } else if (listvincx.size() > 1) {
                             //如果查到多条记录，弹出对话框，显示chex_mc和chex_mc_std；
-                            Log.e("vin", "listvincx的长度："+listvincx.size() );
+                            Log.e("vin", "listvincx的长度：" + listvincx.size());
                             showDialogSelectCx();
                         }
                     }
                     if (jsonObject.get("message").toString().equals("查询失败")) {
-                        Toast.makeText(getActivity(),jsonObject.getString("data").toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), jsonObject.getString("data").toString(), Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1088,11 +1369,11 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
 
 
     /*
-*根据vin码、车辆代码获取车牌车系车组车型信息
-*/
+     *根据vin码、车辆代码获取车牌车系车组车型信息
+     */
     public void getcx_by_cxdm() {
         AbRequestParams params = new AbRequestParams();
-        Log.e("sss", "cxnm是："+cxnm );
+        Log.e("sss", "cxnm是：" + cxnm);
         params.put("chex_dm", cxnm);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcx_byvindm, params, new AbStringHttpResponseListener() {
             @Override
@@ -1106,7 +1387,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                         //给车牌、车系、车组、车型赋值；
                         ArrayList arr = new ArrayList();
                         String[] s1 = data.split("\\|");
-                        Log.e("vin", "品牌："+s1[0]+",车系"+s1[1]+",车组"+s1[2]+",车系"+s1[3]);
+                        Log.e("vin", "品牌：" + s1[0] + ",车系" + s1[1] + ",车组" + s1[2] + ",车系" + s1[3]);
                         for (int j = 0; j < s1.length; j++) {
                             arr.add(j, s1[j]);
                         }
@@ -1141,8 +1422,8 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
     /*
      *vin对应多条车辆信息时，弹出选择对话框；
      */
-    public void  showDialogSelectCx(){
-        final View  view=LayoutInflater.from(getActivity()).inflate(R.layout.bsd_clxx_dialog_for_select_cx,null);
+    public void showDialogSelectCx() {
+        final View view = LayoutInflater.from(getActivity()).inflate(R.layout.bsd_clxx_dialog_for_select_cx, null);
         final Dialog dialog = new Dialog(getActivity());
         dialog.setTitle("请选择");
         dialog.setContentView(view);
@@ -1150,11 +1431,11 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         WindowManager.LayoutParams params =
                 dialog.getWindow().getAttributes();
         params.width = 900;
-        params.height = 500 ;
+        params.height = 500;
         dialog.getWindow().setAttributes(params);
 
 
-        ListView  lv= (ListView) window.findViewById(R.id.bsd_clxx_lv_for_select_cx);
+        ListView lv = (ListView) window.findViewById(R.id.bsd_clxx_lv_for_select_cx);
         lv.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
@@ -1174,18 +1455,18 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
             @Override
             public View getView(final int position, View convertView, ViewGroup parent) {
                 View layout = LayoutInflater.from(getActivity()).inflate(R.layout.select_cx_dialog_item, null);
-                TextView   tv_mc= (TextView) layout.findViewById(R.id.tv_cxmc);
-                TextView  tv_nbmc= (TextView) layout.findViewById(R.id.tv_cx_nbmc);
+                TextView tv_mc = (TextView) layout.findViewById(R.id.tv_cxmc);
+                TextView tv_nbmc = (TextView) layout.findViewById(R.id.tv_cx_nbmc);
                 tv_mc.setText(listvincx.get(position).get("cxMc"));     //车辆名称
                 tv_nbmc.setText(listvincx.get(position).get("cxMcStd"));  //车辆内部名称
-                Log.e("vin", "名称： "+listvincx.get(position).get("cxMc") );
-                Log.e("vin", "内部名称： "+listvincx.get(position).get("cxMcStd") );
+                Log.e("vin", "名称： " + listvincx.get(position).get("cxMc"));
+                Log.e("vin", "内部名称： " + listvincx.get(position).get("cxMcStd"));
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        cxnm=listvincx.get(position).get("cxDm");    //车辆代码
-                        Log.e("vins", "车辆代码。。。"+cxnm );
+                        cxnm = listvincx.get(position).get("cxDm");    //车辆代码
+                        Log.e("vins", "车辆代码。。。" + cxnm);
                         getcx_by_cxdm();
                     }
                 });
@@ -1199,15 +1480,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
 
 
     }
-
-
-
-
-
-
-
-
-
 
 
     //车型===================================================================
@@ -1411,21 +1683,11 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                     bsd_ksbj_cz.setText(value);
                     bsd_ksbj_cxing.setText("");
                     chezuid = listjbcz.get(pos).get("chex_dm");
-
                     bsd_chexingdata(chezuid);
-
                 }
-
-//                bsd_gs_name = bst_text_gs.getText().toString().trim();
-//                sbd_user(GongSiNo);
             }
         });
-
-
     }
-
-
-//    车系=================================================
 
     /**
      * 基本信息车系接口
@@ -1559,27 +1821,20 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
     /**
      * 计算维修材料的总价
      */
-    double a = 0;
-    double c = 0;
-
     public void wxclPrice() {
         double jg = 0;
         for (int i = 0; i < listCL.size(); i++) {
             jg = jg + (listCL.get(i).getPeij_dj() * listCL.get(i).getPeij_sl());
         }
-        a = jg;
-
-        tv_wxcl_money.setText(jg + "");
-        Log.i("cjn", "CL的总价：" + jg);
+        clZje = jg;
+        tv_wxcl_money.setText(jg + "元");
+        tv_wxcl_count.setText("(共" + listCL.size() + "条记录)");
         zoongjia();
     }
 
     public void zoongjia() {
-
-        Log.i("jslm", "zoongjia: 1231231313");
-
-        c = a + b;
-        tv_zong_money.setText(a + b + "");
+        totalJe = xmZje + clZje;
+        tv_zong_money.setText(totalJe + "");
     }
 
     public void POP(View view) {
@@ -1615,11 +1870,11 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
 //                        }else {
 //                            item.setWxxm_dj(wxxmdj / entity.getWxxm_gs());
 //                        }
-                        if(entity.getWxxm_gs()==0){
+                        if (entity.getWxxm_gs() == 0) {
                             entity.setWxxm_gs(1.0);
                         }
                         item.setWxxm_dj(wxxmdj / entity.getWxxm_gs());
-                        Toast.makeText(getActivity(),"添加后返回的单价是"+item.getWxxm_dj()+"",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "添加后返回的单价是" + item.getWxxm_dj() + "", Toast.LENGTH_SHORT).show();
                         item.setWxxm_je(wxxmdj);
                         item.setWxxm_no(entity.getWxxm_no());
                         item.setWxxm_cb(entity.getWxxm_cb());
@@ -1640,7 +1895,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
 //                    }else {
 //                        item.setWxxm_dj(wxxmdj / entity.getWxxm_gs());
 //                    }
-                    if(entity.getWxxm_gs()==0){
+                    if (entity.getWxxm_gs() == 0) {
                         Log.i("gsdj", "是0 ");
                         entity.setWxxm_gs(1.0);
                     }
@@ -1719,7 +1974,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                     item.setPeij_dj(jiaqian);
 
 //                    item.setPeij_dj(1230);
-
 
 
                     //单位
@@ -1929,25 +2183,20 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
 
 
     /**
-     * 有订单是修改，e
+     * 保存单据信息
      */
-    private void updata() {
+    private void saveBillInfo() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        Log.i("cjn", "存档开始");
-        danhao = entity.getList_no();
         chepai = bsd_ksbj_cp.getText().toString();
-
         pinpai = bsd_ksbj_pp.getText().toString();
         chexi = bsd_ksbj_cx.getText().toString();
         chezx = bsd_ksbj_cz.getText().toString();
         chexing = bsd_ksbj_cxing.getText().toString();
 
-
         if (bsd_ksbj_pp.getText().toString().equals("") ||
                 bsd_ksbj_cx.getText().toString().equals("") ||
                 bsd_ksbj_cz.getText().toString().equals("") ||
-                bsd_ksbj_cxing.getText().toString().equals("")
-                ) {
+                bsd_ksbj_cxing.getText().toString().equals("")) {
             che_cx = "";
         } else {
             che_cx = pinpai + "|" + chexi + "|" + chezx + "|" + chexing;
@@ -1956,11 +2205,9 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         jinchanglicheng = bsd_ksbj_lc.getText().toString();
         dinahua = bsd_ksbj_dh.getText().toString();
         chezhu = bsd_ksbj_cezhu.getText().toString();
-
-        Log.i("cjn", "存档开始" + "单号==" + danhao);
         AbRequestParams params = new AbRequestParams();
-        params.put("che_no", Car);
-        params.put("list_no", danhao);//预约单号
+        params.put("che_no", billEntiy.getChe_no());
+        params.put("list_no", billEntiy.getList_no());//预约单号
         params.put("che_cx", che_cx);//品牌，车系，车组，车行，che_cx
         params.put("che_vin", VIN);//VIN码
         params.put("List_lc", jinchanglicheng);//进厂里程
@@ -1969,59 +2216,30 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         params.put("kehu_dh", dinahua);//手机号
         params.put("List_sfbz", gongshifeili_name);
         params.put("List_sffl", gongshifeili_id);
-        params.put("kehu_no", Conts.kehu_no);//客户名称
-        params.put("gcsj", bsd_ksbj_tv_gcsj.getText().toString().trim());
+        params.put("kehu_no", billEntiy.getKehu_no());//客户名称
         params.put("list_hjje", tv_zong_money.getText().toString());
         params.put("gcsj", bsd_ksbj_tv_gcsj.getText().toString());
-
-        Log.i("cjn", "查看这些参数"
-                + "--che_no--" + Car
-                + "--list_no--" + danhao
-                + "--che_cx--" + che_cx
-                + "--che_vin--" + VIN
-                + "--List_lc--" + jinchanglicheng
-                + "--kehu_mc--" + chezhu
-                + "--kehu_dh--" + dinahua
-                + "--List_sfbz--" + gongshifeili_name
-                + "--List_sffl--" + gongshifeili_id
-                + "--kehu_no--" + Conts.kehu_no + "--gcsj--" + bsd_ksbj_tv_gcsj.getText().toString().trim());
-
-
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_bcjbxx, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                Log.i("cjn", "存档成功");
-                Log.i("cjn", "快速报价存档操作完成返回什么？" + s.toString().trim());
-
-//                if (listXM.size() > 0) {
-                dataCD(s.toString().trim());
-//                } else {
-//                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-//                    Show.showTime(getActivity(), "请添加项目");
-//                }
-
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+                showTipsDialog("存档成功");
             }
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
                 Show.showTime(getActivity(), "网络请求超时");
-                Log.i("cjn", "存档失败返回" + s);
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-
             }
         });
-
-
     }
 
 
@@ -2173,35 +2391,21 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
 
     //进厂操作
     public void jinchangdata(String no) {
-
-        Log.i("cjn", "进厂操作");
         AbRequestParams params = new AbRequestParams();
-        params.put("no", no);
+        params.put("no", billEntiy.getList_no());
         params.put("gongsiNo", MyApplication.shared.getString("bsd_gs_id", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("bsd_user_name", ""));
-        Log.i("cjn", "查看进厂数据" +
-                "no===" + no +
-                "gongsiNo===" + MyApplication.shared.getString("bsd_gs_id", "") +
-                "caozuoyuan_xm===" + MyApplication.shared.getString("bsd_user_name", "")
-        );
-
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_jc, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                Log.i("cjn", "查看返回什么数据" + s.toString());
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-
-
                 queRen = new QueRen(getActivity(), "进厂成功");
                 queRen.show();
                 queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick() {
                         queRen.dismiss();
-
-
                         queRen_quxiao = new Queding_Quxiao(getActivity(), "是否跳转详情");
-
                         queRen_quxiao.show();
                         queRen_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
                             @Override
@@ -2222,28 +2426,21 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                         });
                     }
                 });
-
-
             }
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "进厂失败" + s);
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
-
-
     }
 
     @Override
@@ -2288,7 +2485,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                     Conts.bycx_CarName = bsd_ksbj_cezhu.getText().toString().trim();
                     Conts.bycx_Shouji = bsd_ksbj_dh.getText().toString().trim();
 
-                    Conts.bycx_cheliangmingcheng=bsd_ksbj_pp.getText().toString().trim() + "|" + bsd_ksbj_cx.getText().toString().trim() + "|" + bsd_ksbj_cz.getText().toString().trim() + "|" + bsd_ksbj_cxing.getText().toString().trim();
+                    Conts.bycx_cheliangmingcheng = bsd_ksbj_pp.getText().toString().trim() + "|" + bsd_ksbj_cx.getText().toString().trim() + "|" + bsd_ksbj_cz.getText().toString().trim() + "|" + bsd_ksbj_cxing.getText().toString().trim();
                     ((MainActivity) getActivity()).upBSD_bycx();
 
                 } catch (JSONException e) {
@@ -2317,6 +2514,23 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
 
     }
 
-
+    private void showTipsDialog(String tips) {
+        CustomDialog.Builder builder = new CustomDialog.Builder(getHostActicity());
+        CustomDialog dialog = builder.style(R.style.mydialog)
+                .view(R.layout.queren)
+                .cancelTouchout(true)
+                .widthDimenRes(R.dimen.qb_px_300)
+                .heightpx(WindowManager.LayoutParams.WRAP_CONTENT)
+                .addViewOnclick(R.id.bsd_queren_queren, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CustomDialog.dismissDialog();
+                    }
+                })
+                .build();
+        TextView tip = (TextView) dialog.getView().findViewById(R.id.bsd_queren_neirong);
+        tip.setText(tips);
+        dialog.show();
+    }
 
 }

@@ -538,7 +538,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/bsd_xsbj_rq"
+                        android:id="@+id/bsd_xsbj_name"
                         style="@style/mysearchtitlestyle"
                         android:layout_weight="1"
                         android:text="员工" />

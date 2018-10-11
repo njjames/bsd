@@ -18,7 +18,7 @@
             android:background="@drawable/biankuang_info_bg">
 
             <TextView
-                android:id="@+id/bsd_xsbj_rq"
+                android:id="@+id/bsd_xsbj_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -71,7 +71,7 @@
             android:background="@drawable/biankuang_info_bg">
 
             <TextView
-                android:id="@+id/bsd_kxbj_fwgw"
+                android:id="@+id/bsd_kxbj_je"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"

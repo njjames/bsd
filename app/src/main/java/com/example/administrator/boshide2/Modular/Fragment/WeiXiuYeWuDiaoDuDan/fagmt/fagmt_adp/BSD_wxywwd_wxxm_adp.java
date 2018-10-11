@@ -94,10 +94,10 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_wxywdd_wxxm_item, null);
 
-            holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_rq);
+            holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj = (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj = (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je = (TextView) contetview.findViewById(R.id.bsd_kxbj_fwgw);
+            holder.bsd_kxbj_je = (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
             holder.bsd_kxbj_cz = (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
             holder.bsd_shanchuxiangmu= (TextView) contetview.findViewById(R.id.bsd_kxbj_cz1);
 //    holder.bsd_kxbj_qian= (TextView) contetview.findViewById(R.id.bsd_kxbj_qian);

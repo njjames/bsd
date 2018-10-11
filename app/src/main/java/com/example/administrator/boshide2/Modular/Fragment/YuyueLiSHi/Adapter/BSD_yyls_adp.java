@@ -57,10 +57,10 @@ public class BSD_yyls_adp extends BaseAdapter {
 
             contetview=layoutInflater.inflate(R.layout.bsd_lsyy_item,null);
 
-            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_rq);
+            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_fwgw);
+            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
             holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
             holder.bsd_kxbj_qian= (TextView) contetview.findViewById(R.id.bsd_kxbj_phone);
             holder.bsd_kxbj_qian1=(TextView)contetview.findViewById(R.id.bsd_kxbj_qian1);

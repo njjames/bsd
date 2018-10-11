@@ -17,9 +17,10 @@ public class UpdateItemInfoDialog extends Dialog implements View.OnClickListener
     public static final int CHANGE_WXXMGS = 0;
     public static final int CHANGE_WXXMNAME = 1;
     public static final int CHANGE_PEIJSL = 2;
-    public static final int CHANGE_PEIJYDJ = 3;
+    public static final int CHANGE_PEIJDJ = 3;
     public static final int CHANGE_PGGS = 4;
     public static final int CHANGE_PGJE = 5;
+    public static final int CHANGE_WXXMBZGS = 6;
     private View view;
     private TextView tv_confirm;
     private TextView tv_cancel;
@@ -59,8 +60,8 @@ public class UpdateItemInfoDialog extends Dialog implements View.OnClickListener
             et_changcontent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             et_changcontent.setText("" + slOrJe);
             et_changcontent.setSelection(et_changcontent.getText().length());
-        } else if (changeType == CHANGE_PEIJYDJ) {
-            tv_changetype.setText("修改配件原单价:");
+        } else if (changeType == CHANGE_PEIJDJ) {
+            tv_changetype.setText("修改配件单价:");
             et_changcontent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             et_changcontent.setText("" + slOrJe);
             et_changcontent.setSelection(et_changcontent.getText().length());
@@ -71,6 +72,11 @@ public class UpdateItemInfoDialog extends Dialog implements View.OnClickListener
             et_changcontent.setSelection(et_changcontent.getText().length());
         } else if (changeType == CHANGE_PGJE) {
             tv_changetype.setText("修改派工金额:");
+            et_changcontent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            et_changcontent.setText("" + slOrJe);
+            et_changcontent.setSelection(et_changcontent.getText().length());
+        } else if (changeType == CHANGE_WXXMBZGS) {
+            tv_changetype.setText("修改项目工时:");
             et_changcontent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             et_changcontent.setText("" + slOrJe);
             et_changcontent.setSelection(et_changcontent.getText().length());
@@ -94,7 +100,8 @@ public class UpdateItemInfoDialog extends Dialog implements View.OnClickListener
                         toopromtXmmc.onYesClick(et_changcontent.getText().toString().trim());
                     }
 
-                }else  if(changeType == CHANGE_WXXMGS || changeType == CHANGE_PEIJSL || changeType == CHANGE_PEIJYDJ || changeType == CHANGE_PGGS || changeType == CHANGE_PGJE){
+                }else  if(changeType == CHANGE_WXXMGS || changeType == CHANGE_PEIJSL || changeType == CHANGE_PEIJDJ
+                        || changeType == CHANGE_PGGS || changeType == CHANGE_PGJE || changeType == CHANGE_WXXMBZGS){
                     if (toopromtOnClickListener != null) {
                         DownJianPan.hide(getContext(), et_changcontent);
                         if (!TextUtils.isEmpty(et_changcontent.getText().toString().trim())) {

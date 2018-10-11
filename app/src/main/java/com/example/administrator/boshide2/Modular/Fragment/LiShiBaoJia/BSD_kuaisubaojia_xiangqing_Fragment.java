@@ -2,14 +2,11 @@ package com.example.administrator.boshide2.Modular.Fragment.LiShiBaoJia;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -24,7 +21,6 @@ import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
-import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_CL_entity;
@@ -45,7 +41,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +65,7 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment implements
     BSD_KuaiSuBaoJia_ety entity;//快速报价实体类
     String danhao;//单号
     TextView bsd_ksbj_lc, bsd_ksbj_cezhu, bsd_ksbj_dh, bsd_ksbj_vin, bsd_ksbj_pp, bsd_ksbj_cx,
-            bsd_ksbj_cz, bsd_ksbj_cxing, tv_zong_money, tv_zong_money1, tv_zong_money3;
+            bsd_ksbj_cz, bsd_ksbj_cxing, tv_zong_money, tv_zong_money3;
     List<BSD_KuaiSuBaoJia_XM_entity> listXM = new ArrayList<BSD_KuaiSuBaoJia_XM_entity>();
     BSD_wxxm_xiangqiang_adp adpxm;
     ListView listxm;//维修项目
@@ -119,21 +114,16 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment implements
     private List<CustemObject> nameList2 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter2;
     private SpinerPopWindow mSpinerPopWindow2;
-    //单号
-    TextView bsd_ksbj_tv_dh;
-    TextView bsd_ksbj_tv_sj;
-
 
     //工时费率
     //    RelativeLayout bsd_ksbj_rl_gsfl;
-    TextView bsd_ksbj_tv_gsfl;
-    String gongshifeili_name;
-    String gongshifeili_id;
-
-    URLS url;
-    Queding_Quxiao queRen_quxiao;
-    RelativeLayout bsd_lishibaojiaxiangqing_fh;
-    private TextView mTv_billNo;
+    private TextView bsd_ksbj_tv_gsfl;
+    private String gongshifeili_name;
+    private String gongshifeili_id;
+    private URLS url;
+    private Queding_Quxiao queRen_quxiao;
+    private LinearLayout bsd_lishibaojiaxiangqing_fh;
+    private TextView billNo;
     private TextView title;
     private TextView footerText;
 
@@ -333,8 +323,6 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment implements
             bsd_ksbj_lc.setText("" + entity.getList_sffl());
             bsd_ksbj_cezhu.setText(entity.getKehu_mc());
             bsd_ksbj_dh.setText(entity.getKehu_dh());
-            bsd_ksbj_tv_dh.setText("单号:" + entity.getList_no());
-            bsd_ksbj_tv_sj.setText("日期:" + entity.getList_jlrq());
             bsd_ksbj_tv_gsfl.setText(entity.getList_sfbz());
             //维修项目查询
             xmdata();
@@ -352,7 +340,7 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment implements
         beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
         entity = new BSD_KuaiSuBaoJia_ety();
         entity = ((MainActivity) getActivity()).getKsbjenity();
-        bsd_lishibaojiaxiangqing_fh = (RelativeLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
+        bsd_lishibaojiaxiangqing_fh = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
         bsd_lishibaojiaxiangqing_fh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -360,7 +348,6 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment implements
             }
         });
 
-        mTv_billNo = (TextView) view.findViewById(R.id.tv_billNo);
         bsd_ksbj_tv_gsfl = (TextView) view.findViewById(R.id.bsd_ksbj_tv_gsfl);
         tv_zong_money = (TextView) view.findViewById(R.id.tv_total_je);
 
@@ -395,11 +382,17 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment implements
         tv_wxcl_money = (TextView) view.findViewById(R.id.tv_wxcl_money);
         title = (TextView) view.findViewById(R.id.tv_title);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
+        billNo = (TextView) view.findViewById(R.id.tv_billNo);
+
     }
 
     @Override
     public void initData() {
         url = new URLS();
+        title.setText("历史报价");
+        footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
+                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
+        billNo.setText(entity.getList_no());
     }
 
     /**
@@ -439,7 +432,6 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment implements
     public void zoongjia() {
         c = a + b;
         tv_zong_money.setText(a + b + "");
-        tv_zong_money1.setText(a + b + "");
     }
 
     String chepai;

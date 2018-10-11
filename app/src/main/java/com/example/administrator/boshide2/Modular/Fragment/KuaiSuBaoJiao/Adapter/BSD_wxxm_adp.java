@@ -25,6 +25,7 @@ import java.util.List;
 public class BSD_wxxm_adp extends BaseAdapter {
     LayoutInflater layoutInflater;
     Context context;
+    private OnOperateItemListener onOperateItemListener;
 
     public void setList(List<BSD_KuaiSuBaoJia_XM_entity> list) {
         this.list = list;
@@ -68,9 +69,14 @@ public class BSD_wxxm_adp extends BaseAdapter {
         return 0;
     }
 
-    class Holder {
-        TextView bsd_xsbj_name,bsd_kxbj_bzsj,bsd_kxbj_gsdj,bsd_kxbj_je,bsd_ksbj_tv_zt;
-        ImageView bsd_kxbj_xmsc;
+    public final class Holder {
+        TextView bsd_xsbj_name;
+        TextView bsd_kxbj_bzsj;
+        TextView bsd_kxbj_gsdj;
+        TextView bsd_kxbj_je;
+        TextView bsd_ksbj_tv_zt;
+        ImageView iv_delete;
+        TextView tv_wxxmNo;
     }
 
     @Override
@@ -79,63 +85,52 @@ public class BSD_wxxm_adp extends BaseAdapter {
         if (contetview == null) {
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_wxxm_item,null);
-            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_rq);
+            holder.tv_wxxmNo = (TextView) contetview.findViewById(R.id.bsd_xsbj_no);
+            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_fwgw);
-            holder.bsd_kxbj_xmsc= (ImageView) contetview.findViewById(R.id.iv_delete);
+            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
+            holder.iv_delete= (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_ksbj_tv_zt= (TextView) contetview.findViewById(R.id.bsd_ksbj_tv_zt);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
+        holder.tv_wxxmNo.setText(list.get(i).getWxxm_no());
         holder.bsd_xsbj_name.setText(list.get(i).getWxxm_mc());
         //工时
-        holder.bsd_kxbj_bzsj.setText(""+list.get(i).getWxxm_gs());
+        holder.bsd_kxbj_bzsj.setText("" + list.get(i).getWxxm_gs());
         holder.bsd_kxbj_bzsj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                up_ksbj_gs.onYesClick(i,list.get(i).getWxxm_mc(),list.get(i).getWxxm_gs());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateGS(list.get(i).getWxxm_no(), list.get(i).getWxxm_gs(), list.get(i).getWxxm_mc(), i);
+                }
             }
         });
-
-//        String a  = String.valueOf((list.get(i).getWxxm_je()/list.get(i).getWxxm_gs()));
-//        if (a.equals("NaN")){
-//            holder.bsd_kxbj_gsdj.setText(list.get(i).getWxxm_je()+"");
-//        }else {
-//            holder.bsd_kxbj_gsdj.setText(""+list.get(i).getWxxm_je()/list.get(i).getWxxm_gs());
-//        }
-//        holder.bsd_kxbj_gsdj.setText(""+list.get(i).getWxxm_dj());
-        if(list.get(i).getWxxm_gs()==0){
-            list.get(i).setWxxm_gs(1.0);
+        if (list.get(i).getWxxm_gs() == 0) {
+            holder.bsd_kxbj_gsdj.setText("" + list.get(i).getWxxm_je());
+        } else {
+            DecimalFormat df=new DecimalFormat("#.##");
+            String    gs=df.format(list.get(i).getWxxm_je() / list.get(i).getWxxm_gs());
+            holder.bsd_kxbj_gsdj.setText(gs);
         }
-
-        DecimalFormat df=new DecimalFormat("#.##");
-        String    gs=df.format(list.get(i).getWxxm_je() / list.get(i).getWxxm_gs());
-        holder.bsd_kxbj_gsdj.setText(gs);
-
+        holder.bsd_kxbj_je.setText("" + list.get(i).getWxxm_je());
         holder.bsd_kxbj_je.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                up_ksbj_gsdj.onYesClick(i,list.get(i).getWxxm_mc(),list.get(i).getWxxm_je());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateJe(list.get(i).getWxxm_no(), list.get(i).getWxxm_je(), list.get(i).getWxxm_mc(), i);
+                }
             }
         });
         holder.bsd_ksbj_tv_zt.setText(list.get(i).getWxxm_zt());
-        holder.bsd_kxbj_je.setText(""+list.get(i).getWxxm_je());
-        holder.bsd_kxbj_xmsc.setOnClickListener(new View.OnClickListener() {
+        holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                promptdiaog=new TooPromptdiaog(context,"是否删除");
-                promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        list.remove(i);
-                        notifyDataSetChanged();
-                        promptdiaog.dismiss();
-                        up_ksbj_sc.onYesClick();
-                    }
-                });
-                promptdiaog.show();
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onDelete(list.get(i).getWxxm_no(), i);
+                }
             }
         });
         return contetview;
@@ -152,4 +147,15 @@ public class BSD_wxxm_adp extends BaseAdapter {
         public void onYesClick();
     }
 
+    public interface OnOperateItemListener {
+        void onDelete(String wxxmNo, int position);
+
+        void onUpdateGS(String wxxmNo, double wxxmGs, String wxxmMc, int position);
+
+        void onUpdateJe(String wxxmNo,  double wxxmje, String wxxmMc, int position);
+    }
+
+    public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {
+        this.onOperateItemListener = onOperateItemListener;
+    }
 }

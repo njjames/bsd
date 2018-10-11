@@ -162,7 +162,7 @@ public class BSD_mrkx_wxcl extends Fragment {
 
             @Override
             public void onUpdateYDj(final String peij_no, String peij_mc, double peij_ydj, final int position) {
-                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PEIJYDJ, peij_ydj, peij_mc);
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PEIJDJ, peij_ydj, peij_mc);
                 updateItemInfoDialog.show();
                 updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
                     @Override

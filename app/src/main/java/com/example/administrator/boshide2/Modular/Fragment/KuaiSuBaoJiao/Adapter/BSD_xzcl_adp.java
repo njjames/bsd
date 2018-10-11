@@ -35,6 +35,7 @@ public class BSD_xzcl_adp extends BaseAdapter {
     private Updanjia updanjia;//加
     private Delete delete;//删除
     private KuCun kuCun;
+    private OnOperateItemListener onOperateItemListener;
 
     public void setDelete(Delete delete) {
         this.delete = delete;
@@ -96,6 +97,7 @@ public class BSD_xzcl_adp extends BaseAdapter {
         TextView bsd_xzcl_name, bsd_xzcl_shuliang, bsd_xzcl_danjia, bsd_xzcl_dw, bsd_xzcl_je, bsd_xzcl_caozuo;
         ImageView iv_delete;
         ImageView iv_stock;
+        TextView tv_peijNo;
     }
 
     @Override
@@ -104,6 +106,7 @@ public class BSD_xzcl_adp extends BaseAdapter {
         if (contetview == null) {
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_wxyy_xzcl_item, null);
+            holder.tv_peijNo = (TextView) contetview.findViewById(R.id.bsd_xzcl_no);
             holder.bsd_xzcl_name = (TextView) contetview.findViewById(R.id.bsd_xzcl_name);
             holder.bsd_xzcl_shuliang = (TextView) contetview.findViewById(R.id.bsd_xzcl_shuliang);
             holder.bsd_xzcl_danjia = (TextView) contetview.findViewById(R.id.bsd_xzcl_danjia);
@@ -115,38 +118,43 @@ public class BSD_xzcl_adp extends BaseAdapter {
         } else {
             holder = (Holder) contetview.getTag();
         }
+        holder.tv_peijNo.setText(list.get(i).getPeij_no());
         holder.bsd_xzcl_name.setText(list.get(i).getPeij_mc());
         holder.bsd_xzcl_shuliang.setText("" + (int) list.get(i).getPeij_sl());
         holder.bsd_xzcl_danjia.setText("" + list.get(i).getPeij_dj());
         holder.bsd_xzcl_dw.setText(list.get(i).getPeij_dw());
         holder.bsd_xzcl_je.setText("" + list.get(i).getPeij_sl() * list.get(i).getPeij_dj());
+        holder.bsd_xzcl_shuliang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateSL(list.get(i).getPeij_no(), list.get(i).getPeij_sl(), list.get(i).getPeij_mc(), i);
+                }
+            }
+        });
         holder.bsd_xzcl_danjia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updanjia.onYesClick(i, list.get(i).getPeij_mc(), list.get(i).getPeij_dj());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateDj(list.get(i).getPeij_no(), list.get(i).getPeij_dj(), list.get(i).getPeij_mc(), i);
+                }
             }
         });
         holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                promptdiaog = new TooPromptdiaog(context, "是否删除");
-                promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        list.remove(i);
-                        notifyDataSetChanged();
-                        promptdiaog.dismiss();
-                        delete.onYesClick();
-                    }
-                });
-                promptdiaog.show();
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onDelete(list.get(i).getPeij_no(), i);
+                }
             }
         });
 
         holder.iv_stock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                kuCun.query_kc(list.get(i).getPeij_no());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onSearchStock(list.get(i).getPeij_no());
+                }
             }
         });
         return contetview;
@@ -168,5 +176,19 @@ public class BSD_xzcl_adp extends BaseAdapter {
     //删除
     public interface Delete {
         public void onYesClick();
+    }
+
+    public interface OnOperateItemListener {
+        void onDelete(String peijNo, int position);
+
+        void onUpdateSL(String peijNo, double peijSL, String peijMc, int position);
+
+        void onUpdateDj(String peijNo,  double peijDj, String peijMc, int position);
+
+        void onSearchStock(String peij_no);
+    }
+
+    public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {
+        this.onOperateItemListener = onOperateItemListener;
     }
 }

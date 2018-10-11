@@ -53,6 +53,7 @@ public class BSD_lsbj_adp extends BaseAdapter {
         TextView bsd_kxbj_fwgw;
         LinearLayout bsd_xm6;
         ImageView iv_phone;
+        TextView tv_ksbjNo;
     }
 
     @Override
@@ -61,7 +62,8 @@ public class BSD_lsbj_adp extends BaseAdapter {
         if (contetview == null) {
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_lsbj_item, null);
-            holder.bsd_xsbj_rq = (TextView) contetview.findViewById(R.id.bsd_xsbj_rq);
+            holder.tv_ksbjNo = (TextView) contetview.findViewById(R.id.bsd_xsbj_no);
+            holder.bsd_xsbj_rq = (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj = (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_cheno = (TextView) contetview.findViewById(R.id.bsd_kxbj_cheno);
             holder.bsd_kxbj_fwgw = (TextView) contetview.findViewById(R.id.bsd_kxbj_fwgw);
@@ -73,6 +75,7 @@ public class BSD_lsbj_adp extends BaseAdapter {
         } else {
             holder = (Holder) contetview.getTag();
         }
+        holder.tv_ksbjNo.setText(list.get(i).getList_no());
         holder.bsd_xsbj_rq.setText(list.get(i).getList_jlrq());
         holder.bsd_kxbj_bzsj.setText(list.get(i).getKehu_mc());
         holder.bsd_kxbj_cheno.setText(list.get(i).getChe_no());

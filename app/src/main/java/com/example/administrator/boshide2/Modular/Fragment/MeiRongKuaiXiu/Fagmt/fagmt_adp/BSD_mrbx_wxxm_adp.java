@@ -108,10 +108,10 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
             textView = new RelativeLayout(context);
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_mrkx_wxxm_item, null);
-            holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_rq);
+            holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj = (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj = (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.tv_ygsf = (TextView) contetview.findViewById(R.id.bsd_kxbj_fwgw);
+            holder.tv_ygsf = (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
             holder.bsd_kxbj_cz = (ImageView) contetview.findViewById(R.id.bsd_kxbj_je);
             holder.tv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_kxbj_hyzk = (TextView) contetview.findViewById(R.id.bsd_kxbj_hyzk);

@@ -115,7 +115,7 @@
             android:id="@+id/rl_top2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_2"
+            android:layout_marginTop="@dimen/qb_px_4"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -137,7 +137,8 @@
             <LinearLayout
                 android:id="@+id/relativeLayout9"
                 style="@style/myeditlinearlayoutstyle"
-                android:layout_marginLeft="@dimen/qb_px_8">
+                android:layout_marginLeft="@dimen/qb_px_8"
+                android:layout_weight="0.8">
 
                 <TextView
                     android:id="@+id/textView8"
@@ -147,7 +148,7 @@
                 <TextView
                     android:id="@+id/bsd_ksbj_lc"
                     style="@style/myeditinfovaluestyle"
-                    android:hint="请输入本次进厂里程" />
+                    android:hint="进厂里程" />
             </LinearLayout>
 
             <LinearLayout
@@ -169,7 +170,8 @@
             <LinearLayout
                 android:id="@+id/relativeLayout12"
                 style="@style/myeditlinearlayoutstyle"
-                android:layout_marginLeft="@dimen/qb_px_8">
+                android:layout_marginLeft="@dimen/qb_px_8"
+                android:layout_weight="0.8">
 
                 <TextView
                     android:id="@+id/textView11"
@@ -185,6 +187,7 @@
             <LinearLayout
                 android:id="@+id/bsd_ksbj_rl_gsfl"
                 style="@style/myeditlinearlayoutstyle"
+                android:layout_weight="0.8"
                 android:layout_marginLeft="@dimen/qb_px_8">
 
                 <TextView
@@ -195,7 +198,7 @@
                 <TextView
                     android:id="@+id/bsd_ksbj_tv_gsfl"
                     style="@style/myeditinfovaluestyle"
-                    android:hint="选择收费标准" />
+                    android:hint="收费标准" />
             </LinearLayout>
 
             <LinearLayout
@@ -218,7 +221,7 @@
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_1"
-            android:layout_marginTop="@dimen/qb_px_4"
+            android:layout_marginTop="@dimen/qb_px_2"
             android:background="#F7714C" />
 
         <LinearLayout
@@ -301,8 +304,8 @@
         <View
             android:id="@+id/bsd_onzhongjian"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/qb_px_2"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginTop="@dimen/qb_px_1"
             android:background="#F7714C" />
 
         <LinearLayout

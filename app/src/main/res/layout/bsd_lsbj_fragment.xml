@@ -86,7 +86,12 @@
             android:layout_marginTop="@dimen/qb_px_2">
 
             <TextView
-                android:layout_weight="1.5"
+                android:layout_weight="1.2"
+                style="@style/mysearchtitlestyle"
+                android:text="报价单号" />
+
+            <TextView
+                android:layout_weight="1.2"
                 style="@style/mysearchtitlestyle"
                 android:text="报价日期" />
 
@@ -96,22 +101,22 @@
                 android:text="车主" />
 
             <TextView
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 style="@style/mysearchtitlestyle"
                 android:text="车牌" />
 
             <TextView
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 style="@style/mysearchtitlestyle"
                 android:text="服务顾问" />
 
             <TextView
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 style="@style/mysearchtitlestyle"
                 android:text="金额" />
 
             <TextView
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 style="@style/mysearchtitlestyle"
                 android:text="联系方式" />
         </LinearLayout>

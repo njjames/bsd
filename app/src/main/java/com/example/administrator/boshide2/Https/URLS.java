@@ -554,6 +554,14 @@ public class URLS {
      * 派工项目删除
      */
     public String BSD_deletXM = "paigong/diaoduDelwxxm";
+
+    /**
+     * 派工项目删除
+     */
+    public String BSD_ksbj_deletXM = "offer/deletewxxm";
+
+    public String BSD_ksbj_deletCL = "offer/deletewxcl";
+
     /**
      * 派工材料删除
      */
@@ -566,6 +574,14 @@ public class URLS {
      * 派工项目修改工时单价
      */
     public String BSD_mrkx_upxm = "paigong/editWxxmByhyzk";
+
+    public String BSD_ksbj_upxmgs = "offer/updatewxxmgs";
+
+    public String BSD_ksbj_upxmje = "offer/updatewxxmje";
+
+    public String BSD_ksbj_upclsl = "offer/updatewxclsl";
+
+    public String BSD_ksbj_upcldj = "offer/updatewxcldj";
     /**
      * 派工项目修改工时单价
      */
