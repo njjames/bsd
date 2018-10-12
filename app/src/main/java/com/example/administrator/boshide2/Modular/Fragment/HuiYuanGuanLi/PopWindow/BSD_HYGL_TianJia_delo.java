@@ -86,7 +86,6 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
 
         super(context, R.style.mydialog);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        // TODO Auto-generated constructor stub
         view = getLayoutInflater().inflate(R.layout.bsd_hygl_tianjia, null, false);
         url = new URLS();
         timeShow = new TimeDialog(getContext());

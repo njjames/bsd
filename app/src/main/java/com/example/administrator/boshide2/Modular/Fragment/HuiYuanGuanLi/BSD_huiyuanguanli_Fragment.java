@@ -1,16 +1,11 @@
 package com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi;
 
 import android.app.Dialog;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ab.http.AbRequestParams;
@@ -56,9 +51,10 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
     //转圈
     private Dialog mWeiboDialog;
     URLS url;
-    EditText bsd_huiyuanguanli_sskh;
-    TextView bsd_kleixin;
-    RelativeLayout relativeLayout4444, bsd_hygl_cx;
+    EditText et_cardno;
+    TextView tv_cardkind;
+    LinearLayout ll_cardkind;
+    private TextView tv_search;
     List<Map<String, String>> listjbcz = new ArrayList<Map<String, String>>();
     private List<CustemObject> nameList1 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter1;
@@ -81,16 +77,14 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
     @Override
     public void onResume() {
         super.onResume();
-        bsd_huiyuanguanli_sskh.setText("");
+        et_cardno.setText("");
     }
 
     @Override
     public void initView() {
         abPullToRefreshView= (AbPullToRefreshView) view.findViewById(R.id.lsfreshview);
-
         abPullToRefreshView.setOnHeaderRefreshListener(this);
         abPullToRefreshView.setOnFooterLoadListener(this);
-
         // 设置进度条的样式
         // 设置进度条的样式
         abPullToRefreshView.getHeaderView().setHeaderProgressBarDrawable(
@@ -98,8 +92,8 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
         abPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
                 getResources().getDrawable(R.drawable.progress_circular));
 
-        bsd_hygl_cx = (RelativeLayout) view.findViewById(R.id.bsd_hygl_cx);
-        bsd_hygl_cx.setOnClickListener(new View.OnClickListener() {
+        tv_search = (TextView) view.findViewById(R.id.tv_search);
+        tv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (type == 0) {
@@ -115,16 +109,15 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
             }
         });
 
-        bsd_kleixin = (TextView) view.findViewById(R.id.bsd_hygl_keixing);
-        relativeLayout4444 = (RelativeLayout) view.findViewById(R.id.relativeLayout4444);
-        bsd_huiyuanguanli_sskh = (EditText) view.findViewById(R.id.bsd_huiyuanguanli_sskh);
-        relativeLayout4444.setOnClickListener(new View.OnClickListener() {
+        tv_cardkind = (TextView) view.findViewById(R.id.tv_cardkind);
+        ll_cardkind = (LinearLayout) view.findViewById(R.id.ll_cardkind);
+        et_cardno = (EditText) view.findViewById(R.id.et_cardno);
+        ll_cardkind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showGongSi1();
             }
         });
-        view22 = view.findViewById(R.id.view22);
         bsd_hygl_yfk = (TextView) view.findViewById(R.id.bsd_hygl_yfk);
         bsd_hygl_dfk = (TextView) view.findViewById(R.id.bsd_hygl_dfk);
         arr_tv = new TextView[2];
@@ -134,8 +127,17 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
         bsd_hygl_dfk.setOnClickListener(this);
         //会员办理
         bsd_hybl = (LinearLayout) view.findViewById(R.id.ll_lishi);
+        bsd_hybl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bsd_wxxm = new BSD_HYGL_TianJia_delo(getActivity(), getActivity());
+                bsd_wxxm.show();
+            }
+        });
         //
         bsd_lv1 = (ListView) view.findViewById(R.id.bsd_lv1);
+        adapter = new BSD_hygl_adp(getActivity(), data);
+        bsd_lv1.setAdapter(adapter);
         title = (TextView) view.findViewById(R.id.tv_title);
         titleAdd = (TextView) view.findViewById(R.id.tv_title_lishi);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
@@ -148,24 +150,9 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         url = new URLS();
-        adapter = new BSD_hygl_adp(getActivity());
         checkHighLight(0);
-        popup();
         hygl_yf();
         kaxiala();
-    }
-
-    public void popup() {
-        //维修项目
-        bsd_hybl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                bsd_wxxm = new BSD_HYGL_TianJia_delo(getActivity(), getActivity());
-                bsd_wxxm.show();
-            }
-        });
-
     }
 
 
@@ -196,24 +183,24 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
     String kh=null;
     String lx=null;
     private void hygl_yf() {
-        if (bsd_huiyuanguanli_sskh.getText().toString().length()<0){
+        if (et_cardno.getText().toString().length()<0){
             kh=null;
         }else {
-            kh=bsd_huiyuanguanli_sskh.getText().toString();
+            kh= et_cardno.getText().toString();
         }
-        if (bsd_kleixin.getText().toString().length()<0){
+        if (tv_cardkind.getText().toString().length()<0){
             lx=null;
         }else {
-            lx=bsd_kleixin.getText().toString();
+            lx=tv_cardkind.getText().toString();
         }
 
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("card_no", bsd_huiyuanguanli_sskh.getText().toString());
-        if (bsd_kleixin.getText().toString().equals("全部")){
+        params.put("card_no", et_cardno.getText().toString());
+        if (tv_cardkind.getText().toString().equals("全部")){
             klx="";
         }else {
-            klx=bsd_kleixin.getText().toString();
+            klx=tv_cardkind.getText().toString();
         }
         params.put("cardkind", klx);
         params.put("pageNumber",page);
@@ -242,26 +229,14 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
                             Log.i("jjj","这里是已收款查询AAAAAAA"+item.getString("id"));
                             data.add(hygl_ety);
                         }
-                        Log.i("jjj","这里是已收款查询BBBBB"+data.size());
-                        adapter.setList(data);
-                        bsd_lv1.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                        abPullToRefreshView.onFooterLoadFinish();
-                        abPullToRefreshView.onHeaderRefreshFinish();
-                    } else {
-                        adapter.setList(data);
-                        bsd_lv1.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
-                        adapter.notifyDataSetChanged();
-                        abPullToRefreshView.onFooterLoadFinish();
-                        abPullToRefreshView.onHeaderRefreshFinish();
                     }
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                adapter.notifyDataSetChanged();
+                abPullToRefreshView.onFooterLoadFinish();
+                abPullToRefreshView.onHeaderRefreshFinish();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -279,7 +254,6 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
                 abPullToRefreshView.onFooterLoadFinish();
                 abPullToRefreshView.onHeaderRefreshFinish();
-
             }
         });
 
@@ -290,11 +264,11 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
      */
     private void hygl_df() {
         AbRequestParams params = new AbRequestParams();
-        params.put("card_no", bsd_huiyuanguanli_sskh.getText().toString());
-        if (bsd_kleixin.getText().toString().equals("全部")){
+        params.put("card_no", et_cardno.getText().toString());
+        if (tv_cardkind.getText().toString().equals("全部")){
             klx="";
         }else {
-            klx=bsd_kleixin.getText().toString();
+            klx=tv_cardkind.getText().toString();
         }
 
         params.put("cardkind", klx);
@@ -321,29 +295,22 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
                             hygl_ety.setCard_leftje(item.optString("card_leftje"));
                             data.add(hygl_ety);
                         }
-                        adapter.setList(data);
-                        adapter.notifyDataSetChanged();
-                        abPullToRefreshView.onFooterLoadFinish();
-                        abPullToRefreshView.onHeaderRefreshFinish();
                     }
-                    adapter.setList(data);
-                    adapter.notifyDataSetChanged();
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-                    abPullToRefreshView.onFooterLoadFinish();
-                    abPullToRefreshView.onHeaderRefreshFinish();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                adapter.notifyDataSetChanged();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+                abPullToRefreshView.onFooterLoadFinish();
+                abPullToRefreshView.onHeaderRefreshFinish();
             }
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -387,7 +354,6 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
                     e.printStackTrace();
                 }
 
-
                 Log.i("cjn", "查看是否请求成功会员管理" + s);
             }
 
@@ -411,8 +377,8 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
     }
 
     private void showGongSi1() {
-        mSpinerPopWindow1.setWidth(relativeLayout4444.getWidth());
-        mSpinerPopWindow1.showAsDropDown(relativeLayout4444);
+        mSpinerPopWindow1.setWidth(ll_cardkind.getWidth());
+        mSpinerPopWindow1.showAsDropDown(ll_cardkind);
     }
 
     public void bumen3() {
@@ -433,10 +399,8 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements View.OnC
             @Override
             public void onItemClick(int pos) {
                 String value = nameList1.get(pos).toString();
-
-                Log.i("cjn", "看看是不是这里的问题" + value);
-                if (!bsd_kleixin.getText().toString().equals(value)) {
-                    bsd_kleixin.setText(value);
+                if (!tv_cardkind.getText().toString().equals(value)) {
+                    tv_cardkind.setText(value);
                 }
             }
         });

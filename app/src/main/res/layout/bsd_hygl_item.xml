@@ -1,156 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/qb_px_28"
+    android:minHeight="@dimen/qb_px_28"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y45">
-
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm11"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/bsd_xzcl_name"
         android:layout_weight="1.6"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
-
-        <TextView
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:gravity="center"
-            android:layout_width="match_parent"
-
-            android:id="@+id/bsd_xzcl_name"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="姓名" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm22"
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
+        style="@style/mysearchinfostyle"
+        android:text="姓名" />
 
         <TextView
             android:id="@+id/bsd_xzcl_shuliang"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="2"
+            style="@style/mysearchinfostyle"
             android:text="电话" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm33"
-        android:layout_width="0dp"
-        android:layout_weight="1.5"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
 
         <TextView
             android:id="@+id/bsd_xzcl_danjia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="1.5"
+            style="@style/mysearchinfostyle"
             android:text="卡号" />
 
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm44"
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
-
         <TextView
             android:id="@+id/bsd_xzcl_dw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="2"
+            style="@style/mysearchinfostyle"
             android:text="卡名称" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm55"
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
 
         <TextView
             android:id="@+id/bsd_xzcl_je"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="2"
+            style="@style/mysearchinfostyle"
             android:text="办理日期" />
 
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm77"
-        android:layout_width="0dp"
-        android:layout_weight="1.5"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
 
         <TextView
             android:id="@+id/bsd_xzcl_qingxi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="1.5"
+            style="@style/mysearchinfostyle"
             android:text="经办人" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm88"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
 
         <TextView
             android:id="@+id/bsd_xzcl_peijian"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            style="@style/mysearchinfostyle"
             android:text="积分" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm99"
-        android:layout_width="0dp"
-        android:layout_weight="1.5"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
 
         <TextView
             android:id="@+id/bsd_xzcl_shengyujiner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="1.5"
+            style="@style/mysearchinfostyle"
             android:text="剩余金额" />
-
-    </RelativeLayout>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

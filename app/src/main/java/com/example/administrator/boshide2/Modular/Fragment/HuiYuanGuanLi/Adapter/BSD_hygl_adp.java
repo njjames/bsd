@@ -24,9 +24,10 @@ public class BSD_hygl_adp extends BaseAdapter {
     Context context;
     List<BSD_HYGL_ety> list;
 
-    public BSD_hygl_adp(Context context) {
+    public BSD_hygl_adp(Context context, List<BSD_HYGL_ety> list) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     public void setList(List<BSD_HYGL_ety> list) {
@@ -35,12 +36,12 @@ public class BSD_hygl_adp extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return (list==null)?0:list.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return list.get(i);
     }
 
     @Override
@@ -48,9 +49,20 @@ public class BSD_hygl_adp extends BaseAdapter {
         return 0;
     }
 
-    class Holder {
-        TextView bsd_xzcl_shengyujiner, bsd_xzcl_name, bsd_xzcl_shuliang, bsd_xzcl_danjia, bsd_xzcl_tuhao, bsd_xzcl_pinpai, bsd_xzcl_caozuo, bsd_xzcl_danxi, bsd_xzcl_qingxi, bsd_xzcl_peijian, bsd_xzcl_keyong, bsd_xzcl_shengyu, bsd_xzcl_jinyong;
-
+    public final class Holder {
+        TextView bsd_xzcl_shengyujiner;
+        TextView bsd_xzcl_name;
+        TextView bsd_xzcl_shuliang;
+        TextView bsd_xzcl_danjia;
+        TextView bsd_xzcl_tuhao;
+        TextView bsd_xzcl_pinpai;
+        TextView bsd_xzcl_caozuo;
+        TextView bsd_xzcl_danxi;
+        TextView bsd_xzcl_qingxi;
+        TextView bsd_xzcl_peijian;
+        TextView bsd_xzcl_keyong;
+        TextView bsd_xzcl_shengyu;
+        TextView bsd_xzcl_jinyong;
     }
 
     @Override
@@ -64,18 +76,14 @@ public class BSD_hygl_adp extends BaseAdapter {
             holder.bsd_xzcl_danjia = (TextView) contetview.findViewById(R.id.bsd_xzcl_danjia);
             holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
             holder.bsd_xzcl_pinpai = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
-//            holder.bsd_xzcl_danxi = (TextView) contetview.findViewById(R.id.bsd_xzcl_danxi);
             holder.bsd_xzcl_qingxi = (TextView) contetview.findViewById(R.id.bsd_xzcl_qingxi);
             holder.bsd_xzcl_peijian = (TextView) contetview.findViewById(R.id.bsd_xzcl_peijian);
             holder.bsd_xzcl_shengyujiner = (TextView) contetview.findViewById(R.id.bsd_xzcl_shengyujiner);
-
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
-
         final BSD_HYGL_ety item = list.get(i);
-
         holder.bsd_xzcl_name.setSelected(true);
         holder.bsd_xzcl_name.setText(item.getKehu_mc());//卡名称
         holder.bsd_xzcl_shuliang.setText(item.getKehu_dh());//折扣
@@ -97,6 +105,5 @@ public class BSD_hygl_adp extends BaseAdapter {
         //  holder.bsd_xzcl_jinyong.setText(item.getFlag_use());//禁用
         return contetview;
     }
-
 
 }
