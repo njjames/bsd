@@ -13,14 +13,16 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@drawable/bsd_lsbj_body"
+        android:paddingLeft="@dimen/qb_px_4"
+        android:paddingRight="@dimen/qb_px_4"
+        android:paddingTop="@dimen/qb_px_6"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/bsd_on_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="@dimen/qb_px_4">
+            android:gravity="center_vertical">
 
             <LinearLayout
                 android:id="@+id/relativeLayout7"
@@ -71,20 +73,25 @@
         <View
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/qb_px_1"
             android:background="#F7714C"
-            android:layout_marginLeft="@dimen/qb_px_4"
-            android:layout_marginRight="@dimen/qb_px_4"/>
+            android:layout_marginTop="@dimen/qb_px_4"/>
 
         <LinearLayout
             android:id="@+id/bsd_lsbj_toubuju"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_30"
-            android:layout_below="@+id/bsd_on_xian"
-            android:layout_marginTop="@dimen/qb_px_2"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/qb_px_4"
-            android:paddingRight="@dimen/qb_px_4">
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/mysearchtitlestyle"
+                android:layout_weight="0.4"
+                android:text="序号" />
+
+            <TextView
+                style="@style/mysearchtitlestyle"
+                android:layout_weight="1"
+                android:text="车牌" />
 
             <TextView
                 style="@style/mysearchtitlestyle"
@@ -100,11 +107,6 @@
                 style="@style/mysearchtitlestyle"
                 android:layout_weight="1.2"
                 android:text="日期" />
-
-            <TextView
-                style="@style/mysearchtitlestyle"
-                android:layout_weight="1"
-                android:text="车牌" />
 
             <TextView
                 style="@style/mysearchtitlestyle"
@@ -126,10 +128,7 @@
             <ListView
                 android:id="@+id/bsd_lsbj_lv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/qb_px_4"
-                android:paddingRight="@dimen/qb_px_4">
-
+                android:layout_height="match_parent">
             </ListView>
         </com.ab.view.pullview.AbPullToRefreshView>
     </LinearLayout>

@@ -45,6 +45,8 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
     private URLS url;
     private TextView title;
     private TextView footerText;
+    private String chepai = "";
+    private String chezhu = "";
 
     @Override
     protected int getLayoutId() {
@@ -72,6 +74,8 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
             public void onClick(View view) {
                 datas.clear();
                 page = 1;
+                chepai = et_cl_chepai.getText().toString().trim();
+                chezhu = et_cl_chezhu.getText().toString().trim();
                 searchCar();
             }
         });
@@ -110,6 +114,7 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         datas.clear();
+        page = 1;
         searchCar();
     }
 
@@ -118,8 +123,6 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
      */
     public void searchCar() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        String chepai = et_cl_chepai.getText().toString().trim();
-        String chezhu = et_cl_chezhu.getText().toString().trim();
         AbRequestParams params = new AbRequestParams();
         params.put("pageNumber", page);
         params.put("che_no", chepai);
@@ -156,7 +159,8 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
                         }
                         adapter.notifyDataSetChanged();
                     } else {
-                        Show.showTime(getActivity(), jsonObject.get("message").toString());
+                        Show.showTime(getActivity(), "没有更多数据了");
+                        page--;
                     }
                     refreshView.onFooterLoadFinish();
                     refreshView.onHeaderRefreshFinish();
@@ -166,6 +170,7 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
                     adapter.notifyDataSetChanged();
                     refreshView.onFooterLoadFinish();
                     WeiboDialogUtils.closeDialog(mWeiboDialog);
+                    page--;
                 }
             }
 
@@ -183,6 +188,7 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
                 refreshView.onFooterLoadFinish();
                 refreshView.onHeaderRefreshFinish();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
+                page--;
             }
         });
     }
@@ -190,6 +196,8 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
     @Override
     public void onFooterLoad(AbPullToRefreshView abPullToRefreshView) {
         page++;
+        chepai = et_cl_chepai.getText().toString().trim();
+        chezhu = et_cl_chezhu.getText().toString().trim();
         searchCar();
     }
 
@@ -197,6 +205,8 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
     public void onHeaderRefresh(AbPullToRefreshView abPullToRefreshView) {
         datas.clear();
         page = 1;
+        chepai = et_cl_chepai.getText().toString().trim();
+        chezhu = et_cl_chezhu.getText().toString().trim();
         searchCar();
     }
 

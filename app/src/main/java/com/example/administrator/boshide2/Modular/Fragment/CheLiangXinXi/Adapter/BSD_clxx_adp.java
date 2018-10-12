@@ -17,12 +17,10 @@ import java.util.List;
  */
 
 public class BSD_clxx_adp extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
-    List<BSD_CLXX_ety> list;
+    private LayoutInflater layoutInflater;
+    private List<BSD_CLXX_ety> list;
 
     public BSD_clxx_adp(Context context, List<BSD_CLXX_ety> list) {
-        this.context = context;
         this.list = list;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -48,39 +46,35 @@ public class BSD_clxx_adp extends BaseAdapter {
         if (contetview == null) {
             holder = new Holder();
             contetview=layoutInflater.inflate(R.layout.bsd_clxx_item,null);
-            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
-            holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
-            holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_kxbj_qian= (TextView) contetview.findViewById(R.id.bsd_kxbj_phone);
-            holder.bsd_kxbj_qian1= (TextView) contetview.findViewById(R.id.bsd_kxbj_qian1);
+            holder.tv_reco_no= (TextView) contetview.findViewById(R.id.tv_reco_no);
+            holder.bsd_xsbj_cheno= (TextView) contetview.findViewById(R.id.bsd_xsbj_cheno);
+            holder.bsd_xsbj_kehumc= (TextView) contetview.findViewById(R.id.bsd_xsbj_kehumc);
+            holder.bsd_kxbj_kehuxm= (TextView) contetview.findViewById(R.id.bsd_kxbj_kehuxm);
+            holder.bsd_kxbj_rq= (TextView) contetview.findViewById(R.id.bsd_kxbj_rq);
+            holder.bsd_kxbj_cx= (TextView) contetview.findViewById(R.id.bsd_kxbj_cx);
+            holder.bsd_kxbj_xz= (TextView) contetview.findViewById(R.id.bsd_kxbj_xz);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
         BSD_CLXX_ety item=list.get(i);
-        holder.bsd_xsbj_name.setText(item.getKehu_mc());
-        holder.bsd_xsbj_name.setSelected(true);
-        holder.bsd_kxbj_bzsj.setText(item.getKehu_xm());
-        holder.bsd_kxbj_bzsj.setSelected(true);
-        holder.bsd_kxbj_gsdj.setText(item.getChe_djrq());
-        holder.bsd_kxbj_je.setText(item.getChe_no());
-        holder.bsd_kxbj_cz.setText(item.getChe_cx());
-        holder.bsd_kxbj_qian.setText("");
-        holder.bsd_kxbj_qian1.setText(item.getChe_xingzhi());
-        holder.bsd_kxbj_cz.setSelected(true);
-        holder.bsd_kxbj_gsdj.setSelected(true);
+        holder.tv_reco_no.setText("" + i);
+        holder.bsd_xsbj_cheno.setText(item.getChe_no());
+        holder.bsd_xsbj_kehumc.setText(item.getKehu_mc());
+        holder.bsd_kxbj_kehuxm.setText(item.getKehu_xm());
+        holder.bsd_kxbj_rq.setText(item.getChe_djrq());
+        holder.bsd_kxbj_cx.setText(item.getChe_cx());
+        holder.bsd_kxbj_xz.setText(item.getChe_xingzhi());
         return contetview;
     }
 
     class Holder {
-        TextView bsd_kxbj_qian1;
-        TextView bsd_xsbj_name;
-        TextView bsd_kxbj_bzsj;
-        TextView bsd_kxbj_gsdj;
-        TextView bsd_kxbj_je;
-        TextView bsd_kxbj_qian;
-        TextView bsd_kxbj_cz;
+        TextView bsd_xsbj_cheno;
+        TextView bsd_xsbj_kehumc;
+        TextView bsd_kxbj_kehuxm;
+        TextView bsd_kxbj_rq;
+        TextView bsd_kxbj_cx;
+        TextView bsd_kxbj_xz;
+        TextView tv_reco_no;
     }
 }

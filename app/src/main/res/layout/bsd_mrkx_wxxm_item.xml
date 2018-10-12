@@ -58,7 +58,7 @@
         android:layout_height="@dimen/qb_px_30">
 
         <ImageView
-            android:id="@+id/bsd_kxbj_je"
+            android:id="@+id/bsd_kxbj_pg"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_30"
             android:padding="@dimen/qb_px_2"

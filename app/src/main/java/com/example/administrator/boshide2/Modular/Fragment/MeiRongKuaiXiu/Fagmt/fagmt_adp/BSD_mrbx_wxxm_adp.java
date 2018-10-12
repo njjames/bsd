@@ -112,7 +112,7 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
             holder.bsd_kxbj_bzsj = (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj = (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
             holder.tv_ygsf = (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_kxbj_cz = (ImageView) contetview.findViewById(R.id.bsd_kxbj_je);
+            holder.bsd_kxbj_cz = (ImageView) contetview.findViewById(R.id.bsd_kxbj_pg);
             holder.tv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_kxbj_hyzk = (TextView) contetview.findViewById(R.id.bsd_kxbj_hyzk);
             holder.bsd_kxbj_hygsf = (TextView) contetview.findViewById(R.id.bsd_kxbj_hygsf);

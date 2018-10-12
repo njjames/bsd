@@ -27,7 +27,7 @@
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_32"
-                android:layout_weight="1.5">
+                android:layout_weight="1.2">
 
                 <TextView
                     android:id="@+id/textView7"
@@ -377,7 +377,7 @@
 
                 <ListView
                     android:id="@+id/bsd_wxxq_cl_lv1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 

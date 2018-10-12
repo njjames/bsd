@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
@@ -34,10 +36,11 @@ import java.io.IOException;
  */
 
 public class BSD_CheLiangTuPian extends BaseFragment {
+    private static final String PARAM_KEY = "param_key";
     private WebView bsd_cxq_wbweb;
     private URLS url;
-    private Button but_upload;
-    private Button but_delete;
+    private LinearLayout ll_upload;
+    private LinearLayout ll_delete;
     private Context context;
     private String jsonUrl;
     private String urlStr;
@@ -49,6 +52,21 @@ public class BSD_CheLiangTuPian extends BaseFragment {
     //选中上传图片对话框
     private Button  but1,but2,but3,but4;
     private String  name;
+    private String param;
+
+    public static Fragment newInstance(String params) {
+        BSD_CheLiangTuPian fragment = new BSD_CheLiangTuPian();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY, params);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        param = getArguments().getString(PARAM_KEY);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -58,16 +76,16 @@ public class BSD_CheLiangTuPian extends BaseFragment {
     @Override
     public void initView() {
         bsd_cxq_wbweb = (WebView) view.findViewById(R.id.bsd_cxq_wbweb);
-        but_upload = (Button) view.findViewById(R.id.but_upload);
-        but_upload.setOnClickListener(new View.OnClickListener() {
+        ll_upload = (LinearLayout) view.findViewById(R.id.ll_upload);
+        ll_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showUploadDialog();
             }
         });
 
-        but_delete = (Button) view.findViewById(R.id.but_delete);
-        but_delete.setOnClickListener(new View.OnClickListener() {
+        ll_delete = (LinearLayout) view.findViewById(R.id.ll_delete);
+        ll_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDeletImgDialog();
@@ -270,7 +288,7 @@ public class BSD_CheLiangTuPian extends BaseFragment {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     jsonUrl = jsonObject.getString("data").toString().trim();
-                    urlStr = java.net.URLEncoder.encode(Conts.cp, "GB2312");
+                    urlStr = java.net.URLEncoder.encode(param, "GB2312");
                     jsonUrl = jsonUrl + "/ShowImageChe.aspx?che_no=" + urlStr;
 //                    bsd_cxq_wbweb.loadUrl("http://css85.bsd126.com:8/BSDImage/ShowImageChe.aspx?che_no=%BB%A6%BD%F2Q023456");
                     bsd_cxq_wbweb.loadUrl(jsonUrl);

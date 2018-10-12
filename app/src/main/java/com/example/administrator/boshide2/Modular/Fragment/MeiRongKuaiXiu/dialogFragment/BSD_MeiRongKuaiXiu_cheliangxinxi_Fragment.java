@@ -532,7 +532,7 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                 data_mrkx(Conts.cp, billNo);
                 break;
             case Conts.BILLTYPE_KSBJ:
-                data_ksbj(Conts.cp, view);
+                data_ksbj(Conts.cp, billNo);
                 break;
         }
 //        if ("mrkx".equals(paramBillType)) {
@@ -609,13 +609,14 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     /*
     *根据车牌获取数据，打开快速报价
     */
-    public void data_ksbj(final String cardNo, final View view) {
+    public void data_ksbj(final String cardNo, String billNo) {
         list_ksbj.clear();
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
         params.put("pai", cardNo);
         params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
+        params.put("list_no", billNo);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_jbxx, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {

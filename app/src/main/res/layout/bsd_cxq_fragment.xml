@@ -398,36 +398,50 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/qb_px_32"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:id="@+id/bus_clxq_tv_cltp"
-                        android:layout_width="@dimen/qb_px_80"
-                        android:layout_height="@dimen/qb_px_30"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:text="车辆图片"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:paddingLeft="@dimen/qb_px_4"
+                        android:paddingRight="@dimen/qb_px_4"/>
 
                     <TextView
                         android:id="@+id/bus_clxq_tv_wxls"
-                        android:layout_width="@dimen/qb_px_80"
-                        android:layout_height="@dimen/qb_px_30"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:text="维修历史"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:paddingLeft="@dimen/qb_px_4"
+                        android:paddingRight="@dimen/qb_px_4"/>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2">
+
+                    </FrameLayout>
                 </LinearLayout>
 
                 <View
                     android:id="@+id/bus_vi1"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/qb_px_1"
                     android:background="#F7714C"
                     android:layout_marginTop="@dimen/qb_px_1"/>
 
                 <FrameLayout
                     android:id="@+id/bsd_clxq_lswx"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="#FFFFFF"
                     android:orientation="vertical" />
             </LinearLayout>

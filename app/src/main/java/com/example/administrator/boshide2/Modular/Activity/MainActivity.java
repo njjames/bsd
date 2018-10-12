@@ -1001,4 +1001,14 @@ public class MainActivity extends FragmentActivity {
         DownJianPan.DJP(this);
         change(BSD_kuaisubaojia_Fragment.newInstance(params));
     }
+
+    public void showKsbjXqFragment(String params) {
+        DownJianPan.DJP(this);
+        change(BSD_kuaisubaojia_xiangqing_Fragment.newInstance(params));
+    }
+
+    public void showWXXQFragment(String params) {
+        DownJianPan.DJP(this);
+        change(BSD_WeiXiuXiangQing_Fragment.newInstance(params));
+    }
 }

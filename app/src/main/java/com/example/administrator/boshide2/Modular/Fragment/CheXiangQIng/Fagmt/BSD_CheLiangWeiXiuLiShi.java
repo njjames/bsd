@@ -1,6 +1,7 @@
 package com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng.Fagmt;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng.Fagmt.FagmtAdp.BSD_CheLiangLiShiWeiXiu_adp;
+import com.example.administrator.boshide2.Modular.Fragment.LiShiBaoJia.BSD_kuaisubaojia_xiangqing_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiWeiXiu.Entity.BSD_LSWX_ety;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
@@ -38,6 +40,7 @@ import java.util.List;
  */
 
 public class BSD_CheLiangWeiXiuLiShi extends BaseFragment {
+    private static final String PARAM_KEY = "param_key";
     private ListView bsd_lsbj_lv;
     private BSD_CheLiangLiShiWeiXiu_adp adapter;
     private ScrollView scrollView;
@@ -46,6 +49,21 @@ public class BSD_CheLiangWeiXiuLiShi extends BaseFragment {
     //转圈
     private Dialog mWeiboDialog;
     private URLS url;
+    private String param;
+
+    public static Fragment newInstance(String params) {
+        BSD_CheLiangWeiXiuLiShi fragment = new BSD_CheLiangWeiXiuLiShi();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY, params);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        param = getArguments().getString(PARAM_KEY);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -97,9 +115,8 @@ public class BSD_CheLiangWeiXiuLiShi extends BaseFragment {
     public void WXLS() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        Log.i("车牌", "1111111111111" + chepai);
         params.put("pageNumber", 1);
-        params.put("che_no", chepai);
+        params.put("che_no", param);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CL_WX, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
@@ -134,12 +151,10 @@ public class BSD_CheLiangWeiXiuLiShi extends BaseFragment {
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override

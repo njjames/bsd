@@ -6,11 +6,6 @@
 
     <include layout="@layout/content_title_back_no_layout" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_1"
-        android:background="#E0E0E0" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -238,9 +233,14 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_weight="1"
+                    style="@style/mysearchtitlestyle"
+                    android:text="项目编码" />
+
+                <TextView
                     android:layout_weight="1.2"
                     style="@style/mysearchtitlestyle"
-                    android:text="项目" />
+                    android:text="项目名称" />
 
                 <TextView
                     android:layout_weight="1"
@@ -258,47 +258,50 @@
                     android:text="总计金额" />
 
                 <TextView
-                    android:layout_weight="1.2"
+                    android:layout_weight="0.8"
                     style="@style/mysearchtitlestyle"
                     android:text="状态" />
-
-                <TextView
-                    android:layout_weight="1"
-                    style="@style/mysearchtitlestyle"
-                    android:text="操作" />
             </LinearLayout>
 
             <ListView
                 android:id="@+id/bsd_lv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qb_px_26"
-                android:background="@drawable/bsd_xiamianyuan">
+                android:background="@drawable/bsd_xiamianyuan"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/tv_hj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/qb_px_10"
                     android:text="维修项目合计:"
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_wxxm_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="14sp"
+                    android:text="(共0条记录)"
+                    android:layout_marginLeft="@dimen/qb_px_4"/>
+
+                <TextView
                     android:id="@+id/tv_wxxm_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/qb_px_10"
-                    android:layout_alignParentRight="true"
                     android:text="元"
                     android:textColor="#F7714C"
                     android:textSize="16sp" />
-            </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -321,67 +324,85 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="1.2"
+                    android:layout_weight="1"
                     style="@style/mysearchtitlestyle"
-                    android:text="材料名称" />
+                    android:text="配件编码" />
 
                 <TextView
                     android:layout_weight="1.2"
+                    style="@style/mysearchtitlestyle"
+                    android:text="配件名称" />
+
+                <TextView
+                    android:layout_weight="1"
+                    style="@style/mysearchtitlestyle"
+                    android:text="图号" />
+
+                <TextView
+                    android:layout_weight="1"
+                    style="@style/mysearchtitlestyle"
+                    android:text="品牌" />
+
+                <TextView
+                    android:layout_weight="0.8"
                     style="@style/mysearchtitlestyle"
                     android:text="数量" />
 
                 <TextView
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
+                    style="@style/mysearchtitlestyle"
+                    android:text="单位" />
+
+                <TextView
+                    android:layout_weight="0.8"
                     style="@style/mysearchtitlestyle"
                     android:text="单价" />
 
                 <TextView
                     android:layout_weight="1"
                     style="@style/mysearchtitlestyle"
-                    android:text="单位" />
-
-                <TextView
-                    android:layout_weight="1.2"
-                    style="@style/mysearchtitlestyle"
                     android:text="总价" />
-
-                <TextView
-                    android:layout_weight="1"
-                    style="@style/mysearchtitlestyle"
-                    android:text="操作" />
             </LinearLayout>
 
             <ListView
                 android:id="@+id/bsd_lv1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qb_px_26"
-                android:background="@drawable/bsd_xiamianyuan">
+                android:background="@drawable/bsd_xiamianyuan"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/tv_hj2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/qb_px_10"
-                    android:text="合计:"
+                    android:text="维修用料合计:"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_wxcl_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="14sp"
+                    android:text="(共0条记录)"
+                    android:layout_marginLeft="@dimen/qb_px_4"/>
 
                 <TextView
                     android:id="@+id/tv_wxcl_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/qb_px_10"
-                    android:layout_alignParentRight="true"
                     android:text="元"
                     android:textColor="#F7714C"
                     android:textSize="16sp" />
-            </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

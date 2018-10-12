@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
@@ -80,12 +81,7 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                BSD_KuaiSuBaoJia_ety entiy = new BSD_KuaiSuBaoJia_ety();
-                entiy = data.get(i);
-                ((MainActivity) getActivity()).setKsbjenity(entiy);//传了个实体
-                Conts.zt = 1;
-                Conts.cp = entiy.getChe_no();
-                ((MainActivity) getActivity()).upksbjxiangqing();
+                ((MainActivity) getActivity()).showKsbjXqFragment(JSON.toJSON(data.get(i)).toString());
             }
         });
         // 返回

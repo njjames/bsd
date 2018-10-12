@@ -27,10 +27,7 @@ import com.example.administrator.boshide2.Tools.DownJianPan;
 public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnClickListener {
     LinearLayout bsd_lsbj_fanhui;
     TextView bus_clxq_tv_cltp, bus_clxq_tv_wxls;
-    private Fragment[] fragments;
     private TextView[] arr_tv;// 图标的数组0
-    private int[] arr_id_box = {R.id.bus_clxq_tv_cltp, R.id.bus_clxq_tv_wxls};
-    private Fragment BSD_CLTP, BSD_WXLS;
     ScrollView scrollview;
     TextView tv_xq_number,tv_xq_cx,tv_xq_xz,tv_xq_vin,tv_xq_kh,tv_xq_lxr,tv_xq_chezhu,tv_xq_phone,tv_xq_gmrq,tv_xq_bysj,
             tv_xq_bylc,tv_xq_nextrq,tv_xq_next_lc;
@@ -46,8 +43,6 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
     public void onStart() {
         super.onStart();
         initFragment();
-        change(BSD_CLTP);
-        checkHighLight(0);
     }
 
     @Override
@@ -110,11 +105,9 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
      * 初始化碎片
      */
     private void initFragment() {
-        BSD_CLTP = new BSD_CheLiangTuPian();
-        BSD_WXLS = new BSD_CheLiangWeiXiuLiShi();
-        fragments = new Fragment[2];
-        fragments[0] = BSD_CLTP;
-        fragments[1] = BSD_WXLS;
+        DownJianPan.DJP(getActivity());
+        change(BSD_CheLiangTuPian.newInstance(((MainActivity)getActivity()).getClxx_ety().getChe_no()));
+        checkHighLight(0);
     }
 
 
@@ -131,12 +124,17 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        for (int i = 0; i < arr_id_box.length; i++) {
-            if (view.getId() == arr_id_box[i]) {
+        switch (view.getId()) {
+            case R.id.bus_clxq_tv_wxls:
                 DownJianPan.DJP(getActivity());
-                change(fragments[i]);
-                checkHighLight(i);
-            }
+                change(BSD_CheLiangWeiXiuLiShi.newInstance(((MainActivity)getActivity()).getClxx_ety().getChe_no()));
+                checkHighLight(1);
+                break;
+            case R.id.bus_clxq_tv_cltp:
+                DownJianPan.DJP(getActivity());
+                change(BSD_CheLiangTuPian.newInstance(((MainActivity)getActivity()).getClxx_ety().getChe_no()));
+                checkHighLight(0);
+                break;
         }
     }
 

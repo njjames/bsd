@@ -109,7 +109,6 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
         //隐藏输入法
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
         WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
 //        params.width = (int) getActivity().getResources().getDimension(R.dimen.x480);
 //        params.height = (int) getActivity().getResources().getDimension(R.dimen.y820);

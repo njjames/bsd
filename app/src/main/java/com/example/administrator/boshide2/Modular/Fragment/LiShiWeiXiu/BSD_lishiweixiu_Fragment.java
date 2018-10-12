@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.view.pullview.AbPullToRefreshView;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
@@ -39,30 +40,27 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @历史维修碎片页
- * Created by Administrator on 2017-4-13.
+ * @历史维修碎片页 Created by Administrator on 2017-4-13.
  */
 
-public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRefreshView.OnHeaderRefreshListener,AbPullToRefreshView.OnFooterLoadListener{
-    ListView bsd_lsbj_lv;
-    List<BSD_LSWX_ety> data = new ArrayList<BSD_LSWX_ety>();
-    BSD_lswx_adp adapter;
-    AbPullToRefreshView wx_rfview;//刷新
-    int page=1;//分页
-    EditText et_wx_chepai;
-    TextView tv_wx_chaxun;
-    String wx_chepai;
+public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
+    private ListView bsd_lsbj_lv;
+    private List<BSD_LSWX_ety> data = new ArrayList<BSD_LSWX_ety>();
+    private BSD_lswx_adp adapter;
+    private AbPullToRefreshView wx_rfview;//刷新
+    private int page = 1;//分页
+    private EditText et_wx_chepai;
+    private TextView tv_wx_chaxun;
+    private String wx_chepai;
     //转圈
     private Dialog mWeiboDialog;
     //PopupWindow对象声明
     PopupWindow pw;
-    //当前选中的列表项位置
-    int clickPsition = -1;
     private BSD_lswx_guwen_adp lswx_guwen_adp;//服务顾问适配器
-    List<Map<String, String>>list_gu=new ArrayList<Map<String, String>>();
-    TextView tv_lswx_gw;
-    String guwen;
-    URLS url;
+    private List<Map<String, String>> list_gu = new ArrayList<Map<String, String>>();
+    private TextView tv_lswx_gw;
+    private String guwen;
+    private URLS url;
     private TextView title;
     private TextView footerText;
 
@@ -73,35 +71,26 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
 
     @Override
     public void initView() {
-        tv_lswx_gw= (TextView) view.findViewById(R.id.tv_lswx_gw);
-        wx_rfview= (AbPullToRefreshView) view.findViewById(R.id.wx_rfview);
-        tv_wx_chaxun= (TextView) view.findViewById(R.id.tv_wx_chaxun);
+        tv_lswx_gw = (TextView) view.findViewById(R.id.tv_lswx_gw);
+        wx_rfview = (AbPullToRefreshView) view.findViewById(R.id.wx_rfview);
+        et_wx_chepai = (EditText) view.findViewById(R.id.et_wx_chepai);
+        tv_wx_chaxun = (TextView) view.findViewById(R.id.tv_wx_chaxun);
         tv_wx_chaxun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            data.clear();
-                wx_chepai=et_wx_chepai.getText().toString();
-                if (et_wx_chepai.getText().toString().length()>0){
-                    LSWX();
-                }else {
-                    wx_chepai=null;
-                    LSWX();
-                }
-               Log.i("cjn","查看车牌"+ wx_chepai);
-
+                data.clear();
+                wx_chepai = et_wx_chepai.getText().toString();
+                LSWX();
             }
         });
-        et_wx_chepai= (EditText) view.findViewById(R.id.et_wx_chepai);
 
-        bsd_lsbj_lv= (ListView) view.findViewById(R.id.bsd_lsbj_lv);
-        adapter=new BSD_lswx_adp(getActivity(),data);
+        bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
+        adapter = new BSD_lswx_adp(getActivity(), data);
         bsd_lsbj_lv.setAdapter(adapter);
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ((MainActivity) getActivity()).setWork_no(data.get(i).getWork_no());
-                ((MainActivity) getActivity()).setData(data.get(i));
-                ((MainActivity) getActivity()).upwxxq(view);
+                ((MainActivity) getActivity()).showWXXQFragment(JSON.toJSON(data.get(i)).toString());
             }
         });
         /**
@@ -112,9 +101,8 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
             public void onHeaderRefresh(AbPullToRefreshView view) {
                 data.clear();
                 page = 1;
+                wx_chepai = et_wx_chepai.getText().toString();
                 LSWX();
-                Log.i("维修","111111111111"+page);
-                adapter.notifyDataSetChanged();
             }
         });
         /**
@@ -123,8 +111,8 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
         wx_rfview.setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
             @Override
             public void onFooterLoad(AbPullToRefreshView view) {
-                // TODO Auto-generated method stub
-                page = page + 1;
+                page++;
+                wx_chepai = et_wx_chepai.getText().toString();
                 LSWX();
             }
         });
@@ -134,36 +122,32 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
 
     @Override
     public void initData() {
-        url=new URLS();
+        url = new URLS();
         title.setText("历史维修");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         data.clear();
         LSWX();
-        list_gu.clear();
-        guwen();
+//        list_gu.clear();
+//        guwen();
     }
 
-    public  void LSWX(){
+    public void LSWX() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        AbRequestParams params=new AbRequestParams();
-        params.put("pageNumber",page);
-        params.put("che_no",wx_chepai);
-        params.put("type",0);
-        Log.i("cjn","查看数据page="+page+",wx_chepai="+wx_chepai+",type="+0);
-        Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_CL_WX, params, new AbStringHttpResponseListener() {
-
-//           Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_CL_WX, params, new AbStringHttpResponseListener() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("pageNumber", page);
+        params.put("che_no", wx_chepai);
+        params.put("type", 0);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CL_WX, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int sss, String s) {
-                Log.i("cjn","查看数据"+s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
                         JSONArray jsonarray = jsonObject.getJSONArray("data");
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject json = jsonarray.getJSONObject(i);
-                            BSD_LSWX_ety lswx_ety=new BSD_LSWX_ety();
+                            BSD_LSWX_ety lswx_ety = new BSD_LSWX_ety();
                             lswx_ety.setWork_no(json.getString("work_no"));
                             lswx_ety.setKehu_mc(json.getString("kehu_mc"));
                             lswx_ety.setChe_no(json.getString("che_no"));
@@ -172,7 +156,6 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
                             lswx_ety.setXche_hjje(json.getString("xche_hjje"));
                             lswx_ety.setKehu_bxno(json.getString("kehu_bxno"));
                             lswx_ety.setXche_jdrq(json.getString("xche_jdrq"));
-
                             lswx_ety.setKehu_mc(json.getString("kehu_mc"));
                             lswx_ety.setKehu_dh(json.getString("kehu_dh"));
                             lswx_ety.setXche_jsrq(json.getString("xche_jsrq"));
@@ -181,27 +164,16 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
                             lswx_ety.setZhifu_card_no(json.getString("zhifu_card_no"));//储值卡号
                             lswx_ety.setFlag_cardjs(json.getBoolean("flag_cardjs"));//储值卡结算标志
                             lswx_ety.setZhifu_card_xj(json.getString("zhifu_card_xj"));//补现金
-
                             data.add(lswx_ety);
                         }
-                        wx_rfview.onFooterLoadFinish();
-                        wx_rfview.onHeaderRefreshFinish();
-                        adapter.notifyDataSetChanged();
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
-                    } else {
-                        wx_rfview.onFooterLoadFinish();
-                        wx_rfview.onHeaderRefreshFinish();
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
                     }
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-                    wx_rfview.onFooterLoadFinish();
-                    wx_rfview.onHeaderRefreshFinish();
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    wx_rfview.onFooterLoadFinish();
-                    wx_rfview.onHeaderRefreshFinish();
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
                 }
+                adapter.notifyDataSetChanged();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+                wx_rfview.onFooterLoadFinish();
+                wx_rfview.onHeaderRefreshFinish();
             }
 
             @Override
@@ -219,11 +191,11 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
                 wx_rfview.onFooterLoadFinish();
                 wx_rfview.onHeaderRefreshFinish();
-                Log.i("cjn","失败"+s);
                 Show.showTime(getActivity(), "网络连接超时");
             }
         });
     }
+
     private void popwin() {
         //通过布局注入器，注入布局给View对象
         View myView = getActivity().getLayoutInflater().inflate(R.layout.bsd_hygl_bumen, null);
@@ -243,19 +215,21 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 guwen = list_gu.get(i).get("name").toString();
-                tv_lswx_gw .setText(guwen);
+                tv_lswx_gw.setText(guwen);
                 pw.dismiss();
             }
         });
     }
+
     /**
      * 服务顾问
+     *
      * @param
      */
-    private void guwen(){
+    private void guwen() {
         AbRequestParams params = new AbRequestParams();
         params.put("type", "ITJcr");
-        Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int sssss, String s) {
                 try {
@@ -298,13 +272,6 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
     }
 
 
-
-
-
-
-
-
-
     @Override
     public void onFooterLoad(AbPullToRefreshView abPullToRefreshView) {
 
@@ -314,20 +281,4 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
     public void onHeaderRefresh(AbPullToRefreshView abPullToRefreshView) {
 
     }
-
-
-//    public void data() {
-//
-//        for (int i = 0; i < 20; i++) {
-//            HashMap<String, String> map = new HashMap<>();
-//            map.put("name", "张生军");
-//            map.put("time", "张生军");
-//            map.put("timemany","2017/02/02");
-//            map.put("jinqian", "冀A·53151");
-//            map.put("caozuo", "别克");
-//            map.put("qian", "洗车");
-//            map.put("qian1", "150");
-//            data.add(map);
-//        }
-//    }
 }
