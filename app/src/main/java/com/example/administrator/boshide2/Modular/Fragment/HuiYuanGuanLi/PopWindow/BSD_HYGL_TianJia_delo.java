@@ -403,21 +403,6 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     private void popwin() {
         //通过布局注入器，注入布局给View对象
         View myView = getLayoutInflater().inflate(R.layout.bsd_hygl_bumen, null);
-        //通过view 和宽·高，构造PopopWindow
-        pw = new PopupWindow(myView, rela_bumen.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
-        pw.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.yuan));
-        //设置焦点为可点击
-        pw.setFocusable(true);//可以试试设为false的结果
-        //将window视图显示在myButton下面
-//        pw.showAsDropDown(rela_bumen);
-        int[] location = new int[2];
-//        rela_bumen.getLocationOnScreen(location);
-        rela_bumen.getLocationInWindow(location);
-//        listView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        pw.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        int popHeight = pw.getContentView().getMeasuredHeight();
-        pw.showAtLocation(rela_bumen, Gravity.NO_GRAVITY, location[0], location[1] - popHeight);
         ListView lv = (ListView) myView.findViewById(R.id.lv_hygl_bumen);
         hygl_bumen_adp = new BSD_hygl_bumen_adp(getContext(), list_bumen);
         lv.setAdapter(hygl_bumen_adp);
@@ -429,6 +414,23 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                 pw.dismiss();
             }
         });
+        //通过view 和宽·高，构造PopopWindow
+        pw = new PopupWindow(myView, rela_bumen.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
+        pw.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.yuan));
+        //设置焦点为可点击
+        pw.setFocusable(true);//可以试试设为false的结果
+        //将window视图显示在myButton下面
+//        pw.showAsDropDown(rela_bumen);
+        int[] location = new int[2];
+//        rela_bumen.getLocationOnScreen(location);
+        rela_bumen.getLocationInWindow(location);
+        rela_bumen.getLeft();
+        rela_bumen.getHeight();
+//        listView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        myView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int popHeight = myView.getMeasuredHeight();
+        pw.showAtLocation(rela_bumen, Gravity.NO_GRAVITY, location[0] + 20, location[1] - popHeight * list_bumen.size());
     }
 
     /**
@@ -437,15 +439,6 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     private void popwin_jiesuan() {
         //通过布局注入器，注入布局给View对象
         View myView = getLayoutInflater().inflate(R.layout.bsd_hygl_bumen, null);
-        //通过view 和宽·高，构造PopopWindow
-        pw = new PopupWindow(myView, relat_jiesuan.getWidth(), (int) getContext().getResources().getDimension(R.dimen.y200), true);
-        pw.setBackgroundDrawable(getContext().getResources().getDrawable(
-                //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
-                R.drawable.yuan));
-        //设置焦点为可点击
-        pw.setFocusable(true);//可以试试设为false的结果
-        //将window视图显示在myButton下面
-        pw.showAsDropDown(relat_jiesuan);
         ListView lv = (ListView) myView.findViewById(R.id.lv_hygl_bumen);
         hygl_jiesuan_adp = new BSD_hygl_jiesuan_adp(getContext(), list_jiesuan);
         lv.setAdapter(hygl_jiesuan_adp);
@@ -457,6 +450,16 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                 pw.dismiss();
             }
         });
+        //通过view 和宽·高，构造PopopWindow
+        pw = new PopupWindow(myView, relat_jiesuan.getWidth(), (int) getContext().getResources().getDimension(R.dimen.y200), true);
+        pw.setBackgroundDrawable(getContext().getResources().getDrawable(
+                //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
+                R.drawable.yuan));
+        //设置焦点为可点击
+        pw.setFocusable(true);//可以试试设为false的结果
+        //将window视图显示在myButton下面
+        pw.showAsDropDown(relat_jiesuan);
+
     }
 
     /**
