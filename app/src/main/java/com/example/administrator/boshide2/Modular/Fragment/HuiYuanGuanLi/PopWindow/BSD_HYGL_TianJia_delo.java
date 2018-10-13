@@ -1,16 +1,17 @@
 package com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.PopWindow;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +54,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     TextView et_hy_birthday, et_hy_youdate, et_hy_bumen, et_hy_payselect, et_hy_jingban, et_hy_kaname;
     TextView bsd_chepaichaun, et_hy_keyongjie;
     TimePickerShow timePickerShow;
-    RelativeLayout relativeday, rela_youxiao, rela_bumen, relat_jiesuan, relat_jingban, rela_ka;
+    LinearLayout relativeday, rela_youxiao, rela_bumen, relat_jiesuan, relat_jingban, rela_ka;
     Promptdiaog promptdiaog;
     //PopupWindow对象声明
     PopupWindow pw;
@@ -82,39 +83,36 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     //转圈
     private Dialog mWeiboDialog;
 
-    public BSD_HYGL_TianJia_delo(Context context, Activity activity) {
-
+    public BSD_HYGL_TianJia_delo(Context context) {
         super(context, R.style.mydialog);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         view = getLayoutInflater().inflate(R.layout.bsd_hygl_tianjia, null, false);
         url = new URLS();
         timeShow = new TimeDialog(getContext());
         timePickerShow = new TimePickerShow(getContext());
-        initview(activity);
-        katype();//部门
-        jiesuantype();//结算下拉
-        jingbanype();//经办人
+        initview();
+        getDeptData();//部门
+        getJSFSData();//结算下拉
+        getJBRData();//经办人
         //chepai();
-        kaype();
-
+        getCardKindData();
         setContentView(view);
-
         setCanceledOnTouchOutside(true);
         WindowManager.LayoutParams params =
                 this.getWindow().getAttributes();
-        params.width = (int) getContext().getResources().getDimension(R.dimen.x400);
-        params.height = (int) getContext().getResources().getDimension(R.dimen.y550);
+        params.width = (int) getContext().getResources().getDimension(R.dimen.qb_px_680);
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         this.getWindow().setAttributes(params);
     }
-    private void initview(final Activity activity) {
-        bsd_chepaichaun = (TextView) view.findViewById(R.id.bsd_chepaichaun);
 
-        rela_ka = (RelativeLayout) view.findViewById(R.id.rela_ka);
-        relat_jingban = (RelativeLayout) view.findViewById(R.id.relat_jingban);
-        relat_jiesuan = (RelativeLayout) view.findViewById(R.id.relat_jiesuan);
-        rela_bumen = (RelativeLayout) view.findViewById(R.id.rela_bumen);
-        relativeday = (RelativeLayout) view.findViewById(R.id.relativeday);
-        rela_youxiao = (RelativeLayout) view.findViewById(R.id.rela_youxiao);
+    private void initview() {
+        bsd_chepaichaun = (TextView) view.findViewById(R.id.bsd_chepaichaun);
+        rela_ka = (LinearLayout) view.findViewById(R.id.rela_ka);
+        relat_jingban = (LinearLayout) view.findViewById(R.id.relat_jingban);
+        relat_jiesuan = (LinearLayout) view.findViewById(R.id.relat_jiesuan);
+        rela_bumen = (LinearLayout) view.findViewById(R.id.rela_bumen);
+        relativeday = (LinearLayout) view.findViewById(R.id.relativeday);
+        rela_youxiao = (LinearLayout) view.findViewById(R.id.rela_youxiao);
         et_hy_chepai = (EditText) view.findViewById(R.id.et_hy_chepai);
 
         et_hy_lianxi = (EditText) view.findViewById(R.id.et_hy_lianxi);
@@ -406,14 +404,20 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         //通过布局注入器，注入布局给View对象
         View myView = getLayoutInflater().inflate(R.layout.bsd_hygl_bumen, null);
         //通过view 和宽·高，构造PopopWindow
-        pw = new PopupWindow(myView, rela_bumen.getWidth(), (int) getContext().getResources().getDimension(R.dimen.y300), true);
-        pw.setBackgroundDrawable(getContext().getResources().getDrawable(
-                //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
-                R.drawable.yuan));
+        pw = new PopupWindow(myView, rela_bumen.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
+        pw.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.yuan));
         //设置焦点为可点击
         pw.setFocusable(true);//可以试试设为false的结果
         //将window视图显示在myButton下面
-        pw.showAsDropDown(rela_bumen);
+//        pw.showAsDropDown(rela_bumen);
+        int[] location = new int[2];
+//        rela_bumen.getLocationOnScreen(location);
+        rela_bumen.getLocationInWindow(location);
+//        listView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        pw.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int popHeight = pw.getContentView().getMeasuredHeight();
+        pw.showAtLocation(rela_bumen, Gravity.NO_GRAVITY, location[0], location[1] - popHeight);
         ListView lv = (ListView) myView.findViewById(R.id.lv_hygl_bumen);
         hygl_bumen_adp = new BSD_hygl_bumen_adp(getContext(), list_bumen);
         lv.setAdapter(hygl_bumen_adp);
@@ -541,30 +545,23 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     /**
      * 部门
      */
-    private void katype() {
+    private void getDeptData() {
         AbRequestParams params = new AbRequestParams();
         params.put("type", "ITdept");
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int sssss, String s) {
+            public void onSuccess(int code, String s) {
                 try {
                     JSONObject object = new JSONObject(s);
-
                     if (object.get("status").toString().equals("1")) {
-                        Log.i("传走没有", "..." + s);
                         JSONArray jsonarray = object.getJSONArray("data");
                         for (int i = 0; i < jsonarray.length(); i++) {
-
                             JSONObject json = jsonarray.getJSONObject(i);
                             HashMap<String, String> map = new HashMap<>();
-
-                            map.put("name",
-                                    json.get("dept_mc").toString());
+                            map.put("name", json.get("dept_mc").toString());
                             map.put("bianhao", json.get("reco_no").toString());
                             list_bumen.add(map);
                         }
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -591,30 +588,23 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     /**
      * 结算方式
      */
-    private void jiesuantype() {
+    private void getJSFSData() {
         AbRequestParams params = new AbRequestParams();
         params.put("type", "ITJiesuan");
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int sssss, String s) {
+            public void onSuccess(int code, String s) {
                 try {
                     JSONObject object = new JSONObject(s);
-
                     if (object.get("status").toString().equals("1")) {
-                        Log.i("传走没有", "..." + s);
                         JSONArray jsonarray = object.getJSONArray("data");
                         for (int i = 0; i < jsonarray.length(); i++) {
-
                             JSONObject json = jsonarray.getJSONObject(i);
                             HashMap<String, String> map = new HashMap<>();
-
-                            map.put("name",
-                                    json.get("jiesuan_mc").toString());
+                            map.put("name", json.get("jiesuan_mc").toString());
                             map.put("jiesuanhao", json.get("reco_no").toString());
                             list_jiesuan.add(map);
                         }
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -641,30 +631,24 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     /**
      * 经办人下拉
      */
-    private void jingbanype() {
+    private void getJBRData() {
         AbRequestParams params = new AbRequestParams();
         params.put("type", "ITjb");
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int sssss, String s) {
+            public void onSuccess(int code, String s) {
                 try {
                     JSONObject object = new JSONObject(s);
-
                     if (object.get("status").toString().equals("1")) {
-                        Log.i("传走没有", "..." + s);
                         JSONArray jsonarray = object.getJSONArray("data");
                         for (int i = 0; i < jsonarray.length(); i++) {
-
                             JSONObject json = jsonarray.getJSONObject(i);
                             HashMap<String, String> map = new HashMap<>();
-
                             map.put("name", json.get("reny_xm").toString());
                             map.put("reny_dm", json.get("reny_dm").toString());
                             map.put("reny_xm", json.get("dept_mc").toString());
                             list_jingban.add(map);
                         }
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -673,12 +657,10 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -691,20 +673,16 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     /**
      * 卡类型下拉
      */
-    private void kaype() {
+    private void getCardKindData() {
         AbRequestParams params = new AbRequestParams();
-
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_KA_TYPE, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int sssss, String s) {
+            public void onSuccess(int code, String s) {
                 try {
                     JSONObject object = new JSONObject(s);
-
                     if (object.get("status").toString().equals("1")) {
-                        Log.i("传走没有", "..." + s);
                         JSONArray jsonarray = object.getJSONArray("data");
                         for (int i = 0; i < jsonarray.length(); i++) {
-
                             JSONObject json = jsonarray.getJSONObject(i);
                             HashMap<String, String> map = new HashMap<>();
                             map.put("id", json.get("id").toString());
@@ -715,8 +693,6 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                             map.put("px", json.get("card_cs_px").toString());//普洗
                             map.put("jx", json.get("card_cs_jx").toString());//精细
                             map.put("card_addje", json.get("card_addje").toString());
-
-
                             list_katype.add(map);
                         }
 

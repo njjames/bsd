@@ -245,4 +245,10 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="MySwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#F7714C</item>
+        <item name="colorSwitchThumbNormal">#666666</item>
+        <item name="android:colorForeground">#99F7714C</item>
+    </style>
 </resources>
