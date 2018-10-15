@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -105,10 +106,8 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
     List<BSD_WeiXiuJieDan_CL_Entity> list_CL = new ArrayList<>();
     int choufutianjia = 0;
     TextView bsd_wxjd_cd;
-
     public int jc_or_cd;
-
-    RelativeLayout bsd_wxjd_cj;
+    TextView bsd_wxjd_cj;
 
     //修改工时弹框
     BSD_XiuGaiGongShi bsd_xiuGaiGongShi;
@@ -116,7 +115,7 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
     private Dialog mWeiboDialog,mWeiboDialog2;
     QueRen queRen;
     //品牌   车系   车组   车型
-    RelativeLayout bsd_wxjd_pinpai, bsd_ksbj_RLchexi, bsd_ksbj_chezu, bsd_ksbj_rl_chexing;
+    LinearLayout bsd_wxjd_pinpai, bsd_ksbj_RLchexi, bsd_ksbj_chezu, bsd_ksbj_rl_chexing;
     //品牌 车系车组 车行
     BSD_KSBJ_PinPai_delo bsd_ksbj_pinPai_delo;
     String cxbianhao;
@@ -142,10 +141,9 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
     private SpinerPopWindow mSpinerPopWindow2;
 
     TextView bsd_wxjd_tv_dh,bsd_wxjd_tv_sj;
-//工时费率
-    RelativeLayout bsd_wxjd_rl_gsfl;
+    //工时费率
+    LinearLayout bsd_wxjd_rl_gsfl;
     TextView bsd_wxjd_tv_gsfl;
-
 
     List<Map<String, String>> listgslv = new ArrayList<Map<String, String>>();
 
@@ -155,22 +153,20 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
     String gongshifeili_name;
     String gongshifeili_id;
 
-
-    RelativeLayout bsd_wxjd_rl_bycx,bsd_wxjd_rl_gcsj;
+    LinearLayout bsd_wxjd_rl_gcsj;
+    TextView bsd_wxjd_rl_bycx;
     TextView bsd_wxjd_tv_gcsj;
     EditText bsd_wxjd_et_niankuan,bsd_wxjd_et_cunyou,bsd_wxjd_et_color,bsd_wxjd_et_miaoshu;
     TimeDialog  timePickerShow;
     Queding_Quxiao queRen_quxiao;
     Queding_Quxiao queding_quxiao;
-
     private   String   isPrint;
-
     URLS url;
 
     //根据VIN返回车型信息
     List<Map<String, String>> listvincx = new ArrayList<>();
     String   cxnm;      //车型内码
-    RelativeLayout   rl_duqu;
+    TextView rl_duqu;
 
     //车辆信息、历史维修、历史维修建议
     private  RelativeLayout  bsd_wxjd_clxx,bsd_wxjd_lswxjy,bsd_wxjd_lswx;
@@ -239,17 +235,12 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
         }else {
             initdata();
         }
-
-
-
-
-
     }
 
     private void init(View view) {
-        bsd_wxjd_rl_bycx= (RelativeLayout) view.findViewById(R.id.bsd_wxjd_rl_bycx);
+        bsd_wxjd_rl_bycx= (TextView) view.findViewById(R.id.bsd_wxjd_rl_bycx);
         bsd_wxjd_tv_gcsj= (TextView) view.findViewById(R.id.bsd_wxjd_tv_gcsj);
-        bsd_wxjd_rl_gcsj= (RelativeLayout) view.findViewById(R.id.bsd_wxjd_rl_gcsj);
+        bsd_wxjd_rl_gcsj= (LinearLayout) view.findViewById(R.id.bsd_wxjd_rl_gcsj);
         bsd_wxjd_rl_gcsj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -259,7 +250,7 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
 
 
         //读取vin码
-        rl_duqu = (RelativeLayout) view.findViewById(R.id.tv_readvin);
+        rl_duqu = (TextView) view.findViewById(R.id.tv_readvin);
         rl_duqu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -330,7 +321,7 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
 
 
 
-        bsd_wxjd_rl_gsfl= (RelativeLayout) view.findViewById(R.id.bsd_wxjd_rl_gsfl);
+        bsd_wxjd_rl_gsfl= (LinearLayout) view.findViewById(R.id.bsd_wxjd_rl_gsfl);
         bsd_wxjd_tv_gsfl= (TextView) view.findViewById(R.id.bsd_wxjd_tv_gsfl);
 
         bsd_wxjd_rl_gsfl.setOnClickListener(new View.OnClickListener() {
@@ -346,7 +337,7 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
         bsd_wxjd_cd = (TextView) view.findViewById(R.id.bsd_wxjd_cd);
         bsd_wxjd_cd.setOnClickListener(this);
         //进厂
-        bsd_wxjd_cj = (RelativeLayout) view.findViewById(R.id.bsd_wxjd_cj);
+        bsd_wxjd_cj = (TextView) view.findViewById(R.id.bsd_wxjd_cj);
         bsd_wxjd_cj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -397,10 +388,10 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
         tv_wxjd_hj = (TextView) view.findViewById(R.id.tv_wxjd_hj);
         tv_wxjd_xmhj = (TextView) view.findViewById(R.id.tv_wxjd_xmhj);
 
-        bsd_wxjd_pinpai = (RelativeLayout) view.findViewById(R.id.bsd_wxjd_pinpai);
-        bsd_ksbj_RLchexi = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_RLchexi);
-        bsd_ksbj_chezu = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_chezu);
-        bsd_ksbj_rl_chexing = (RelativeLayout) view.findViewById(R.id.bsd_ksbj_rl_chexing);
+        bsd_wxjd_pinpai = (LinearLayout) view.findViewById(R.id.bsd_wxjd_pinpai);
+        bsd_ksbj_RLchexi = (LinearLayout) view.findViewById(R.id.bsd_ksbj_RLchexi);
+        bsd_ksbj_chezu = (LinearLayout) view.findViewById(R.id.bsd_ksbj_chezu);
+        bsd_ksbj_rl_chexing = (LinearLayout) view.findViewById(R.id.bsd_ksbj_rl_chexing);
 
         bsd_wxjd_xm_pop = new BSD_WXYY_XM_POP(getActivity());
         //添加项目回调
