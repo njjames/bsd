@@ -101,7 +101,7 @@
 
             <LinearLayout
                 android:id="@+id/bsd_my_qianzhui"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bsd_chepaiyuan"
@@ -140,10 +140,10 @@
 
             <LinearLayout
                 android:id="@+id/bsd_my_jiaqian"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginLeft="@dimen/qb_px_6"
+                android:layout_marginLeft="@dimen/qb_px_10"
                 android:gravity="center_vertical"
                 android:background="@drawable/bsd_chepaiyuan"
                 android:orientation="horizontal">
@@ -186,7 +186,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:background="@drawable/bsd_chepaiyuan"
-                android:layout_marginLeft="@dimen/qb_px_6">
+                android:layout_marginLeft="@dimen/qb_px_10">
 
                 <CheckBox
                     android:id="@+id/bsd_my_shifoudayin"

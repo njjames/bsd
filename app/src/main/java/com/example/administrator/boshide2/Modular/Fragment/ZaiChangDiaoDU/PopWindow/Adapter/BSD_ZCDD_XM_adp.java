@@ -17,28 +17,26 @@ import java.util.List;
  */
 
 public class BSD_ZCDD_XM_adp extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
+    private LayoutInflater layoutInflater;
+    private List<BSD_ZaiChangDiaoDu_Entity> list;
 
     public void setList(List<BSD_ZaiChangDiaoDu_Entity> list) {
         this.list = list;
     }
 
-    List<BSD_ZaiChangDiaoDu_Entity> list;
-
-    public BSD_ZCDD_XM_adp(Context context) {
-        this.context = context;
+    public BSD_ZCDD_XM_adp(Context context, List<BSD_ZaiChangDiaoDu_Entity> list) {
         this.layoutInflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     @Override
     public int getCount() {
-        return (list==null)?0:list.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return list.get(i);
     }
 
     @Override
@@ -47,8 +45,15 @@ public class BSD_ZCDD_XM_adp extends BaseAdapter {
     }
 
 
-    class Holder {
-        TextView bsd_xzcl_djrq,bsd_xzcl_wxjd,bsd_xzcl_name, bsd_xzcl_shuliang, bsd_xzcl_danjia, bsd_xzcl_tuhao, bsd_xzcl_pinpai, bsd_xzcl_caozuo;
+    public final class Holder {
+        TextView bsd_xzcl_djrq;
+        TextView bsd_xzcl_wxjd;
+        TextView bsd_xzcl_name;
+        TextView bsd_xzcl_shuliang;
+        TextView bsd_xzcl_danjia;
+        TextView bsd_xzcl_tuhao;
+        TextView bsd_xzcl_pinpai;
+        TextView bsd_xzcl_caozuo;
     }
 
     @Override
@@ -70,12 +75,11 @@ public class BSD_ZCDD_XM_adp extends BaseAdapter {
             holder = (Holder) contetview.getTag();
         }
 
-
         holder.bsd_xzcl_name.setText(list.get(i).getWork_no());
         holder.bsd_xzcl_shuliang.setText(list.get(i).getChe_no());
         holder.bsd_xzcl_danjia.setText(list.get(i).getKehu_mc());
         holder.bsd_xzcl_tuhao.setText(list.get(i).getXche_cz());
-        holder.bsd_xzcl_pinpai.setText(""+list.get(i).getXche_hjje());
+        holder.bsd_xzcl_pinpai.setText("" + list.get(i).getXche_hjje());
         holder.bsd_xzcl_caozuo.setText(list.get(i).getKehu_dh());
         holder.bsd_xzcl_wxjd.setText(list.get(i).getXche_ywlx());
         holder.bsd_xzcl_djrq.setText(list.get(i).getXche_jdrq());

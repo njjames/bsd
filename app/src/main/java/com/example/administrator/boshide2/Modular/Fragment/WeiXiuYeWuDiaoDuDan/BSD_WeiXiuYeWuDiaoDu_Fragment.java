@@ -19,6 +19,7 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
+import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
@@ -47,7 +48,7 @@ import java.util.Map;
 /**
  * @维修业务调度 Created by Administrator on 2017-4-13.
  */
-public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnClickListener {
+public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.OnClickListener {
     RelativeLayout bsd_lsbj_fanhui;
     TextView bsd_clxq_tv_cltp, bsd_clxq_tv_lswx;
     private Fragment[] fragments;
@@ -77,15 +78,18 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
     List<Map<String, String>> listPGrenyuan = new ArrayList<Map<String, String>>();
     URLS url;
     TextView bsd_zaichangdiaodu_zhuangtai;
-    RelativeLayout bsd_zadd_wg;
+    TextView bsd_zadd_wg;
     QueRen queRen;
     double renyuangongshi;
-    RelativeLayout bsd_zadd_zz;
+    TextView tv_stopwx;
     TiaoZhuan tiaoZhuan;
     //车辆信息、历史维修、历史维修建议
-    private  RelativeLayout  bsd_wxywdd_clxx,bsd_wxywdd_lswxjy,bsd_wxywdd_lswx;
+    private  TextView  bsd_wxywdd_clxx,bsd_wxywdd_lswxjy,bsd_wxywdd_lswx;
 
     private MainActivity mainActivity;
+    private TextView title;
+    private TextView footerText;
+
     public void setTiaoZhuan(TiaoZhuan tiaoZhuan) {
         this.tiaoZhuan = tiaoZhuan;
     }
@@ -95,24 +99,13 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bsd_wxywdd, null);
-        mainActivity = (MainActivity) getActivity();
-        tiaoZhuan.onYesClick();
-        url = new URLS();
-        init(view);
-        if (Conts.wxjdtiaozhuan == 1) {
-            Log.i("cjn", "aaaaa");
-            tiaozhuanjiedan();
-            Conts.wxjdtiaozhuan = 0;
-        } else {
-            jibendata();
-            Log.i("cjn", "bbbbb");
-            Conts.wxjdtiaozhuan = 0;
-        }
-        bsdtext(view);
+    protected int getLayoutId() {
+        return R.layout.bsd_wxywdd;
+    }
 
-
+    @Override
+    public void initView() {
+        // 返回
         bsd_lsbj_fanhui = (RelativeLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,167 +113,15 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
                 ((MainActivity) getActivity()).upzcdd(view);
             }
         });
-
-        initFragment();
-        checkHighLight(0);
-        return view;
-    }
-
-    public void DY() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
-        params.put("caozuoyuan", MyApplication.shared.getString("bsd_user_name", ""));
-        Log.i("cjn", "查看打印的参数+" + Conts.work_no + "===caozuoyuan====" + MyApplication.shared.getString("bsd_user_name", ""));
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_DY, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "打印成功显示==" + s);
-                queRen = new QueRen(getActivity(), "打印成功");
-                queRen.show();
-                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        queRen.dismiss();
-                        ((MainActivity) getActivity()).upzcdd();
-                    }
-                });
-
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "打印失败显示==" + s);
-            }
-        });
-
-    }
-
-    public void WG(String wxid) {
-        AbRequestParams params = new AbRequestParams();
-        params.put("work_no", wxid);
-        Log.i("cjn", "查看完工的参数" + wxid);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_WG, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "完工成功==" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("message").toString().equals("查询失败")) {
-                        queRen = new QueRen(getActivity(), jsonObject.getString("data"));
-                        queRen.show();
-                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                            @Override
-                            public void onYesClick() {
-                                queRen.dismiss();
-                            }
-                        });
-
-                    } else {
-
-                        queding_quxiao = new Queding_Quxiao(getActivity(), "成功！是否打印");
-                        queding_quxiao.show();
-                        queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
-                            @Override
-                            public void onConfirm() {
-                                DY();
-                                queding_quxiao.dismiss();
-                            }
-
-                            @Override
-                            public void onCancel() {
-                                queding_quxiao.dismiss();
-                                ((MainActivity) getActivity()).upzcdd();
-                            }
-                        });
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "完工失败==" + s);
-            }
-        });
-
-    }
-
-    /**
-     * 终止派工
-     */
-    public void zz() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ZZ, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", s);
-                queRen = new QueRen(getActivity(), "终止成功");
-                queRen.show();
-                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        queRen.dismiss();
-                        ((MainActivity) getActivity()).upzcdd();
-                    }
-                });
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void init(View view) {
-
-        bsd_zadd_zz = (RelativeLayout) view.findViewById(R.id.bsd_zadd_zz);
-        bsd_zadd_zz.setOnClickListener(new View.OnClickListener() {
+        tv_stopwx = (TextView) view.findViewById(R.id.tv_stopwx);
+        tv_stopwx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 zz();
             }
         });
 
-        bsd_zadd_wg = (RelativeLayout) view.findViewById(R.id.bsd_zadd_wg);
+        bsd_zadd_wg = (TextView) view.findViewById(R.id.bsd_zadd_wg);
         bsd_zadd_wg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -305,35 +146,31 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
 
             }
         });
-
-
         //车辆信息、历史维修、历史维修建议
-        bsd_wxywdd_clxx = (RelativeLayout) view.findViewById(R.id.bsd_wxywdd_clxx);
+        bsd_wxywdd_clxx = (TextView) view.findViewById(R.id.bsd_wxywdd_clxx);
         bsd_wxywdd_clxx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"车辆信息",Toast.LENGTH_LONG).show();
                 //跳转到编辑车辆、客户信息界面
                 Conts.danju_type="wxywdd";
-
                 //跳转到编辑车辆、客户信息对话框
                 new BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment()
                         .show(getFragmentManager(), "dialog_fragment");
 
             }
         });
-        bsd_wxywdd_lswx= (RelativeLayout) view.findViewById(R.id.bsd_wxywdd_lswx);
+        bsd_wxywdd_lswx= (TextView) view.findViewById(R.id.bsd_wxywdd_lswx);
         bsd_wxywdd_lswx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Conts.danju_type="wxywdd";
                 new BSD_LishiWeiXiu_DialogFragment().
                         show(getFragmentManager(),"mrkx_lswx");
 
             }
         });
-        bsd_wxywdd_lswxjy= (RelativeLayout) view.findViewById(R.id.bsd_wxywdd_lswxjy);
+        bsd_wxywdd_lswxjy= (TextView) view.findViewById(R.id.bsd_wxywdd_lswxjy);
         bsd_wxywdd_lswxjy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -341,10 +178,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
                         show(getFragmentManager(),"mrkx_lswxjy");
             }
         });
-
-
-
-
 
         bsd_zaichangdiaodu_zhuangtai = (TextView) view.findViewById(R.id.bsd_zaichangdiaodu_zhuangtai);
         bsd_ywwwdd_dh = (TextView) view.findViewById(R.id.bsd_ywwwdd_dh);
@@ -371,8 +204,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
         adapter.setUp_gongshi(new BSD_wxywdd_dap.UP_gongshi() {
             @Override
             public void onYesClick(String gongshi, final int i) {
-
-
                 double gs = Double.parseDouble(gongshi);
                 bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), "修改工时", 0,gs, "","修改工时");
                 bsd_xiuGaiGongShi.show();
@@ -392,14 +223,14 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
                         BigDecimal  gsbg=new BigDecimal(renyuangongshi);
                         for (int j = 0; j < listPGrenyuan.size(); j++) {
                             Log.i("pggs", "onAdd: Other  ==="+listPGrenyuan.get(j).get("paig_khgs"));
-//                            renyuangongshi = renyuangongshi + Double.parseDouble(listPGrenyuan.get(j).get("paig_khgs"));
+                            //                            renyuangongshi = renyuangongshi + Double.parseDouble(listPGrenyuan.get(j).get("paig_khgs"));
                             Double  gg= Double.parseDouble(listPGrenyuan.get(j).get("paig_khgs"));
                             BigDecimal gsbd2 = new BigDecimal(Double.toString(gg));
                             gsbg=gsbg.add(gsbd2);
                             Log.i("pggs", "onAdd: Other  gsbd2==="+gsbd2);
                             Log.i("pggs", "onAdd: Other   gsbg  ==="+gsbg);
                             if (j == i) {
-//                                renyuangongshi = renyuangongshi - Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
+                                //                                renyuangongshi = renyuangongshi - Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
                                 Double  ggg= Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
                                 BigDecimal gsbd3 = new BigDecimal(Double.toString(ggg));
                                 gsbg= gsbg.subtract(gsbd3);
@@ -484,10 +315,162 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
         bsd_clxq_tv_lswx = (TextView) view.findViewById(R.id.tv_wxll_add);
         arr_tv = new TextView[2];
         arr_tv[0] = bsd_clxq_tv_cltp;
-
         arr_tv[1] = bsd_clxq_tv_lswx;
         bsd_clxq_tv_cltp.setOnClickListener(this);
         bsd_clxq_tv_lswx.setOnClickListener(this);
+        title = (TextView) view.findViewById(R.id.tv_title);
+        footerText = (TextView) view.findViewById(R.id.tv_footertext);
+    }
+
+    @Override
+    public void initData() {
+        url = new URLS();
+        title.setText("维修调度");
+        footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
+                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
+        tiaoZhuan.onYesClick();
+        if (Conts.wxjdtiaozhuan == 1) {
+            Log.i("cjn", "aaaaa");
+            tiaozhuanjiedan();
+            Conts.wxjdtiaozhuan = 0;
+        } else {
+            jibendata();
+            Log.i("cjn", "bbbbb");
+            Conts.wxjdtiaozhuan = 0;
+        }
+        initFragment();
+        checkHighLight(0);
+    }
+
+    public void DY() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", Conts.work_no);
+        params.put("caozuoyuan", MyApplication.shared.getString("bsd_user_name", ""));
+        Log.i("cjn", "查看打印的参数+" + Conts.work_no + "===caozuoyuan====" + MyApplication.shared.getString("bsd_user_name", ""));
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_DY, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+                Log.i("cjn", "打印成功显示==" + s);
+                queRen = new QueRen(getActivity(), "打印成功");
+                queRen.show();
+                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        queRen.dismiss();
+                        ((MainActivity) getActivity()).upzcdd();
+                    }
+                });
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Log.i("cjn", "打印失败显示==" + s);
+            }
+        });
+
+    }
+
+    public void WG(String wxid) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", wxid);
+        Log.i("cjn", "查看完工的参数" + wxid);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_WG, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+                Log.i("cjn", "完工成功==" + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.get("message").toString().equals("查询失败")) {
+                        queRen = new QueRen(getActivity(), jsonObject.getString("data"));
+                        queRen.show();
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                            }
+                        });
+                    } else {
+                        queding_quxiao = new Queding_Quxiao(getActivity(), "成功！是否打印");
+                        queding_quxiao.show();
+                        queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
+                            @Override
+                            public void onConfirm() {
+                                DY();
+                                queding_quxiao.dismiss();
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                queding_quxiao.dismiss();
+                                ((MainActivity) getActivity()).upzcdd();
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Log.i("cjn", "完工失败==" + s);
+            }
+        });
+
+    }
+
+    /**
+     * 终止派工
+     */
+    public void zz() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", Conts.work_no);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ZZ, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+                Log.i("cjn", s);
+                queRen = new QueRen(getActivity(), "终止成功");
+                queRen.show();
+                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        queRen.dismiss();
+                        ((MainActivity) getActivity()).upzcdd();
+                    }
+                });
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -510,12 +493,10 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -570,18 +551,14 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -590,13 +567,12 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
             }
         });
 
-
     }
 
     /**
-     *完工时发微信
+     * 完工时发微信
      */
-    private   void    weixin(){
+    private void weixin() {
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", Conts.work_no);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wg_weixin, params, new AbStringHttpResponseListener() {
@@ -619,7 +595,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
             public void onFailure(int i, String s, Throwable throwable) {
             }
         });
-
 
 
     }
@@ -912,15 +887,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends Fragment implements View.OnCl
         });
 
 
-    }
-
-
-    TextView bsd_01_text;
-
-    public void bsdtext(View view) {
-        bsd_01_text = (TextView) view.findViewById(R.id.bsd_14_text);
-        bsd_01_text.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
-                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
     }
 
 }

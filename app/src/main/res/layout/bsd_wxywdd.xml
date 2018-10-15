@@ -1,629 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- 顶部开始 -->
-    <RelativeLayout
-        android:id="@+id/bsd_m_top"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y55"
-        android:background="#FFFFFF">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/bsd_lsbj_fanhui"
-            android:layout_width="@dimen/x60"
-            android:layout_height="match_parent">
+    <include layout="@layout/content_title_back_layout" />
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="@dimen/x5"
-                android:layout_height="@dimen/y25"
-                android:scaleType="fitXY"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/x5"
-                android:src="@mipmap/bsd_fanhui" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/x2"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/imageView5"
-                android:text="返回"
-                android:textColor="#636364"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="业务维修调度"
-            android:textColor="#636364"
-            android:textSize="20sp"
-            android:id="@+id/textView28" />
-
-        <TextView
-            android:id="@+id/bsd_zaichangdiaodu_zhuangtai"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="维修状态"
-            android:textColor="#636364"
-            android:visibility="invisible"
-            android:textSize="18sp"
-            android:layout_marginEnd="@dimen/x10"
-            android:layout_alignParentEnd="true" />
-
-
-        <RelativeLayout
-            android:id="@+id/bsd_zadd_zz"
-            android:layout_width="@dimen/x40"
-            android:layout_height="@dimen/y45"
-            android:background="@drawable/cundang"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x10"
-            android:layout_alignParentRight="true">
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="终止维修"
-                android:textColor="#FFFFFF" />
-
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-    <!-- 顶部结束 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/bsd_m_top"
-        android:background="#E0E0E0" />
     <!-- 中间开始 -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bsd_m_xia"
-        android:layout_below="@+id/bsd_m_top"
-        android:layout_marginLeft="@dimen/x5"
-        android:layout_marginRight="@dimen/x5"
-        android:layout_marginTop="@dimen/y10"
-        android:paddingLeft="@dimen/x5"
-        android:paddingRight="@dimen/x5"
-        android:background="@drawable/bodyshangyuan">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/qb_px_4"
+        android:paddingRight="@dimen/qb_px_4"
+        android:paddingTop="@dimen/qb_px_6"
+        android:background="@drawable/bodyshangyuan"
+        android:orientation="vertical">
 
-        <!--中间头部 -->
-        <RelativeLayout
-            android:id="@+id/bsd_on_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/y5"
-            android:layout_marginBottom="@dimen/y5">
-
-            <LinearLayout
+        <LinearLayout
             android:id="@+id/bsd_wxywdd_top_line1"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y55"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout7"
-                    android:layout_width="0dp"
                     android:layout_weight="1.5"
-                    android:layout_height="@dimen/y45"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle">
 
                     <TextView
                         android:id="@+id/bsd_ytp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="维修单号:" />
 
                     <TextView
                         android:id="@+id/bsd_ywwwdd_dh"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/x3"
-                        android:layout_toRightOf="@+id/bsd_ytp"
-                        android:background="@null"
-                        android:text="      "
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
+                        style="@style/myeditinfovaluestyle" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout8"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView77"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="车牌:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsd_ywwwdd_cp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/textView77"
-                        android:layout_alignBottom="@+id/textView77"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toEndOf="@+id/textView77"
-                        android:background="@null"
-                        android:text="冀A·54321"
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
-                </RelativeLayout>
+                        style="@style/myeditinfomarqeestyle" />
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout13"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="品牌:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsd_ywwwdd_pinpai"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView14"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toEndOf="@+id/textView14"
-                        android:background="@null"
-                        android:hint=""
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
+                        style="@style/myeditinfomarqeestyle" />
+                </LinearLayout>
 
-
-                </RelativeLayout>
-
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout14"
                     android:layout_width="0dp"
                     android:layout_weight="1.5"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="车系:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsdywwwdd_chexi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView15"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toEndOf="@+id/textView15"
-                        android:background="@null"
-                        android:hint=""
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
+                        style="@style/myeditinfomarqeestyle" />
+                </LinearLayout>
 
-
-                </RelativeLayout>
-
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout15"
                     android:layout_width="0dp"
                     android:layout_weight="1.5"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="车组:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsd_ywwwdd_chezu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView16"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toEndOf="@+id/textView16"
-                        android:background="@null"
-                        android:hint=""
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp"
-
-                        />
-
-
-                </RelativeLayout>
-
-
-
+                        style="@style/myeditinfomarqeestyle"/>
+                </LinearLayout>
             </LinearLayout>
 
 
             <LinearLayout
                 android:id="@+id/bsd_wxywdd_top_line2"
-                android:layout_below="@+id/bsd_wxywdd_top_line1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y55"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/qb_px_4">
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout21"
                     android:layout_width="0dp"
                     android:layout_weight="1.5"
-                    android:layout_height="@dimen/y45"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle">
 
                     <TextView
                         android:id="@+id/textView17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="车型:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsd_ywwwdd_chexing"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView17"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toEndOf="@+id/textView17"
-                        android:background="@null"
-                        android:text=""
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
-                </RelativeLayout>
+                        style="@style/myeditinfomarqeestyle" />
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout22"
                     android:layout_width="0dp"
                     android:layout_weight="1.5"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView18"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="VIN:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
                         android:id="@+id/bsd_ywwwdd_vin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/textView18"
-                        android:layout_alignBottom="@+id/textView18"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toEndOf="@+id/textView18"
-                        android:background="@null"
-                        android:text=""
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
-                </RelativeLayout>
+                        style="@style/myeditinfomarqeestyle" />
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout23"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView19"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="客户:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsd_ywwwdd_user"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView19"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toEndOf="@+id/textView19"
-                        android:background="@null"
-                        android:text=""
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
-                </RelativeLayout>
+                        style="@style/myeditinfomarqeestyle" />
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout24"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="服务顾问:" />
 
                     <TextView
                         android:id="@+id/bsd_ywwwdd_fuwuguwen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView20"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toEndOf="@+id/textView20"
-                        android:background="@null"
-                        android:text=""
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
-                </RelativeLayout>
+                        style="@style/myeditinfovaluestyle" />
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout26"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView22"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="电话:" />
 
                     <TextView
                         android:id="@+id/bsd_ywwwdd_dianhua"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/textView22"
-                        android:layout_alignBottom="@+id/textView22"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toEndOf="@+id/textView22"
-                        android:background="@null"
-                        android:text=""
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
-                </RelativeLayout>
-
-
+                        style="@style/myeditinfovaluestyle" />
+                </LinearLayout>
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/bsd_wxywdd_top_line3"
-                android:layout_below="@+id/bsd_wxywdd_top_line2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y55"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
-                <RelativeLayout
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/qb_px_4">
+
+                <LinearLayout
                     android:id="@+id/relativeLayout25"
                     android:layout_width="0dp"
-                    android:layout_weight="2.5"
-                    android:layout_height="@dimen/y45"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_weight="2"
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle">
 
                     <TextView
                         android:id="@+id/textView21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="登记时间:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsd_ywwwdd_dengjishijian"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView21"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toEndOf="@+id/textView21"
-                        android:background="@null"
-                        android:text=""
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
-                </RelativeLayout>
+                        style="@style/myeditinfomarqeestyle" />
+                </LinearLayout>
 
-                <RelativeLayout
+
+                <TextView
                     android:id="@+id/bsd_wxywdd_clxx"
-                    android:layout_width="0dp"
                     android:layout_weight="0.8"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x20"
-                    android:background="@drawable/cundang"
-                    android:gravity="center">
+                    style="@style/myeditnormalbtnstyle"
+                    android:text="车辆信息"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="车辆信息"
-                        android:textColor="#FFFFFF" />
-                </RelativeLayout>
-
-                <RelativeLayout
+                <TextView
                     android:id="@+id/bsd_wxywdd_lswx"
-                    android:layout_width="0dp"
                     android:layout_weight="0.8"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x20"
-                    android:background="@drawable/cundang"
-                    android:gravity="center">
+                    style="@style/myeditnormalbtnstyle"
+                    android:text="历史维修"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="历史维修"
-                        android:textColor="#FFFFFF" />
-                </RelativeLayout>
 
-                <RelativeLayout
+                <TextView
                     android:id="@+id/bsd_wxywdd_lswxjy"
-                    android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x20"
-                    android:background="@drawable/cundang"
-                    android:gravity="center">
+                    style="@style/myeditnormalbtnstyle"
+                    android:text="历史维修建议"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="历史维修建议"
-                        android:textColor="#FFFFFF" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/bsd_zadd_wg"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_stopwx"
                     android:layout_weight="0.8"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x20"
-                    android:background="@drawable/cundang"
-                    android:gravity="center">
+                    style="@style/myeditnormalbtnstyle"
+                    android:text="终止维修"/>
 
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="完工"
-                        android:textColor="#FFFFFF" />
-
-
-                </RelativeLayout>
-
+                <TextView
+                    android:id="@+id/bsd_zadd_wg"
+                    android:layout_weight="0.8"
+                    style="@style/myeditnormalbtnstyle"
+                    android:text="完工"/>
 
             </LinearLayout>
-
-        </RelativeLayout>
 
         <View
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/bsd_on_top"
-            android:background="#F7714C" />
-        <!--这里是切换这里面的布局 -->
+            android:layout_height="@dimen/qb_px_1"
+            android:background="#F7714C"
+            android:layout_marginTop="@dimen/qb_px_4"/>
 
-
-        <!--中间碎片内容-->
-        <!-- 中间滑动 -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bsd_on_xian"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/qb_px_1">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3">
+                android:layout_weight="3"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/bsd_clxxqiehua"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y55"
-                    android:layout_marginTop="@dimen/y10"
-                    android:layout_marginRight="@dimen/x3"
+                    android:layout_height="@dimen/qb_px_34"
                     android:background="@drawable/bsd_chepaiyuan">
 
                     <TextView
@@ -635,10 +306,10 @@
                         android:text="维修项目" />
 
                     <View
-                        android:layout_width="1dp"
-                        android:layout_height="45dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_width="@dimen/qb_px_1"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/qb_px_2"
+                        android:layout_marginTop="@dimen/qb_px_2"
                         android:background="#B4B3B3" />
 
                     <TextView
@@ -648,45 +319,35 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="维修用料" />
-
-
                 </LinearLayout>
 
                 <FrameLayout
                     android:id="@+id/bsd_clxq_lswx"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/bsd_clxxqiehua"
-                    android:layout_marginRight="@dimen/x3"
-                    android:layout_marginBottom="@dimen/y5"
                     android:background="#FFFFFF"
                     android:orientation="vertical" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
-                android:layout_width="1dp"
+                android:layout_width="@dimen/qb_px_1"
                 android:layout_height="match_parent"
-                android:background="#F7714C" />
+                android:background="#F7714C"
+                android:layout_marginLeft="@dimen/qb_px_2"/>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="3dp"
-                android:layout_marginLeft="@dimen/x3"
-                android:layout_weight="1">
+                android:layout_marginLeft="@dimen/qb_px_2"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/bsd_xm55"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y55"
-                    android:layout_marginTop="@dimen/y10"
+                    android:layout_height="@dimen/qb_px_34"
                     android:background="@drawable/biankuang_title_bg">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
                         <TextView
                             android:id="@+id/bsd_xsbj_name"
                             android:gravity="center"
@@ -694,80 +355,39 @@
                             android:layout_weight="1"
                             android:layout_height="match_parent"
                             android:text="员工" />
+
                         <TextView
                             android:id="@+id/bsd_xsbj_gongshi"
                             android:gravity="center"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:text="工时"
-                            />
+                            android:text="工时" />
+
                         <TextView
                             android:id="@+id/bsd_xsbj_jiner"
                             android:gravity="center"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:text="金额"
-                            />
+                            android:text="金额" />
+
                         <TextView
                             android:id="@+id/bsd_xsbj_caozuo"
                             android:gravity="center"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:text="操作"
-                            />
-                    </LinearLayout>
+                            android:text="操作" />
+                </LinearLayout>
 
-
-                </RelativeLayout>
-
-
-                <!-- 中间滑动 -->
-                <com.example.administrator.boshide2.Modular.View.MyScrollView
-                    android:id="@+id/scrollview"
+                <ListView
+                    android:id="@+id/bsd_wxywdd_you_lv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/bsd_xm55"
-                    android:fadeScrollbars="false"
-                    android:scrollbars="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <com.example.administrator.boshide2.Modular.View.ListViewForsrollView
-                            android:id="@+id/bsd_wxywdd_you_lv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-
-
-                    </RelativeLayout>
-                </com.example.administrator.boshide2.Modular.View.MyScrollView>
-
-
-            </RelativeLayout>
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 
-    </RelativeLayout>
-    <!-- 底部开始 -->
-    <RelativeLayout
-        android:id="@+id/bsd_m_xia"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:layout_alignParentBottom="true">
-
-            <TextView
-                android:id="@+id/bsd_14_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_alignParentBottom="true"
-                android:text="售后服务电话: 0311-83998032      保修 (非工作时间) : 15176436937   13930122976" />
-
-    </RelativeLayout>
-    <!-- 底部结束 -->
-
-</RelativeLayout>
+    <include layout="@layout/content_footer_layout" />
+</LinearLayout>

@@ -1,300 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- 顶部开始 -->
-    <RelativeLayout
-        android:id="@+id/bsd_m_top"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y55"
-        android:background="#FFFFFF">
-        <TextView
-            android:id="@+id/bsd_wxjd_tv_dh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="单号"
-            android:textColor="#636364"
-            android:textSize="16sp"
-            android:layout_marginStart="@dimen/x10"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
-        <TextView
-            android:id="@+id/bsd_wxjd_tv_sj"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="日期"
-            android:textColor="#636364"
-            android:textSize="16sp"
-            android:layout_marginStart="@dimen/x10"
-            android:layout_alignBaseline="@+id/bsd_wxjd_tv_dh"
-            android:layout_alignBottom="@+id/bsd_wxjd_tv_dh"
-            android:layout_toEndOf="@+id/bsd_wxjd_tv_dh" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="维修接单"
-            android:textColor="#636364"
-            android:textSize="20sp" />
+    <include layout="@layout/content_title_back_no_layout" />
 
-
-    </RelativeLayout>
-    <!-- 顶部结束 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/bsd_m_top"
-        android:background="#E0E0E0" />
-    <!-- 中间开始 -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bsd_m_xia"
-        android:layout_below="@+id/bsd_m_top"
-        android:layout_marginLeft="@dimen/x5"
-        android:layout_marginRight="@dimen/x5"
-        android:layout_marginTop="@dimen/y10"
-        android:background="@drawable/bodyshangyuan">
-
-        <!--中间头部 -->
-        <RelativeLayout
-            android:id="@+id/bsd_on_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x5"
-            android:layout_marginRight="@dimen/x5">
+        android:paddingLeft="@dimen/qb_px_4"
+        android:paddingRight="@dimen/qb_px_4"
+        android:paddingTop="@dimen/qb_px_6"
+        android:background="@drawable/bodyshangyuan"
+        android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/bsd_wxjd_top_line1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y55"
-                android:layout_marginTop="@dimen/y10"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout7"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_weight="0.8"
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle">
 
                     <TextView
                         android:id="@+id/textView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="车牌:" />
 
                     <TextView
                         android:id="@+id/bsd_wxjd_tv_chepai"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toRightOf="@+id/textView7"
-                        android:background="@null"
-                        android:hint="请输入车牌号"
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
+                        style="@style/myeditinfovaluestyle"
+                        android:hint="请输入车牌号" />
+                </LinearLayout>
 
-                </RelativeLayout>
-
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/bsd_wxjd_pinpai"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_weight="0.8"
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/x2"
+                        style="@style/myeditinfonamestyle"
                         android:text="品牌:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsd_wxjd_tv_pinpai"
-                        android:layout_width="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toRightOf="@+id/textView14"
-                        android:layout_toLeftOf="@+id/iv1"
-                        android:background="@null"
-                        android:hint="请选择品牌"
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
+                        style="@style/myeditinfomarqeestyle"
+                        android:hint="请选择品牌"/>
 
                     <ImageView
                         android:id="@+id/iv1"
-                        android:layout_width="@dimen/x6"
-                        android:layout_height="@dimen/y10"
-                        android:scaleType="fitXY"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/x2"
-                        android:src="@mipmap/bsd_duoxuan" />
+                        style="@style/myeditdowimgstyle" />
+                </LinearLayout>
 
-                </RelativeLayout>
-
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/bsd_ksbj_RLchexi"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="车系:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsd_wxjd_tv_chexi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView15"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toRightOf="@+id/textView15"
-                        android:layout_toLeftOf="@+id/iv3"
-                        android:background="@null"
-                        android:hint="请选择车系"
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
-
+                        style="@style/myeditinfomarqeestyle"
+                        android:hint="请选择车系" />
 
                     <ImageView
                         android:id="@+id/iv3"
-                        android:layout_width="@dimen/x6"
-                        android:layout_height="@dimen/y10"
-                        android:scaleType="fitXY"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/x2"
-                        android:src="@mipmap/bsd_duoxuan" />
-                </RelativeLayout>
+                        style="@style/myeditdowimgstyle" />
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/bsd_ksbj_chezu"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="车组:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsd_wxjd_tv_chezu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView16"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toRightOf="@+id/textView16"
-                        android:layout_toLeftOf="@+id/iv4"
-                        android:background="@null"
-                        android:hint="请选择车组"
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
-
+                        style="@style/myeditinfomarqeestyle"
+                        android:hint="请选择车组" />
 
                     <ImageView
                         android:id="@+id/iv4"
-                        android:layout_width="@dimen/x6"
-                        android:layout_height="@dimen/y10"
-                        android:scaleType="fitXY"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/x2"
-                        android:src="@mipmap/bsd_duoxuan" />
+                        style="@style/myeditdowimgstyle" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/bsd_ksbj_rl_chexing"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/y45"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:background="@drawable/bsd_chepaiyuan">
+                    android:layout_height="@dimen/qb_px_32"
+                    style="@style/myconditionboxstyle"
+                    android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
                         android:id="@+id/textView17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/x3"
+                        style="@style/myeditinfonamestyle"
                         android:text="车型:" />
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:ellipsize="marquee"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:id="@+id/bsd_wxjd_tv_chexing"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView17"
-                        android:layout_marginLeft="@dimen/x2"
-                        android:layout_toRightOf="@+id/textView17"
-                        android:layout_toLeftOf="@+id/iv5"
-                        android:background="@null"
-                        android:hint="请选择车型"
-                        android:textColorHint="#B1B0B0"
-                        android:textSize="13sp" />
-
+                        style="@style/myeditinfomarqeestyle"
+                        android:hint="请选择车型" />
 
                     <ImageView
                         android:id="@+id/iv5"
-                        android:layout_width="@dimen/x6"
-                        android:layout_height="@dimen/y10"
-                        android:scaleType="fitXY"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/x2"
-                        android:src="@mipmap/bsd_duoxuan" />
-                </RelativeLayout>
+                        style="@style/myeditdowimgstyle" />
+                </LinearLayout>
 
 
             </LinearLayout>
@@ -775,20 +612,14 @@
                         android:text="历史维修建议"
                         android:textColor="#FFFFFF" />
                 </RelativeLayout>
-
             </LinearLayout>
-
-
-        </RelativeLayout>
 
         <View
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/bsd_on_top"
-            android:layout_marginLeft="@dimen/x5"
-            android:layout_marginRight="@dimen/x5"
-            android:background="#F7714C" />
+            android:layout_height="@dimen/qb_px_1"
+            android:background="#F7714C"
+            android:layout_marginTop="@dimen/qb_px_4"/>
 
         <!-- 中间滑动 -->
         <com.example.administrator.boshide2.Modular.View.MyScrollView
@@ -1209,7 +1040,7 @@
 
         </com.example.administrator.boshide2.Modular.View.MyScrollView>
 
-    </RelativeLayout>
+    </LinearLayout>
     <!-- 中间结束 -->
 
 
@@ -1307,4 +1138,5 @@
         </RelativeLayout>
     </RelativeLayout>
     <!-- 底部结束 -->
-</RelativeLayout>
+    <include layout="@layout/content_footer_layout" />
+</LinearLayout>
