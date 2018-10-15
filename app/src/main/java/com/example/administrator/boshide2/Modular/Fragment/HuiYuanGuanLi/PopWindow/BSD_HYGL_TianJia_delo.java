@@ -2,6 +2,7 @@ package com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.PopWin
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.Adapter
 import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.Promptdiaog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
+import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.Modular.View.timepicker.TimePickerShow;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
@@ -55,7 +57,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     TextView bsd_chepaichaun, et_hy_keyongjie;
     TimePickerShow timePickerShow;
     LinearLayout relativeday, rela_youxiao, rela_bumen, relat_jiesuan, relat_jingban, rela_ka;
-    Promptdiaog promptdiaog;
+    TooPromptdiaog promptdiaog;
     //PopupWindow对象声明
     PopupWindow pw;
     //当前选中的列表项位置
@@ -169,75 +171,51 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         bsd_chepaichaun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (et_hy_chepai.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "请输入车牌", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(et_hy_chepai.getText().toString())) {
+                    Toast.makeText(getContext(), "请输入车牌号", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.i("cjn", "有数据的点击");
-                    chepaidata(et_hy_chepai.getText().toString());
+                    getCarInfo(et_hy_chepai.getText().toString());
                 }
             }
         });
     }
 
-   //.net接口
-    public void chepaidata(String cp) {
-        list_cp.clear();
+    public void getCarInfo(String cardNo) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getContext(), "加载中...");
-        Log.i("cjn", "查看啥车牌" + cp);
         AbRequestParams params = new AbRequestParams();
-        params.put("che_no", cp);
+        params.put("che_no", cardNo);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ChePaiXinXi, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int a, String s) {
-                Log.i("cjn", "查看数据" + s);
+            public void onSuccess(int code, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject json = jsonarray.getJSONObject(i);
-
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("kehu_xm", json.getString("kehu_xm"));
-                            map.put("kehu_dz", json.getString("kehu_dz"));
-                            map.put("kehu_dh", json.getString("kehu_dh"));
-                            map.put("kehu_sj", json.getString("kehu_sj"));
-                            map.put("kehu_mc", json.getString("kehu_mc"));
-                            map.put("kehu_birthday", json.getString("kehu_birthday"));
-                            list_cp.add(map);
-                            et_hy_lianxi.setText(list_cp.get(0).get("kehu_mc"));
-                            et_hy_address.setText(list_cp.get(0).get("kehu_dz"));
-                            et_hy_phone.setText(list_cp.get(0).get("kehu_dh"));
-                            et_hy_birthday.setText(list_cp.get(0).get("kehu_birthday"));
-                            et_hy_shouphone.setText(list_cp.get(0).get("kehu_sj"));
-                            WeiboDialogUtils.closeDialog(mWeiboDialog);
-
-                        }
+                        JSONObject json = jsonObject.getJSONObject("data");
+                        et_hy_lianxi.setText(json.getString("kehu_mc"));
+                        et_hy_address.setText(json.getString("kehu_dz"));
+                        et_hy_phone.setText(json.getString("kehu_dh"));
+                        et_hy_birthday.setText(json.getString("kehu_birthday"));
+                        et_hy_shouphone.setText(json.getString("kehu_sj"));
                     }else {
-                        Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT).show();
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
+                        Toast.makeText(getContext(),"不存在此车牌的相关信息",Toast.LENGTH_SHORT).show();
                         et_hy_lianxi.setText("");
                         et_hy_address.setText("");
                         et_hy_phone.setText("");
                         et_hy_birthday.setText("");
                         et_hy_shouphone.setText("");
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -336,7 +314,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
 //                break;
             //确认办理
             case R.id.tv_hy_banli:
-                if (et_hy_chepai.getText().toString().length() < 1) {
+                if (TextUtils.isEmpty(et_hy_chepai.getText().toString())) {
                     queRen = new QueRen(getContext(), "车牌号不能为空");
                     queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
                         @Override
@@ -345,7 +323,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                         }
                     });
                     queRen.show();
-                } else if (et_hy_lianxi.getText().toString().length() < 1) {
+                } else if (TextUtils.isEmpty(et_hy_lianxi.getText().toString())) {
                     queRen = new QueRen(getContext(), "客户不能为空");
                     queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
                         @Override
@@ -354,7 +332,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                         }
                     });
                     queRen.show();
-                } else if (et_hy_shouphone.getText().toString().length() < 1) {
+                } else if (TextUtils.isEmpty(et_hy_shouphone.getText().toString())) {
                     queRen = new QueRen(getContext(), "手机号不能为空");
                     queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
                         @Override
@@ -363,7 +341,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                         }
                     });
                     queRen.show();
-                } else if (et_hy_kaname.getText().toString().length() < 1) {
+                } else if (TextUtils.isEmpty(et_hy_kaname.getText().toString())) {
                     queRen = new QueRen(getContext(), "卡名称不能为空");
                     queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
                         @Override
@@ -373,8 +351,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                     });
                     queRen.show();
                 } else {
-
-                    chepai();
+                    checkCarNo(et_hy_chepai.getText().toString());
                 }
                 // addCustom();
                 break;
@@ -409,7 +386,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                bumen = list_bumen.get(i).get("name").toString();
+                bumen = list_bumen.get(i).get("name");
                 et_hy_bumen.setText(bumen);
                 pw.dismiss();
             }
@@ -421,16 +398,16 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         //设置焦点为可点击
         pw.setFocusable(true);//可以试试设为false的结果
         //将window视图显示在myButton下面
-//        pw.showAsDropDown(rela_bumen);
-        int[] location = new int[2];
-//        rela_bumen.getLocationOnScreen(location);
-        rela_bumen.getLocationInWindow(location);
-        rela_bumen.getLeft();
-        rela_bumen.getHeight();
-//        listView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        myView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        int popHeight = myView.getMeasuredHeight();
-        pw.showAtLocation(rela_bumen, Gravity.NO_GRAVITY, location[0] + 20, location[1] - popHeight * list_bumen.size());
+        pw.showAsDropDown(rela_bumen);
+//        int[] location = new int[2];
+////        rela_bumen.getLocationOnScreen(location);
+//        rela_bumen.getLocationInWindow(location);
+////        listView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//        pw.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//        int popHeight = pw.getContentView().getMeasuredHeight();
+//        rela_bumen.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//        int popHeight1 = rela_bumen.getMeasuredHeight();
+//        pw.showAtLocation(rela_bumen, Gravity.NO_GRAVITY, location[0], location[1] + popHeight1);
     }
 
     /**
@@ -721,7 +698,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         });
     }
 
-    private void addCustom() {
+    private void addCustom(int isNewCar) {
         AbRequestParams params = new AbRequestParams();
         params.put("che_no", et_hy_chepai.getText().toString().trim());
         params.put("kehu_no", chepai);
@@ -743,18 +720,10 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         params.put("dept_mc", bumen);//部门
         params.put("card_jb", jingban);//经办人
         params.put("card_jsfs", jiesuan);//结算方式
-        Log.i("cjn", "=======================" + "che_no==" + et_hy_chepai.getText().toString().trim() +
-                "---kehu_no---" + chepai + "---che_mc---" + et_hy_lianxi.getText().toString() + "---" +
-                "kehu_dz---" + et_hy_address.getText().toString() +
-                "---kehu_sj---" + et_hy_shouphone.getText().toString() +
-                "---kehu_Birthday---" + et_hy_birthday.getText().toString() +
-                "---card_enddate---" + khje +
-                "---card_kind---" + katype +
-                "---card_ysje---" + et_hy_kaimoney.getText().toString());
+        params.put("isNewCar", isNewCar);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int sss, String s) {
-                Log.i("cjn", "..." + s);
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
                 queRen = new QueRen(getContext(), "办理成功");
                 queRen.show();
@@ -787,28 +756,35 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     }
 
     /**
-     * 车牌
+     * 判断车牌号是否存在
      */
-    private void chepai() {
+    private void checkCarNo(String carNo) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getContext(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("che_no", et_hy_chepai.getText().toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_che, params, new AbStringHttpResponseListener() {
+        params.put("che_no", carNo);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_check_che, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int sssss, String s) {
-                try {
-                    JSONObject object = new JSONObject(s);
-
-                    if (object.get("status").toString().equals("1")) {
-                        Log.i("是多少", "..." + s);
-                        JSONObject json = object.getJSONObject("data");
-                        chepai = json.get("kehu_no").toString();
-
-                    }
-                    addCustom();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void onSuccess(int code, String s) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+                if (s.equals("false")) {
+                    promptdiaog = new TooPromptdiaog(getContext(), "此车为新车，确认办理将会自动增加车辆和客户信息，是否继续");
+                    promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
+                        @Override
+                        public void onYesClick() {
+                            promptdiaog.dismiss();
+                            addCustom(1);
+                        }
+                    });
+                    promptdiaog.show();
+                } else {
+                    addCustom(0);
                 }
+//                    JSONObject object = new JSONObject(s);
+//                    if (object.get("status").toString().equals("1")) {
+//                        JSONObject json = object.getJSONObject("data");
+//                        chepai = json.get("kehu_no").toString();
+//                    }
+//                    addCustom();
             }
 
             @Override

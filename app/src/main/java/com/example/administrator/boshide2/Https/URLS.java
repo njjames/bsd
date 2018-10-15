@@ -176,6 +176,8 @@ public class URLS {
      */
     public String BSD_HYGL_ADD_che = "public/cheliang";
 
+    public String BSD_HYGL_check_che = "public/checkcar";
+
     /**
      * 修改车辆、客户信息
      */

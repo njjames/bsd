@@ -238,7 +238,8 @@
 
             <EditText
                 android:id="@+id/et_hy_kaimoney"
-                style="@style/myeditinfovaluestyle" />
+                style="@style/myeditinfovaluestyle"
+                android:inputType="numberDecimal"/>
         </LinearLayout>
 
         <LinearLayout
@@ -254,7 +255,8 @@
 
             <EditText
                 android:id="@+id/et_hy_keyongjie"
-                style="@style/myeditinfovaluestyle" />
+                style="@style/myeditinfovaluestyle"
+                android:inputType="numberDecimal"/>
         </LinearLayout>
 
         <LinearLayout
@@ -337,7 +339,8 @@
 
             <EditText
                 android:id="@+id/et_hy_shouxi"
-                style="@style/myeditinfovaluestyle" />
+                style="@style/myeditinfovaluestyle"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
@@ -353,7 +356,8 @@
 
             <EditText
                 android:id="@+id/et_hy_jingxi"
-                style="@style/myeditinfovaluestyle" />
+                style="@style/myeditinfovaluestyle"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
