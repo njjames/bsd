@@ -6,7 +6,6 @@
 
     <include layout="@layout/content_title_back_layout" />
 
-    <!-- 中间开始 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -28,7 +27,7 @@
                     android:id="@+id/relativeLayout7"
                     android:layout_weight="1.5"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle">
+                    style="@style/myeditlinearlayoutstyle">
 
                     <TextView
                         android:id="@+id/bsd_ytp"
@@ -43,10 +42,8 @@
 
                 <LinearLayout
                     android:id="@+id/relativeLayout8"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle"
+                    style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
@@ -61,10 +58,8 @@
 
                 <LinearLayout
                     android:id="@+id/relativeLayout13"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle"
+                    style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
@@ -79,10 +74,9 @@
 
                 <LinearLayout
                     android:id="@+id/relativeLayout14"
-                    android:layout_width="0dp"
                     android:layout_weight="1.5"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle"
+                    style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
@@ -97,10 +91,9 @@
 
                 <LinearLayout
                     android:id="@+id/relativeLayout15"
-                    android:layout_width="0dp"
                     android:layout_weight="1.5"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle"
+                    style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
@@ -125,10 +118,9 @@
 
                 <LinearLayout
                     android:id="@+id/relativeLayout21"
-                    android:layout_width="0dp"
                     android:layout_weight="1.5"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle">
+                    style="@style/myeditlinearlayoutstyle">
 
                     <TextView
                         android:id="@+id/textView17"
@@ -142,10 +134,9 @@
 
                 <LinearLayout
                     android:id="@+id/relativeLayout22"
-                    android:layout_width="0dp"
                     android:layout_weight="1.5"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle"
+                    style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
@@ -160,10 +151,9 @@
 
                 <LinearLayout
                     android:id="@+id/relativeLayout23"
-                    android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle"
+                    style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
@@ -178,10 +168,8 @@
 
                 <LinearLayout
                     android:id="@+id/relativeLayout24"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle"
+                    style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
@@ -196,10 +184,8 @@
 
                 <LinearLayout
                     android:id="@+id/relativeLayout26"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle"
+                    style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_10">
 
                     <TextView
@@ -223,10 +209,9 @@
 
                 <LinearLayout
                     android:id="@+id/relativeLayout25"
-                    android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="@dimen/qb_px_32"
-                    style="@style/myconditionboxstyle">
+                    style="@style/myeditlinearlayoutstyle">
 
                     <TextView
                         android:id="@+id/textView21"

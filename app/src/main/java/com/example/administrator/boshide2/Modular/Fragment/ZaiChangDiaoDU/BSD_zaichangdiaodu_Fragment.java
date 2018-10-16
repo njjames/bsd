@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.view.pullview.AbPullToRefreshView;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
@@ -75,9 +76,7 @@ public class BSD_zaichangdiaodu_Fragment extends BaseFragment implements AbPullT
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Conts.cp = list.get(i).getChe_no();
-                Conts.work_no = list.get(i).getWork_no();
-                ((MainActivity) getActivity()).upwxywdd(view);
+                ((MainActivity) getActivity()).showWxddFragment(list.get(i).getWork_no());
             }
         });
         // 查询

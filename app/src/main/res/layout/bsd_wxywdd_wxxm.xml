@@ -1,185 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/bsd_wxxm"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/y45"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/y10"
-        android:background="@drawable/bsd_chepaiyuan">
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/x5"
-            android:text="维修项目:" />
-
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textView10"
-            android:layout_marginLeft="@dimen/x2"
-            android:layout_toEndOf="@+id/textView10"
-            android:background="@null"
-            android:hint="请选择维修项目"
-            android:textColorHint="#B1B0B0"
-            android:textSize="13sp" />
-
-        <ImageView
-            android:layout_width="@dimen/x10"
-            android:layout_height="@dimen/y30"
-            android:scaleType="fitXY"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x2"
-            android:layout_marginRight="@dimen/x5"
-            android:layout_toEndOf="@+id/textView22"
-            android:src="@mipmap/sbd_add" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_zcdd_rl_ztpg"
-        android:layout_width="@dimen/x40"
-        android:layout_height="@dimen/y45"
-        android:background="@drawable/cundang"
-        android:gravity="center"
-        android:layout_marginRight="@dimen/x20"
-        android:layout_alignBottom="@+id/bsd_wxxm"
-        android:layout_toLeftOf="@+id/bsd_wxxm">
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="整体派工"
-            android:textColor="#FFFFFF" />
-
-
-    </RelativeLayout>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/bsd_lsbj_toubuju"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y45"
-        android:layout_below="@+id/bsd_wxxm"
-        android:layout_marginTop="@dimen/y10">
+        android:layout_height="@dimen/qb_px_30">
 
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm12"
-            android:layout_width="0dp"
+        <TextView
             android:layout_weight="1.5"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_title_bg">
+            style="@style/mysearchtitlestyle"
+            android:text="项目名称" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="项目名称" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm22"
-            android:layout_width="0dp"
+        <TextView
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_title_bg">
+            style="@style/mysearchtitlestyle"
+            android:text="标准工时" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="标准工时" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm33"
-            android:layout_width="0dp"
+        <TextView
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_title_bg">
+            style="@style/mysearchtitlestyle"
+            android:text="工时单价" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="工时单价" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm44"
-            android:layout_width="0dp"
+        <TextView
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_title_bg">
+            style="@style/mysearchtitlestyle"
+            android:text="金额" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="金额" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm66"
-            android:layout_width="0dp"
+        <TextView
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_title_bg">
+            style="@style/mysearchtitlestyle"
+            android:text="删除" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="删除" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm55"
-            android:layout_width="0dp"
+        <TextView
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_title_bg">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="单项派工" />
-
-        </RelativeLayout>
-
-
+            style="@style/mysearchtitlestyle"
+            android:text="单项派工" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/bsd_lsbj_lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/bsd_lsbj_toubuju">
-
+        android:layout_height="match_parent">
     </ListView>
-
-
-
-
-
-
-</RelativeLayout>
+</LinearLayout>

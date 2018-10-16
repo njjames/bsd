@@ -18,6 +18,7 @@ import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
+import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.deleg.BSD_WeiXiuYeWuDiaoDuDian_delg;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.fagmt_adp.BSD_wxywwd_wxxm_adp;
@@ -41,7 +42,7 @@ import java.util.List;
  * Created by Administrator on 2017-4-24.
  */
 
-public class BSD_wxywdd_wxxm extends Fragment {
+public class BSD_wxywdd_wxxm extends BaseFragment {
 
     Delet delet;
 
@@ -81,22 +82,9 @@ public class BSD_wxywdd_wxxm extends Fragment {
         this.clearPaiGongRenYuan=clearPaiGongRenYuan;
     }
 
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bsd_wxywdd_wxxm, null);
-        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        url = new URLS();
-
-        dataxm();
-        init(view);
-        for (int a = 0; a < list_XM.size(); a++) {
-            list_XM.get(a).getReco_no();
-            Log.i("cjn", "循环查看这个id" + list_XM.get(a).getReco_no());
-        }
-
-        return view;
+    protected int getLayoutId() {
+        return R.layout.bsd_wxywdd_wxxm;
     }
 
     public void setChaKanPaiGongREN(ChaKanPaiGongREN chaKanPaiGongREN) {
@@ -105,12 +93,9 @@ public class BSD_wxywdd_wxxm extends Fragment {
 
     String wxxm_nos;
 
-    public void init(View view) {
+    @Override
+    public void initView() {
         beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
-        //维修项目添加
-        bsd_wxxm = (RelativeLayout) view.findViewById(R.id.bsd_wxxm);
-
-
         bsd_zcduxq_xm_pop = new BSD_ZCDUXQ_XM_POP(getActivity());
         bsd_zcduxq_xm_pop.setClist(new BSD_ZCDUXQ_XM_POP.chuanlist() {
             @Override
@@ -118,7 +103,6 @@ public class BSD_wxywdd_wxxm extends Fragment {
                 if (list_XM.size() > 0) {
                     for (int i = 0; i < list_XM.size(); i++) {
                         if (list_XM.get(i).getWxxm_no().equals(entity.getWxxm_no())) {
-
                             choufutianjia = 1;
                             break;
                         }
@@ -336,7 +320,16 @@ public class BSD_wxywdd_wxxm extends Fragment {
         });
     }
 
-    public void upxm(int i,double gs, double dj,String  xmmc){
+    @Override
+    public void initData() {
+        url = new URLS();
+        dataxm();
+        for (int a = 0; a < list_XM.size(); a++) {
+            list_XM.get(a).getReco_no();
+        }
+    }
+
+    public void upxm(int i, double gs, double dj, String  xmmc){
         AbRequestParams params = new AbRequestParams();
         params.put("id", i);
         params.put("jg", dj+"");
@@ -439,9 +432,7 @@ public class BSD_wxywdd_wxxm extends Fragment {
     public void dataxm() {
         list_XM.clear();
         AbRequestParams params = new AbRequestParams();
-        Log.i("cjn", "看看单号" + Conts.work_no);
         params.put("work_no", Conts.work_no);
-
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_xmlb, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
@@ -466,7 +457,6 @@ public class BSD_wxywdd_wxxm extends Fragment {
                             entity.setWxxm_bz(item.getString("wxxm_bz"));
                             entity.setWxxm_dj(item.getDouble("wxxm_dj"));
                             list_XM.add(entity);
-                            Log.i("cjn", "查看这个worno" + item.getString("work_no"));
                         }
                         WeiboDialogUtils.closeDialog(mWeiboDialog);
                         adapter.setList(list_XM);
@@ -476,7 +466,6 @@ public class BSD_wxywdd_wxxm extends Fragment {
                         clearPaiGongRenYuan.clearPaiGong();
                     } else {
                         WeiboDialogUtils.closeDialog(mWeiboDialog);
-//                        Show.showTime(getActivity(), jsonObject.get("message").toString());
 
                     }
 

@@ -456,6 +456,8 @@ public class URLS {
      * 在场调度ListView
      */
     public String BSD_zcdu_list = "paigong/paiGongList";
+
+    public String BSD_zcdu_listinfo = "paigong/getlistinfobyno";
     /**
      * 维修接单-->历史接单
      */
