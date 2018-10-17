@@ -154,7 +154,6 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
             }
         });
         return contetview;
-
     }
 
 
