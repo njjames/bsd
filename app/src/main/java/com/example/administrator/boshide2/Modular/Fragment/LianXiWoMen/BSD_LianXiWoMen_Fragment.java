@@ -36,6 +36,8 @@ public class BSD_LianXiWoMen_Fragment extends Fragment {
     TextView bsd_my;
     TextView bsd_my_daiam;
     Html.ImageGetter imgGetter;
+    private TextView title;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bsd_lxwm_fragment, null);
@@ -48,6 +50,8 @@ public class BSD_LianXiWoMen_Fragment extends Fragment {
                 "\u3000\u3000"+"经过多年努力，博士德软件客户拥有量和市场占有率迅速扩大，其中博士德汽配汽修管理软件已经成为该行业管理软件的知名品牌。博士德系列商务管理软件赢得了全国各地用户的好评。经过几年的积累与发展，公司的科研队伍不断壮大。公司拥有一支由计算机软件专家和商务管理专家共同组成的一流的科研开发队伍。\n" +
                 "\u3000\u3000"+"目前，公司正在全国各省、自治区、直辖市，建立健全各地销售服务中心。以各地销售服务中心以基础，在全国中等以上城市建立各级代理体系。该体系将涵盖全国地区以上的城市312个，在全国任何地级市，都将有博士德公司的销售代理体系。该销售网络体系的建立，将极大地丰富博士德企业文化的内容，同时，为实现博士德公司下一步战略目标打下坚实的基础。\n");
         init();
+        title = (TextView) view.findViewById(R.id.tv_title);
+        title.setText("联系我们");
         bsd_lsbj_fanhui = (RelativeLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,13 +62,8 @@ public class BSD_LianXiWoMen_Fragment extends Fragment {
         data();
         bsd_my.setMovementMethod(ScrollingMovementMethod.getInstance());// 设置可滚动
         bsd_my.setMovementMethod(LinkMovementMethod.getInstance());//设置超链接可以打开网页
-
-
-
         return view;
     }
-
-
 
     public void init(){
     //这里面的resource就是fromhtml函数的第一个参数里面的含有的url

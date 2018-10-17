@@ -28,8 +28,6 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
     List<BSD_WeiXiuYuYue_Cl_entity> list;
     TooPromptdiaog promptdiaog;
     double zongjia;
-
-    int shuliangs[];
     public int shuliang = 1;
     Updanjia updanjia;
     private  KuCun   kuCun;
@@ -56,17 +54,6 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
 
     public void setList(List<BSD_WeiXiuYuYue_Cl_entity> list) {
         this.list = list;
-//        shuliangs=new int[list.size()];
-
-        if (list.size() > 0) {
-            shuliangs = new int[list.size()];
-            for (int i = 0; i < list.size(); i++) {
-                shuliangs[i] = (int) list.get(i).getPeij_sl();
-
-            }
-        }
-
-
     }
 
 
@@ -82,9 +69,10 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
 
     shuliangzongjia shuliangzongjia;
 
-    public BSD_WXYY_CL_adp(Context context ) {
+    public BSD_WXYY_CL_adp(Context context, List<BSD_WeiXiuYuYue_Cl_entity> list) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     @Override
@@ -102,12 +90,14 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
         return 0;
     }
 
-
-    class Holder {
-        TextView bsd_xzcl_name, bsd_xzcl_shuliang, bsd_xzcl_danjia, bsd_xzcl_tuhao, bsd_xzcl_pinpai, bsd_xzcl_caozuo;
-        RelativeLayout bsd_wxyy_cl_delet;
-        ImageView bsd_scl_iv_jian, bsd_scl_iv_jia;
-        LinearLayout bsd_wxcl_kc;
+    public final class Holder {
+        TextView bsd_xzcl_name;
+        TextView bsd_xzcl_shuliang;
+        TextView bsd_xzcl_danjia;
+        TextView bsd_xzcl_dw;
+        TextView bsd_xzcl_je;
+        ImageView iv_delete;
+        ImageView iv_stock;
     }
 
     @Override
@@ -119,29 +109,17 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
             holder.bsd_xzcl_name = (TextView) contetview.findViewById(R.id.bsd_xzcl_name);
             holder.bsd_xzcl_shuliang = (TextView) contetview.findViewById(R.id.bsd_xzcl_shuliang);
             holder.bsd_xzcl_danjia = (TextView) contetview.findViewById(R.id.bsd_xzcl_danjia);
-            holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
-            holder.bsd_xzcl_pinpai = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
-            holder.bsd_wxyy_cl_delet = (RelativeLayout) contetview.findViewById(R.id.bsd_wxyy_cl_delet);
-            holder.bsd_scl_iv_jia = (ImageView) contetview.findViewById(R.id.bsd_scl_iv_jia);
-            holder.bsd_scl_iv_jian = (ImageView) contetview.findViewById(R.id.bsd_scl_iv_jian);
-            holder.bsd_wxcl_kc= (LinearLayout) contetview.findViewById(R.id.bsd_wxcl_kc);
-// holder.bsd_xzcl_caozuo = (TextView) contetview.findViewById(R.id.bsd_xzcl_caozuo);
+            holder.bsd_xzcl_dw = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
+            holder.bsd_xzcl_je = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
+            holder.iv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
+            holder.iv_stock= (ImageView) contetview.findViewById(R.id.iv_stock);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
 
-
         holder.bsd_xzcl_name.setText(list.get(i).getPeij_mc());
-
-
         holder.bsd_xzcl_shuliang.setText("" + (int) list.get(i).getPeij_sl());
-
-
-        final Holder finalHolder = holder;
-
-
-
         holder.bsd_xzcl_danjia.setText("" + list.get(i).getPeij_dj());
         holder.bsd_xzcl_danjia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,42 +128,10 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
             }
         });
 
-
-        holder.bsd_xzcl_tuhao.setText(list.get(i).getPeij_dw());
-
-        zongjia = shuliangs[i] * list.get(i).getPeij_dj();
-        holder.bsd_xzcl_pinpai.setText("" + "" +list.get(i).getPeij_sl()*list.get(i).getPeij_dj());
+        holder.bsd_xzcl_dw.setText(list.get(i).getPeij_dw());
+        holder.bsd_xzcl_je.setText("" + "" +list.get(i).getPeij_sl()*list.get(i).getPeij_dj());
 //        holder.bsd_xzcl_caozuo.setText(list.get(i).get("caozuo"));
-        holder.bsd_scl_iv_jia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shuliangs[i]++;
-//                shuliang++;
-                finalHolder.bsd_xzcl_shuliang.setText("" + shuliangs[i]);
-                zongjia = shuliangs[i] * list.get(i).getPeij_dj();
-                Log.i("cjn","查看这个单价"+list.get(i).getPeij_dj()+"总价"+zongjia+"数量"+shuliangs[i]);
-                finalHolder.bsd_xzcl_pinpai.setText("" + zongjia);
-
-                list.get(i).setPeij_sl(shuliangs[i]);
-                list.get(i).setPeij_je(zongjia);
-                shuliangzongjia.onYesClick(shuliangs[i], zongjia);
-            }
-        });
-        holder.bsd_scl_iv_jian.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (shuliangs[i] > 1) {
-                    shuliangs[i]--;
-                    finalHolder.bsd_xzcl_shuliang.setText("" + shuliangs[i]);
-                    zongjia = shuliangs[i] * list.get(i).getPeij_dj();
-                    finalHolder.bsd_xzcl_pinpai.setText("" + zongjia);
-                    list.get(i).setPeij_sl(shuliangs[i]);
-                    list.get(i).setPeij_je(zongjia);
-                    shuliangzongjia.onYesClick(shuliangs[i], zongjia);
-                }
-            }
-        });
-        holder.bsd_wxyy_cl_delet.setOnClickListener(new View.OnClickListener() {
+        holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 promptdiaog = new TooPromptdiaog(context, "是否删除");
@@ -201,15 +147,12 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
                 promptdiaog.show();
             }
         });
-
-        holder.bsd_wxcl_kc.setOnClickListener(new View.OnClickListener() {
+        holder.iv_stock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 kuCun.query_kc(list.get(i).getPeij_no());
             }
         });
-
-
         return contetview;
 
     }

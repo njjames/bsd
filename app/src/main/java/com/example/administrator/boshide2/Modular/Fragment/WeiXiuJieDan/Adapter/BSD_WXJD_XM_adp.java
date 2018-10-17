@@ -45,14 +45,15 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
         this.list = list;
     }
 
-    public BSD_WXJD_XM_adp(Context context) {
+    public BSD_WXJD_XM_adp(Context context, List<BSD_WeiXiuJieDan_XM_Entity> list) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     @Override
     public int getCount() {
-        return (list==null)?0:list.size();
+        return (list == null) ? 0 : list.size();
     }
 
     @Override
@@ -67,7 +68,7 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
 
 
     class Holder {
-        TextView bsd_xzcl_name, bsd_xzcl_shuliang, bsd_xzcl_danjia, bsd_xzcl_tuhao, bsd_xzcl_pinpai;
+        TextView bsd_xzcl_name, bsd_xzcl_gs, bsd_xzcl_danjia, bsd_xzcl_je, bsd_xzcl_zt;
             ImageView bsd_xzcl_caozuo;
     }
 
@@ -90,16 +91,15 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_wxjd_xzxm_item, null);
             holder.bsd_xzcl_name = (TextView) contetview.findViewById(R.id.bsd_xzcl_name);
-            holder.bsd_xzcl_shuliang = (TextView) contetview.findViewById(R.id.bsd_xzcl_shuliang);
+            holder.bsd_xzcl_gs = (TextView) contetview.findViewById(R.id.bsd_xzcl_gs);
             holder.bsd_xzcl_danjia = (TextView) contetview.findViewById(R.id.bsd_xzcl_danjia);
-            holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
-            holder.bsd_xzcl_pinpai = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
+            holder.bsd_xzcl_je = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
+            holder.bsd_xzcl_zt = (TextView) contetview.findViewById(R.id.bsd_xzcl_zt);
             holder.bsd_xzcl_caozuo = (ImageView) contetview.findViewById(R.id.bsd_xzcl_caozuo);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
-
 
         holder.bsd_xzcl_name.setText(list.get(i).getWxxm_mc());
         holder.bsd_xzcl_name.setOnClickListener(new View.OnClickListener() {
@@ -110,8 +110,8 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
         });
 
         //工时
-        holder.bsd_xzcl_shuliang.setText(""+list.get(i).getWxxm_gs());
-        holder.bsd_xzcl_shuliang.setOnClickListener(new View.OnClickListener() {
+        holder.bsd_xzcl_gs.setText(""+list.get(i).getWxxm_gs());
+        holder.bsd_xzcl_gs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 upGongShi.onYesClick(i,list.get(i).getWxxm_mc(),list.get(i).getWxxm_gs());
@@ -127,15 +127,11 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
 //                    ()/list.get(i).getWxxm_gs());
 //        }金额   工时  单价
 
-        Log.i("upje", "getView: 金额=="+list.get(i).getWxxm_je());
-        Log.i("upje", "getView: 工时=="+list.get(i).getWxxm_gs());
-        Log.i("upje", "getView:  单价=="+list.get(i).getWxxm_dj());
-
-        if(list.get(i).getWxxm_gs()==0){
+        if (list.get(i).getWxxm_gs() == 0) {
             list.get(i).setWxxm_gs(1.0);
         }
         DecimalFormat df=new DecimalFormat("#.##");
-        String    gs=df.format(list.get(i).getWxxm_je() / list.get(i).getWxxm_gs());
+        String gs = df.format(list.get(i).getWxxm_je() / list.get(i).getWxxm_gs());
 
         holder.bsd_xzcl_danjia.setText(gs);
 
@@ -143,7 +139,7 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
 
 
         //金额
-        holder.bsd_xzcl_tuhao.setOnClickListener(new View.OnClickListener() {
+        holder.bsd_xzcl_je.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 upGongShiDanJia.onYesClick(i,list.get(i).getWxxm_mc(),list.get(i).getWxxm_je());
@@ -151,15 +147,8 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
             }
         });
 
-        holder.bsd_xzcl_tuhao.setText(""+list.get(i).getWxxm_je());
-
-        Log.i("upje", "getView111: 金额=="+list.get(i).getWxxm_je());
-        Log.i("upje", "getView111: 工时=="+list.get(i).getWxxm_gs());
-        Log.i("upje", "getView111:  单价=="+list.get(i).getWxxm_dj());
-
-
-
-        holder.bsd_xzcl_pinpai.setText(list.get(i).getWxxm_zt());
+        holder.bsd_xzcl_je.setText("" + list.get(i).getWxxm_je());
+        holder.bsd_xzcl_zt.setText(list.get(i).getWxxm_zt());
         //删除操作
         holder.bsd_xzcl_caozuo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,10 +168,7 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
                 promptdiaog.show();
             }
         });
-
-
         return contetview;
-
     }
 
 

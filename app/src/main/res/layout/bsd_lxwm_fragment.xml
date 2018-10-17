@@ -1,66 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- 顶部开始 -->
-    <RelativeLayout
-        android:id="@+id/bsd_m_top"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y55"
-        android:background="#FFFFFF">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/bsd_lsbj_fanhui"
-            android:layout_width="@dimen/x60"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/x5">
+    <include layout="@layout/content_title_back_layout" />
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="@dimen/x5"
-                android:layout_height="@dimen/y25"
-                android:scaleType="fitXY"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/bsd_fanhui" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/x2"
-                android:layout_toEndOf="@+id/imageView5"
-                android:text="返回"
-                android:textColor="#636364"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="联系我们"
-            android:textColor="#636364"
-            android:textSize="20sp" />
-
-
-    </RelativeLayout>
-    <!-- 顶部结束 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/bsd_m_top"
-        android:background="#E0E0E0" />
-    <!-- 中间开始 -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bsd_m_xia"
-        android:layout_below="@+id/bsd_m_top"
-        android:layout_marginLeft="@dimen/x5"
-        android:layout_marginRight="@dimen/x5"
-        android:layout_marginTop="@dimen/y10"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@drawable/bodyshangyuan">
 
         <TextView
@@ -76,48 +25,48 @@
             android:id="@+id/bsd_my_daiam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/y20"
-            android:lineSpacingExtra="@dimen/x2"
+            android:layout_marginTop="@dimen/qb_px_16"
+            android:lineSpacingExtra="@dimen/qb_px_4"
             android:lineSpacingMultiplier="1.5"
-            android:layout_marginLeft="@dimen/x5"
-            android:layout_marginRight="@dimen/y10"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_marginRight="@dimen/qb_px_10"
             android:text=""
             android:textSize="18dp" />
 
         <TextView
             android:id="@+id/bsd_text1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bsd_my_daiam"
-            android:layout_marginLeft="@dimen/x10"
-            android:layout_marginTop="@dimen/y10"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginTop="@dimen/qb_px_10"
             android:text="服务专线：0311-83998032"
             android:textSize="18dp" />
 
         <TextView
             android:id="@+id/bsd_text2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bsd_text1"
-            android:layout_marginLeft="@dimen/x10"
-            android:layout_marginTop="@dimen/y10"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginTop="@dimen/qb_px_8"
             android:text="销售专线：400-6400319"
             android:textSize="18sp" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bsd_text2"
-            android:layout_marginLeft="@dimen/x10"
-            android:layout_marginTop="@dimen/y10"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginTop="@dimen/qb_px_8"
             android:text="地址：石家庄市红旗大街25号西清公寓13层"
             android:textSize="18sp"
             android:id="@+id/textView33" />
 -
         <ImageView
             android:id="@+id/imageView12"
-            android:layout_width="@dimen/x40"
-            android:layout_height="@dimen/y120"
+            android:layout_width="@dimen/qb_px_90"
+            android:layout_height="@dimen/qb_px_90"
             android:src="@mipmap/bsd_2weima"
             android:layout_alignRight="@+id/textView32"
             android:layout_alignLeft="@+id/textView32"
@@ -133,41 +82,34 @@
             android:layout_above="@+id/textView32"
             android:layout_alignRight="@+id/textView32"
             android:layout_alignLeft="@+id/textView32"
-            android:layout_marginBottom="@dimen/y2" />
+            android:layout_marginBottom="@dimen/qb_px_2" />
 
         <TextView
             android:id="@+id/textView32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:text="博士德微信公众号：BOSTER-1993"
             android:textSize="18sp"
-            android:layout_marginBottom="@dimen/y2"
-            android:layout_marginEnd="@dimen/x5"
+            android:layout_marginBottom="@dimen/qb_px_4"
+            android:layout_marginEnd="@dimen/qb_px_10"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true" />
-
-
     </RelativeLayout>
     <!-- 中间结束 -->
     <!-- 底部开始 -->
     <RelativeLayout
         android:id="@+id/bsd_m_xia"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:layout_alignParentBottom="true">
-
+        android:layout_height="@dimen/qb_px_20">
 
             <TextView
                 android:id="@+id/bsd_06_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
                 android:text="售后服务电话: 0311-83998032      保修 (非工作时间) : 15176436937   13930122976" />
 
     </RelativeLayout>
     <!-- 底部结束 -->
 
-</RelativeLayout>
+</LinearLayout>

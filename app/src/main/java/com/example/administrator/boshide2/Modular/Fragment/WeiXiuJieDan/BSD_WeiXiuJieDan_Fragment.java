@@ -96,14 +96,12 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
     BSD_WXYY_XM_POP bsd_wxjd_xm_pop;
     //材料选择
     BSD_KSBJ_CL_POP bsd_wxjd_cl_pop;
-    ListView listxm;//维修项目
-    ListView listcl;//维修材料
-    //维修项目
-    BSD_WXJD_XM_adp adp_xm;
-    List<BSD_WeiXiuJieDan_XM_Entity> list_XM = new ArrayList<>();
-    //选择材料
-    BSD_WXJD_CL_adp adp_cl;
-    List<BSD_WeiXiuJieDan_CL_Entity> list_CL = new ArrayList<>();
+    private ListView listViewXM;//维修项目
+    private ListView listViewCL;//维修材料
+    private BSD_WXJD_XM_adp adp_xm;
+    private BSD_WXJD_CL_adp adp_cl;
+    private List<BSD_WeiXiuJieDan_XM_Entity> list_XM = new ArrayList<>();
+    private List<BSD_WeiXiuJieDan_CL_Entity> list_CL = new ArrayList<>();
     int choufutianjia = 0;
     TextView bsd_wxjd_cd;
     public int jc_or_cd;
@@ -222,14 +220,11 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
             bsd_wxjd_et_name.setText(Conts.bycx_CarName);
             bsd_wxjd_et_shouji.setText(Conts.bycx_Shouji);
             bsd_wxjd_et_huiyuan.setText(Conts.bycx_huiyuan);
-
-            adp_xm.setList(list_XM);
-            listxm.setAdapter(adp_xm);
             adp_xm.notifyDataSetChanged();
 
 
             adp_cl.setList(list_CL);
-            listcl.setAdapter(adp_cl);
+            listViewCL.setAdapter(adp_cl);
             adp_cl.notifyDataSetChanged();
             initdata2();
         }else {
@@ -463,9 +458,6 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
 
                     adp_xm.notifyDataSetChanged();
                 }
-
-                adp_xm.setList(list_XM);
-                listxm.setAdapter(adp_xm);
                 wxjd_xm_money();
                 adp_xm.notifyDataSetChanged();
             }
@@ -532,7 +524,7 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
                 }
 
                 adp_cl.setList(list_CL);
-                listcl.setAdapter(adp_cl);
+                listViewCL.setAdapter(adp_cl);
                 wxjd_cl_money();
                 adp_cl.notifyDataSetChanged();
 
@@ -543,11 +535,11 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
         bsd_wxxm1 = (RelativeLayout) view.findViewById(R.id.bsd_wxxm1);
         bsd_wxxm = (RelativeLayout) view.findViewById(R.id.bsd_wxxm);
         //数据atap
-        listxm = (ListView) view.findViewById(R.id.bsd_lv);
+        listViewXM = (ListView) view.findViewById(R.id.bsd_lv);
         //维修材料
-        listcl = (ListView) view.findViewById(R.id.bsd_lv1);
+        listViewCL = (ListView) view.findViewById(R.id.bsd_lv1);
         //维修材料
-        adp_cl = new BSD_WXJD_CL_adp(getContext());
+        adp_cl = new BSD_WXJD_CL_adp(getContext(), list_CL);
         adp_cl.setJia_jian(new BSD_WXJD_CL_adp.Jia_Jian() {
             @Override
             public void onYesClick() {
@@ -592,10 +584,10 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
                 kcDialog.show(getFragmentManager(),"kcDialog");
             }
         });
-
+        listViewCL.setAdapter(adp_cl);
 
         //维修项目
-        adp_xm = new BSD_WXJD_XM_adp(getActivity());
+        adp_xm = new BSD_WXJD_XM_adp(getActivity(), list_XM);
         adp_xm.setUpGongShi(new BSD_WXJD_XM_adp.UpGongShi() {
             @Override
             public void onYesClick(final int i, String name, double gongshi) {
@@ -644,16 +636,13 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
                 });
             }
         });
-
-
         adp_xm.setXmDelete(new BSD_WXJD_XM_adp.XmDelete() {
             @Override
             public void onYesClick() {
                 wxjd_xm_money();
             }
         });
-        listxm.setAdapter(adp_xm);
-        listcl.setAdapter(adp_cl);
+        listViewXM.setAdapter(adp_xm);
         beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
         //维修项目
         //滑动
@@ -1606,7 +1595,7 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
                             list_CL.add(entity);
                         }
                         adp_cl.setList(list_CL);
-                        listcl.setAdapter(adp_cl);
+                        listViewCL.setAdapter(adp_cl);
                         adp_cl.notifyDataSetChanged();
 
 
@@ -1670,8 +1659,6 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
                             entity.setWxxm_dj(item.getDouble("wxxm_dj"));
                             list_XM.add(entity);
                         }
-                        adp_xm.setList(list_XM);
-                        listxm.setAdapter(adp_xm);
                         adp_xm.notifyDataSetChanged();
 
                     }else {
@@ -1760,7 +1747,7 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
      */
     public void huadong() {
         //解决滑动问题
-        listcl.setOnTouchListener(new View.OnTouchListener() {
+        listViewCL.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 try {
@@ -1783,7 +1770,7 @@ public class BSD_WeiXiuJieDan_Fragment extends Fragment implements View.OnClickL
 
 
         //解决滑动问题。
-        listxm.setOnTouchListener(new View.OnTouchListener() {
+        listViewXM.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 try {
