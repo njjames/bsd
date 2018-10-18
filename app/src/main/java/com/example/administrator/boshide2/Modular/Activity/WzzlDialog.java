@@ -86,12 +86,12 @@ public class WzzlDialog extends Dialog {
 
         setContentView(view);
         setCanceledOnTouchOutside(false);
-//        WindowManager.LayoutParams params = this.getWindow().getAttributes();
-////        params.width = WindowManager.LayoutParams.WRAP_CONTENT;//宽高可设置具体大小
-////        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        params.width = getContext().getResources().getDimensionPixelOffset(R.dimen.x280);
-//        params.height = getContext().getResources().getDimensionPixelOffset(R.dimen.y610);
-//        this.getWindow().setAttributes(params);
+        WindowManager.LayoutParams params = this.getWindow().getAttributes();
+//        params.width = WindowManager.LayoutParams.WRAP_CONTENT;//宽高可设置具体大小
+//        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.width = getContext().getResources().getDimensionPixelOffset(R.dimen.qb_px_500);
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        this.getWindow().setAttributes(params);
         initData();//初始化页面数据
     }
 
