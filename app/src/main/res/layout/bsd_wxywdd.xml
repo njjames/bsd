@@ -10,265 +10,265 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@drawable/bodyshangyuan"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/qb_px_4"
         android:paddingRight="@dimen/qb_px_4"
-        android:paddingTop="@dimen/qb_px_6"
-        android:background="@drawable/bodyshangyuan"
-        android:orientation="vertical">
+        android:paddingTop="@dimen/qb_px_6">
 
         <LinearLayout
             android:id="@+id/bsd_wxywdd_top_line1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout7"
-                    android:layout_weight="1.5"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle">
-
-                    <TextView
-                        android:id="@+id/bsd_ytp"
-                        style="@style/myeditinfonamestyle"
-                        android:text="维修单号:" />
-
-                    <TextView
-                        android:id="@+id/bsd_ywwwdd_dh"
-                        style="@style/myeditinfovaluestyle" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout8"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle"
-                    android:layout_marginLeft="@dimen/qb_px_10">
-
-                    <TextView
-                        android:id="@+id/textView77"
-                        style="@style/myeditinfonamestyle"
-                        android:text="车牌:" />
-
-                    <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:id="@+id/bsd_ywwwdd_cp"
-                        style="@style/myeditinfomarqeestyle" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout13"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle"
-                    android:layout_marginLeft="@dimen/qb_px_10">
-
-                    <TextView
-                        android:id="@+id/textView14"
-                        style="@style/myeditinfonamestyle"
-                        android:text="品牌:" />
-
-                    <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:id="@+id/bsd_ywwwdd_pinpai"
-                        style="@style/myeditinfomarqeestyle" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout14"
-                    android:layout_weight="1.5"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle"
-                    android:layout_marginLeft="@dimen/qb_px_10">
-
-                    <TextView
-                        android:id="@+id/textView15"
-                        style="@style/myeditinfonamestyle"
-                        android:text="车系:" />
-
-                    <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:id="@+id/bsdywwwdd_chexi"
-                        style="@style/myeditinfomarqeestyle" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout15"
-                    android:layout_weight="1.5"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle"
-                    android:layout_marginLeft="@dimen/qb_px_10">
-
-                    <TextView
-                        android:id="@+id/textView16"
-                        style="@style/myeditinfonamestyle"
-                        android:text="车组:" />
-
-                    <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:id="@+id/bsd_ywwwdd_chezu"
-                        style="@style/myeditinfomarqeestyle"/>
-                </LinearLayout>
-            </LinearLayout>
-
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/bsd_wxywdd_top_line2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/qb_px_4">
+                android:id="@+id/relativeLayout7"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_weight="1.5">
 
-                <LinearLayout
-                    android:id="@+id/relativeLayout21"
-                    android:layout_weight="1.5"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle">
+                <TextView
+                    android:id="@+id/bsd_ytp"
+                    style="@style/myeditinfonamestyle"
+                    android:text="维修单号:" />
 
-                    <TextView
-                        android:id="@+id/textView17"
-                        style="@style/myeditinfonamestyle"
-                        android:text="车型:" />
+                <TextView
+                    android:id="@+id/bsd_ywwwdd_dh"
+                    style="@style/myeditinfovaluestyle" />
 
-                    <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:id="@+id/bsd_ywwwdd_chexing"
-                        style="@style/myeditinfomarqeestyle" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout22"
-                    android:layout_weight="1.5"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle"
-                    android:layout_marginLeft="@dimen/qb_px_10">
-
-                    <TextView
-                        android:id="@+id/textView18"
-                        style="@style/myeditinfonamestyle"
-                        android:text="VIN:" />
-
-                    <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:id="@+id/bsd_ywwwdd_vin"
-                        style="@style/myeditinfomarqeestyle" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout23"
-                    android:layout_weight="1"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle"
-                    android:layout_marginLeft="@dimen/qb_px_10">
-
-                    <TextView
-                        android:id="@+id/textView19"
-                        style="@style/myeditinfonamestyle"
-                        android:text="客户:" />
-
-                    <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:id="@+id/bsd_ywwwdd_user"
-                        style="@style/myeditinfomarqeestyle" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout24"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle"
-                    android:layout_marginLeft="@dimen/qb_px_10">
-
-                    <TextView
-                        android:id="@+id/textView20"
-                        style="@style/myeditinfonamestyle"
-                        android:text="服务顾问:" />
-
-                    <TextView
-                        android:id="@+id/bsd_ywwwdd_fuwuguwen"
-                        style="@style/myeditinfovaluestyle" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout26"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle"
-                    android:layout_marginLeft="@dimen/qb_px_10">
-
-                    <TextView
-                        android:id="@+id/textView22"
-                        style="@style/myeditinfonamestyle"
-                        android:text="电话:" />
-
-                    <TextView
-                        android:id="@+id/bsd_ywwwdd_dianhua"
-                        style="@style/myeditinfovaluestyle" />
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bsd_wxywdd_top_line3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/qb_px_4">
-
-                <LinearLayout
-                    android:id="@+id/relativeLayout25"
-                    android:layout_weight="2"
-                    android:layout_height="@dimen/qb_px_32"
-                    style="@style/myeditlinearlayoutstyle">
-
-                    <TextView
-                        android:id="@+id/textView21"
-                        style="@style/myeditinfonamestyle"
-                        android:text="登记时间:" />
-
-                    <com.example.administrator.boshide2.Modular.View.MarqueeView
-                        android:id="@+id/bsd_ywwwdd_dengjishijian"
-                        style="@style/myeditinfomarqeestyle" />
-                </LinearLayout>
-
+                android:id="@+id/relativeLayout8"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
-                    android:id="@+id/bsd_wxywdd_clxx"
-                    android:layout_weight="0.8"
-                    style="@style/myeditnormalbtnstyle"
-                    android:text="车辆信息"/>
+                    android:id="@+id/textView77"
+                    style="@style/myeditinfonamestyle"
+                    android:text="车牌:" />
 
-                <TextView
-                    android:id="@+id/bsd_wxywdd_lswx"
-                    android:layout_weight="0.8"
-                    style="@style/myeditnormalbtnstyle"
-                    android:text="历史维修"/>
-
-
-                <TextView
-                    android:id="@+id/bsd_wxywdd_lswxjy"
-                    android:layout_weight="1"
-                    style="@style/myeditnormalbtnstyle"
-                    android:text="历史维修建议"/>
-
-                <TextView
-                    android:id="@+id/tv_stopwx"
-                    android:layout_weight="0.8"
-                    style="@style/myeditnormalbtnstyle"
-                    android:text="终止维修"/>
-
-                <TextView
-                    android:id="@+id/bsd_zadd_wg"
-                    android:layout_weight="0.8"
-                    style="@style/myeditnormalbtnstyle"
-                    android:text="完工"/>
-
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/bsd_ywwwdd_cp"
+                    style="@style/myeditinfomarqeestyle" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/relativeLayout13"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_10">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    style="@style/myeditinfonamestyle"
+                    android:text="品牌:" />
+
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/bsd_ywwwdd_pinpai"
+                    style="@style/myeditinfomarqeestyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/relativeLayout14"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_weight="1.5">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    style="@style/myeditinfonamestyle"
+                    android:text="车系:" />
+
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/bsdywwwdd_chexi"
+                    style="@style/myeditinfomarqeestyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/relativeLayout15"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_weight="1.5">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    style="@style/myeditinfonamestyle"
+                    android:text="车组:" />
+
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/bsd_ywwwdd_chezu"
+                    style="@style/myeditinfomarqeestyle" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/bsd_wxywdd_top_line2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_4"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/relativeLayout21"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_weight="1.5">
+
+                <TextView
+                    android:id="@+id/textView17"
+                    style="@style/myeditinfonamestyle"
+                    android:text="车型:" />
+
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/bsd_ywwwdd_chexing"
+                    style="@style/myeditinfomarqeestyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/relativeLayout22"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_weight="1.5">
+
+                <TextView
+                    android:id="@+id/textView18"
+                    style="@style/myeditinfonamestyle"
+                    android:text="VIN:" />
+
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/bsd_ywwwdd_vin"
+                    style="@style/myeditinfomarqeestyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/relativeLayout23"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView19"
+                    style="@style/myeditinfonamestyle"
+                    android:text="客户:" />
+
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/bsd_ywwwdd_user"
+                    style="@style/myeditinfomarqeestyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/relativeLayout24"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_10">
+
+                <TextView
+                    android:id="@+id/textView20"
+                    style="@style/myeditinfonamestyle"
+                    android:text="服务顾问:" />
+
+                <TextView
+                    android:id="@+id/bsd_ywwwdd_fuwuguwen"
+                    style="@style/myeditinfovaluestyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/relativeLayout26"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_marginLeft="@dimen/qb_px_10">
+
+                <TextView
+                    android:id="@+id/textView22"
+                    style="@style/myeditinfonamestyle"
+                    android:text="电话:" />
+
+                <TextView
+                    android:id="@+id/bsd_ywwwdd_dianhua"
+                    style="@style/myeditinfovaluestyle" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bsd_wxywdd_top_line3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_4"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/relativeLayout25"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_weight="2">
+
+                <TextView
+                    android:id="@+id/textView21"
+                    style="@style/myeditinfonamestyle"
+                    android:text="登记时间:" />
+
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/bsd_ywwwdd_dengjishijian"
+                    style="@style/myeditinfomarqeestyle" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/bsd_wxywdd_clxx"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="0.8"
+                android:text="车辆信息" />
+
+            <TextView
+                android:id="@+id/bsd_wxywdd_lswx"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="0.8"
+                android:text="历史维修" />
+
+
+            <TextView
+                android:id="@+id/bsd_wxywdd_lswxjy"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="1"
+                android:text="历史维修建议" />
+
+            <TextView
+                android:id="@+id/tv_stopwx"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="0.8"
+                android:text="终止维修" />
+
+            <TextView
+                android:id="@+id/bsd_zadd_wg"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="0.8"
+                android:text="完工" />
+
+        </LinearLayout>
 
         <View
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_1"
-            android:background="#F7714C"
-            android:layout_marginTop="@dimen/qb_px_4"/>
+            android:layout_marginTop="@dimen/qb_px_4"
+            android:background="#F7714C" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/qb_px_1">
+            android:layout_marginTop="@dimen/qb_px_2"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -282,13 +282,39 @@
                     android:layout_height="@dimen/qb_px_34"
                     android:background="@drawable/bsd_chepaiyuan">
 
-                    <TextView
-                        android:id="@+id/tv_wxxm_add"
+                    <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="维修项目" />
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tv_wxxm_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="维修项目" />
+
+                        <ImageView
+                            android:id="@+id/iv_wxxm_add"
+                            android:layout_width="@dimen/qb_px_34"
+                            android:layout_height="@dimen/qb_px_34"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/qb_px_4"
+                            android:padding="@dimen/qb_px_6"
+                            android:src="@drawable/ic_add" />
+
+                        <TextView
+                            android:id="@+id/tv_paigong_all"
+                            style="@style/myeditnormalbtnstyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/qb_px_4"
+                            android:paddingLeft="@dimen/qb_px_4"
+                            android:paddingRight="@dimen/qb_px_4"
+                            android:text="整体派工" />
+                    </RelativeLayout>
 
                     <View
                         android:layout_width="@dimen/qb_px_1"
@@ -297,13 +323,29 @@
                         android:layout_marginTop="@dimen/qb_px_2"
                         android:background="#B4B3B3" />
 
-                    <TextView
-                        android:id="@+id/tv_wxll_add"
+                    <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="维修用料" />
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tv_wxll_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="维修用料" />
+
+                        <ImageView
+                            android:id="@+id/iv_wxll_add"
+                            android:layout_width="@dimen/qb_px_34"
+                            android:layout_height="@dimen/qb_px_34"
+                            android:padding="@dimen/qb_px_6"
+                            android:src="@drawable/ic_add"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/qb_px_4"/>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <FrameLayout
@@ -317,8 +359,8 @@
             <View
                 android:layout_width="@dimen/qb_px_1"
                 android:layout_height="match_parent"
-                android:background="#F7714C"
-                android:layout_marginLeft="@dimen/qb_px_2"/>
+                android:layout_marginLeft="@dimen/qb_px_2"
+                android:background="#F7714C" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -333,43 +375,43 @@
                     android:layout_height="@dimen/qb_px_34"
                     android:background="@drawable/biankuang_title_bg">
 
-                        <TextView
-                            android:id="@+id/bsd_xsbj_name"
-                            android:gravity="center"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:text="员工" />
+                    <TextView
+                        android:id="@+id/bsd_xsbj_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="员工" />
 
-                        <TextView
-                            android:id="@+id/bsd_xsbj_gongshi"
-                            android:gravity="center"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:text="工时" />
+                    <TextView
+                        android:id="@+id/bsd_xsbj_gongshi"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="工时" />
 
-                        <TextView
-                            android:id="@+id/bsd_xsbj_jiner"
-                            android:gravity="center"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:text="金额" />
+                    <TextView
+                        android:id="@+id/bsd_xsbj_jiner"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="金额" />
 
-                        <TextView
-                            android:id="@+id/bsd_xsbj_caozuo"
-                            android:gravity="center"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:text="操作" />
+                    <TextView
+                        android:id="@+id/bsd_xsbj_caozuo"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="操作" />
                 </LinearLayout>
 
                 <ListView
                     android:id="@+id/bsd_wxywdd_you_lv"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

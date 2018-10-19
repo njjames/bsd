@@ -79,7 +79,6 @@ public class BSD_WXJD_CL_xiangqing_adp extends BaseAdapter {
     class Holder {
         TextView bsd_xzcl_name, bsd_xzcl_shuliang, bsd_xzcl_danjia, bsd_xzcl_tuhao, bsd_xzcl_pinpai;
         ImageView bsd_xzcl_caozuo;
-        ImageView bsd_scl_iv_jian, bsd_scl_iv_jia;
     }
 
     @Override
@@ -94,8 +93,6 @@ public class BSD_WXJD_CL_xiangqing_adp extends BaseAdapter {
             holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
             holder.bsd_xzcl_pinpai = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
             holder.bsd_xzcl_caozuo = (ImageView) contetview.findViewById(R.id.bsd_xzcl_caozuo);
-            holder.bsd_scl_iv_jia = (ImageView) contetview.findViewById(R.id.bsd_scl_iv_jia);
-            holder.bsd_scl_iv_jian = (ImageView) contetview.findViewById(R.id.bsd_scl_iv_jian);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();

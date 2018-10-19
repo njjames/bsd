@@ -1,12 +1,8 @@
 package com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt;
 
 import android.app.Dialog;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -45,6 +41,7 @@ import java.util.List;
 public class BSD_wxywdd_wxxm extends BaseFragment {
 
     Delet delet;
+    private OnRefreashPaiGongListener onRefreashPaiGongListener;
 
     public Delet getDelet() {
         return delet;
@@ -65,7 +62,6 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
     BSD_ZCDUXQ_XM_POP bsd_zcduxq_xm_pop;
     BSD_WeiXiuYeWuDiaoDuDian_delg delg;
     ChaKanPaiGongREN chaKanPaiGongREN;
-    RelativeLayout bsd_wxxm;
     URLS url;
     private Dialog mWeiboDialog;
     RelativeLayout oldView;
@@ -167,50 +163,48 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
             }
 
         });
-        bsd_wxxm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+//        bsd_wxxm.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+////                bsd_wxxm.setEnabled(false);
+//                bsd_zcduxq_xm_pop.showPopupWindow(beijing, 0);
+//                bsd_zcduxq_xm_pop.getDetialsInfo();
+//                bsd_zcduxq_xm_pop.gb(new BSD_ZCDUXQ_XM_POP.Guanbi() {
+//                    @Override
+//                    public void guanbi() {
+//                        bsd_wxxm.setEnabled(true);
+//                    }
+//
+//                    @Override
+//                    public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList) {
+//
+//                    }
+//                });
+//            }
+//        });
 
-//                bsd_wxxm.setEnabled(false);
-                bsd_zcduxq_xm_pop.showPopupWindow(beijing, 0);
-                bsd_zcduxq_xm_pop.getDetialsInfo();
-                bsd_zcduxq_xm_pop.gb(new BSD_ZCDUXQ_XM_POP.Guanbi() {
-                    @Override
-                    public void guanbi() {
-                        bsd_wxxm.setEnabled(true);
-                    }
-
-                    @Override
-                    public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList) {
-
-                    }
-                });
-
-
-            }
-        });
-
-        bsd_zcdd_rl_ztpg = (RelativeLayout) view.findViewById(R.id.bsd_zcdd_rl_ztpg);
-        bsd_zcdd_rl_ztpg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //整体派工
-                if (list_XM.size() > 0) {
-                    wxxm_nos = "[";
-                    for (int i = 0; i < list_XM.size() - 1; i++) {
-                        wxxm_nos = wxxm_nos + list_XM.get(i).getWxxm_no() + ",";
-                    }
-                    wxxm_nos = wxxm_nos + list_XM.get(list_XM.size() - 1).getWxxm_no() + "]";
-                    Conts.zhengti_or_danxiang = 0;
-                    delg = new BSD_WeiXiuYeWuDiaoDuDian_delg(getActivity(), wxxm_nos);
-                    delg.show();
-
-                } else {
-                    Show.showTime(getActivity(), "没有维修项目");
-                }
-
-            }
-        });
+//        bsd_zcdd_rl_ztpg = (RelativeLayout) view.findViewById(R.id.bsd_zcdd_rl_ztpg);
+////        bsd_zcdd_rl_ztpg.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                //整体派工
+////                if (list_XM.size() > 0) {
+////                    wxxm_nos = "[";
+////                    for (int i = 0; i < list_XM.size() - 1; i++) {
+////                        wxxm_nos = wxxm_nos + list_XM.get(i).getWxxm_no() + ",";
+////                    }
+////                    wxxm_nos = wxxm_nos + list_XM.get(list_XM.size() - 1).getWxxm_no() + "]";
+////                    Conts.zhengti_or_danxiang = 0;
+////                    delg = new BSD_WeiXiuYeWuDiaoDuDian_delg(getActivity(), wxxm_nos);
+////                    delg.show();
+////
+////                } else {
+////                    Show.showTime(getActivity(), "没有维修项目");
+////                }
+////
+////            }
+////        });
 
 
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
@@ -564,5 +558,20 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
 
     public interface Delet {
         public void onYesClick(int i, String work_no);
+    }
+
+    public void refreashData() {
+        adapter.notifyDataSetChanged();
+//        wxxmPrice();
+    }
+
+    public interface OnRefreashPaiGongListener {
+        void onRefreash(String workNo, String wxxmNo);
+
+        void onWxxmRequestSuccess(String workNo, String wxxmNo);
+    }
+
+    public void setOnRefreashPaiGongListener(OnRefreashPaiGongListener onRefreashPaiGongListener) {
+        this.onRefreashPaiGongListener = onRefreashPaiGongListener;
     }
 }

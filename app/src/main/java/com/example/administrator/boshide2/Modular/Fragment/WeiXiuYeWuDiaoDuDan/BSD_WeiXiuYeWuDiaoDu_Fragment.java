@@ -4,13 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
+import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.BSD_mrkx_wxxm;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
@@ -33,7 +33,6 @@ import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.R;
-import com.example.administrator.boshide2.Tools.DownJianPan;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
 
@@ -53,7 +52,8 @@ import java.util.Map;
 public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.OnClickListener {
     private static final String PARAM_KEY = "param_key";
     LinearLayout bsd_lsbj_fanhui;
-    TextView bsd_clxq_tv_cltp, bsd_clxq_tv_lswx;
+    private TextView tv_wxxmAdd;
+    private TextView tv_wxllAdd;
     private Fragment[] fragments;
     private TextView[] arr_tv;// 图标的数组
     private int[] arr_id_box = {R.id.tv_wxxm_add, R.id.tv_wxll_add};
@@ -74,7 +74,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     TextView bsd_ywwwdd_dianhua;
     private List<BSD_WeiXiuJieDan_Entity> list = new ArrayList<BSD_WeiXiuJieDan_Entity>();
     private Dialog mWeiboDialog;
-    BSD_wxywdd_wxxm BSD_wxxm;
+    private BSD_wxywdd_wxxm BSD_wxxm;
     Queding_Quxiao queding_quxiao;
     //修改工时弹框
     BSD_XiuGaiGongShi bsd_xiuGaiGongShi;
@@ -93,6 +93,10 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private TextView footerText;
     private String param;
     private BSD_WeiXiuJieDan_Entity billEntiy;
+    private TextView tv_paigongAll;
+    private int currentType = 0;
+    private ImageView iv_wxllAdd;
+    private ImageView iv_wxxmAdd;
 
     public void setTiaoZhuan(TiaoZhuan tiaoZhuan) {
         this.tiaoZhuan = tiaoZhuan;
@@ -327,15 +331,38 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         });
         bsd_wxywdd_you_lv.setAdapter(adapter);
 
-        bsd_clxq_tv_cltp = (TextView) view.findViewById(R.id.tv_wxxm_add);
-        bsd_clxq_tv_lswx = (TextView) view.findViewById(R.id.tv_wxll_add);
+        tv_wxxmAdd = (TextView) view.findViewById(R.id.tv_wxxm_add);
+        tv_wxllAdd = (TextView) view.findViewById(R.id.tv_wxll_add);
+        iv_wxxmAdd = (ImageView) view.findViewById(R.id.iv_wxxm_add);
+        iv_wxllAdd = (ImageView) view.findViewById(R.id.iv_wxll_add);
         arr_tv = new TextView[2];
-        arr_tv[0] = bsd_clxq_tv_cltp;
-        arr_tv[1] = bsd_clxq_tv_lswx;
-        bsd_clxq_tv_cltp.setOnClickListener(this);
-        bsd_clxq_tv_lswx.setOnClickListener(this);
+        arr_tv[0] = tv_wxxmAdd;
+        arr_tv[1] = tv_wxllAdd;
+        tv_wxxmAdd.setOnClickListener(this);
+        tv_wxllAdd.setOnClickListener(this);
         title = (TextView) view.findViewById(R.id.tv_title);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
+        tv_paigongAll = (TextView) view.findViewById(R.id.tv_paigong_all);
+        tv_paigongAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                list_XM = BSD_wxxm.getList_XM();
+//                if (list_XM.size() > 0) {
+//                    PaiGongDialog paiGongDialog = new PaiGongDialog(getActivity(), PaiGongDialog.PAIGONG_ALL);
+//                    paiGongDialog.setWorkNo(billEntiy.getWork_no());
+//                    paiGongDialog.setOnPaiGongListener(new PaiGongDialog.OnPaiGongListener() {
+//                        @Override
+//                        public void onSuccess() {
+//                            int currentPosition = BSD_wxxm.getCurrentPosition();
+//                            getPaiGongInfo(billEntiy.getWork_no(), list_XM.get(currentPosition).getWxxm_no());
+//                        }
+//                    });
+//                    paiGongDialog.show();
+//                } else {
+//                    Show.showTime(getActivity(), "没有维修项目，无法进行派工");
+//                }
+            }
+        });
     }
 
     @Override
@@ -345,16 +372,16 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         getBillInfo();
-        tiaoZhuan.onYesClick();
-        if (Conts.wxjdtiaozhuan == 1) {
-            Log.i("cjn", "aaaaa");
-            tiaozhuanjiedan();
-            Conts.wxjdtiaozhuan = 0;
-        } else {
-            getBillInfo();
-            Log.i("cjn", "bbbbb");
-            Conts.wxjdtiaozhuan = 0;
-        }
+//        tiaoZhuan.onYesClick();
+//        if (Conts.wxjdtiaozhuan == 1) {
+//            Log.i("cjn", "aaaaa");
+//            tiaozhuanjiedan();
+//            Conts.wxjdtiaozhuan = 0;
+//        } else {
+//            getBillInfo();
+//            Log.i("cjn", "bbbbb");
+//            Conts.wxjdtiaozhuan = 0;
+//        }
         initFragment();
         checkHighLight(0);
     }
@@ -691,16 +718,73 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
      */
     @Override
     public void onClick(View view) {
-        for (int i = 0; i < arr_id_box.length; i++) {
-            if (view.getId() == arr_id_box[i]) {
-
-                listPGrenyuan.clear();
-                adapter.notifyDataSetChanged();
-                DownJianPan.DJP(getActivity());
-                change(fragments[i]);
-                checkHighLight(i);
-            }
+        switch (view.getId()) {
+            case R.id.tv_wxxm_add:   //维修项目
+                if (currentType == 1) {
+                    change_XM();
+                    currentType = 0;
+                }
+                break;
+            case R.id.tv_wxll_add:    //维修材料
+                if (currentType == 0) {
+//                    change_CL();
+                    currentType = 1;
+                }
+                break;
+            case R.id.iv_wxxm_add: // 添加维修项目
+//                showWxxm();
+                break;
+            case R.id.iv_wxll_add: // 添加维修用料
+//                showWxll();
+                break;
         }
+
+    }
+
+    private void change_XM() {
+        tv_wxxmAdd.setTextColor(getResources().getColor(R.color.bsd_xz_yes));
+        tv_wxllAdd.setTextColor(getResources().getColor(R.color.transparent_background));
+        iv_wxxmAdd.setVisibility(View.VISIBLE);
+        iv_wxllAdd.setVisibility(View.INVISIBLE);
+        tv_paigongAll.setVisibility(View.VISIBLE);
+        FragmentTransaction transaction = getActivity().
+                getSupportFragmentManager().
+                beginTransaction();
+        if (BSD_wxxm == null) {
+            BSD_wxxm = new BSD_wxywdd_wxxm();
+            BSD_wxxm.setOnRefreashPaiGongListener(new BSD_wxywdd_wxxm.OnRefreashPaiGongListener() {
+                @Override
+                public void onRefreash(String workNo, String wxxmNo) {
+                    getPaiGongInfo(workNo, wxxmNo);
+                }
+
+                @Override
+                public void onWxxmRequestSuccess(String workNo, String wxxmNo) {
+                    getPaiGongInfo(workNo, wxxmNo);
+                }
+
+            });
+            BSD_wxxm.setChaKanPaiGongREN(new BSD_wxywdd_wxxm.ChaKanPaiGongREN() {
+                @Override
+                public void onYesClick(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je) {
+                    PGRenYuan(work_no, wxxm_no, wxxm_gs, wxxm_je);
+                    Log.i("cjn", "点击事件更近数据");
+                }
+            });
+
+            transaction.add(R.id.bsd_clxq_lswx, BSD_wxxm);
+            transaction.show(BSD_wxxm);
+            transaction.commit();
+        } else {
+            if (BSD_wxcl != null) {
+                transaction.hide(BSD_wxcl);
+            }
+            transaction.show(BSD_wxxm);
+            transaction.commit();
+        }
+    }
+
+    private void getPaiGongInfo(String workNo, String wxxmNo) {
 
     }
 
@@ -715,10 +799,11 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_zcdu_listinfo, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("total").toString().equals("1")) {
-                        if (jsonObject.get("status").toString().equals(1)) {
+                        if (jsonObject.get("status").toString().equals("1")) {
                             JSONObject json = jsonObject.getJSONObject("data");
                             billEntiy = new BSD_WeiXiuJieDan_Entity();
                             billEntiy.setWork_no(json.getString("work_no"));
@@ -747,10 +832,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                     } else {
                         Show.showTime(getActivity(), "此维修单已不存在");
                     }
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
                     change(BSD_wxxm);
-                    Conts.work_no = list.get(0).getWork_no();
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

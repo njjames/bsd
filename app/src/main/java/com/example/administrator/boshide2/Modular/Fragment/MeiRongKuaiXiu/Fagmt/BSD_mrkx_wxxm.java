@@ -550,9 +550,9 @@ public class BSD_mrkx_wxxm extends Fragment {
     }
 
     public interface OnRefreashPaiGongListener {
-        public void onRefreash(String workNo, String wxxmNo);
+        void onRefreash(String workNo, String wxxmNo);
 
-        public void onWxxmRequestSuccess(String workNo, String wxxmNo);
+        void onWxxmRequestSuccess(String workNo, String wxxmNo);
     }
 
     public void setOnRefreashPaiGongListener(OnRefreashPaiGongListener onRefreashPaiGongListener) {

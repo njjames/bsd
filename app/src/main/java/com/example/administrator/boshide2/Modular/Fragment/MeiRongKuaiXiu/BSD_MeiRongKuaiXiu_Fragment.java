@@ -2644,8 +2644,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 showWxll();
                 break;
         }
-
-
     }
 
     /**

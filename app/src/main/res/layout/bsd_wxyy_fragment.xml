@@ -308,6 +308,18 @@
                 android:visibility="gone"/>
 
             <TextView
+                android:id="@+id/tv_add_wxxm"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="1"
+                android:text="添加维修项目" />
+
+            <TextView
+                android:id="@+id/tv_add_wxcl"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="1"
+                android:text="添加维修用料" />
+
+            <TextView
                 android:id="@+id/bsd_ksbj_jc"
                 style="@style/myeditnormalbtnstyle"
                 android:layout_weight="0.5"

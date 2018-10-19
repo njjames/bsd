@@ -98,7 +98,6 @@ public class BSD_WXYY_CL_xiangqing_adp extends BaseAdapter {
     class Holder {
         TextView bsd_xzcl_name, bsd_xzcl_shuliang, bsd_xzcl_danjia, bsd_xzcl_tuhao, bsd_xzcl_pinpai, bsd_xzcl_caozuo;
         RelativeLayout bsd_wxyy_cl_delet;
-        ImageView bsd_scl_iv_jian, bsd_scl_iv_jia;
     }
 
     @Override
@@ -113,22 +112,12 @@ public class BSD_WXYY_CL_xiangqing_adp extends BaseAdapter {
             holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
             holder.bsd_xzcl_pinpai = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
             holder.bsd_wxyy_cl_delet = (RelativeLayout) contetview.findViewById(R.id.bsd_wxyy_cl_delet);
-            holder.bsd_scl_iv_jia = (ImageView) contetview.findViewById(R.id.bsd_scl_iv_jia);
-            holder.bsd_scl_iv_jian = (ImageView) contetview.findViewById(R.id.bsd_scl_iv_jian);
-
-// holder.bsd_xzcl_caozuo = (TextView) contetview.findViewById(R.id.bsd_xzcl_caozuo);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
-
-
         holder.bsd_xzcl_name.setText(list.get(i).getPeij_mc());
-
-
         holder.bsd_xzcl_shuliang.setText("" + (int) list.get(i).getPeij_sl());
-
-
 //        final Holder finalHolder = holder;
 //        holder.bsd_scl_iv_jia.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -148,14 +137,8 @@ public class BSD_WXYY_CL_xiangqing_adp extends BaseAdapter {
 //            }
 //        });
 
-
-
         holder.bsd_xzcl_danjia.setText("" + list.get(i).getPeij_dj());
-
-
-
         holder.bsd_xzcl_tuhao.setText(list.get(i).getPeij_dw());
-
         zongjia = shuliangs[i] * list.get(i).getPeij_dj();
         holder.bsd_xzcl_pinpai.setText("" + "" +list.get(i).getPeij_sl()*list.get(i).getPeij_dj());
 //        holder.bsd_xzcl_caozuo.setText(list.get(i).get("caozuo"));

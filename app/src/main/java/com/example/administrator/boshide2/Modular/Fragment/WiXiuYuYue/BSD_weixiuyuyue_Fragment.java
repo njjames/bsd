@@ -77,7 +77,8 @@ public class BSD_weixiuyuyue_Fragment extends Fragment implements View.OnClickLi
     RelativeLayout beijing;
 
     //弹出popwin
-    LinearLayout bsd_wxxm, bsd_wxxm1;
+    TextView tv_add_wxcl;
+    TextView tv_add_wxxm;
 
     //维修项目
     BSD_WeiXiyYueYue_XM_entity_Dao XM_Dao;
@@ -1561,8 +1562,8 @@ public class BSD_weixiuyuyue_Fragment extends Fragment implements View.OnClickLi
         });
 
         //弹出框布局
-        bsd_wxxm1 = (LinearLayout) view.findViewById(R.id.bsd_wxxm1);
-        bsd_wxxm = (LinearLayout) view.findViewById(R.id.bsd_wxyy_rl_wxxm);
+        tv_add_wxxm = (TextView) view.findViewById(R.id.tv_add_wxxm);
+        tv_add_wxcl = (TextView) view.findViewById(R.id.tv_add_wxcl);
         //数据atap
         beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
         //维修项目
@@ -1710,7 +1711,7 @@ public class BSD_weixiuyuyue_Fragment extends Fragment implements View.OnClickLi
 
     public void popup() {
         //维修项目
-        bsd_wxxm.setOnClickListener(new View.OnClickListener() {
+        tv_add_wxxm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pinpai = bsd_wxyy_top_pinpai.getText().toString();
@@ -1719,13 +1720,11 @@ public class BSD_weixiuyuyue_Fragment extends Fragment implements View.OnClickLi
                 chexing = bsd_wxyy_top_chexing.getText().toString();
                 che_cx = pinpai + "|" + chexi + "|" + chezu + "|" + chexing;
                 Conts.chexing = che_cx;
-                //                bsd_wxxm.setEnabled(false);
                 bsd_wxyy_xm_pop.showPopupWindow(beijing, 0);
                 bsd_wxyy_xm_pop.reightdata();
                 bsd_wxyy_xm_pop.gb(new BSD_WXYY_XM_POP.Guanbi() {
                     @Override
                     public void guanbi() {
-                        bsd_wxxm.setEnabled(true);
                     }
                 });
 
@@ -1733,16 +1732,13 @@ public class BSD_weixiuyuyue_Fragment extends Fragment implements View.OnClickLi
         });
 
         //选择材料
-        bsd_wxxm1.setOnClickListener(new View.OnClickListener() {
+        tv_add_wxcl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //                bsd_wxxm1.setEnabled(false);
                 bsd_wxyy_cl_pop.showPopupWindow(beijing, 0);
                 bsd_wxyy_cl_pop.gb(new BSD_KSBJ_CL_POP.Guanbi() {
                     @Override
                     public void guanbi() {
-                        bsd_wxxm1.setEnabled(true);
                     }
                 });
             }
