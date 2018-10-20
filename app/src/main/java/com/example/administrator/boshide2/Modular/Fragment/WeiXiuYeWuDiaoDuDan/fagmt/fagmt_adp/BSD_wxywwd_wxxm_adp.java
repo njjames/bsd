@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,10 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
     UPdj uPdj;
     UPmc  uPmc;
 
+    private List<BSD_WeiXiuJieDan_XM_Entity> list;
+    private int currentPosition = 0;
+    private OnOperateItemListener onOperateItemListener;
+
     public void setuPgs(UPgs uPgs) {
         this.uPgs = uPgs;
     }
@@ -42,8 +47,8 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
     public  void  setuPmc(UPmc uPmc){
         this.uPmc=uPmc;
     }
-
     TooPromptdiaog promptdiaog;
+
     public void setDelite(Delite delite) {
         this.delite = delite;
     }
@@ -60,11 +65,10 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
         this.list = list;
     }
 
-    List<BSD_WeiXiuJieDan_XM_Entity> list;
-
-    public BSD_wxywwd_wxxm_adp(Context context) {
+    public BSD_wxywwd_wxxm_adp(Context context, List<BSD_WeiXiuJieDan_XM_Entity> list) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     @Override
@@ -83,7 +87,10 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
     }
 
     class Holder {
-        TextView bsd_shanchuxiangmu, bsd_xsbj_name, bsd_kxbj_bzsj, bsd_kxbj_gsdj, bsd_kxbj_je, bsd_kxbj_qian, bsd_kxbj_cz;
+        TextView bsd_xsbj_name, bsd_kxbj_bzsj, bsd_kxbj_gsdj, bsd_kxbj_je;
+        ImageView iv_delete;
+        ImageView bsd_kxbj_pg;
+        ImageView iv_selected;
     }
 
     @Override
@@ -93,15 +100,13 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
             textView = new RelativeLayout(context);
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_wxywdd_wxxm_item, null);
-
             holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj = (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj = (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
             holder.bsd_kxbj_je = (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_kxbj_cz = (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_shanchuxiangmu= (TextView) contetview.findViewById(R.id.bsd_kxbj_cz1);
-//    holder.bsd_kxbj_qian= (TextView) contetview.findViewById(R.id.bsd_kxbj_qian);
-//                holder.bsd_kxbj_qian1= (TextView) contetview.findViewById(R.id.bsd_kxbj_qian1);
+            holder.iv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
+            holder.bsd_kxbj_pg = (ImageView) contetview.findViewById(R.id.bsd_kxbj_pg);
+            holder.iv_selected =(ImageView) contetview.findViewById(R.id.iv_selected);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
@@ -110,10 +115,11 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
         holder.bsd_xsbj_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uPmc.onYesClick(list.get(i).getReco_no(),list.get(i).getWxxm_gs(),list.get(i).getWxxm_je(),list.get(i).getWxxm_mc());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateWxxmMc(list.get(i).getWxxm_no(), list.get(i).getWxxm_mc(), i);
+                }
             }
         });
-
 
         holder.bsd_kxbj_bzsj.setText("" + list.get(i).getWxxm_gs());
         holder.bsd_kxbj_bzsj.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +142,7 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
             list.get(i).setWxxm_gs(1.0);
         }
         DecimalFormat  df=new DecimalFormat("#.##");
-        String    gs=df.format(list.get(i).getWxxm_je() / list.get(i).getWxxm_gs());
+        String gs=df.format(list.get(i).getWxxm_je() / list.get(i).getWxxm_gs());
         holder.bsd_kxbj_gsdj.setText(gs);
 
 //        holder.bsd_kxbj_gsdj.setText(list.get(i).getWxxm_dj()+"");
@@ -145,23 +151,26 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
         holder.bsd_kxbj_je.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uPdj.onYesClick(list.get(i).getReco_no(),list.get(i).getWxxm_gs(),list.get(i).getWxxm_je(),list.get(i).getWxxm_mc());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateYgsf(list.get(i).getWxxm_no(), list.get(i).getWxxm_gs(), list.get(i).getWxxm_yje(),list.get(i).getWxxm_mc(), i);
+                }
             }
         });
 
-        holder.bsd_kxbj_cz.setText("单项派工");
-        holder.bsd_kxbj_cz.setOnClickListener(new View.OnClickListener() {
+        holder.bsd_kxbj_pg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                danXiangPaiGong.onYesClick(i);
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onPaiGong(list.get(i).getWxxm_no());
+                }
             }
         });
-        holder.bsd_shanchuxiangmu.setOnClickListener(new View.OnClickListener() {
+        holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                delite.onYesClick(list.get(i).getReco_no(),list.get(i).getWork_no());
-
-                notifyDataSetChanged();
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onDelete(list.get(i).getWxxm_no(), i);
+                }
             }
         });
 //        holder.bsd_kxbj_qian.setText(list.get(i).get("qian"));
@@ -173,6 +182,11 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
 //            // textView.setBackgroundColor(Color.WHITE);
 //            textView.setBackgroundResource(R.drawable.article_listview_item_bg);
 //        }
+        if (currentPosition == i) {
+            holder.iv_selected.setVisibility(View.VISIBLE);
+        } else {
+            holder.iv_selected.setVisibility(View.INVISIBLE);
+        }
         return contetview;
     }
 
@@ -191,6 +205,29 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
 
     public  interface  UPmc{
         public  void  onYesClick(int i,double gs,double dj,String  xmmc);
+    }
+
+    public interface OnOperateItemListener {
+        void onPaiGong(String wxxmNo);
+
+        /**
+         * 删除维修项目
+         * @param wxxmNo  维修项目编码
+         * @param position  这个维修项目在集合中的位置
+         */
+        void onDelete(String wxxmNo, int position);
+
+        void onUpdateYgsf(String wxxmNo, double wxxmGs, double wxxmYje, String wxxmMc, int position);
+
+        void onUpdateWxxmMc(String wxxmNo, String wxxmMc, int position);
+    }
+
+    public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {
+        this.onOperateItemListener = onOperateItemListener;
+    }
+
+    public void setCurrentPosition(int position) {
+        this.currentPosition = position;
     }
 
 }

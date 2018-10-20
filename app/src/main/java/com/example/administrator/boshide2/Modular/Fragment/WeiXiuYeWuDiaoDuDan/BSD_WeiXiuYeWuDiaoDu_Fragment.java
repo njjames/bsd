@@ -382,8 +382,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
 //            Log.i("cjn", "bbbbb");
 //            Conts.wxjdtiaozhuan = 0;
 //        }
-        initFragment();
-        checkHighLight(0);
+
     }
 
     private void updateBillInfoUI() {
@@ -751,19 +750,19 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 getSupportFragmentManager().
                 beginTransaction();
         if (BSD_wxxm == null) {
-            BSD_wxxm = new BSD_wxywdd_wxxm();
-            BSD_wxxm.setOnRefreashPaiGongListener(new BSD_wxywdd_wxxm.OnRefreashPaiGongListener() {
-                @Override
-                public void onRefreash(String workNo, String wxxmNo) {
-                    getPaiGongInfo(workNo, wxxmNo);
-                }
-
-                @Override
-                public void onWxxmRequestSuccess(String workNo, String wxxmNo) {
-                    getPaiGongInfo(workNo, wxxmNo);
-                }
-
-            });
+            BSD_wxxm = BSD_wxywdd_wxxm.newInstance(billEntiy.getWork_no());
+//            BSD_wxxm.setOnRefreashPaiGongListener(new BSD_wxywdd_wxxm.OnRefreashPaiGongListener() {
+//                @Override
+//                public void onRefreash(String workNo, String wxxmNo) {
+//                    getPaiGongInfo(workNo, wxxmNo);
+//                }
+//
+//                @Override
+//                public void onWxxmRequestSuccess(String workNo, String wxxmNo) {
+//                    getPaiGongInfo(workNo, wxxmNo);
+//                }
+//
+//            });
             BSD_wxxm.setChaKanPaiGongREN(new BSD_wxywdd_wxxm.ChaKanPaiGongREN() {
                 @Override
                 public void onYesClick(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je) {
@@ -821,6 +820,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                             billEntiy.setXche_yjwgrq(json.getString("xche_yjwgrq"));
                             billEntiy.setXche_ywlx(json.getString("substate"));
                             updateBillInfoUI();
+                            change_XM();
                         } else {
                             String mainstate = jsonObject.getString("data");
                             if (mainstate.equals("-1")) {

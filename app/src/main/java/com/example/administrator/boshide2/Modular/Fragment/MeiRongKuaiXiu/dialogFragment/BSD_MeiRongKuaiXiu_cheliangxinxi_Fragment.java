@@ -173,7 +173,7 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                 getDialog().getWindow().getAttributes();
         params.width = (int) getActivity().getResources().getDimension(R.dimen.qb_px_600);
 //        params.height = (int) getActivity().getResources().getDimension(R.dimen.qb_px_474);
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
         getDialog().getWindow().setAttributes(params);
     }
 

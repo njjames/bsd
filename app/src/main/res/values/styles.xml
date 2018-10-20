@@ -217,6 +217,7 @@
         <item name="android:textColorHint">#B1B0B0</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
     </style>
 
     <style name="myeditreadbtnstyle">

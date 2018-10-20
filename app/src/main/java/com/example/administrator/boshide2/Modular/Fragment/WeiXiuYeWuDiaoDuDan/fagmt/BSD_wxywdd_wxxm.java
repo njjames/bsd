@@ -1,11 +1,14 @@
 package com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
@@ -15,11 +18,14 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
+import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.BSD_MeiRongKuaiXiu_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.deleg.BSD_WeiXiuYeWuDiaoDuDian_delg;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.dialog.PaiGongDialog;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.fagmt_adp.BSD_wxywwd_wxxm_adp;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_xm_pop_entiy;
+import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
@@ -40,8 +46,13 @@ import java.util.List;
 
 public class BSD_wxywdd_wxxm extends BaseFragment {
 
+    private static final String PARAM_KEY = "param_key";
     Delet delet;
     private OnRefreashPaiGongListener onRefreashPaiGongListener;
+    private String param;
+    private TextView tv_wxxm_money;
+    private TextView tv_record_num;
+    private UpdateItemInfoDialog updateItemInfoDialog;
 
     public Delet getDelet() {
         return delet;
@@ -78,6 +89,20 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
         this.clearPaiGongRenYuan=clearPaiGongRenYuan;
     }
 
+    public static BSD_wxywdd_wxxm newInstance(String params) {
+        BSD_wxywdd_wxxm fragment = new BSD_wxywdd_wxxm();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY, params);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        param = getArguments().getString(PARAM_KEY);
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.bsd_wxywdd_wxxm;
@@ -111,12 +136,6 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
                         item.setWxxm_mc(entity.getWxxm_mc());
                         item.setWxxm_gs(entity.getWxxm_gs());
                         item.setWxxm_je(wxxmdj);
-//                        String a = String.valueOf(wxxmdj / entity.getWxxm_gs());
-//                        if (a.equals("NaN")){
-//                            item.setWxxm_dj(wxxmdj);
-//                        }else {
-//                            item.setWxxm_dj(wxxmdj / entity.getWxxm_gs());
-//                        }
 
                         if(entity.getWxxm_gs()==0){
                             Log.i("gsdj", "是0 ");
@@ -136,12 +155,6 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
                     item.setWxxm_mc(entity.getWxxm_mc());
                     item.setWxxm_gs(entity.getWxxm_gs());
                     item.setWxxm_je(wxxmdj);
-//                    String a = String.valueOf(wxxmdj / entity.getWxxm_gs());
-//                    if (a.equals("NaN")){
-//                        item.setWxxm_dj(wxxmdj);
-//                    }else {
-//                        item.setWxxm_dj(wxxmdj / entity.getWxxm_gs());
-//                    }
                     if(entity.getWxxm_gs()==0){
                         entity.setWxxm_gs(1.0);
                         Log.i("gsdj", "是0");
@@ -163,52 +176,63 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
             }
 
         });
-//        bsd_wxxm.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-////                bsd_wxxm.setEnabled(false);
-//                bsd_zcduxq_xm_pop.showPopupWindow(beijing, 0);
-//                bsd_zcduxq_xm_pop.getDetialsInfo();
-//                bsd_zcduxq_xm_pop.gb(new BSD_ZCDUXQ_XM_POP.Guanbi() {
-//                    @Override
-//                    public void guanbi() {
-//                        bsd_wxxm.setEnabled(true);
-//                    }
-//
-//                    @Override
-//                    public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList) {
-//
-//                    }
-//                });
-//            }
-//        });
-
-//        bsd_zcdd_rl_ztpg = (RelativeLayout) view.findViewById(R.id.bsd_zcdd_rl_ztpg);
-////        bsd_zcdd_rl_ztpg.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////                //整体派工
-////                if (list_XM.size() > 0) {
-////                    wxxm_nos = "[";
-////                    for (int i = 0; i < list_XM.size() - 1; i++) {
-////                        wxxm_nos = wxxm_nos + list_XM.get(i).getWxxm_no() + ",";
-////                    }
-////                    wxxm_nos = wxxm_nos + list_XM.get(list_XM.size() - 1).getWxxm_no() + "]";
-////                    Conts.zhengti_or_danxiang = 0;
-////                    delg = new BSD_WeiXiuYeWuDiaoDuDian_delg(getActivity(), wxxm_nos);
-////                    delg.show();
-////
-////                } else {
-////                    Show.showTime(getActivity(), "没有维修项目");
-////                }
-////
-////            }
-////        });
-
 
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
-        adapter = new BSD_wxywwd_wxxm_adp(getActivity());
+        adapter = new BSD_wxywwd_wxxm_adp(getActivity(), list_XM);
+        adapter.setOnOperateItemListener(new BSD_wxywwd_wxxm_adp.OnOperateItemListener() {
+            @Override
+            public void onPaiGong(final String wxxmNo) {
+                PaiGongDialog paiGongDialog = new PaiGongDialog(getContext(), PaiGongDialog.PAIGONG_SINGLE);
+                paiGongDialog.setWorkNo(Conts.work_no);
+                paiGongDialog.setWxxmNo(wxxmNo);
+                paiGongDialog.setOnPaiGongListener(new PaiGongDialog.OnPaiGongListener() {
+                    @Override
+                    public void onSuccess() {
+                        if (onRefreashPaiGongListener != null) {
+                            onRefreashPaiGongListener.onRefreash(Conts.work_no, wxxmNo);
+                        }
+                    }
+                });
+                paiGongDialog.show();
+            }
+
+            @Override
+            public void onDelete(final String wxxmNo, final int position) {
+                promptdiaog = new TooPromptdiaog(getContext(), "是否删除");
+                promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        deleteWxxm(wxxmNo, position);
+                    }
+                });
+                promptdiaog.show();
+            }
+
+            @Override
+            public void onUpdateYgsf(final String wxxmNo, final double wxxmGs, double wxxmYje, final String wxxmMc, final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_WXXMGS, wxxmYje, wxxmMc);
+                updateItemInfoDialog.show();
+                updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick(double gongshif) {
+                        Conts.wxxm_je = gongshif;
+                        updateWxxmGsf(wxxmNo, wxxmGs, gongshif, wxxmMc, position);
+                    }
+                });
+            }
+
+            @Override
+            public void onUpdateWxxmMc(final String wxxmNo, String wxxmMc, final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_WXXMNAME, 0, wxxmMc);
+                updateItemInfoDialog.show();
+                updateItemInfoDialog.setToopromtXmmc(new UpdateItemInfoDialog.ToopromtXmmc() {
+                    @Override
+                    public void onYesClick(String newWxxmMc) {
+                        updateWxxmMC(wxxmNo, newWxxmMc, position);
+                    }
+                });
+            }
+        });
         //单项派工
         adapter.setDanXiangPaiGong(new BSD_wxywwd_wxxm_adp.DanXiangPaiGong() {
             @Override
@@ -290,7 +314,6 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
             }
         });
 
-
         bsd_lsbj_lv.setAdapter(adapter);
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -312,15 +335,104 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
                 }
             }
         });
+
+        tv_wxxm_money = (TextView) view.findViewById(R.id.tv_wxxm_money);
+        tv_record_num = (TextView) view.findViewById(R.id.tv_record_num);
+
+    }
+
+    private void updateWxxmGsf(String wxxmNo, double wxxmGs, double gongshif, String wxxmMc, int position) {
+        
+    }
+
+    private void updateWxxmMC(String wxxmNo, final String wxxmMc, final int position) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", Conts.work_no);
+        params.put("wxxm_no", wxxmNo);
+        params.put("wxxm_mc", wxxmMc);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_Update_WxxmMc, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                list_XM.get(position).setWxxm_mc(wxxmMc);
+                int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
+                adapter.notifyDataSetChanged();
+                bsd_lsbj_lv.setSelection(firstVisiblePosition);
+                updateItemInfoDialog.dismiss();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    private void deleteWxxm(String wxxmNo, final int position) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", Conts.work_no);
+        params.put("wxxm_no", wxxmNo);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_deletXM, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                list_XM.remove(position);
+                adapter.notifyDataSetChanged();
+                wxxmPrice();
+                promptdiaog.dismiss();
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "删除失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void wxxmPrice() {
+        double wxxmZje = 0;
+        for (int i = 0; i < list_XM.size(); i++) {
+            wxxmZje = wxxmZje + (list_XM.get(i).getWxxm_yje() * list_XM.get(i).getWxxm_zk());
+        }
+        double v = (Math.round(wxxmZje * 100) / 100.0);
+        tv_wxxm_money.setText(v + "元");
+        if (list_XM.size() > 0) {
+            tv_record_num.setText("(共" + list_XM.size() + "条记录)");
+        } else {
+            tv_record_num.setText("");
+        }
+//        if (list_XM.size() > 0) {
+//            xm_zj.onYesClick(wxxmZje);
+//        } else {
+//            xm_zj.onYesClick(0);
+//        }
     }
 
     @Override
     public void initData() {
         url = new URLS();
         dataxm();
-        for (int a = 0; a < list_XM.size(); a++) {
-            list_XM.get(a).getReco_no();
-        }
     }
 
     public void upxm(int i, double gs, double dj, String  xmmc){
@@ -368,7 +480,6 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
     public void deletxm(final int i, final String workno) {
         AbRequestParams params = new AbRequestParams();
         params.put("id", i);
-        Log.i("cjn", "集合个主" + list_XM.size() + "查看这个id" + i);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_deletXM, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
@@ -426,7 +537,7 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
     public void dataxm() {
         list_XM.clear();
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
+        params.put("work_no", param);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_xmlb, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
@@ -452,23 +563,19 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
                             entity.setWxxm_dj(item.getDouble("wxxm_dj"));
                             list_XM.add(entity);
                         }
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
-                        adapter.setList(list_XM);
-                        adapter.notifyDataSetChanged();
-
-                        //每次查询项目都应该清空派工人员列表
-                        clearPaiGongRenYuan.clearPaiGong();
                     } else {
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
-
                     }
-
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
+                adapter.notifyDataSetChanged();
+                wxxmPrice();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+                if (list_XM.size() > 0) {
+                    if (onRefreashPaiGongListener != null) {
+                        onRefreashPaiGongListener.onWxxmRequestSuccess(list_XM.get(0).getWork_no(), list_XM.get(0).getWxxm_no());
+                    }
+                }
             }
 
             @Override

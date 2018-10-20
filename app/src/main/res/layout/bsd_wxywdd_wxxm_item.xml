@@ -1,117 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/qb_px_30"
+    android:minHeight="@dimen/qb_px_30"
+    android:orientation="horizontal">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y45"
-        android:orientation="horizontal">
-
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm1"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/bsd_xsbj_name"
             android:layout_weight="1.5"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_info_bg">
+            style="@style/mysearchinfostyle"
+            android:text="项目名称" />
 
-            <TextView
-                android:id="@+id/bsd_xsbj_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="项目名称" />
+    <TextView
+        android:id="@+id/bsd_kxbj_bzsj"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="标准工时" />
 
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_info_bg">
-
-            <TextView
-                android:id="@+id/bsd_kxbj_bzsj"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="标准工时" />
-
-        </RelativeLayout>
+    <TextView
+        android:id="@+id/bsd_kxbj_gsdj"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="工时单价" />
 
 
-        <RelativeLayout
-            android:id="@+id/bsd_xm3"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_info_bg">
+    <TextView
+        android:id="@+id/bsd_kxbj_je"
+        android:layout_weight="1"
+        style="@style/mysearchinfostyle"
+        android:text="金额" />
 
-            <TextView
-                android:id="@+id/bsd_kxbj_gsdj"
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:text="工时单价" />
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_weight="0.6"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_30"
+        android:src="@drawable/ic_delete_maincolor"
+        android:padding="@dimen/qb_px_8"
+        android:background="@drawable/biankuang_info_bg" />
 
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/qb_px_30">
 
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/bsd_kxbj_pg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_30"
+            android:padding="@dimen/qb_px_2"
+            android:src="@drawable/ic_paigong_sucesss"
+            android:background="@drawable/biankuang_info_bg"/>
 
+        <ImageView
+            android:id="@+id/iv_selected"
+            android:layout_width="@dimen/qb_px_16"
+            android:layout_height="@dimen/qb_px_16"
+            android:src="@drawable/ic_arrow_left"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm4"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_info_bg">
-
-            <TextView
-                android:id="@+id/bsd_kxbj_je"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="金额" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm5"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_info_bg">
-
-            <TextView
-                android:id="@+id/bsd_kxbj_cz1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="删除" />
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/bsd_xm6"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/biankuang_info_bg">
-
-            <TextView
-                android:id="@+id/bsd_kxbj_je"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="删除" />
-        </RelativeLayout>
-
-
-
-    </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
