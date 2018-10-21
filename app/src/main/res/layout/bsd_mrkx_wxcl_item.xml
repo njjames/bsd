@@ -27,7 +27,7 @@
 
 
     <TextView
-        android:id="@+id/bsd_kxbj_je"
+        android:id="@+id/bsd_kxbj_dw"
         android:layout_weight="0.7"
         style="@style/mysearchinfostyle"
         android:text="单位" />

@@ -6,30 +6,43 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
+import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.BSD_mrkx_wxcl;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.BSD_mrkx_wxxm;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.Adapter.BSD_wxywdd_dap;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.dialog.PaiGongDialog;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_XM_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_wxywdd_wxcl;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_wxywdd_wxxm;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
+import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
+import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_xm_pop_entiy;
+import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.R;
@@ -43,6 +56,7 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -54,10 +68,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     LinearLayout bsd_lsbj_fanhui;
     private TextView tv_wxxmAdd;
     private TextView tv_wxllAdd;
-    private Fragment[] fragments;
-    private TextView[] arr_tv;// 图标的数组
-    private int[] arr_id_box = {R.id.tv_wxxm_add, R.id.tv_wxll_add};
-    public Fragment BSD_wxcl;
     public ListView bsd_wxywdd_you_lv;
     BSD_wxywdd_dap adapter;
     List<HashMap<String, String>> data = new ArrayList<>();
@@ -74,6 +84,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     TextView bsd_ywwwdd_dianhua;
     private List<BSD_WeiXiuJieDan_Entity> list = new ArrayList<BSD_WeiXiuJieDan_Entity>();
     private Dialog mWeiboDialog;
+    private BSD_wxywdd_wxcl BSD_wxcl;
     private BSD_wxywdd_wxxm BSD_wxxm;
     Queding_Quxiao queding_quxiao;
     //修改工时弹框
@@ -97,6 +108,15 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private int currentType = 0;
     private ImageView iv_wxllAdd;
     private ImageView iv_wxxmAdd;
+    private BSD_ZCDUXQ_XM_POP bsd_zcduxq_xm_pop;
+    private RelativeLayout beijing;
+    private List<BSD_WeiXiuJieDan_XM_Entity> list_XM;
+    private List<BSD_WeiXiuJieDan_CL_Entity> list_CL;
+    private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
+    private double cl_zj;
+    private double xm_zj;
+    private double zong_zj;
+    private UpdateItemInfoDialog updateItemInfoDialog;
 
     public void setTiaoZhuan(TiaoZhuan tiaoZhuan) {
         this.tiaoZhuan = tiaoZhuan;
@@ -215,129 +235,27 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         //获取listView
         bsd_wxywdd_you_lv = (ListView) view.findViewById(R.id.bsd_wxywdd_you_lv);
         adapter = new BSD_wxywdd_dap(getActivity(), listPGrenyuan);
-        adapter.setRemove(new BSD_wxywdd_dap.Remo() {
+        adapter.setOnOperateItemListener(new BSD_wxywdd_dap.OnOperateItemListener() {
             @Override
-            public void onYesClick(String reco_no) {
-                remodata(reco_no);
-
+            public void onDelete(int reco_no, int position) {
+                deletePaigongInfo(reco_no, position);
             }
-        });
-        adapter.setUp_gongshi(new BSD_wxywdd_dap.UP_gongshi() {
+
             @Override
-            public void onYesClick(String gongshi, final int i) {
-                double gs = Double.parseDouble(gongshi);
-                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), "修改工时", 0,gs, "","修改工时");
-                bsd_xiuGaiGongShi.show();
-                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick(double gongshi) {
-
-                        int a;
-                        Double je;
-                        Double gs;
-
-                        a = Integer.parseInt(listPGrenyuan.get(i).get("reco_no"));
-                        double aa = Double.parseDouble(listPGrenyuan.get(i).get("paig_khje"));
-                        je =  aa;
-                        gs =  gongshi;
-                        renyuangongshi = 0.0;
-                        BigDecimal  gsbg=new BigDecimal(renyuangongshi);
-                        for (int j = 0; j < listPGrenyuan.size(); j++) {
-                            Log.i("pggs", "onAdd: Other  ==="+listPGrenyuan.get(j).get("paig_khgs"));
-                            //                            renyuangongshi = renyuangongshi + Double.parseDouble(listPGrenyuan.get(j).get("paig_khgs"));
-                            Double  gg= Double.parseDouble(listPGrenyuan.get(j).get("paig_khgs"));
-                            BigDecimal gsbd2 = new BigDecimal(Double.toString(gg));
-                            gsbg=gsbg.add(gsbd2);
-                            Log.i("pggs", "onAdd: Other  gsbd2==="+gsbd2);
-                            Log.i("pggs", "onAdd: Other   gsbg  ==="+gsbg);
-                            if (j == i) {
-                                //                                renyuangongshi = renyuangongshi - Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
-                                Double  ggg= Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
-                                BigDecimal gsbd3 = new BigDecimal(Double.toString(ggg));
-                                gsbg= gsbg.subtract(gsbd3);
-                                Log.i("pggs", "onAdd: This  gsbd3==="+gsbd3);
-                                Log.i("pggs", "onAdd: This   gsbg  ==="+gsbg);
-                            }
-                        }
-                        renyuangongshi=gsbg.doubleValue();
-                        Log.i("gsssss", "可以写入" + "查看总工时===" + Conts.wxxm_gs + "查看人员所有工时===" + renyuangongshi + "查看输入完工时" + gongshi);
-
-                        BigDecimal   gsA = BigDecimal.valueOf(Conts.wxxm_gs);
-                        BigDecimal   gsB= BigDecimal.valueOf(renyuangongshi);
-
-                        Double  gsC= gsA.subtract(gsB).doubleValue();
-                        Log.i("gsssss", "成功工时gsA="+gsA+"-----gsB="+gsB+"----gsC="+gsC);
-                        if (gsC>= gongshi) {
-                            xiugaigongshi(a, je, gs);
-                            listPGrenyuan.get(i).put("paig_khgs", String.valueOf(gongshi));
-                            adapter.notifyDataSetChanged();
-                            bsd_xiuGaiGongShi.dismiss();
-                            renyuangongshi = renyuangongshi + gongshi;
-                        } else {
-                            Log.i("gsssss", "不成功"+gsC );
-                            Log.i("cjn", "总工时-集合所有工时小于输入工时不可以输入");
-                            Toast.makeText(getActivity(), "派工工时不能大于总工时", Toast.LENGTH_SHORT).show();
-                            bsd_xiuGaiGongShi.dismiss();
-                        }
-
-                    }
-                });
-
+            public void onUpdateGS(int position) {
+                updatePaigongGS(position);
             }
-        });
-        adapter.setUp_jiaqian(new BSD_wxywdd_dap.UP_jiaqian() {
-            @Override
-            public void onYesClick(String gongshi, final int i) {
-                double gs = Double.parseDouble(gongshi);
-                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), "修改价钱",0, gs,"", "修改价钱");
-                bsd_xiuGaiGongShi.show();
-                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick(double gongshi) {
-                        int a;
-                        Double je;
-                        Double gs;
-                        a = Integer.parseInt(listPGrenyuan.get(i).get("reco_no"));
-                        double aa = Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
-                        je = gongshi;
-                        gs = aa;
-                        renyuangongshi = 0.0;
-                        for (int j = 0; j < listPGrenyuan.size(); j++) {
-                            renyuangongshi = renyuangongshi + Double.parseDouble(listPGrenyuan.get(j).get("paig_khje"));
-                            if (j == i) {
-                                renyuangongshi = renyuangongshi - Double.parseDouble(listPGrenyuan.get(i).get("paig_khje"));
-                            }
-                        }
 
-                        Log.i("cjn", "可以写入" + "查看总金额===" + Conts.wxxm_je + "查看人员所有工时===" + renyuangongshi + "查看输入完工时" + gongshi);
-                        BigDecimal   gsA = BigDecimal.valueOf(Conts.wxxm_je);
-                        BigDecimal   gsB= BigDecimal.valueOf(renyuangongshi);
-                        Double  gsC= gsA.subtract(gsB).doubleValue();
-                        if (gsC >= gongshi) {
-                            Log.i("cjn", "成功工时"+gsC);
-                            xiugaigongshi(a, je, gs);
-                            listPGrenyuan.get(i).put("paig_khje", String.valueOf(gongshi));
-                            adapter.notifyDataSetChanged();
-                            bsd_xiuGaiGongShi.dismiss();
-                            renyuangongshi = renyuangongshi + gongshi;
-                        } else {
-                            Log.i("cjn", "总工时-集合所有工时小于输入工时不可以输入");
-                            Toast.makeText(getActivity(), "派工金额不能大于总金额", Toast.LENGTH_SHORT).show();
-                            bsd_xiuGaiGongShi.dismiss();
-                        }
-                    }
-                });
+            @Override
+            public void onUpdateJE(int position) {
+                updatePaigongJE(position);
             }
         });
         bsd_wxywdd_you_lv.setAdapter(adapter);
-
         tv_wxxmAdd = (TextView) view.findViewById(R.id.tv_wxxm_add);
         tv_wxllAdd = (TextView) view.findViewById(R.id.tv_wxll_add);
         iv_wxxmAdd = (ImageView) view.findViewById(R.id.iv_wxxm_add);
         iv_wxllAdd = (ImageView) view.findViewById(R.id.iv_wxll_add);
-        arr_tv = new TextView[2];
-        arr_tv[0] = tv_wxxmAdd;
-        arr_tv[1] = tv_wxllAdd;
         tv_wxxmAdd.setOnClickListener(this);
         tv_wxllAdd.setOnClickListener(this);
         title = (TextView) view.findViewById(R.id.tv_title);
@@ -346,21 +264,149 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         tv_paigongAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                list_XM = BSD_wxxm.getList_XM();
-//                if (list_XM.size() > 0) {
-//                    PaiGongDialog paiGongDialog = new PaiGongDialog(getActivity(), PaiGongDialog.PAIGONG_ALL);
-//                    paiGongDialog.setWorkNo(billEntiy.getWork_no());
-//                    paiGongDialog.setOnPaiGongListener(new PaiGongDialog.OnPaiGongListener() {
-//                        @Override
-//                        public void onSuccess() {
-//                            int currentPosition = BSD_wxxm.getCurrentPosition();
-//                            getPaiGongInfo(billEntiy.getWork_no(), list_XM.get(currentPosition).getWxxm_no());
-//                        }
-//                    });
-//                    paiGongDialog.show();
-//                } else {
-//                    Show.showTime(getActivity(), "没有维修项目，无法进行派工");
-//                }
+                list_XM = BSD_wxxm.getList_XM();
+                if (list_XM.size() > 0) {
+                    PaiGongDialog paiGongDialog = new PaiGongDialog(getActivity(), PaiGongDialog.PAIGONG_ALL);
+                    paiGongDialog.setWorkNo(billEntiy.getWork_no());
+                    paiGongDialog.setOnPaiGongListener(new PaiGongDialog.OnPaiGongListener() {
+                        @Override
+                        public void onSuccess() {
+                            int currentPosition = BSD_wxxm.getCurrentPosition();
+                            getPaiGongInfo(billEntiy.getWork_no(), list_XM.get(currentPosition).getWxxm_no());
+                        }
+                    });
+                    paiGongDialog.show();
+                } else {
+                    Show.showTime(getActivity(), "没有维修项目，无法进行派工");
+                }
+            }
+        });
+    }
+
+    private void updatePaigongJE(final int position) {
+        final int reco_no = Integer.parseInt(listPGrenyuan.get(position).get("reco_no"));
+        final double paig_khgs = Double.parseDouble(listPGrenyuan.get(position).get("paig_khgs"));
+        final double paig_khje = Double.parseDouble(listPGrenyuan.get(position).get("paig_khje"));
+        String reny_mc = listPGrenyuan.get(position).get("reny_mc");
+        updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PGJE, paig_khje, reny_mc);
+        updateItemInfoDialog.show();
+        updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
+            @Override
+            public void onYesClick(double gongshif) {
+                double jeNow = 0.0;
+                for (int i = 0; i < listPGrenyuan.size(); i++) {
+                    if (i != position) {
+                        jeNow = jeNow + Double.parseDouble(listPGrenyuan.get(i).get("paig_khje"));
+                    } else {
+                        jeNow = jeNow + gongshif;
+                    }
+                }
+                double jeAll = 0.0;
+                list_XM = BSD_wxxm.getList_XM();
+                for (BSD_WeiXiuJieDan_XM_Entity entity : list_XM) {
+                    jeAll = jeAll + entity.getWxxm_je();
+                }
+                BigDecimal gsAll = BigDecimal.valueOf(jeAll);
+                BigDecimal gsNow = BigDecimal.valueOf(jeNow);
+                Double gsRemain = gsAll.subtract(gsNow).doubleValue();
+                if (gsRemain >= 0) {
+                    updatePaigongInfoToDB(reco_no, gongshif, paig_khgs, position);
+                } else {
+                    Toast.makeText(getActivity(), "派工金额不能大于总金额", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void updatePaigongGS(final int position) {
+        final int reco_no = Integer.parseInt(listPGrenyuan.get(position).get("reco_no"));
+        final double paig_khgs = Double.parseDouble(listPGrenyuan.get(position).get("paig_khgs"));
+        final double paig_khje = Double.parseDouble(listPGrenyuan.get(position).get("paig_khje"));
+        String reny_mc = listPGrenyuan.get(position).get("reny_mc");
+        updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PGGS, paig_khgs, reny_mc);
+        updateItemInfoDialog.show();
+        updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
+            @Override
+            public void onYesClick(double gongshif) {
+                double gongshiNow = 0.0;
+                for (int i = 0; i < listPGrenyuan.size(); i++) {
+                    if (i != position) {
+                        gongshiNow = gongshiNow + Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
+                    } else {
+                        gongshiNow = gongshiNow + gongshif;
+                    }
+                }
+                double gongshiAll = 0.0;
+                list_XM = BSD_wxxm.getList_XM();
+                for (BSD_WeiXiuJieDan_XM_Entity entity : list_XM) {
+                    gongshiAll = gongshiAll + entity.getWxxm_khgs();
+                }
+                BigDecimal gsAll = BigDecimal.valueOf(gongshiAll);
+                BigDecimal gsNow = BigDecimal.valueOf(gongshiNow);
+                Double gsRemain = gsAll.subtract(gsNow).doubleValue();
+                if (gsRemain >= 0) {
+                    updatePaigongInfoToDB(reco_no, paig_khje, gongshif, position);
+                } else {
+                    Toast.makeText(getActivity(), "派工工时不能大于总工时", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void updatePaigongInfoToDB(int reco_no, final double je, final double gs, final int position) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("id", reco_no);
+        params.put("je", je + "");
+        params.put("gs", gs + "");
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_GsDj_xiugai, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+                listPGrenyuan.get(position).put("paig_khgs", gs + "");
+                listPGrenyuan.get(position).put("paig_khje", je + "");
+                adapter.notifyDataSetChanged();
+                updateItemInfoDialog.dismiss();
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getActivity(), "修改失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void deletePaigongInfo(int reco_no, final int position) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("xxNo", reco_no);//id
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_paigongdelPgxx, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                listPGrenyuan.remove(position);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "派工人员删除失败", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -659,38 +705,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         });
     }
 
-    /**
-     * 初始化碎片
-     */
-    public void initFragment() {
-        BSD_wxxm = new BSD_wxywdd_wxxm();
-
-        //查看
-        BSD_wxxm.setChaKanPaiGongREN(new BSD_wxywdd_wxxm.ChaKanPaiGongREN() {
-            @Override
-            public void onYesClick(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je) {
-                PGRenYuan(work_no, wxxm_no, wxxm_gs, wxxm_je);
-                Log.i("cjn", "点击事件更近数据");
-            }
-        });
-
-        BSD_wxxm.setClearPaiGongRenYuan(new BSD_wxywdd_wxxm.ClearPaiGongRenYuan() {
-            @Override
-            public void clearPaiGong() {
-                listPGrenyuan.clear();
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        BSD_wxcl = new BSD_wxywdd_wxcl();
-
-        fragments = new Fragment[2];
-        fragments[0] = BSD_wxxm;
-        fragments[1] = BSD_wxcl;
-
-    }
-
-
     //切换碎片事务的方法
     private void change(Fragment f) {
         getActivity().getSupportFragmentManager()//碎片管理者
@@ -700,16 +714,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 .replace(R.id.bsd_clxq_lswx, f)
                 //提交事务
                 .commit();
-    }
-
-
-    //选中项的变色
-    private void checkHighLight(int index) {
-        for (int i = 0; i < arr_tv.length; i++) {
-            arr_tv[i].setTextColor(this.getResources().getColor(R.color.transparent_background));
-        }
-        arr_tv[index].setTextColor(this.getResources().getColor(R.color.bsd_xz_yes));
-
     }
 
     /**
@@ -726,18 +730,271 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 break;
             case R.id.tv_wxll_add:    //维修材料
                 if (currentType == 0) {
-//                    change_CL();
+                    change_CL();
                     currentType = 1;
                 }
                 break;
             case R.id.iv_wxxm_add: // 添加维修项目
-//                showWxxm();
+                showWxxm();
                 break;
             case R.id.iv_wxll_add: // 添加维修用料
-//                showWxll();
+                showWxll();
                 break;
         }
 
+    }
+
+    private void showWxll() {
+        bsd_zcduxq_cl_pop = new BSD_ZCDUXQ_CL_POP(getActivity());
+        bsd_zcduxq_cl_pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
+        //BSD_wxcl
+        list_CL = BSD_wxcl.getList_CL();
+        List<BSD_wxyy_cl_pop_entity> tempLists = new ArrayList<>();
+        if (list_CL != null) {
+            for (BSD_WeiXiuJieDan_CL_Entity item : list_CL) {
+                BSD_wxyy_cl_pop_entity tempItem = new BSD_wxyy_cl_pop_entity();
+                tempItem.setPeij_no(item.getPeij_no());
+                tempItem.setPeij_sl(item.getPeij_sl());
+                tempItem.setPeij_ydj(item.getPeij_ydj());
+                tempLists.add(tempItem);
+            }
+        }
+        bsd_zcduxq_cl_pop.setTempLists(tempLists);
+        bsd_zcduxq_cl_pop.gb(new BSD_ZCDUXQ_CL_POP.Guanbi() {
+            @Override
+            public void guanbi() {
+
+            }
+
+            @Override
+            public void onGuanBi(List<BSD_wxyy_cl_pop_entity> tempList) {
+                list_CL = BSD_wxcl.getList_CL();
+                List<BSD_WeiXiuJieDan_CL_Entity> needAddList = new ArrayList<>();
+                // 循环返回的数据，找不需要新添加的
+                for (BSD_wxyy_cl_pop_entity item : tempList) {
+                    boolean hasAdd = false;
+                    double addPeijSl = item.getPeij_sl();
+                    for (BSD_WeiXiuJieDan_CL_Entity listCLItem : list_CL) {
+                        if (listCLItem.getPeij_no().equals(item.getPeij_no())) {
+                            if (listCLItem.getPeij_sl() == item.getPeij_sl()) {
+                                // 如果相等，则表示存在，直接退出，否则继续循环
+                                hasAdd = true;
+                            } else {
+                                addPeijSl = item.getPeij_sl() - listCLItem.getPeij_sl();
+                            }
+                            break;
+                        }
+                    }
+                    // 如果没有找到，则是需要添加的集合
+                    if (!hasAdd) {
+                        BSD_WeiXiuJieDan_CL_Entity wxclItem = new BSD_WeiXiuJieDan_CL_Entity();
+                        wxclItem.setWork_no(Conts.work_no);
+                        wxclItem.setPeij_no(item.getPeij_no());
+                        wxclItem.setPeij_mc(item.getPeij_mc());
+                        wxclItem.setPeij_sl(addPeijSl);
+                        wxclItem.setPeij_ydj(item.getPeij_ydj());
+                        wxclItem.setPeij_dj(item.getPeij_ydj() * Conts.MRKX_CL_ZK);
+                        wxclItem.setPeij_zk(Conts.MRKX_CL_ZK);
+                        wxclItem.setPeij_je(addPeijSl * item.getPeij_ydj() * Conts.MRKX_CL_ZK);
+                        wxclItem.setPeij_dw(item.getPeij_dw());
+                        wxclItem.setPeij_th(item.getPeij_th());
+                        wxclItem.setPeij_zt("正常");
+                        needAddList.add(wxclItem);
+                    }
+                }
+                // 请求接口，把数据添加到数据库中
+                if (needAddList.size() > 0) {
+                    saveNewWxclToDB(needAddList);
+                }
+            }
+        });
+        bsd_zcduxq_cl_pop.showAtLocation(beijing, Gravity.TOP, 0, 0);
+    }
+
+    private void saveNewWxclToDB(final List<BSD_WeiXiuJieDan_CL_Entity> needAddList) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");
+        AbRequestParams params = new AbRequestParams();
+        Object json = JSON.toJSON(needAddList);
+        params.put("addLists", json.toString());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_addnewcl, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                // 保存成功
+                if (data.equals("success")) {
+                    boolean isAdd = true;
+                    for (BSD_WeiXiuJieDan_CL_Entity item : needAddList) {
+                        for (BSD_WeiXiuJieDan_CL_Entity listClItem : list_CL) {
+                            if (listClItem.getPeij_no().equals(item.getPeij_no())) {
+                                isAdd = false;
+                                listClItem.setPeij_sl(listClItem.getPeij_sl() + item.getPeij_sl());
+                                listClItem.setPeij_je(listClItem.getPeij_je() + item.getPeij_je());
+                                break;
+                            }
+                        }
+                        if (isAdd) {
+                            list_CL.add(item);
+                        }
+                    }
+                    // 循环遍历一下集合，删除数量为0的
+                    Iterator<BSD_WeiXiuJieDan_CL_Entity> iterator = list_CL.iterator();
+                    while (iterator.hasNext()) {
+                        BSD_WeiXiuJieDan_CL_Entity next = iterator.next();
+                        if (next.getPeij_sl() == 0) {
+                            iterator.remove();
+                        }
+                    }
+                    BSD_wxcl.refreashData();
+                }
+                bsd_zcduxq_cl_pop.dismiss();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    private void change_CL() {
+        tv_wxllAdd.setTextColor(getResources().getColor(R.color.bsd_xz_yes));
+        tv_wxxmAdd.setTextColor(getResources().getColor(R.color.transparent_background));
+        iv_wxllAdd.setVisibility(View.VISIBLE);
+        iv_wxxmAdd.setVisibility(View.INVISIBLE);
+        tv_paigongAll.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getActivity().
+                getSupportFragmentManager().
+                beginTransaction();
+        if (BSD_wxcl == null) {
+            BSD_wxcl = BSD_wxywdd_wxcl.newInstance(billEntiy.getWork_no());
+            BSD_wxcl.setCl_zj(new BSD_wxywdd_wxcl.CL_ZJ() {
+                @Override
+                public void onYesClick(double clzj) {
+                    cl_zj = clzj;
+                    zong_zj = xm_zj + cl_zj;
+                    double v = (Math.round(zong_zj * 100) / 100.0);
+//                    bsd_mrkx_zongjia.setText("" + v);
+                    billEntiy.setXche_hjje(zong_zj);
+                }
+            });
+            transaction.hide(BSD_wxxm);
+            transaction.add(R.id.bsd_clxq_lswx, BSD_wxcl).commit();
+        } else {
+            if (BSD_wxxm != null) {
+                transaction.hide(BSD_wxxm);
+            }
+            transaction.show(BSD_wxcl);
+            transaction.commit();
+        }
+    }
+
+    private void showWxxm() {
+        bsd_zcduxq_xm_pop = new BSD_ZCDUXQ_XM_POP(getActivity());
+        bsd_zcduxq_xm_pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
+        // 将当前已经添加的维修项目，放到popwindow的临时表中，表示这些项目已经添加
+        list_XM = BSD_wxxm.getList_XM();
+        List<BSD_wxyy_xm_pop_entiy> tempLists = new ArrayList<>();
+        if (list_XM != null) {
+            for (BSD_WeiXiuJieDan_XM_Entity item : list_XM) {
+                BSD_wxyy_xm_pop_entiy tempItem = new BSD_wxyy_xm_pop_entiy();
+                tempItem.setWxxm_no(item.getWxxm_no());
+                tempLists.add(tempItem);
+            }
+        }
+        bsd_zcduxq_xm_pop.setTempLists(tempLists);
+        // 设置点击返回的回调
+        bsd_zcduxq_xm_pop.gb(new BSD_ZCDUXQ_XM_POP.Guanbi() {
+            @Override
+            public void guanbi() {
+
+            }
+
+            @Override
+            public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList) {
+                // 获取到当前work_ll_gz中显示的维修项目
+                list_XM = BSD_wxxm.getList_XM();
+                List<BSD_WeiXiuJieDan_XM_Entity> needAddList = new ArrayList<>();
+                // 循环返回的数据，找不需要新添加的
+                for (BSD_wxyy_xm_pop_entiy item : tempList) {
+                    boolean hasAdd = false;
+                    for (BSD_WeiXiuJieDan_XM_Entity listXMItem : list_XM) {
+                        if (listXMItem.getWxxm_no().equals(item.getWxxm_no())) {
+                            // 如果相等，则表示存在，直接退出，否则继续循环
+                            hasAdd = true;
+                            break;
+                        }
+                    }
+                    // 如果没有找到，则是需要添加的集合
+                    if (!hasAdd) {
+                        BSD_WeiXiuJieDan_XM_Entity wxxmItem = new BSD_WeiXiuJieDan_XM_Entity();
+                        wxxmItem.setWork_no(Conts.work_no);
+                        wxxmItem.setWxxm_no(item.getWxxm_no());
+                        wxxmItem.setWxxm_mc(item.getWxxm_mc());
+                        wxxmItem.setWxxm_yje(item.getWxxm_zddj());
+                        wxxmItem.setWxxm_gs(item.getWxxm_gs());
+                        wxxmItem.setWxxm_dj(item.getWxxm_dj());
+                        wxxmItem.setWxxm_cb(item.getWxxm_cb());
+                        wxxmItem.setWxxm_zk(Conts.MRKX_XM_ZK);
+                        wxxmItem.setWxxm_je(Conts.MRKX_XM_ZK * item.getWxxm_zddj());
+                        wxxmItem.setWxxm_zt("正常");
+                        wxxmItem.setWxxm_Tpye("正常");
+                        needAddList.add(wxxmItem);
+                    }
+                }
+                // 请求接口，把数据添加到数据库中
+                if (needAddList.size() > 0) {
+                    saveNewWxxmToDB(needAddList);
+                }
+            }
+        });
+        // 用下面这个显示方式，上面的显示方式会出现：键盘关闭时popwindow显示后面的activity，而不能恢复到原来的样子
+        bsd_zcduxq_xm_pop.showAtLocation(beijing, Gravity.TOP, 0, 0);
+    }
+
+    private void saveNewWxxmToDB(final List<BSD_WeiXiuJieDan_XM_Entity> needAddList) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");
+        AbRequestParams params = new AbRequestParams();
+        Object json = JSON.toJSON(needAddList);
+        params.put("addLists", json.toString());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_addnewxm, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                // 保存成功
+                if (data.equals("success")) {
+                    list_XM.addAll(needAddList);
+                    BSD_wxxm.refreashData();
+                }
+                bsd_zcduxq_xm_pop.dismiss();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
     }
 
     private void change_XM() {
@@ -751,26 +1008,28 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 beginTransaction();
         if (BSD_wxxm == null) {
             BSD_wxxm = BSD_wxywdd_wxxm.newInstance(billEntiy.getWork_no());
-//            BSD_wxxm.setOnRefreashPaiGongListener(new BSD_wxywdd_wxxm.OnRefreashPaiGongListener() {
-//                @Override
-//                public void onRefreash(String workNo, String wxxmNo) {
-//                    getPaiGongInfo(workNo, wxxmNo);
-//                }
-//
-//                @Override
-//                public void onWxxmRequestSuccess(String workNo, String wxxmNo) {
-//                    getPaiGongInfo(workNo, wxxmNo);
-//                }
-//
-//            });
-            BSD_wxxm.setChaKanPaiGongREN(new BSD_wxywdd_wxxm.ChaKanPaiGongREN() {
+            BSD_wxxm.setOnRefreashPaiGongListener(new BSD_wxywdd_wxxm.OnRefreashPaiGongListener() {
                 @Override
-                public void onYesClick(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je) {
-                    PGRenYuan(work_no, wxxm_no, wxxm_gs, wxxm_je);
-                    Log.i("cjn", "点击事件更近数据");
+                public void onRefreash(String workNo, String wxxmNo) {
+                    getPaiGongInfo(workNo, wxxmNo);
+                }
+
+                @Override
+                public void onWxxmRequestSuccess(String workNo, String wxxmNo) {
+                    getPaiGongInfo(workNo, wxxmNo);
+                }
+
+            });
+            BSD_wxxm.setXm_zj(new BSD_wxywdd_wxxm.XM_ZJ() {
+                @Override
+                public void onYesClick(double xmzj) {
+                    xm_zj = xmzj;
+                    zong_zj = xm_zj + cl_zj;
+                    double v = (Math.round(zong_zj * 100) / 100.0);
+//                    bsd_mrkx_zongjia.setText("" + v);
+                    billEntiy.setXche_hjje(zong_zj);
                 }
             });
-
             transaction.add(R.id.bsd_clxq_lswx, BSD_wxxm);
             transaction.show(BSD_wxxm);
             transaction.commit();
@@ -784,7 +1043,53 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     }
 
     private void getPaiGongInfo(String workNo, String wxxmNo) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
+        listPGrenyuan.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", workNo);
+        params.put("wxxm_no", wxxmNo);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_PaiGong_XiangXi, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int a, String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.get("status").toString().equals("1")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("reco_no", item.getString("reco_no"));
+                            map.put("work_no", item.getString("work_no"));
+                            map.put("wxxm_no", item.getString("wxxm_no"));
+                            map.put("reny_no", item.getString("reny_no"));
+                            map.put("reny_mc", item.getString("reny_mc"));
+                            map.put("wxry_bm", item.getString("wxry_bm"));
+                            map.put("paig_khgs", item.getString("paig_khgs"));
+                            map.put("paig_khje", item.getString("paig_khje"));
+                            map.put("paig_pgsj", item.getString("paig_pgsj"));
+                            listPGrenyuan.add(map);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                adapter.notifyDataSetChanged();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
 
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
     }
 
     /**

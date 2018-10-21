@@ -1,131 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y45"
+    android:layout_height="@dimen/qb_px_30"
+    android:minHeight="@dimen/qb_px_30"
     android:orientation="horizontal">
-    <RelativeLayout
-        android:id="@+id/bsd_xm1"
-        android:layout_width="0dp"
+
+    <TextView
+        android:id="@+id/bsd_xsbj_name"
         android:layout_weight="1.2"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
+        style="@style/mysearchinfostyle"
+        android:text="材料名称" />
 
-        <TextView
-            android:id="@+id/bsd_xsbj_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="材料名称" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm2"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/bsd_kxbj_sl"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
+        style="@style/mysearchinfostyle"
+        android:text="数量" />
 
-        <TextView
-            android:id="@+id/bsd_kxbj_bzsj"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="数量" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm3"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/bsd_kxbj_dj"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
+        style="@style/mysearchinfostyle"
+        android:text="单价" />
 
-        <TextView
-            android:id="@+id/bsd_kxbj_gsdj"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="单价" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm4"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/bsd_kxbj_dw"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
+        style="@style/mysearchinfostyle"
+        android:text="单位" />
 
-        <TextView
-            android:id="@+id/bsd_kxbj_je"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="图号" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm5"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/bsd_kxbj_je"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
+        style="@style/mysearchinfostyle"
+        android:text="总价" />
 
-        <TextView
-            android:id="@+id/bsd_kxbj_je"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="品牌" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm7"
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_weight="0.7"
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
+        android:layout_height="@dimen/qb_px_30"
+        android:src="@drawable/ic_delete_maincolor"
+        android:padding="@dimen/qb_px_8"
+        android:background="@drawable/biankuang_info_bg" />
 
-        <TextView
-            android:id="@+id/bsd_kxbj_qian1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="操作" />
-
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:id="@+id/bsd_wxcl_kc"
+    <ImageView
+        android:id="@+id/iv_stock"
+        android:layout_weight="0.8"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="查看库存" />
-    </LinearLayout>
+        android:layout_height="@dimen/qb_px_30"
+        android:src="@drawable/ic_stock"
+        android:padding="@dimen/qb_px_6"
+        android:background="@drawable/biankuang_info_bg" />
 
 
 </LinearLayout>
-
-</RelativeLayout>

@@ -74,7 +74,7 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
         return 0;
     }
     class Holder {
-        TextView bsd_kxbj_dj,bsd_mrkx_hyzk,bsd_xsbj_name,bsd_kxbj_bzsj,bsd_kxbj_gsdj,bsd_kxbj_je,bsd_kxbj_qian,bsd_kxbj_cz;
+        TextView bsd_kxbj_dj,bsd_mrkx_hyzk,bsd_xsbj_name,bsd_kxbj_bzsj,bsd_kxbj_gsdj,bsd_kxbj_dw,bsd_kxbj_qian,bsd_kxbj_cz;
         ImageView iv_stock;
         ImageView iv_delete;
     }
@@ -88,7 +88,7 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
             holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
+            holder.bsd_kxbj_dw= (TextView) contetview.findViewById(R.id.bsd_kxbj_dw);
             holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
             holder.iv_delete= (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_mrkx_hyzk= (TextView) contetview.findViewById(R.id.bsd_mrkx_hyzk);
@@ -120,7 +120,7 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
                 }
             }
         });
-        holder.bsd_kxbj_je.setText(list.get(i).getPeij_dw());
+        holder.bsd_kxbj_dw.setText(list.get(i).getPeij_dw());
         holder.bsd_kxbj_cz.setText(""+list.get(i).getPeij_sl()*v);
         // 删除
         holder.iv_delete.setOnClickListener(new View.OnClickListener() {

@@ -25,41 +25,12 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
     Context context;
     DanXiangPaiGong danXiangPaiGong;
     RelativeLayout textView = null;
-    int last_item;
 
-    Delite delite;
     UPgs  uPgs;
-    UPdj uPdj;
-    UPmc  uPmc;
 
     private List<BSD_WeiXiuJieDan_XM_Entity> list;
     private int currentPosition = 0;
     private OnOperateItemListener onOperateItemListener;
-
-    public void setuPgs(UPgs uPgs) {
-        this.uPgs = uPgs;
-    }
-
-    public void setuPdj(UPdj uPdj) {
-        this.uPdj = uPdj;
-    }
-
-    public  void  setuPmc(UPmc uPmc){
-        this.uPmc=uPmc;
-    }
-    TooPromptdiaog promptdiaog;
-
-    public void setDelite(Delite delite) {
-        this.delite = delite;
-    }
-
-    public void setLast_item(int last_item) {
-        this.last_item = last_item;
-    }
-
-    public void setDanXiangPaiGong(DanXiangPaiGong danXiangPaiGong) {
-        this.danXiangPaiGong = danXiangPaiGong;
-    }
 
     public void setList(List<BSD_WeiXiuJieDan_XM_Entity> list) {
         this.list = list;
@@ -129,23 +100,12 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
             }
         });
 
-//        String a  = String.valueOf((list.get(i).getWxxm_je()/list.get
-//                (i).getWxxm_gs()));
-//        if (a.equals("NaN")){
-//            holder.bsd_kxbj_gsdj.setText(list.get(i).getWxxm_je()+"");
-//        }else {
-//            holder.bsd_kxbj_gsdj.setText(""+list.get(i).getWxxm_je
-//                    ()/list.get(i).getWxxm_gs());
-//        }
-
         if(list.get(i).getWxxm_gs()==0){
             list.get(i).setWxxm_gs(1.0);
         }
         DecimalFormat  df=new DecimalFormat("#.##");
         String gs=df.format(list.get(i).getWxxm_je() / list.get(i).getWxxm_gs());
         holder.bsd_kxbj_gsdj.setText(gs);
-
-//        holder.bsd_kxbj_gsdj.setText(list.get(i).getWxxm_dj()+"");
 
         holder.bsd_kxbj_je.setText("" + list.get(i).getWxxm_je());
         holder.bsd_kxbj_je.setOnClickListener(new View.OnClickListener() {
@@ -173,15 +133,6 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
                 }
             }
         });
-//        holder.bsd_kxbj_qian.setText(list.get(i).get("qian"));
-//        holder.bsd_kxbj_qian1.setText(list.get(i).get("qian1"));
-//        if (last_item == i) {//解决滑动listview的时候,选中的条目选中效果消失问题
-//            // textView.setBackgroundColor(Color.BLUE);
-//            textView.setBackgroundResource(R.drawable.bg_article_listview_item_pressed);
-//        } else {
-//            // textView.setBackgroundColor(Color.WHITE);
-//            textView.setBackgroundResource(R.drawable.article_listview_item_bg);
-//        }
         if (currentPosition == i) {
             holder.iv_selected.setVisibility(View.VISIBLE);
         } else {
@@ -193,19 +144,10 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
     public interface DanXiangPaiGong {
         public void onYesClick(int i);
     }
-    public interface Delite {
-        public void onYesClick(int i,String workno);
-    }
     public interface UPgs {
         public void onYesClick(int i,double gs,double dj,String  xmmc);
     }
-    public interface UPdj {
-        public void onYesClick(int i,double gs,double dj,String  xmmc);
-    }
 
-    public  interface  UPmc{
-        public  void  onYesClick(int i,double gs,double dj,String  xmmc);
-    }
 
     public interface OnOperateItemListener {
         void onPaiGong(String wxxmNo);

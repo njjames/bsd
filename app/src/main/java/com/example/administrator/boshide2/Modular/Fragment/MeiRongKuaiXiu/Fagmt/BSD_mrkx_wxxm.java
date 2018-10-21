@@ -52,10 +52,6 @@ public class BSD_mrkx_wxxm extends Fragment {
     private int currentPosition = 0;
     private OnRefreashPaiGongListener onRefreashPaiGongListener;
 
-    public void setXm_zj(XM_ZJ xm_zj) {
-        this.xm_zj = xm_zj;
-    }
-
     private int last_item = -1;
     private RelativeLayout beijing;
     private ListView bsd_lsbj_lv;
@@ -367,21 +363,7 @@ public class BSD_mrkx_wxxm extends Fragment {
             }
         });
 
-
     }
-
-//    public void data() {
-//
-//        for (int i = 0; i < 20; i++) {
-//            HashMap<String, String> map = new HashMap<>();
-//            map.put("name", "洗车");
-//            map.put("time", "2");
-//            map.put("timemany","500");
-//            map.put("jinqian", "150");
-//            map.put("caozuo", "添加");
-//            data.add(map);
-//        }
-//    }
 
     /**
      * 维修项目数据查询
@@ -533,7 +515,11 @@ public class BSD_mrkx_wxxm extends Fragment {
          * 项目修改之后，计算单据总金额的回调方法
          * @param xmzj
          */
-        public void onYesClick(double xmzj);
+        void onYesClick(double xmzj);
+    }
+
+    public void setXm_zj(XM_ZJ xm_zj) {
+        this.xm_zj = xm_zj;
     }
 
     public List<BSD_WeiXiuJieDan_XM_Entity> getList_XM() {

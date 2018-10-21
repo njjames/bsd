@@ -19,6 +19,7 @@ import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
+import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.BSD_MeiRongKuaiXiu_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.fagmt_adp.BSD_mrkx_wxcl_adp;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
@@ -42,18 +43,11 @@ import java.util.List;
  * Created by Administrator on 2017-4-24.
  */
 
-public class BSD_mrkx_wxcl extends Fragment {
+public class BSD_mrkx_wxcl extends BaseFragment {
     CL_ZJ cl_zj;
     BSD_MeiRongKuaiXiu_Fragment    BSD_mrkx;
     private TextView tv_recordNum;
     private UpdateItemInfoDialog updateItemInfoDialog;
-
-    public void setCl_zj(CL_ZJ cl_zj) {
-        this.cl_zj = cl_zj;
-    }
-
-
-
     private ListView bsd_lsbj_lv;
     private BSD_mrkx_wxcl_adp adapter;
     private List<BSD_WeiXiuJieDan_CL_Entity> list_CL = new ArrayList<>();
@@ -67,63 +61,12 @@ public class BSD_mrkx_wxcl extends Fragment {
     TextView tv_wxxm_money;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bsd_mrkx_wxcl, null);
-        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        url = new URLS();
-        init(view);
-        return view;
+    protected int getLayoutId() {
+        return R.layout.bsd_mrkx_wxcl;
     }
-
 
     @Override
-    public void onStart() {
-        super.onStart();
-        cldata();
-    }
-
-    /**
-     * 计算维修材料的总价
-     */
-    public void wxclPrice() {
-        double wxclZje = 0;
-        for (int i = 0; i < list_CL.size(); i++) {
-            wxclZje = wxclZje + (list_CL.get(i).getPeij_je());
-        }
-        double v = (Math.round(wxclZje* 100) / 100.0);
-        tv_wxxm_money.setText( v  + "元");
-        if (list_CL.size() > 0) {
-            tv_recordNum.setText("(共" + list_CL.size() + "条记录)");
-        } else {
-            tv_recordNum.setText("");
-        }
-        if (list_CL.size() > 0) {
-            cl_zj.onYesClick(wxclZje);
-        } else {
-            cl_zj.onYesClick(0);
-        }
-    }
-
-    public void wxclPrice1111() {
-
-        double jg = 0;
-        for (int i = 0; i < list_CL.size(); i++) {
-            jg = jg + (list_CL.get(i).getPeij_je());
-        }
-        double v = (Math.round(jg* 100) / 100.0);
-
-
-        Log.i("cjn", "CL的总价：" + jg);
-        if (list_CL.size()>0){
-            cl_zj.onYesClick(jg);
-        }else {
-            cl_zj.onYesClick(0);
-        }
-
-
-    }
-
-    public void init(View view) {
+    public void initView() {
         tv_wxxm_money = (TextView) view.findViewById(R.id.tv_wxxm_money);
         beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
@@ -215,6 +158,12 @@ public class BSD_mrkx_wxcl extends Fragment {
         tv_recordNum = (TextView) view.findViewById(R.id.tv_record_num);
     }
 
+    @Override
+    public void initData() {
+        url = new URLS();
+        cldata();
+    }
+
     private void updatePeijYdj(String peij_no, final double newPeijYdj, final int position) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
         AbRequestParams params = new AbRequestParams();
@@ -295,7 +244,6 @@ public class BSD_mrkx_wxcl extends Fragment {
         });
     }
 
-
     /**
      * 全部删除操作
      */
@@ -345,6 +293,7 @@ public class BSD_mrkx_wxcl extends Fragment {
         });
 
     }
+
 
     /**
      * 删除维修用料
@@ -445,11 +394,11 @@ public class BSD_mrkx_wxcl extends Fragment {
 
     }
 
-
     /**
      * 添加材料
      */
     String clcdjson;
+
 
     public void CLinData(final String DH) {
         clcdjson = "{" + '"' + "data" + '"' + ":" + "[";
@@ -511,17 +460,39 @@ public class BSD_mrkx_wxcl extends Fragment {
         wxclPrice();
     }
 
-
     public interface CL_ZJ {
-        public void onYesClick(double clzj);
+        void onYesClick(double clzj);
+    }
+
+    public void setCl_zj(CL_ZJ cl_zj) {
+        this.cl_zj = cl_zj;
     }
 
     public List<BSD_WeiXiuJieDan_CL_Entity> getList_CL() {
         return list_CL;
     }
 
-    public void setList_CL(List<BSD_WeiXiuJieDan_CL_Entity> list_CL) {
-        this.list_CL = list_CL;
+
+    /**
+     * 计算维修材料的总价
+     */
+    public void wxclPrice() {
+        double wxclZje = 0;
+        for (int i = 0; i < list_CL.size(); i++) {
+            wxclZje = wxclZje + (list_CL.get(i).getPeij_je());
+        }
+        double v = (Math.round(wxclZje* 100) / 100.0);
+        tv_wxxm_money.setText( v  + "元");
+        if (list_CL.size() > 0) {
+            tv_recordNum.setText("(共" + list_CL.size() + "条记录)");
+        } else {
+            tv_recordNum.setText("");
+        }
+        if (list_CL.size() > 0) {
+            cl_zj.onYesClick(wxclZje);
+        } else {
+            cl_zj.onYesClick(0);
+        }
     }
 
 }

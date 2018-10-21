@@ -100,7 +100,6 @@ public class BSD_wxywdd_dap extends BaseAdapter {
                 if (onOperateItemListener != null) {
                     onOperateItemListener.onUpdateJE(i);
                 }
-//                up_jiaqian.onYesClick(list.get(i).get("paig_khje"), i);
             }
         });
 
