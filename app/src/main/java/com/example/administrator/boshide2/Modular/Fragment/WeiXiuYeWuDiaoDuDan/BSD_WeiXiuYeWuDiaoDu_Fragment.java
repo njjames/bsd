@@ -198,10 +198,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         bsd_wxywdd_lswx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Conts.danju_type="wxywdd";
-                new BSD_LishiWeiXiu_DialogFragment().
-                        show(getFragmentManager(),"mrkx_lswx");
-
+                BSD_LishiWeiXiu_DialogFragment.newInstance(billEntiy.getChe_no()).show(getFragmentManager(),"wxywdd_lswx");
             }
         });
         bsd_wxywdd_lswxjy= (TextView) view.findViewById(R.id.bsd_wxywdd_lswxjy);
@@ -539,11 +536,10 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
      */
     public void stopWx() {
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
+        params.put("work_no", billEntiy.getWork_no());
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ZZ, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                Log.i("cjn", s);
                 queRen = new QueRen(getActivity(), "终止成功");
                 queRen.show();
                 queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
@@ -980,6 +976,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
+                Show.showTime(getActivity(), "获取派工信息失败");
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });

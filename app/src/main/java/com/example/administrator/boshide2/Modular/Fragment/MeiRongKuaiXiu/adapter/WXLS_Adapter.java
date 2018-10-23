@@ -18,13 +18,11 @@ import java.util.List;
  */
 
 public class WXLS_Adapter extends BaseAdapter {
-    Context context;
-    List<WXLS_Bean> list;
-    LayoutInflater inflater;
+    private List<WXLS_Bean> list;
+    private LayoutInflater inflater;
     private int currentPosition = 0;
 
     public WXLS_Adapter(Context context, List<WXLS_Bean> list) {
-        this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
     }
@@ -84,15 +82,15 @@ public class WXLS_Adapter extends BaseAdapter {
         this.currentPosition = position;
     }
 
-    class ViewHolder {
-        public TextView workno;
-        public TextView riqi;
-        public TextView chepai;
-        public TextView chezhu;
-        public TextView huiyuan;
-        public TextView dianhua;
-        public TextView licheng;
-        public TextView jine;
-        public ImageView iv_selected;
+    public final class ViewHolder {
+        TextView workno;
+        TextView riqi;
+        TextView chepai;
+        TextView chezhu;
+        TextView huiyuan;
+        TextView dianhua;
+        TextView licheng;
+        TextView jine;
+        ImageView iv_selected;
     }
 }

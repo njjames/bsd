@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,7 +79,8 @@ public class PaiGongDialog extends Dialog {
         setCanceledOnTouchOutside(true);
         WindowManager.LayoutParams params = this.getWindow().getAttributes();
         params.width = (int) getContext().getResources().getDimension(R.dimen.qb_px_500);
-        params.height = (int) getContext().getResources().getDimension(R.dimen.qb_px_340);
+//        params.height = (int) getContext().getResources().getDimension(R.dimen.qb_px_340);
+        params.height = LinearLayout.LayoutParams.MATCH_PARENT;
         this.getWindow().setAttributes(params);
 
         bsd_zcdd_top= (TextView) view.findViewById(R.id.bsd_zcdd_top);

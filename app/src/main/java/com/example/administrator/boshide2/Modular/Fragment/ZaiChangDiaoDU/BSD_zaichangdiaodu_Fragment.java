@@ -116,8 +116,6 @@ public class BSD_zaichangdiaodu_Fragment extends BaseFragment implements AbPullT
         params.put("pageNumber", page);
 //        params.put("gongsino", MyApplication.shared.getString("bsd_gs_id", ""));
         params.put("gongsino", MyApplication.shared.getString("GongSiNo", ""));
-        Log.i("zcddgsno", "GongSiNo进来了吗" +  MyApplication.shared.getString("GongSiNo", ""));
-
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_zcdu_list, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String s) {

@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -58,21 +59,11 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
     private List<WXLS_Bean> wxlsBeanList;
     private Button but_yes;
     private ListView lv_lishi;
-    private BSD_WeiXiuJieDan_Entity entityWxjd;   //美容快修、维修接单、维修业务调度都用的这个bean；
-    private BSD_KuaiSuBaoJia_ety entityKsbj;
-    private BSD_WeiXiuYueYue_entiy entityWxyy;
-    private String type;  //用于区分是从哪类单据跳转过来的
-    private String chePai;
     private WXLS_WXXM_Adapter wxxm_adapter;//维修项目
     private List<WXLS_XM_Bean> wxlsXmBeanList;
     private WXLS_WXYL_Adapter wxyl_adapter;//维修用料
     private List<WXLS_YL_Bean> wxlsYlBeanList;
-    private HashMap<Integer, Boolean> isSelected;//项目选中
-    private List<String> wxxms;//存维修项目标识
-    private HashMap<Integer, Boolean> isChecked;//用料选中
-    private List<String> wxyls;//存维修用料标识
     private String param;
-    private int currentPosition = 0; // 维修历史默认的位置
 
     public static BSD_LishiWeiXiu_DialogFragment newInstance(String params) {
         BSD_LishiWeiXiu_DialogFragment dialogFragment = new BSD_LishiWeiXiu_DialogFragment();
@@ -96,7 +87,6 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
         url = new URLS();
         View view = inflater.from(context).inflate(R.layout.dialogfragment_lishi_weixiu, null);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        type = Conts.danju_type;
         initView(view);
         return view;
     }
@@ -105,35 +95,18 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
     @Override
     public void onStart() {
         super.onStart();
-//        getDialog().getWindow().setLayout(getContext().getResources().getDimensionPixelSize(R.dimen.x600), getContext().getResources().getDimensionPixelSize(R.dimen.y700));
         //隐藏输入法
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
-//        params.width = (int) getActivity().getResources().getDimension(R.dimen.x480);
-//        params.height = (int) getActivity().getResources().getDimension(R.dimen.y820);
-//        params.width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-        WindowManager manager = getActivity().getWindowManager();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(outMetrics);
-//        WindowManager windowManager =
-//                (WindowManager) getActivity().getApplication().getSystemService(Context.
-//                        WINDOW_SERVICE);
-//        Display display = windowManager.getDefaultDisplay();
-//        Point outPoint = new Point();
-//        display.getRealSize(outPoint);
-        int width = outMetrics.widthPixels;
-        int height = outMetrics.heightPixels;
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = height;
+        params.width = LinearLayout.LayoutParams.MATCH_PARENT;
+        params.height = LinearLayout.LayoutParams.MATCH_PARENT;
         getDialog().getWindow().setAttributes(params);
     }
-
 
     public void initView(View view) {
         but_yes = (Button) view.findViewById(R.id.btn_yes);
         but_yes.setOnClickListener(this);
-
         //历史维修主表
         lv_lishi = (ListView) view.findViewById(R.id.lv_lishi_weixiiu);
         wxlsBeanList = new ArrayList<>();
@@ -160,30 +133,27 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
 //        }
 
         //项目
-        ListView lv_danhao = (ListView) view.findViewById(R.id.lv_danhao);
+        ListView lv_wxxmls = (ListView) view.findViewById(R.id.lv_wxxmls);
         wxlsXmBeanList = new ArrayList<>();
-        isSelected = new HashMap<>();
-        wxxm_adapter = new WXLS_WXXM_Adapter(getActivity(), wxlsXmBeanList, isSelected);
-        lv_danhao.setAdapter(wxxm_adapter);
+        wxxm_adapter = new WXLS_WXXM_Adapter(getActivity(), wxlsXmBeanList);
+        lv_wxxmls.setAdapter(wxxm_adapter);
         //用料
-        ListView lv_yongliao = (ListView) view.findViewById(R.id.lv_yongliao);
+        ListView lv_wxclls = (ListView) view.findViewById(R.id.lv_wxclls);
         wxlsYlBeanList = new ArrayList<>();
-        isChecked = new HashMap<>();
-        wxyl_adapter = new WXLS_WXYL_Adapter(getActivity(), wxlsYlBeanList, isChecked);
-        lv_yongliao.setAdapter(wxyl_adapter);
+        wxyl_adapter = new WXLS_WXYL_Adapter(getActivity(), wxlsYlBeanList);
+        lv_wxclls.setAdapter(wxyl_adapter);
 
         lv_lishi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 wxlsXmBeanList.clear();
                 wxlsYlBeanList.clear();
-                currentPosition = position;
                 int firstVisiblePosition = lv_lishi.getFirstVisiblePosition();
                 wxls_adapter.setCurrentPositon(position);
                 wxls_adapter.notifyDataSetChanged();
                 lv_lishi.setSelection(firstVisiblePosition);
-                setWXYLData(wxlsBeanList.get(position).getDanhao(), wxlsBeanList.get(position).getRiqi());//用料
-                setWXLSXMData(wxlsBeanList.get(position).getDanhao(), wxlsBeanList.get(position).getRiqi());//项目
+                setWXYLData(wxlsBeanList.get(position).getDanhao());//用料
+                setWXLSXMData(wxlsBeanList.get(position).getDanhao());//项目
             }
         });
 
@@ -207,7 +177,6 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
                 try {
                     JSONObject object = new JSONObject(s);
                     if (object.getString("message").equals("查询失败")) {
-//                        Toast.makeText(getActivity(), object.getString("message"), Toast.LENGTH_SHORT).show();
                         Toast.makeText(getActivity(), "未查到历史维修信息", Toast.LENGTH_SHORT).show();
                     } else {
                         JSONArray array = new JSONArray(object.getString("data"));
@@ -228,8 +197,8 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
                     wxls_adapter.notifyDataSetChanged();
                     WeiboDialogUtils.closeDialog(mWeiboDialog);
                     if (wxlsBeanList.size() > 0) {
-                        setWXLSXMData(wxlsBeanList.get(0).getDanhao(), wxlsBeanList.get(0).getRiqi());//项目
-                        setWXYLData(wxlsBeanList.get(0).getDanhao(), wxlsBeanList.get(0).getRiqi());//用料
+                        setWXLSXMData(wxlsBeanList.get(0).getDanhao());//项目
+                        setWXYLData(wxlsBeanList.get(0).getDanhao());//用料
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -248,7 +217,7 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("wxls", "onFailure:请求主表失败了" + s.toString());
+                Toast.makeText(getActivity(), "查询历史维修信息失败", Toast.LENGTH_SHORT).show();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
@@ -259,7 +228,7 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
     /**
      * 维修历史项目数据接口
      */
-    private void setWXLSXMData(final String work_no, final String riqi) {
+    private void setWXLSXMData(final String work_no) {
         xmWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载项目中...");
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", work_no);
@@ -274,11 +243,9 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
                         for (int j = 0; j < array.length(); j++) {
                             JSONObject json = array.getJSONObject(j);
                             WXLS_XM_Bean bean = new WXLS_XM_Bean();
-                            bean.setWxriqi(riqi);
                             bean.setWxxm_no(json.getString("wxxm_no"));
                             bean.setJine(json.getString("wxxm_je"));
                             bean.setWxxiangmu(json.getString("wxxm_mc"));
-                            isSelected.put(wxlsXmBeanList.size(), false);
                             wxlsXmBeanList.add(bean);
                         }
                     }
@@ -301,7 +268,6 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("wxls", "onFailure: 网络请求失败了");
                 WeiboDialogUtils.closeDialog(xmWeiboDialog);
             }
         });
@@ -312,7 +278,7 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
     /**
      * 维修用料数据接口
      */
-    private void setWXYLData(String work_no, final String riqi) {
+    private void setWXYLData(String work_no) {
         ylWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载材料中...");
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", work_no);
@@ -320,7 +286,6 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
             @Override
             public void onSuccess(int i, String s) {
                 try {
-                    Log.i("wxls", "查用料成功" + s);
                     JSONObject object = new JSONObject(s);
                     if (object.getString("message").equals("查询成功")) {
                         JSONArray array = new JSONArray(object.getString("data"));
@@ -332,9 +297,7 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
                             bean.setGuige(json.getString("peij_th"));
                             bean.setJine(json.getString("peij_je"));
                             bean.setPeijian(json.getString("peij_mc"));
-                            bean.setWxriqi(riqi);
                             bean.setShuliang(json.getString("peij_sl"));
-                            isChecked.put(wxlsYlBeanList.size(), false);
                             wxlsYlBeanList.add(bean);
                         }
                     }

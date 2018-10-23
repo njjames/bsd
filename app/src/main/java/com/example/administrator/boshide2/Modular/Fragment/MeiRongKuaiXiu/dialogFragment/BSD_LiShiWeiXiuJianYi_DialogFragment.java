@@ -123,18 +123,18 @@ public class BSD_LiShiWeiXiuJianYi_DialogFragment extends DialogFragment impleme
         setWXLSJYData();
 
         //项目
-        ListView lv_danhao = (ListView) view.findViewById(R.id.lv_danhao);
+        ListView lv_danhao = (ListView) view.findViewById(R.id.lv_wxxmls);
         wxxm_beans = new ArrayList<>();
         isSelected = new HashMap<>();
         wxxms = new ArrayList<>();
-        wxxm_adapter = new WXLS_WXXM_Adapter(getActivity(), wxxm_beans, isSelected);
+        wxxm_adapter = new WXLS_WXXM_Adapter(getActivity(), wxxm_beans);
         lv_danhao.setAdapter(wxxm_adapter);
         //用料数据
-        ListView lv_yongliao = (ListView) view.findViewById(R.id.lv_yongliao);
+        ListView lv_yongliao = (ListView) view.findViewById(R.id.lv_wxclls);
         wxyl_beans = new ArrayList<>();
         isChecked = new HashMap<>();
         wxyls = new ArrayList<>();
-        wxyl_adapter = new WXLS_WXYL_Adapter(getActivity(), wxyl_beans, isChecked);
+        wxyl_adapter = new WXLS_WXYL_Adapter(getActivity(), wxyl_beans);
         lv_yongliao.setAdapter(wxyl_adapter);
         lv_lishi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

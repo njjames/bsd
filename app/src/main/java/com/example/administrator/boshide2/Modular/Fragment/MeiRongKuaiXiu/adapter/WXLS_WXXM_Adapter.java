@@ -19,15 +19,11 @@ import java.util.List;
  */
 
 public class WXLS_WXXM_Adapter extends BaseAdapter {
-    Context context;
-    List<WXLS_XM_Bean> list;
-    LayoutInflater inflater;
-    public static HashMap<Integer, Boolean> isSelected;//选中状态的集合 防止复用 view造成选择混乱问题
+    private List<WXLS_XM_Bean> list;
+    private LayoutInflater inflater;
 
-    public WXLS_WXXM_Adapter(Context context, List<WXLS_XM_Bean> list, HashMap<Integer, Boolean> isSelected) {
-        this.context = context;
+    public WXLS_WXXM_Adapter(Context context, List<WXLS_XM_Bean> list) {
         this.list = list;
-        this.isSelected = isSelected;
         inflater = LayoutInflater.from(context);
     }
 
@@ -52,36 +48,20 @@ public class WXLS_WXXM_Adapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.layout_item_fr_wxls_xm, null);
-            holder.wxxiangmu = (TextView) convertView.findViewById(R.id.tv_wxmingcheng);
-            holder.jine = (TextView) convertView.findViewById(R.id.tv_jine);
+            holder.tv_wxxm_name = (TextView) convertView.findViewById(R.id.tv_wxxm_name);
+            holder.tv_wxxm_je = (TextView) convertView.findViewById(R.id.tv_wxxm_je);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         WXLS_XM_Bean bean = list.get(position);
-        holder.wxxiangmu.setText(bean.getWxxiangmu());
-        holder.jine.setText(bean.getJine());
-//        holder.xuanzhong.setChecked(isSelected.get(position));
-//        holder.xuanzhong.setTag(position);
-//        holder.xuanzhong.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Integer tag = (Integer) v.getTag();
-//                if (isSelected.get(tag)) {// 先判断isSelected中是否已经选中
-//                    // 选中就置为false，即不选中
-//                    isSelected.put(tag, false);
-//                } else {
-//                    // 选中
-//                    isSelected.put(tag, true);
-//                }
-//                notifyDataSetChanged();
-//            }
-//        });
+        holder.tv_wxxm_name.setText(bean.getWxxiangmu());
+        holder.tv_wxxm_je.setText(bean.getJine());
         return convertView;
     }
 
-    class ViewHolder {
-        public TextView wxxiangmu;
-        public TextView jine;
+    public final class ViewHolder {
+        TextView tv_wxxm_name;
+        TextView tv_wxxm_je;
     }
 }

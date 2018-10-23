@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bsd_zcdd_renyuanfenpei"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/qb_px_8"
+    android:paddingRight="@dimen/qb_px_8">
 
     <TextView
         android:id="@+id/bsd_zcdd_top"
@@ -18,8 +20,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_1"
-        android:layout_marginLeft="@dimen/qb_px_4"
-        android:layout_marginRight="@dimen/qb_px_4"
         android:background="#F7714C" />
 
     <LinearLayout
@@ -66,18 +66,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_1"
-        android:layout_marginLeft="@dimen/qb_px_4"
-        android:layout_marginRight="@dimen/qb_px_4"
         android:background="#F7714C" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_34"
-        android:layout_marginTop="@dimen/qb_px_4"
-        android:layout_marginLeft="@dimen/qb_px_4"
-        android:layout_marginRight="@dimen/qb_px_4">
-
+        android:layout_marginTop="@dimen/qb_px_4">
 
         <TextView
             style="@style/mysearchtitlestyle"
@@ -104,15 +99,19 @@
     <ListView
         android:id="@+id/bsd_zcdd_pg_lv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginLeft="@dimen/qb_px_4"
-        android:layout_marginRight="@dimen/qb_px_4"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="#F7714C" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/qb_px_4">
+        android:paddingTop="@dimen/qb_px_4"
+        android:paddingBottom="@dimen/qb_px_4">
 
         <Button
             android:id="@+id/btn_confirm"

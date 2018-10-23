@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/dialog_back_gr"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/qb_px_4">
 
     <TextView
         android:id="@+id/tv_title"
@@ -12,9 +13,9 @@
         android:layout_gravity="center_horizontal"
         android:text="历史维修"
         android:textColor="#000000"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:padding="@dimen/qb_px_8"/>
+        android:padding="@dimen/qb_px_4"/>
 
     <View
         android:layout_width="match_parent"
@@ -89,16 +90,16 @@
                 style="@style/mysearchtitlestyle"/>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_1"
-            android:background="@color/view" />
-
         <ListView
             android:id="@+id/lv_lishi_weixiiu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/view" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -118,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:text="维修项目"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:padding="@dimen/qb_px_4"/>
 
             <View
@@ -143,13 +144,8 @@
                     style="@style/mysearchtitlestyle" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qb_px_1"
-                android:background="@color/view" />
-
             <ListView
-                android:id="@+id/lv_danhao"
+                android:id="@+id/lv_wxxmls"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </LinearLayout>
@@ -166,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:text="维修用料"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:padding="@dimen/qb_px_4"/>
 
             <View
@@ -206,13 +202,8 @@
                     style="@style/mysearchtitlestyle" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qb_px_1"
-                android:background="@color/view" />
-
             <ListView
-                android:id="@+id/lv_yongliao"
+                android:id="@+id/lv_wxclls"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
@@ -223,20 +214,15 @@
         android:layout_height="@dimen/qb_px_1"
         android:background="@color/view" />
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/qb_px_8"
-        android:layout_gravity="right">
-
-        <Button
-            android:id="@+id/btn_yes"
-            android:layout_width="@dimen/qb_px_80"
-            android:layout_height="@dimen/qb_px_30"
-            android:background="@drawable/cundang"
-            android:text="确定"
-            android:textColor="@color/bai"
-            android:textSize="14sp"
-            android:layout_marginRight="@dimen/qb_px_40"/>
-    </FrameLayout>
+    <Button
+        android:id="@+id/btn_yes"
+        android:layout_width="@dimen/qb_px_90"
+        android:layout_height="@dimen/qb_px_30"
+        android:background="@drawable/cundang"
+        android:text="确定"
+        android:textColor="@color/bai"
+        android:textSize="14sp"
+        android:layout_marginRight="@dimen/qb_px_10"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/qb_px_4"/>
 </LinearLayout>

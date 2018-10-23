@@ -353,39 +353,30 @@
                 <LinearLayout
                     android:id="@+id/bsd_xm55"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/qb_px_34"
-                    android:background="@drawable/biankuang_title_bg">
+                    android:layout_height="@dimen/qb_px_34">
 
                     <TextView
                         android:id="@+id/bsd_xsbj_name"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        style="@style/mysearchtitlestyle"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:text="员工" />
 
                     <TextView
                         android:id="@+id/bsd_xsbj_gongshi"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        style="@style/mysearchtitlestyle"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:text="工时" />
 
                     <TextView
                         android:id="@+id/bsd_xsbj_jiner"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        style="@style/mysearchtitlestyle"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:text="金额" />
 
                     <TextView
                         android:id="@+id/bsd_xsbj_caozuo"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        style="@style/mysearchtitlestyle"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:text="操作" />
                 </LinearLayout>
 

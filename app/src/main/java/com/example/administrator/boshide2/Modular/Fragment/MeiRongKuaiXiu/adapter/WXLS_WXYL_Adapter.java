@@ -19,15 +19,11 @@ import java.util.List;
  */
 
 public class WXLS_WXYL_Adapter extends BaseAdapter {
-    Context context;
-    List<WXLS_YL_Bean> list;
-    LayoutInflater inflater;
-    public static HashMap<Integer, Boolean> isChecked;
+    private List<WXLS_YL_Bean> list;
+    private LayoutInflater inflater;
 
-    public WXLS_WXYL_Adapter(Context context, List<WXLS_YL_Bean> list, HashMap<Integer, Boolean> isChecked) {
-        this.context = context;
+    public WXLS_WXYL_Adapter(Context context, List<WXLS_YL_Bean> list) {
         this.list = list;
-        this.isChecked = isChecked;
         inflater = LayoutInflater.from(context);
     }
 
@@ -52,47 +48,29 @@ public class WXLS_WXYL_Adapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.layout_item_fr_wxls_yl, null);
-            holder.peijian = (TextView) convertView.findViewById(R.id.tv_peijian);
-            holder.guige = (TextView) convertView.findViewById(R.id.tv_guige);
-            holder.shuliang = (TextView) convertView.findViewById(R.id.tv_shuliang);
-            holder.danjia = (TextView) convertView.findViewById(R.id.tv_danjia);
-            holder.jine = (TextView) convertView.findViewById(R.id.tv_jine);
-//            holder.checkBox = (CheckBox) convertView.findViewById(R.id.cb_xuanzhong_yl);
+            holder.tv_wxcl_name = (TextView) convertView.findViewById(R.id.tv_wxcl_name);
+            holder.tv_wxcl_th = (TextView) convertView.findViewById(R.id.tv_wxcl_th);
+            holder.tv_wxcl_sl = (TextView) convertView.findViewById(R.id.tv_wxcl_sl);
+            holder.tv_wxcl_dj = (TextView) convertView.findViewById(R.id.tv_wxcl_dj);
+            holder.tv_wxcl_je = (TextView) convertView.findViewById(R.id.tv_wxcl_je);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         WXLS_YL_Bean bean = list.get(position);
-        holder.peijian.setText(bean.getPeijian());
-        holder.guige.setText(bean.getGuige());
-        holder.shuliang.setText(bean.getShuliang());
-        holder.danjia.setText(bean.getDanjia());
-        holder.jine.setText(bean.getJine());
-//        holder.checkBox.setChecked(isChecked.get(position));
-//        holder.checkBox.setTag(position);
-//        holder.checkBox.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Integer tag = (Integer) v.getTag();
-//                if (isChecked.get(tag)) {// 先判断isSelected中是否已经选中
-//                    // 选中就置为false，即不选中
-//                    isChecked.put(tag, false);
-//                } else {
-//                    // 选中
-//                    isChecked.put(tag, true);
-//                }
-//                notifyDataSetChanged();
-//            }
-//        });
+        holder.tv_wxcl_name.setText(bean.getPeijian());
+        holder.tv_wxcl_th.setText(bean.getGuige());
+        holder.tv_wxcl_sl.setText(bean.getShuliang());
+        holder.tv_wxcl_dj.setText(bean.getDanjia());
+        holder.tv_wxcl_je.setText(bean.getJine());
         return convertView;
     }
 
-    class ViewHolder {
-        public TextView peijian;
-        public TextView guige;
-        public TextView shuliang;
-        public TextView danjia;
-        public TextView jine;
-//        public CheckBox checkBox;
+    public final class ViewHolder {
+        TextView tv_wxcl_name;
+        TextView tv_wxcl_th;
+        TextView tv_wxcl_sl;
+        TextView tv_wxcl_dj;
+        TextView tv_wxcl_je;
     }
 }
