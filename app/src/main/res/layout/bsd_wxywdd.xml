@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/content_title_back_layout" />
+    <include layout="@layout/content_title_back_no_layout" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,27 +24,9 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/relativeLayout7"
-                style="@style/myeditlinearlayoutstyle"
-                android:layout_height="@dimen/qb_px_32"
-                android:layout_weight="1.5">
-
-                <TextView
-                    android:id="@+id/bsd_ytp"
-                    style="@style/myeditinfonamestyle"
-                    android:text="维修单号:" />
-
-                <TextView
-                    android:id="@+id/bsd_ywwwdd_dh"
-                    style="@style/myeditinfovaluestyle" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/relativeLayout8"
                 style="@style/myeditlinearlayoutstyle"
-                android:layout_height="@dimen/qb_px_32"
-                android:layout_marginLeft="@dimen/qb_px_10">
+                android:layout_height="@dimen/qb_px_32">
 
                 <TextView
                     android:id="@+id/textView77"
@@ -77,7 +59,7 @@
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_marginLeft="@dimen/qb_px_10"
-                android:layout_weight="1.5">
+                android:layout_weight="1.2">
 
                 <TextView
                     android:id="@+id/textView15"
@@ -105,6 +87,23 @@
                     android:id="@+id/bsd_ywwwdd_chezu"
                     style="@style/myeditinfomarqeestyle" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/relativeLayout21"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_weight="1.5"
+                android:layout_marginLeft="@dimen/qb_px_10">
+
+                <TextView
+                    android:id="@+id/textView17"
+                    style="@style/myeditinfonamestyle"
+                    android:text="车型:" />
+
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/bsd_ywwwdd_chexing"
+                    style="@style/myeditinfomarqeestyle" />
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -117,26 +116,9 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/relativeLayout21"
-                style="@style/myeditlinearlayoutstyle"
-                android:layout_height="@dimen/qb_px_32"
-                android:layout_weight="1.5">
-
-                <TextView
-                    android:id="@+id/textView17"
-                    style="@style/myeditinfonamestyle"
-                    android:text="车型:" />
-
-                <com.example.administrator.boshide2.Modular.View.MarqueeView
-                    android:id="@+id/bsd_ywwwdd_chexing"
-                    style="@style/myeditinfomarqeestyle" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/relativeLayout22"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
-                android:layout_marginLeft="@dimen/qb_px_10"
                 android:layout_weight="1.5">
 
                 <TextView
@@ -153,8 +135,7 @@
                 android:id="@+id/relativeLayout23"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
-                android:layout_marginLeft="@dimen/qb_px_10"
-                android:layout_weight="1">
+                android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
                     android:id="@+id/textView19"
@@ -197,21 +178,13 @@
                     android:id="@+id/bsd_ywwwdd_dianhua"
                     style="@style/myeditinfovaluestyle" />
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bsd_wxywdd_top_line3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_4"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/relativeLayout25"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
-                android:layout_weight="2">
+                android:layout_weight="1.5"
+                android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
                     android:id="@+id/textView21"
@@ -222,7 +195,15 @@
                     android:id="@+id/bsd_ywwwdd_dengjishijian"
                     style="@style/myeditinfomarqeestyle" />
             </LinearLayout>
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/bsd_wxywdd_top_line3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_4"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/bsd_wxywdd_clxx"

@@ -19,41 +19,15 @@ import java.util.Map;
 
 public class BSD_wxywdd_dap extends BaseAdapter {
     private LayoutInflater layoutInflater;
-    private Context context;
     private List<Map<String, String>> list;
-    private UP_jiaqian up_jiaqian;
-    private Remo remove;
-    private UP_gongshi up_gongshi;
-    private UP_xm_mc  up_xm_mc;
     private OnOperateItemListener onOperateItemListener;
-
-
-    public  void  setUp_xm_mc(UP_xm_mc up_xm_mc){
-        this.up_xm_mc=up_xm_mc;
-    }
-    public void setUp_jiaqian(UP_jiaqian up_jiaqian) {
-        this.up_jiaqian = up_jiaqian;
-    }
-    public void setUp_gongshi(UP_gongshi up_gongshi) {
-        this.up_gongshi = up_gongshi;
-    }
-
-    public void setRemove(Remo remove) {
-        this.remove = remove;
-    }
-
 
     public void setList(List<Map<String, String>> list) {
         this.list = list;
     }
 
-    public BSD_wxywdd_dap(Context context) {
-        this.context = context;
-        this.layoutInflater = LayoutInflater.from(context);
-    }
-
     public BSD_wxywdd_dap(Context context, List<Map<String, String>> list) {
-        this.context = context;
+        layoutInflater = LayoutInflater.from(context);
         this.list = list;
     }
 
@@ -64,16 +38,18 @@ public class BSD_wxywdd_dap extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return list.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
-    class Holder {
-        TextView bsd_xsbj_name, bsd_xsbj_caozuo, bsd_xsbj_gongshi, bsd_xsbj_jiner;
+    public final class Holder {
+        TextView bsd_xsbj_name;
+        TextView bsd_xsbj_gongshi;
+        TextView bsd_xsbj_je;
         ImageView iv_delete;
     }
 
@@ -82,19 +58,19 @@ public class BSD_wxywdd_dap extends BaseAdapter {
         Holder holder = null;
         if (contetview == null) {
             holder = new Holder();
-            contetview = LayoutInflater.from(context).inflate(R.layout.bsd_wxywdd_adp_item, null);
+            contetview = layoutInflater.inflate(R.layout.bsd_wxywdd_adp_item, null);
             holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
-            holder.iv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_xsbj_gongshi = (TextView) contetview.findViewById(R.id.bsd_xsbj_gongshi);
-            holder.bsd_xsbj_jiner = (TextView) contetview.findViewById(R.id.bsd_xsbj_jiner);
+            holder.bsd_xsbj_je = (TextView) contetview.findViewById(R.id.bsd_xsbj_je);
+            holder.iv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
         holder.bsd_xsbj_name.setText(list.get(i).get("reny_mc"));
         holder.bsd_xsbj_gongshi.setText(list.get(i).get("paig_khgs"));
-        holder.bsd_xsbj_jiner.setText(list.get(i).get("paig_khje"));
-        holder.bsd_xsbj_jiner.setOnClickListener(new View.OnClickListener() {
+        holder.bsd_xsbj_je.setText(list.get(i).get("paig_khje"));
+        holder.bsd_xsbj_je.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onOperateItemListener != null) {
@@ -121,22 +97,6 @@ public class BSD_wxywdd_dap extends BaseAdapter {
             }
         });
         return contetview;
-    }
-
-    public interface Remo {
-        public void onYesClick(String reco_no);
-    }
-
-    public interface UP_gongshi {
-        public void onYesClick(String gongshi, int i);
-    }
-
-    public interface UP_jiaqian {
-        public void onYesClick(String gongshi, int i);
-    }
-
-    public interface UP_xm_mc {
-        public void onYesClick(String xm_mc, int i);
     }
 
     public interface OnOperateItemListener {

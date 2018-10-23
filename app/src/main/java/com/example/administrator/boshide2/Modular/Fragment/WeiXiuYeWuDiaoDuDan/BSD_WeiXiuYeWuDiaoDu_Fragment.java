@@ -25,8 +25,6 @@ import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.BSD_mrkx_wxcl;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.BSD_mrkx_wxxm;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
@@ -39,7 +37,6 @@ import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.f
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_XM_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_wxywdd_wxcl;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_wxywdd_wxxm;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_xm_pop_entiy;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
@@ -65,40 +62,36 @@ import java.util.Map;
  */
 public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.OnClickListener {
     private static final String PARAM_KEY = "param_key";
-    LinearLayout bsd_lsbj_fanhui;
+    private LinearLayout bsd_lsbj_fanhui;
     private TextView tv_wxxmAdd;
     private TextView tv_wxllAdd;
-    public ListView bsd_wxywdd_you_lv;
-    BSD_wxywdd_dap adapter;
-    List<HashMap<String, String>> data = new ArrayList<>();
-    TextView bsd_ywwwdd_dh;
-    TextView bsd_ywwwdd_cp;
-    TextView bsd_ywwwdd_pinpai;
-    TextView bsdywwwdd_chexi;
-    TextView bsd_ywwwdd_chezu;
-    TextView bsd_ywwwdd_chexing;
-    TextView bsd_ywwwdd_vin;
-    TextView bsd_ywwwdd_user;
-    TextView bsd_ywwwdd_fuwuguwen;
-    TextView bsd_ywwwdd_dengjishijian;
-    TextView bsd_ywwwdd_dianhua;
+    private ListView bsd_wxywdd_you_lv;
+    private BSD_wxywdd_dap adapter;
+    private List<HashMap<String, String>> data = new ArrayList<>();
+    private TextView bsd_ywwwdd_cp;
+    private TextView bsd_ywwwdd_pinpai;
+    private TextView bsdywwwdd_chexi;
+    private TextView bsd_ywwwdd_chezu;
+    private TextView bsd_ywwwdd_chexing;
+    private TextView bsd_ywwwdd_vin;
+    private TextView bsd_ywwwdd_user;
+    private TextView bsd_ywwwdd_fuwuguwen;
+    private TextView bsd_ywwwdd_dengjishijian;
+    private TextView bsd_ywwwdd_dianhua;
     private List<BSD_WeiXiuJieDan_Entity> list = new ArrayList<BSD_WeiXiuJieDan_Entity>();
     private Dialog mWeiboDialog;
     private BSD_wxywdd_wxcl BSD_wxcl;
     private BSD_wxywdd_wxxm BSD_wxxm;
-    Queding_Quxiao queding_quxiao;
-    //修改工时弹框
-    BSD_XiuGaiGongShi bsd_xiuGaiGongShi;
-    List<Map<String, String>> listPGrenyuan = new ArrayList<Map<String, String>>();
-    URLS url;
-    TextView bsd_zadd_wg;
-    QueRen queRen;
-    double renyuangongshi;
-    TextView tv_stopwx;
-    TiaoZhuan tiaoZhuan;
-    //车辆信息、历史维修、历史维修建议
-    private  TextView  bsd_wxywdd_clxx,bsd_wxywdd_lswxjy,bsd_wxywdd_lswx;
-
+    private Queding_Quxiao queding_quxiao;
+    private List<Map<String, String>> listPGrenyuan = new ArrayList<Map<String, String>>();
+    private URLS url;
+    private TextView bsd_zadd_wg;
+    private QueRen queRen;
+    private TextView tv_stopwx;
+    private TiaoZhuan tiaoZhuan;
+    private  TextView  bsd_wxywdd_clxx;
+    private TextView bsd_wxywdd_lswxjy;
+    private TextView bsd_wxywdd_lswx;
     private MainActivity mainActivity;
     private TextView title;
     private TextView footerText;
@@ -117,6 +110,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private double xm_zj;
     private double zong_zj;
     private UpdateItemInfoDialog updateItemInfoDialog;
+    private TextView billNo;
 
     public void setTiaoZhuan(TiaoZhuan tiaoZhuan) {
         this.tiaoZhuan = tiaoZhuan;
@@ -155,26 +149,26 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 ((MainActivity) getActivity()).upzcdd(view);
             }
         });
+        // 终止维修
         tv_stopwx = (TextView) view.findViewById(R.id.tv_stopwx);
         tv_stopwx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zz();
+                stopWx();
             }
         });
-
+        // 完工
         bsd_zadd_wg = (TextView) view.findViewById(R.id.bsd_zadd_wg);
         bsd_zadd_wg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 queding_quxiao = new Queding_Quxiao(getActivity(), "确认是否完工");
                 queding_quxiao.show();
                 queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
                     @Override
                     public void onConfirm() {
                         queding_quxiao.dismiss();
-                        WG(Conts.work_no);
+                        wanGong();
                         //发送微信
                         weixin();
                     }
@@ -184,8 +178,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                         queding_quxiao.dismiss();
                     }
                 });
-
-
             }
         });
         //车辆信息、历史维修、历史维修建议
@@ -220,8 +212,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                         show(getFragmentManager(),"mrkx_lswxjy");
             }
         });
-
-        bsd_ywwwdd_dh = (TextView) view.findViewById(R.id.bsd_ywwwdd_dh);
         bsd_ywwwdd_cp = (TextView) view.findViewById(R.id.bsd_ywwwdd_cp);
         bsd_ywwwdd_pinpai = (TextView) view.findViewById(R.id.bsd_ywwwdd_pinpai);
         bsdywwwdd_chexi = (TextView) view.findViewById(R.id.bsdywwwdd_chexi);
@@ -259,6 +249,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         tv_wxxmAdd.setOnClickListener(this);
         tv_wxllAdd.setOnClickListener(this);
         title = (TextView) view.findViewById(R.id.tv_title);
+        billNo = (TextView) view.findViewById(R.id.tv_billNo);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
         tv_paigongAll = (TextView) view.findViewById(R.id.tv_paigong_all);
         tv_paigongAll.setOnClickListener(new View.OnClickListener() {
@@ -281,6 +272,10 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 }
             }
         });
+
+        bsd_ywwwdd_cp.setFocusable(true);
+        bsd_ywwwdd_cp.setFocusableInTouchMode(true);
+        bsd_ywwwdd_cp.requestFocus();
     }
 
     private void updatePaigongJE(final int position) {
@@ -432,7 +427,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     }
 
     private void updateBillInfoUI() {
-        bsd_ywwwdd_dh.setText(billEntiy.getWork_no());
+        billNo.setText(billEntiy.getWork_no());
         Conts.wxxm_no = billEntiy.getWork_no();
         bsd_ywwwdd_cp.setText(billEntiy.getChe_no());
         String cheCx = billEntiy.getChe_cx();
@@ -450,15 +445,13 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         bsd_ywwwdd_dianhua.setText(billEntiy.getKehu_dh());
     }
 
-    public void DY() {
+    public void print() {
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
+        params.put("work_no", billEntiy.getWork_no());
         params.put("caozuoyuan", MyApplication.shared.getString("bsd_user_name", ""));
-        Log.i("cjn", "查看打印的参数+" + Conts.work_no + "===caozuoyuan====" + MyApplication.shared.getString("bsd_user_name", ""));
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_DY, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                Log.i("cjn", "打印成功显示==" + s);
                 queRen = new QueRen(getActivity(), "打印成功");
                 queRen.show();
                 queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
@@ -486,14 +479,12 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
 
     }
 
-    public void WG(String wxid) {
+    public void wanGong() {
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", wxid);
-        Log.i("cjn", "查看完工的参数" + wxid);
+        params.put("work_no", billEntiy.getWork_no());
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_WG, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                Log.i("cjn", "完工成功==" + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询失败")) {
@@ -506,12 +497,12 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                             }
                         });
                     } else {
-                        queding_quxiao = new Queding_Quxiao(getActivity(), "成功！是否打印");
+                        queding_quxiao = new Queding_Quxiao(getActivity(), "已完工！是否打印");
                         queding_quxiao.show();
                         queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
                             @Override
                             public void onConfirm() {
-                                DY();
+                                print();
                                 queding_quxiao.dismiss();
                             }
 
@@ -525,8 +516,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -548,7 +537,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     /**
      * 终止派工
      */
-    public void zz() {
+    public void stopWx() {
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", Conts.work_no);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ZZ, params, new AbStringHttpResponseListener() {
@@ -579,102 +568,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    /**
-     * 修改工时
-     *
-     * @param id
-     * @param je
-     * @param gs
-     */
-    public void xiugaigongshi(int id, Double je, Double gs) {
-        AbRequestParams params = new AbRequestParams();
-        params.put("id", id);
-        params.put("je", je+"");
-        params.put("gs", gs+"");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_GsDj_xiugai, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "成功的显示" + s);
-            }
-
-            @Override
-            public void onStart() {
-            }
-
-            @Override
-            public void onFinish() {
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "失败的显示" + s);
-            }
-        });
-
-
-    }
-
-    /**
-     * 派工人员详细
-     *
-     * @param work_no
-     * @param wxxm_no
-     */
-    public void PGRenYuan(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je) {
-        listPGrenyuan.clear();
-        AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
-        params.put("wxxm_no", wxxm_no);
-        Log.i("cjn", "查看两个数据" + work_no + "======" + wxxm_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_PaiGong_XiangXi, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int a, String s) {
-                Log.i("cjn", "派工明细" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("1")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            //这块拿到的是维系接单的详细表
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("reco_no", item.getString("reco_no"));
-                            map.put("work_no", item.getString("work_no"));
-                            map.put("wxxm_no", item.getString("wxxm_no"));
-                            map.put("reny_no", item.getString("reny_no"));
-                            map.put("reny_mc", item.getString("reny_mc"));
-                            map.put("wxry_bm", item.getString("wxry_bm"));
-                            map.put("paig_khgs", item.getString("paig_khgs"));
-                            map.put("paig_khje", item.getString("paig_khje"));
-                            map.put("paig_pgsj", item.getString("paig_pgsj"));
-                            listPGrenyuan.add(map);
-                        }
-                        adapter.setList(listPGrenyuan);
-                        adapter.notifyDataSetChanged();
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onStart() {
-            }
-
-            @Override
-            public void onFinish() {
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-
-            }
-        });
-
     }
 
     /**

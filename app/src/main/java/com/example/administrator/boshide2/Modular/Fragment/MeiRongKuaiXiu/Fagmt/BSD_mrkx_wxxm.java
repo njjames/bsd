@@ -171,7 +171,7 @@ public class BSD_mrkx_wxxm extends Fragment {
                 updateItemInfoDialog.setToopromtXmmc(new UpdateItemInfoDialog.ToopromtXmmc() {
                     @Override
                     public void onYesClick(String newWxxmMc) {
-                        updateWxxmMC(wxxmNo, newWxxmMc, position);
+                        updateWxxmMC(list_XM.get(position).getWork_no(), wxxmNo, newWxxmMc, position);
                     }
                 });
             }
@@ -197,10 +197,10 @@ public class BSD_mrkx_wxxm extends Fragment {
         tv_recordNum = (TextView) view.findViewById(R.id.tv_record_num);
     }
 
-    private void updateWxxmMC(String wxxmNo, final String wxxmMc, final int position) {
+    private void updateWxxmMC(String workNo, String wxxmNo, final String wxxmMc, final int position) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
+        params.put("work_no", workNo);
         params.put("wxxm_no", wxxmNo);
         params.put("wxxm_mc", wxxmMc);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_Update_WxxmMc, params, new AbStringHttpResponseListener() {

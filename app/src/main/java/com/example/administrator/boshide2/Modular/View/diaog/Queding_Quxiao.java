@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.boshide2.R;
@@ -26,7 +27,7 @@ public class Queding_Quxiao extends Dialog implements View.OnClickListener {
         setCanceledOnTouchOutside(false);
         WindowManager.LayoutParams params = this.getWindow().getAttributes();
         params.width = getContext().getResources().getDimensionPixelSize(R.dimen.qb_px_300);
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
         this.getWindow().setAttributes(params);
     }
 

@@ -84,7 +84,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private ListView bsd_wxywdd_you_lv;
     private BSD_wxywdd_dap paiGongInfoAdapter;
     private List<HashMap<String, String>> data = new ArrayList<>();
-    private TextView bsd_ywwwdd_dh;
     private TextView bsd_ywwwdd_cp;
     private TextView bsd_ywwwdd_pinpai;
     private TextView bsdywwwdd_chexi;
@@ -493,7 +492,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
         });
 
-        bsd_ywwwdd_dh = (TextView) view.findViewById(R.id.bsd_ywwwdd_dh);
         bsd_ywwwdd_cp = (TextView) view.findViewById(R.id.bsd_ywwwdd_cp);
         bsd_ywwwdd_pinpai = (TextView) view.findViewById(R.id.bsd_ywwwdd_pinpai);
         bsdywwwdd_chexi = (TextView) view.findViewById(R.id.bsdywwwdd_chexi);

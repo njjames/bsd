@@ -20,38 +20,11 @@ import java.util.List;
  */
 
 public class BSD_wxywwd_wxcl_adp extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
-    List<BSD_WeiXiuJieDan_CL_Entity> list;
-    DeletCL deletCL;
-    UPsl uPsl;
-    UPdj uPdj;
-    private  KuCun   kuCun;
+    private LayoutInflater layoutInflater;
+    private List<BSD_WeiXiuJieDan_CL_Entity> list;
     private OnOperateItemListener onOperateItemListener;
 
-    public  void  setKuCun(KuCun   kuCun){
-        this.kuCun=kuCun;
-    }
-
-
-    public void setuPsl(UPsl uPsl) {
-        this.uPsl = uPsl;
-    }
-
-    public void setuPdj(UPdj uPdj) {
-        this.uPdj = uPdj;
-    }
-
-    public void setDeletCL(DeletCL deletCL) {
-        this.deletCL = deletCL;
-    }
-
-    public void setList(List<BSD_WeiXiuJieDan_CL_Entity> list) {
-        this.list = list;
-    }
-
     public BSD_wxywwd_wxcl_adp(Context context, List<BSD_WeiXiuJieDan_CL_Entity> list) {
-        this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.list = list;
     }
@@ -63,13 +36,14 @@ public class BSD_wxywwd_wxcl_adp extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return list.get(i);
     }
 
     @Override
     public long getItemId(int i) {
         return 0;
     }
+
     public final class Holder {
         TextView bsd_xsbj_name;
         TextView bsd_kxbj_sl;
@@ -100,6 +74,10 @@ public class BSD_wxywwd_wxcl_adp extends BaseAdapter {
         }
         holder.bsd_xsbj_name.setText(list.get(i).getPeij_mc());
         holder.bsd_kxbj_sl.setText("" + list.get(i).getPeij_sl());
+        holder.bsd_kxbj_dj.setText("" + list.get(i).getPeij_dj());
+        holder.bsd_kxbj_dw.setText(list.get(i).getPeij_dw());
+        holder.bsd_kxbj_je.setText("" + list.get(i).getPeij_sl() * list.get(i).getPeij_dj());
+
         holder.bsd_kxbj_sl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +86,6 @@ public class BSD_wxywwd_wxcl_adp extends BaseAdapter {
                 }
             }
         });
-        holder.bsd_kxbj_dj.setText("" + list.get(i).getPeij_dj());
         holder.bsd_kxbj_dj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,8 +94,6 @@ public class BSD_wxywwd_wxcl_adp extends BaseAdapter {
                 }
             }
         });
-        holder.bsd_kxbj_dw.setText(list.get(i).getPeij_dw());
-        holder.bsd_kxbj_je.setText("" + list.get(i).getPeij_sl() * list.get(i).getPeij_dj());
         holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,21 +111,6 @@ public class BSD_wxywwd_wxcl_adp extends BaseAdapter {
             }
         });
         return contetview;
-    }
-
-    public  interface   KuCun{
-        public  void  query_kc(String  peij_no );
-    }
-
-
-    public interface  DeletCL{
-        public void onYesClick(int i);
-    }
-    public interface UPsl {
-        public void onYesClick(int i,double sl,double dj);
-    }
-    public interface UPdj {
-        public void onYesClick(int i,double sl,double dj);
     }
 
     public interface OnOperateItemListener {
