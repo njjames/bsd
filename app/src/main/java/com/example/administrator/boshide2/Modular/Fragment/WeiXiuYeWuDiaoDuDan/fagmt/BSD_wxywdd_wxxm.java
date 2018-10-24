@@ -3,11 +3,9 @@ package com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,13 +16,9 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.BSD_MeiRongKuaiXiu_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.deleg.BSD_WeiXiuYeWuDiaoDuDian_delg;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.dialog.PaiGongDialog;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.fagmt_adp.BSD_wxywwd_wxxm_adp;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_xm_pop_entiy;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
@@ -36,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -168,6 +161,11 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
             public void onSuccess(int code, String data) {
                 list_XM.get(position).setWxxm_yje(gongshif);
                 list_XM.get(position).setWxxm_je(gongshif);
+                if (list_XM.get(position).getWxxm_gs() == 0) {
+                    list_XM.get(position).setWxxm_dj(gongshif);
+                } else {
+                    list_XM.get(position).setWxxm_dj(gongshif / list_XM.get(position).getWxxm_gs());
+                }
                 int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
                 adapter.notifyDataSetChanged();
                 bsd_lsbj_lv.setSelection(firstVisiblePosition);

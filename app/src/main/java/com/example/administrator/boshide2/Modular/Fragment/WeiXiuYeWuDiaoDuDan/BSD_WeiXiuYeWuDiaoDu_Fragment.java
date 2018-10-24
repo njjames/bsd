@@ -111,6 +111,8 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private double zong_zj;
     private UpdateItemInfoDialog updateItemInfoDialog;
     private TextView billNo;
+    private TextView tv_gsfl;
+    private TextView tv_totalJe;
 
     public void setTiaoZhuan(TiaoZhuan tiaoZhuan) {
         this.tiaoZhuan = tiaoZhuan;
@@ -154,7 +156,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         tv_stopwx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopWx();
+                stopWX();
             }
         });
         // 完工
@@ -168,9 +170,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                     @Override
                     public void onConfirm() {
                         queding_quxiao.dismiss();
-                        wanGong();
-                        //发送微信
-                        weixin();
+                        completeWX();
                     }
 
                     @Override
@@ -269,7 +269,8 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 }
             }
         });
-
+        tv_gsfl = (TextView) view.findViewById(R.id.bsd_ksbj_tv_gsfl);
+        tv_totalJe = (TextView) view.findViewById(R.id.tv_zong_money);
         bsd_ywwwdd_cp.setFocusable(true);
         bsd_ywwwdd_cp.setFocusableInTouchMode(true);
         bsd_ywwwdd_cp.requestFocus();
@@ -440,24 +441,39 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         bsd_ywwwdd_fuwuguwen.setText(billEntiy.getXche_cz());
         bsd_ywwwdd_dengjishijian.setText(billEntiy.getXche_yjwgrq());
         bsd_ywwwdd_dianhua.setText(billEntiy.getKehu_dh());
+        tv_gsfl.setText(billEntiy.getXche_sfbz());
+        tv_totalJe.setText(billEntiy.getXche_hjje() + "");
     }
 
+    /**
+     * 打印
+     */
     public void print() {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "打印中...");
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", billEntiy.getWork_no());
         params.put("caozuoyuan", MyApplication.shared.getString("bsd_user_name", ""));
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_DY, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int i, String s) {
-                queRen = new QueRen(getActivity(), "打印成功");
-                queRen.show();
-                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        queRen.dismiss();
-                        ((MainActivity) getActivity()).upzcdd();
+            public void onSuccess(int i, String data) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(data);
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        queRen = new QueRen(getActivity(), "打印成功");
+                        queRen.show();
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                                ((MainActivity) getActivity()).upzcdd();
+                            }
+                        });
                     }
-                });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -470,13 +486,14 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "打印失败显示==" + s);
+                Toast.makeText(getActivity(), "网络连接失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
 
     }
 
-    public void wanGong() {
+    public void completeWX() {
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", billEntiy.getWork_no());
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_WG, params, new AbStringHttpResponseListener() {
@@ -494,6 +511,8 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                             }
                         });
                     } else {
+                        //发送微信
+                        weixin();
                         queding_quxiao = new Queding_Quxiao(getActivity(), "已完工！是否打印");
                         queding_quxiao.show();
                         queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
@@ -534,7 +553,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     /**
      * 终止派工
      */
-    public void stopWx() {
+    public void stopWX() {
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", billEntiy.getWork_no());
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ZZ, params, new AbStringHttpResponseListener() {
@@ -773,7 +792,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                     cl_zj = clzj;
                     zong_zj = xm_zj + cl_zj;
                     double v = (Math.round(zong_zj * 100) / 100.0);
-//                    bsd_mrkx_zongjia.setText("" + v);
+                    tv_totalJe.setText("" + v);
                     billEntiy.setXche_hjje(zong_zj);
                 }
             });
@@ -915,7 +934,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                     xm_zj = xmzj;
                     zong_zj = xm_zj + cl_zj;
                     double v = (Math.round(zong_zj * 100) / 100.0);
-//                    bsd_mrkx_zongjia.setText("" + v);
+                    tv_totalJe.setText("" + v);
                     billEntiy.setXche_hjje(zong_zj);
                 }
             });
@@ -1014,6 +1033,12 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                             billEntiy.setXche_cz(json.getString("xche_cz"));
                             billEntiy.setXche_yjwgrq(json.getString("xche_yjwgrq"));
                             billEntiy.setXche_ywlx(json.getString("substate"));
+                            billEntiy.setXche_rgf(json.getDouble("xche_rgf"));
+                            billEntiy.setXche_clf(json.getDouble("xche_clf"));
+                            billEntiy.setXche_hjje(json.getDouble("xche_hjje"));
+                            xm_zj = json.getDouble("xche_rgf");
+                            cl_zj = json.getDouble("xche_clf");
+                            zong_zj = json.getDouble("xche_hjje");
                             updateBillInfoUI();
                             change_XM();
                         } else {
