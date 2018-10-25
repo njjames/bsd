@@ -16,12 +16,14 @@
         android:id="@+id/bsd_kxbj_sl"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
+        android:background="@drawable/biankuang_info_canwrite_bg"
         android:text="数量" />
 
     <TextView
         android:id="@+id/bsd_kxbj_dj"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
+        android:background="@drawable/biankuang_info_canwrite_bg"
         android:text="单价" />
 
     <TextView

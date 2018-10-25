@@ -276,7 +276,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 //隐藏输入法
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
                         WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-                BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(Conts.BILLTYPE_MRKX, billEntiy.getWork_no())
+                BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_MRKX, billEntiy.getWork_no())
                         .show(getFragmentManager(), "dialog_fragment");
             }
         });

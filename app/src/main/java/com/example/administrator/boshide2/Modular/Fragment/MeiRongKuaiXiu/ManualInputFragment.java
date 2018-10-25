@@ -123,9 +123,9 @@ public class ManualInputFragment extends BaseFragment {
         keyboardUtil.showKeyboard();
         keyboardUtil.setOnClickYes(new KeyboardUtil.OnClickYes() {
             @Override
-            public void onYesClick(String license) {
-                Conts.cp = license;
-                checkCarNoCanused(license);
+            public void onYesClick(String cheNo) {
+                Conts.cp = cheNo;
+                checkCarNoCanused(cheNo);
                 Conts.danju_type="mrkx";
             }
         });
@@ -165,10 +165,10 @@ public class ManualInputFragment extends BaseFragment {
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
     }
 
-    private void checkCarNoCanused(String license) {
+    private void checkCarNoCanused(final String cheNo) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("che_no", license);
+        params.put("che_no", cheNo);
         params.put("caozuoyuanID", MyApplication.shared.getString("id", ""));
         Request.Post(MyApplication.shared.getString("ip", "")+url.CHECK_CAR_CANUSED, params, new AbStringHttpResponseListener() {
             @Override
@@ -178,7 +178,7 @@ public class ManualInputFragment extends BaseFragment {
                     boolean canUsedType = jsonObject.getBoolean("data");
                     if (canUsedType) {
                         //跳转到编辑车辆、客户信息对话框
-                        BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(billType,"")
+                        BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(cheNo, billType,"")
                                 .show(getFragmentManager(), "dialog_fragment");
                     } else {   // 这种情况是有这个车，但是没有权限
                         showTipsDialog("此车已存在，但是您没有查询权限");

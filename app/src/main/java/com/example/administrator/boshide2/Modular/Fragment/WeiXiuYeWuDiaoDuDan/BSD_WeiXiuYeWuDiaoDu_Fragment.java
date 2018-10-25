@@ -88,11 +88,9 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private TextView bsd_zadd_wg;
     private QueRen queRen;
     private TextView tv_stopwx;
-    private TiaoZhuan tiaoZhuan;
     private  TextView  bsd_wxywdd_clxx;
     private TextView bsd_wxywdd_lswxjy;
     private TextView bsd_wxywdd_lswx;
-    private MainActivity mainActivity;
     private TextView title;
     private TextView footerText;
     private String param;
@@ -113,14 +111,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private TextView billNo;
     private TextView tv_gsfl;
     private TextView tv_totalJe;
-
-    public void setTiaoZhuan(TiaoZhuan tiaoZhuan) {
-        this.tiaoZhuan = tiaoZhuan;
-    }
-
-    public interface TiaoZhuan {
-        void onYesClick();
-    }
 
     public static BSD_WeiXiuYeWuDiaoDu_Fragment newInstance(String params) {
         BSD_WeiXiuYeWuDiaoDu_Fragment fragment = new BSD_WeiXiuYeWuDiaoDu_Fragment();
@@ -188,8 +178,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 Toast.makeText(getActivity(),"车辆信息",Toast.LENGTH_LONG).show();
                 //跳转到编辑车辆、客户信息界面
                 Conts.danju_type="wxywdd";
-                //跳转到编辑车辆、客户信息对话框
-                new BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment()
+                BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXDD, billEntiy.getWork_no())
                         .show(getFragmentManager(), "dialog_fragment");
 
             }
@@ -411,17 +400,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         getBillInfo();
-//        tiaoZhuan.onYesClick();
-//        if (Conts.wxjdtiaozhuan == 1) {
-//            Log.i("cjn", "aaaaa");
-//            tiaozhuanjiedan();
-//            Conts.wxjdtiaozhuan = 0;
-//        } else {
-//            getBillInfo();
-//            Log.i("cjn", "bbbbb");
-//            Conts.wxjdtiaozhuan = 0;
-//        }
-
     }
 
     private void updateBillInfoUI() {
@@ -1036,6 +1014,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                             billEntiy.setXche_rgf(json.getDouble("xche_rgf"));
                             billEntiy.setXche_clf(json.getDouble("xche_clf"));
                             billEntiy.setXche_hjje(json.getDouble("xche_hjje"));
+                            billEntiy.setXche_sfbz(json.getString("xche_sfbz"));
                             xm_zj = json.getDouble("xche_rgf");
                             cl_zj = json.getDouble("xche_clf");
                             zong_zj = json.getDouble("xche_hjje");
@@ -1159,33 +1138,5 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
 
     }
 
-
-    public void remodata(String reco_no) {
-        AbRequestParams params = new AbRequestParams();
-        params.put("xxNo", reco_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_paigongdelPgxx, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "查看删除成功" + s);
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "查看删除错误信息" + s);
-            }
-        });
-
-
-    }
 
 }

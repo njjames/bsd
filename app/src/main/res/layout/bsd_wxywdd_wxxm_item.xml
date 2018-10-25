@@ -5,60 +5,62 @@
     android:minHeight="@dimen/qb_px_30"
     android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/bsd_xsbj_name"
-            android:layout_weight="1.5"
-            style="@style/mysearchinfostyle"
-            android:text="项目名称" />
+    <TextView
+        android:id="@+id/bsd_xsbj_name"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1.5"
+        android:background="@drawable/biankuang_info_canwrite_bg"
+        android:text="项目名称" />
 
     <TextView
         android:id="@+id/bsd_kxbj_bzsj"
-        android:layout_weight="1"
         style="@style/mysearchinfostyle"
+        android:layout_weight="1"
         android:text="标准工时" />
 
     <TextView
         android:id="@+id/bsd_kxbj_gsdj"
-        android:layout_weight="1"
         style="@style/mysearchinfostyle"
+        android:layout_weight="1"
         android:text="工时单价" />
 
 
     <TextView
         android:id="@+id/bsd_kxbj_je"
-        android:layout_weight="1"
         style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:background="@drawable/biankuang_info_canwrite_bg"
         android:text="金额" />
 
     <ImageView
         android:id="@+id/iv_delete"
-        android:layout_weight="0.6"
         android:layout_width="0dp"
         android:layout_height="@dimen/qb_px_30"
-        android:src="@drawable/ic_delete_maincolor"
+        android:layout_weight="0.6"
+        android:background="@drawable/biankuang_info_bg"
         android:padding="@dimen/qb_px_8"
-        android:background="@drawable/biankuang_info_bg" />
+        android:src="@drawable/ic_delete_maincolor" />
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="@dimen/qb_px_30">
+        android:layout_height="@dimen/qb_px_30"
+        android:layout_weight="1">
 
         <ImageView
             android:id="@+id/bsd_kxbj_pg"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_30"
+            android:background="@drawable/biankuang_info_bg"
             android:padding="@dimen/qb_px_2"
-            android:src="@drawable/ic_paigong_sucesss"
-            android:background="@drawable/biankuang_info_bg"/>
+            android:src="@drawable/ic_paigong_sucesss" />
 
         <ImageView
             android:id="@+id/iv_selected"
             android:layout_width="@dimen/qb_px_16"
             android:layout_height="@dimen/qb_px_16"
-            android:src="@drawable/ic_arrow_left"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrow_left" />
     </RelativeLayout>
 
 </LinearLayout>

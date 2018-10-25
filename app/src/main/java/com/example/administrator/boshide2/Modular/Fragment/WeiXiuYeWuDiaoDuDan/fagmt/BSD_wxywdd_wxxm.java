@@ -260,7 +260,7 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
     private void wxxmPrice() {
         double wxxmZje = 0;
         for (int i = 0; i < list_XM.size(); i++) {
-            wxxmZje = wxxmZje + (list_XM.get(i).getWxxm_yje() * list_XM.get(i).getWxxm_zk());
+            wxxmZje = wxxmZje + (list_XM.get(i).getWxxm_je());
         }
         double v = (Math.round(wxxmZje * 100) / 100.0);
         tv_wxxm_money.setText(v + "元");

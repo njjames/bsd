@@ -57,8 +57,11 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
         return 0;
     }
 
-    class Holder {
-        TextView bsd_xsbj_name, bsd_kxbj_bzsj, bsd_kxbj_gsdj, bsd_kxbj_je;
+    public final class Holder {
+        TextView bsd_xsbj_name;
+        TextView bsd_kxbj_bzsj;
+        TextView bsd_kxbj_gsdj;
+        TextView bsd_kxbj_je;
         ImageView iv_delete;
         ImageView bsd_kxbj_pg;
         ImageView iv_selected;

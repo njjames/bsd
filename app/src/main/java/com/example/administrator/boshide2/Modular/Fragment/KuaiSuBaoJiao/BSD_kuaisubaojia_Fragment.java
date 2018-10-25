@@ -477,7 +477,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         bsd_ksbj_clxx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(Conts.BILLTYPE_KSBJ, billEntiy.getList_no())
+                BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_KSBJ, billEntiy.getList_no())
                         .show(getFragmentManager(), "dialog_fragment");
 
             }

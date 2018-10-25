@@ -87,10 +87,10 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
         bsd_im_zdsb = (ImageView) view.findViewById(R.id.bsd_im_zdsb);
         bsd_im_sdsr = (ImageView) view.findViewById(R.id.bsd_im_sdsr);
         bsd_im_xcbsb = (ImageView) view.findViewById(R.id.bsd_im_xcbsb);
-        bsd_lsbj = (LinearLayout) view.findViewById(R.id.ll_lishi);
         title = (TextView) view.findViewById(R.id.tv_title);
         titleLishi = (TextView) view.findViewById(R.id.tv_title_lishi);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
+        bsd_lsbj = (LinearLayout) view.findViewById(R.id.ll_lishi);
         bsd_lsbj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
