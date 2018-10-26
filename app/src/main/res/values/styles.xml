@@ -252,4 +252,15 @@
         <item name="colorSwitchThumbNormal">#666666</item>
         <item name="android:colorForeground">#99F7714C</item>
     </style>
+
+    <style name="mysearchbtnstyle">
+        <item name="android:layout_width">@dimen/qb_px_60</item>
+        <item name="android:layout_height">@dimen/qb_px_30</item>
+        <item name="android:layout_marginLeft">@dimen/qb_px_10</item>
+        <item name="android:background">@drawable/cundang</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:text">查询</item>
+    </style>
 </resources>

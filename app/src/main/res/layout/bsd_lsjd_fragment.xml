@@ -13,10 +13,10 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@drawable/bsd_lsbj_body"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/qb_px_4"
         android:paddingRight="@dimen/qb_px_4"
-        android:paddingTop="@dimen/qb_px_6"
-        android:orientation="vertical">
+        android:paddingTop="@dimen/qb_px_6">
 
         <LinearLayout
             android:id="@+id/bsd_on_top"
@@ -28,8 +28,8 @@
                 android:id="@+id/relativeLayout7"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/qb_px_32">
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textView7"
@@ -46,9 +46,9 @@
                 android:id="@+id/relativeLayout12"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="@dimen/qb_px_32"
-                android:layout_marginLeft="@dimen/qb_px_10">
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textView11"
@@ -59,8 +59,8 @@
                     android:id="@+id/bsd_lsjd_cz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/x2"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x2"
                     android:layout_toRightOf="@+id/textView11"
                     android:background="@null"
                     android:hint="请输入姓名"
@@ -68,153 +68,73 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout13"
-                android:layout_width="@dimen/x30"
-                android:layout_height="@dimen/y45"
-                android:layout_marginStart="@dimen/x10"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/relativeLayout12"
-                android:background="@drawable/cundang">
+            <TextView
+                android:id="@+id/iv_search"
+                style="@style/mysearchbtnstyle" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="查询"
-                    android:textColor="#FFFFFF" />
-            </RelativeLayout>
-
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"></FrameLayout>
         </LinearLayout>
 
         <View
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
-            android:layout_below="@+id/bsd_on_top"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginTop="@dimen/qb_px_4"
             android:background="#F7714C" />
 
         <LinearLayout
             android:id="@+id/bsd_lsbj_toubuju"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y45"
+            android:layout_height="@dimen/qb_px_30"
             android:layout_below="@+id/bsd_on_xian"
-            android:layout_marginTop="@dimen/y10"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/bsd_xm12"
+            <TextView
+                style="@style/mysearchtitlestyle"
                 android:layout_weight="1.5"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
+                android:text="接单日期" />
 
-                <TextView
-                    android:id="@+id/tv_lsjd_rq"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="接单日期" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm22"
+            <TextView
+                style="@style/mysearchtitlestyle"
                 android:layout_weight="1"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
+                android:text="车主" />
 
-                <TextView
-                    android:id="@+id/tv_lsjd_mc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="车主" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm33"
+            <TextView
+                style="@style/mysearchtitlestyle"
                 android:layout_weight="1"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
+                android:text="车牌号" />
 
-                <TextView
-                    android:id="@+id/tv_lsjd_che_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="车牌号" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm44"
+            <TextView
+                style="@style/mysearchtitlestyle"
                 android:layout_weight="1"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
+                android:text="服务顾问" />
 
-                <TextView
-                    android:id="@+id/tv_lsjd_gw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="服务顾问" />
+            <TextView
+                style="@style/mysearchtitlestyle"
+                android:layout_weight="1"
+                android:text="维修进度" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm55"
-                android:layout_weight="1.2"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
-
-                <TextView
-                    android:id="@+id/tv_lsjd_jindu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="维修进度" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_xm66"
-                android:layout_weight="1.5"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
-
-                <TextView
-                    android:id="@+id/tv_lsjd_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="联系方式" />
-
-            </LinearLayout>
-
+            <TextView
+                style="@style/mysearchtitlestyle"
+                android:layout_weight="1"
+                android:text="联系方式" />
         </LinearLayout>
+
         <com.ab.view.pullview.AbPullToRefreshView
             android:id="@+id/lsfreshview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/bsd_lsbj_toubuju"
-            android:orientation="vertical" >
-        <ListView
-            android:id="@+id/bsd_lsbj_lv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/bsd_lsbj_toubuju"/>
-</com.ab.view.pullview.AbPullToRefreshView>
+            android:orientation="vertical">
 
+            <ListView
+                android:id="@+id/bsd_lsbj_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.ab.view.pullview.AbPullToRefreshView>
     </LinearLayout>
-    <!--中间结束-->
 
     <include layout="@layout/content_footer_layout" />
 </LinearLayout>

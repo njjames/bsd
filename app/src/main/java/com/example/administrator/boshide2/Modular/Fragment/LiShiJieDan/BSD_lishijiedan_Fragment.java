@@ -2,13 +2,9 @@ package com.example.administrator.boshide2.Modular.Fragment.LiShiJieDan;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,6 +20,7 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
+import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiJieDan.Adapter.BSD_lsjd_adp;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.R;
@@ -42,7 +39,7 @@ import static android.content.Context.TELEPHONY_SERVICE;
  * @历史接单 Created by Administrator on 2017-4-13.
  */
 
-public class BSD_lishijiedan_Fragment extends Fragment implements AbPullToRefreshView.OnFooterLoadListener, AbPullToRefreshView.OnHeaderRefreshListener {
+public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRefreshView.OnFooterLoadListener, AbPullToRefreshView.OnHeaderRefreshListener {
     RelativeLayout bsd_lsbj_fanhui;
     ListView bsd_lsbj_lv;
     List<BSD_WeiXiuJieDan_Entity> data = new ArrayList<BSD_WeiXiuJieDan_Entity>();
@@ -51,24 +48,22 @@ public class BSD_lishijiedan_Fragment extends Fragment implements AbPullToRefres
     int page = 1;
     URLS url;
     EditText bsd_lsjd_cp, bsd_lsjd_cz;
-    RelativeLayout relativeLayout13;
+    TextView iv_search;
+    private TextView title;
+    private TextView footerText;
+    private String cheNo = "";
+    private String kehuMc = "";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bsd_lsjd_fragment, null);
-        bsd_lsjd_cp = (EditText) view.findViewById(R.id.bsd_lsjd_cp);
-        bsd_lsjd_cz = (EditText) view.findViewById(R.id.bsd_lsjd_cz);
-        relativeLayout13 = (RelativeLayout) view.findViewById(R.id.relativeLayout13);
-        url = new URLS();
-        LSJD();
-        //data();
-        init(view);
-        bsdtext(view);
-
-        return view;
+    protected int getLayoutId() {
+        return R.layout.bsd_lsjd_fragment;
     }
 
-    public void init(View view) {
+    @Override
+    public void initView() {
+        bsd_lsjd_cp = (EditText) view.findViewById(R.id.bsd_lsjd_cp);
+        bsd_lsjd_cz = (EditText) view.findViewById(R.id.bsd_lsjd_cz);
+        iv_search = (TextView) view.findViewById(R.id.iv_search);
         abPullToRefreshView = (AbPullToRefreshView) view.findViewById(R.id.lsfreshview);
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
         adapter = new BSD_lsjd_adp(getActivity(), data);
@@ -106,7 +101,7 @@ public class BSD_lishijiedan_Fragment extends Fragment implements AbPullToRefres
                 ((MainActivity) getActivity()).uowxjdxiangqing();
             }
         });
-// 设置监听器
+        // 设置监听器
         abPullToRefreshView.setOnHeaderRefreshListener(this);
         abPullToRefreshView.setOnFooterLoadListener(this);
 
@@ -117,30 +112,44 @@ public class BSD_lishijiedan_Fragment extends Fragment implements AbPullToRefres
         abPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
                 getResources().getDrawable(R.drawable.progress_circular));
 
-        relativeLayout13.setOnClickListener(new View.OnClickListener() {
+        iv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LSJD();
+                data.clear();
+                cheNo = bsd_lsjd_cp.getText().toString();
+                kehuMc = bsd_lsjd_cz.getText().toString();
+                page = 1;
+                getData();
             }
         });
+        title = (TextView) view.findViewById(R.id.tv_title);
+        footerText = (TextView) view.findViewById(R.id.tv_footertext);
+    }
 
+    @Override
+    public void initData() {
+        url = new URLS();
+        title.setText("在厂调度");
+        footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
+                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
+        data.clear();
+        page = 1;
+        getData();
     }
 
     /**
-     * lishi接单
+     * 获取历史接单
      */
-    public void LSJD() {
+    public void getData() {
         data.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("pageNumber", page);
-        params.put("che_no",bsd_lsjd_cp.getText().toString());
-        params.put("kehu_mc",bsd_lsjd_cz.getText().toString());
+        params.put("che_no", cheNo);
+        params.put("kehu_mc", kehuMc);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_LSJD, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int statusCode, String s) {
-                Log.i("cjn", "历史接单====" + s);
                 try {
-
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
                         JSONArray jsonarray = jsonObject.getJSONArray("data");
@@ -169,15 +178,12 @@ public class BSD_lishijiedan_Fragment extends Fragment implements AbPullToRefres
                             entiy.setXche_wxjd(item.getString("xche_wxjd"));
                             data.add(entiy);
                         }
-                        Log.i("cjn", "历史接单" + data.toString());
                         adapter.notifyDataSetChanged();
-
                     } else {
                         Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }
                     abPullToRefreshView.onFooterLoadFinish();
                     abPullToRefreshView.onHeaderRefreshFinish();
-//                    WeiboDialogUtils.closeDialog(mWeiboDialog);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     adapter.notifyDataSetChanged();
@@ -212,37 +218,15 @@ public class BSD_lishijiedan_Fragment extends Fragment implements AbPullToRefres
     public void onFooterLoad(AbPullToRefreshView abPullToRefreshView) {
 
         page++;
-        LSJD();
+        getData();
     }
 
     @Override
     public void onHeaderRefresh(AbPullToRefreshView abPullToRefreshView) {
         data.clear();
         page = 1;
-        LSJD();
+        getData();
         adapter.notifyDataSetChanged();
-    }
-
-
-    //    public void data() {
-//
-//        for (int i = 0; i < 20; i++) {
-//            HashMap<String, String> map = new HashMap<>();
-//            map.put("name", "2017/4/24 11:12");
-//            map.put("time", "张三");
-//            map.put("timemany", "冀A·54321");
-//            map.put("jinqian", "李晓敏");
-//            map.put("caozuo", "500元");
-//            map.put("qian", "11011912066");
-//            data.add(map);
-//        }
-//    }
-    TextView bsd_01_text;
-
-    public void bsdtext(View view) {
-        bsd_01_text = (TextView) view.findViewById(R.id.bsd_08_text);
-        bsd_01_text.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
-                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
     }
 
 
