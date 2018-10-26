@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,17 +19,11 @@ import java.util.List;
  */
 
 public class BSD_lsjd_adp extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
-    List<BSD_WeiXiuJieDan_Entity> list;
-    Photo photo;
-
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
-    }
+    private LayoutInflater layoutInflater;
+    private List<BSD_WeiXiuJieDan_Entity> list;
+    private Photo photo;
 
     public BSD_lsjd_adp(Context context, List<BSD_WeiXiuJieDan_Entity> list) {
-        this.context = context;
         this.list = list;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -40,45 +35,52 @@ public class BSD_lsjd_adp extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return list.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
-    class Holder {
-        TextView bsd_xsbj_name,bsd_kxbj_bzsj,bsd_kxbj_gsdj,bsd_kxbj_je,bsd_kxbj_qian,bsd_kxbj_cz;
-    RelativeLayout bsd_xm6;
+
+    public final class Holder {
+        TextView bsd_lsjd_workno;
+        TextView bsd_lsjd_jdrq;
+        TextView bsd_lsjd_kehumc;
+        TextView bsd_lsjd_cheno;
+        TextView bsd_lsjd_fwgw;
+        TextView bsd_lsjd_phone;
+        TextView bsd_lsjd_wxjd;
+        ImageView iv_phone;
     }
 
     @Override
     public View getView(int i, View contetview, ViewGroup viewGroup) {
-        Holder holder=null;
+        Holder holder = null;
         if (contetview == null) {
             holder = new Holder();
-
-            contetview=layoutInflater.inflate(R.layout.bsd_lsjd_item,null);
-
-            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
-            holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
-            holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_kxbj_qian= (TextView) contetview.findViewById(R.id.bsd_kxbj_phone);
-            holder.bsd_xm6= (RelativeLayout) contetview.findViewById(R.id.bsd_xm6);
+            contetview = layoutInflater.inflate(R.layout.bsd_lsjd_item, null);
+            holder.bsd_lsjd_workno = (TextView) contetview.findViewById(R.id.bsd_lsjd_workno);
+            holder.bsd_lsjd_jdrq = (TextView) contetview.findViewById(R.id.bsd_lsjd_jdrq);
+            holder.bsd_lsjd_kehumc = (TextView) contetview.findViewById(R.id.bsd_lsjd_kehumc);
+            holder.bsd_lsjd_cheno = (TextView) contetview.findViewById(R.id.bsd_lsjd_cheno);
+            holder.bsd_lsjd_fwgw = (TextView) contetview.findViewById(R.id.bsd_lsjd_fwgw);
+            holder.bsd_lsjd_wxjd = (TextView) contetview.findViewById(R.id.bsd_lsjd_wxjd);
+            holder.bsd_lsjd_phone = (TextView) contetview.findViewById(R.id.bsd_lsjd_phone);
+            holder.iv_phone = (ImageView) contetview.findViewById(R.id.iv_phone);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
-        final BSD_WeiXiuJieDan_Entity item=list.get(i);
-        holder.bsd_xsbj_name.setText(item.getXche_jdrq());
-        holder.bsd_kxbj_bzsj.setText(item.getKehu_mc());
-        holder.bsd_kxbj_gsdj.setText(item.getChe_no());
-        holder.bsd_kxbj_je.setText(item.getXche_pgcz());
-        holder.bsd_kxbj_cz.setText(item.getXche_wxjd());
-        holder.bsd_kxbj_qian.setText(item.getKehu_dh());
-        holder.bsd_xm6.setOnClickListener(new View.OnClickListener() {
+        final BSD_WeiXiuJieDan_Entity item = list.get(i);
+        holder.bsd_lsjd_workno.setText(item.getWork_no());
+        holder.bsd_lsjd_jdrq.setText(item.getXche_jdrq());
+        holder.bsd_lsjd_kehumc.setText(item.getKehu_mc());
+        holder.bsd_lsjd_cheno.setText(item.getChe_no());
+        holder.bsd_lsjd_fwgw.setText(item.getXche_pgcz());
+        holder.bsd_lsjd_wxjd.setText(item.getXche_wxjd());
+        holder.bsd_lsjd_phone.setText(item.getKehu_dh());
+        holder.iv_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 photo.Ddh(item.getKehu_dh());
@@ -89,6 +91,10 @@ public class BSD_lsjd_adp extends BaseAdapter {
     }
 
     public interface Photo {
-        public void Ddh(String dianhua);
+        void Ddh(String dianhua);
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
     }
 }

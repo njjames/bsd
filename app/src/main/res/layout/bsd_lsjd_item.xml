@@ -1,122 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y45"
+    android:layout_height="@dimen/qb_px_30"
+    android:minHeight="@dimen/qb_px_30"
     android:orientation="horizontal">
-    <RelativeLayout
-        android:id="@+id/bsd_xm1"
-        android:layout_width="0dp"
-        android:layout_weight="1.5"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
 
-        <TextView
-            android:id="@+id/bsd_xsbj_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="接单日期" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm2"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
-
-        <TextView
-            android:id="@+id/bsd_kxbj_bzsj"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="车主" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm3"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
-
-        <TextView
-            android:id="@+id/bsd_kxbj_gsdj"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="车牌号" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm4"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
-
-        <TextView
-            android:id="@+id/bsd_kxbj_je"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="服务顾问" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bsd_xm5"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/bsd_lsjd_workno"
+        style="@style/mysearchinfostyle"
         android:layout_weight="1.2"
-        android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
+        android:text="维修单号" />
 
-        <TextView
-            android:id="@+id/bsd_kxbj_je"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="维修进度" />
+    <TextView
+        android:id="@+id/bsd_lsjd_jdrq"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1.5"
+        android:text="接单日期" />
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/bsd_lsjd_kehumc"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="车主" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/bsd_lsjd_cheno"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="车牌号" />
+
+    <TextView
+        android:id="@+id/bsd_lsjd_fwgw"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="服务顾问" />
+
+    <TextView
+        android:id="@+id/bsd_lsjd_wxjd"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="维修进度" />
+
+    <LinearLayout
         android:id="@+id/bsd_xm6"
         android:layout_width="0dp"
-        android:layout_weight="1.5"
         android:layout_height="match_parent"
-        android:background="@drawable/biankuang_info_bg">
+        android:layout_weight="1.2"
+        android:background="@drawable/biankuang_info_bg"
+        android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/bsd_kxbj_phone"
-            android:layout_width="wrap_content"
+            android:id="@+id/bsd_lsjd_phone"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="联系方式" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="联系方式"
+            android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="@dimen/x10"
-            android:layout_height="@dimen/y30"
-            android:scaleType="fitXY"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x5"
-            android:src="@mipmap/bsd_phone" />
-
-    </RelativeLayout>
+            android:id="@+id/iv_phone"
+            android:layout_width="@dimen/qb_px_30"
+            android:layout_height="@dimen/qb_px_30"
+            android:padding="@dimen/qb_px_6"
+            android:layout_marginEnd="@dimen/qb_px_4"
+            android:src="@drawable/ic_phone" />
+    </LinearLayout>
 </LinearLayout>
-
-</RelativeLayout>

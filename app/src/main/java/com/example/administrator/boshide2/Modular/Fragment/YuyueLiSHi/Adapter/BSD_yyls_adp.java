@@ -17,36 +17,37 @@ import java.util.List;
  */
 
 public class BSD_yyls_adp extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
-    List<BSD_WeiXiuYueYue_entiy> list;
+    private LayoutInflater layoutInflater;
+    private List<BSD_WeiXiuYueYue_entiy> list;
 
-    public void setList(List<BSD_WeiXiuYueYue_entiy> list) {
-        this.list = list;
-    }
-
-    public BSD_yyls_adp(Context context) {
-        this.context = context;
+    public BSD_yyls_adp(Context context, List<BSD_WeiXiuYueYue_entiy> list) {
         this.layoutInflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     @Override
     public int getCount() {
-        return (list==null)?0:list.size();
-
+        return list.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return list.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
-    class Holder {
-        TextView bsd_xsbj_name,bsd_kxbj_bzsj,bsd_kxbj_gsdj,bsd_kxbj_je,bsd_kxbj_qian,bsd_kxbj_cz,bsd_kxbj_qian1;
+
+    public final class Holder {
+        TextView bsd_xsbj_jlrq;
+        TextView bsd_kxbj_jcrq;
+        TextView bsd_kxbj_kehumc;
+        TextView bsd_kxbj_phone;
+        TextView bsd_kxbj_cheno;
+        TextView bsd_kxbj_fwgw;
+        TextView bsd_kxbj_zt;
     }
 
     @Override
@@ -54,28 +55,25 @@ public class BSD_yyls_adp extends BaseAdapter {
         Holder holder=null;
         if (contetview == null) {
             holder = new Holder();
-
             contetview=layoutInflater.inflate(R.layout.bsd_lsyy_item,null);
-
-            holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
-            holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
-            holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_kxbj_qian= (TextView) contetview.findViewById(R.id.bsd_kxbj_phone);
-            holder.bsd_kxbj_qian1=(TextView)contetview.findViewById(R.id.bsd_kxbj_qian1);
+            holder.bsd_xsbj_jlrq= (TextView) contetview.findViewById(R.id.bsd_xsbj_jlrq);
+            holder.bsd_kxbj_jcrq= (TextView) contetview.findViewById(R.id.bsd_kxbj_jcrq);
+            holder.bsd_kxbj_kehumc= (TextView) contetview.findViewById(R.id.bsd_kxbj_kehumc);
+            holder.bsd_kxbj_phone= (TextView) contetview.findViewById(R.id.bsd_kxbj_phone);
+            holder.bsd_kxbj_cheno= (TextView) contetview.findViewById(R.id.bsd_kxbj_cheno);
+            holder.bsd_kxbj_fwgw= (TextView) contetview.findViewById(R.id.bsd_kxbj_fwgw);
+            holder.bsd_kxbj_zt=(TextView)contetview.findViewById(R.id.bsd_kxbj_zt);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
-        holder.bsd_xsbj_name.setText(list.get(i).getYuyue_jlrq());
-        holder.bsd_kxbj_bzsj.setText(list.get(i).getYuyue_scjcrq());
-        holder.bsd_kxbj_gsdj.setText(list.get(i).getKehu_mc());
-        holder.bsd_kxbj_je.setText(list.get(i).getKehu_dh());
-        holder.bsd_kxbj_cz.setText(list.get(i).getChe_no());
-        holder.bsd_kxbj_qian.setText(list.get(i).getYuyue_czy());
-        holder.bsd_kxbj_qian1.setText(list.get(i).getYuyue_progress());
-
+        holder.bsd_xsbj_jlrq.setText(list.get(i).getYuyue_jlrq());
+        holder.bsd_kxbj_jcrq.setText(list.get(i).getYuyue_scjcrq());
+        holder.bsd_kxbj_kehumc.setText(list.get(i).getKehu_mc());
+        holder.bsd_kxbj_phone.setText(list.get(i).getKehu_dh());
+        holder.bsd_kxbj_cheno.setText(list.get(i).getChe_no());
+        holder.bsd_kxbj_fwgw.setText(list.get(i).getYuyue_czy());
+        holder.bsd_kxbj_zt.setText(list.get(i).getYuyue_progress());
         return contetview;
     }
 }

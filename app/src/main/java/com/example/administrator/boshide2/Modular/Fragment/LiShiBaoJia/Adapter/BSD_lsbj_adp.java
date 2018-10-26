@@ -23,7 +23,6 @@ public class BSD_lsbj_adp extends BaseAdapter {
     private List<BSD_KuaiSuBaoJia_ety> list;
     private Photo photo;
 
-
     public BSD_lsbj_adp(Context context, List<BSD_KuaiSuBaoJia_ety> list) {
         this.list = list;
         this.layoutInflater = LayoutInflater.from(context);

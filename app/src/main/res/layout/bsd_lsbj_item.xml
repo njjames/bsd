@@ -62,7 +62,6 @@
             android:id="@+id/iv_phone"
             android:layout_width="@dimen/qb_px_30"
             android:layout_height="@dimen/qb_px_30"
-            android:layout_alignParentEnd="true"
             android:padding="@dimen/qb_px_6"
             android:layout_marginEnd="@dimen/qb_px_4"
             android:src="@drawable/ic_phone" />

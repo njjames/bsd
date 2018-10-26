@@ -19,61 +19,35 @@ import java.util.List;
  */
 
 public class BSD_WXJD_XM_xiangqingadp extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
-    List<BSD_WeiXiuJieDan_XM_Entity> list;
+    private LayoutInflater layoutInflater;
+    private List<BSD_WeiXiuJieDan_XM_Entity> list;
 
-
-    TooPromptdiaog promptdiaog;
-    UpGongShi upGongShi;
-    UpGongShiDanJia upGongShiDanJia;
-
-    public void setXmDelete(XmDelete xmDelete) {
-        this.xmDelete = xmDelete;
-    }
-
-    XmDelete xmDelete;
-
-    public void setList(List<BSD_WeiXiuJieDan_XM_Entity> list) {
-        this.list = list;
-    }
-
-    public BSD_WXJD_XM_xiangqingadp(Context context) {
-        this.context = context;
+    public BSD_WXJD_XM_xiangqingadp(Context context, List<BSD_WeiXiuJieDan_XM_Entity> list) {
         this.layoutInflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     @Override
     public int getCount() {
-        return (list==null)?0:list.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return list.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
-
-    class Holder {
-        TextView bsd_xzcl_name, bsd_xzcl_shuliang, bsd_xzcl_danjia, bsd_xzcl_tuhao, bsd_xzcl_pinpai;
-            ImageView bsd_xzcl_caozuo;
-    }
-
-    public void setPromptdiaog(TooPromptdiaog promptdiaog) {
-        this.promptdiaog = promptdiaog;
-    }
-
-    public void setUpGongShi(UpGongShi upGongShi) {
-        this.upGongShi = upGongShi;
-    }
-
-    public void setUpGongShiDanJia(UpGongShiDanJia upGongShiDanJia) {
-        this.upGongShiDanJia = upGongShiDanJia;
+    public final class Holder {
+        TextView bsd_xzcl_name;
+        TextView bsd_xzcl_gs;
+        TextView bsd_xzcl_dj;
+        TextView bsd_xzcl_je;
+        TextView bsd_xzcl_zt;
     }
 
     @Override
@@ -83,42 +57,19 @@ public class BSD_WXJD_XM_xiangqingadp extends BaseAdapter {
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_wxjd_xzxm_xiangqing_item, null);
             holder.bsd_xzcl_name = (TextView) contetview.findViewById(R.id.bsd_xzcl_name);
-            holder.bsd_xzcl_shuliang = (TextView) contetview.findViewById(R.id.bsd_xzcl_shuliang);
-            holder.bsd_xzcl_danjia = (TextView) contetview.findViewById(R.id.bsd_xzcl_danjia);
-            holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
-            holder.bsd_xzcl_pinpai = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
-            holder.bsd_xzcl_caozuo = (ImageView) contetview.findViewById(R.id.bsd_xzcl_caozuo);
+            holder.bsd_xzcl_gs = (TextView) contetview.findViewById(R.id.bsd_xzcl_gs);
+            holder.bsd_xzcl_dj = (TextView) contetview.findViewById(R.id.bsd_xzcl_dj);
+            holder.bsd_xzcl_je = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
+            holder.bsd_xzcl_zt = (TextView) contetview.findViewById(R.id.bsd_xzcl_zt);
             contetview.setTag(holder);
         } else {
             holder = (Holder) contetview.getTag();
         }
-
-
         holder.bsd_xzcl_name.setText(list.get(i).getWxxm_mc());
-
-        //工时
-        holder.bsd_xzcl_shuliang.setText(""+list.get(i).getWxxm_gs());
-
-
-        //工时单价
-        holder.bsd_xzcl_danjia.setText(""+list.get(i).getWxxm_dj());
-
-        holder.bsd_xzcl_tuhao.setText(""+list.get(i).getWxxm_gs()*list.get(i).getWxxm_dj());
-        holder.bsd_xzcl_pinpai.setText(list.get(i).getWxxm_zt());
+        holder.bsd_xzcl_gs.setText("" + list.get(i).getWxxm_gs());
+        holder.bsd_xzcl_dj.setText("" + list.get(i).getWxxm_dj());
+        holder.bsd_xzcl_je.setText("" + list.get(i).getWxxm_gs() * list.get(i).getWxxm_dj());
+        holder.bsd_xzcl_zt.setText(list.get(i).getWxxm_zt());
         return contetview;
-
-    }
-
-
-    public interface UpGongShi {
-        public void onYesClick(int i, String name, double gongshi);
-    }
-
-    public interface UpGongShiDanJia {
-        public void onYesClick(int i, String name, double gongshidanjia);
-    }
-
-    public interface  XmDelete{
-        public void onYesClick();
     }
 }

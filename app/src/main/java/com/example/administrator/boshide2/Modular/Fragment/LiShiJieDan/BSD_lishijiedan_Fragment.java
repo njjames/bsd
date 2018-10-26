@@ -63,8 +63,6 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
     public void initView() {
         bsd_lsjd_cp = (EditText) view.findViewById(R.id.bsd_lsjd_cp);
         bsd_lsjd_cz = (EditText) view.findViewById(R.id.bsd_lsjd_cz);
-        iv_search = (TextView) view.findViewById(R.id.iv_search);
-        abPullToRefreshView = (AbPullToRefreshView) view.findViewById(R.id.lsfreshview);
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
         adapter = new BSD_lsjd_adp(getActivity(), data);
         adapter.setPhoto(new BSD_lsjd_adp.Photo() {
@@ -82,14 +80,6 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
             }
         });
         bsd_lsbj_lv.setAdapter(adapter);
-        bsd_lsbj_fanhui = (RelativeLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
-        bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity) getActivity()).uplishijiedanlog(view);
-            }
-        });
-
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -101,17 +91,26 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
                 ((MainActivity) getActivity()).uowxjdxiangqing();
             }
         });
+        // 返回
+        bsd_lsbj_fanhui = (RelativeLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
+        bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).uplishijiedanlog(view);
+            }
+        });
+        abPullToRefreshView = (AbPullToRefreshView) view.findViewById(R.id.lsfreshview);
         // 设置监听器
         abPullToRefreshView.setOnHeaderRefreshListener(this);
         abPullToRefreshView.setOnFooterLoadListener(this);
-
         // 设置进度条的样式
         // 设置进度条的样式
         abPullToRefreshView.getHeaderView().setHeaderProgressBarDrawable(
                 getResources().getDrawable(R.drawable.progress_circular));
         abPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
                 getResources().getDrawable(R.drawable.progress_circular));
-
+        // 查询
+        iv_search = (TextView) view.findViewById(R.id.iv_search);
         iv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +128,7 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
     @Override
     public void initData() {
         url = new URLS();
-        title.setText("在厂调度");
+        title.setText("历史接单");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         data.clear();
@@ -146,6 +145,7 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
         params.put("pageNumber", page);
         params.put("che_no", cheNo);
         params.put("kehu_mc", kehuMc);
+        params.put("gongsino", MyApplication.shared.getString("GongSiNo", ""));
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_LSJD, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int statusCode, String s) {
@@ -166,7 +166,6 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
 //                            entiy.setKehu_dh(item.getString("kehu_dh"));
                             entiy.setChe_no(item.getString("che_no"));
                             entiy.setChe_cx(item.getString("che_cx"));
-                            Log.i("lsjd", "onSuccess: 车系是---"+item.getString("che_cx"));
                             entiy.setChe_vin(item.getString("che_vin"));
                             entiy.setXche_lc(item.getInt("xche_lc"));
                             entiy.setKehu_dh(item.getString("kehu_dh"));
@@ -178,17 +177,15 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
                             entiy.setXche_wxjd(item.getString("xche_wxjd"));
                             data.add(entiy);
                         }
-                        adapter.notifyDataSetChanged();
                     } else {
                         Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }
-                    abPullToRefreshView.onFooterLoadFinish();
-                    abPullToRefreshView.onHeaderRefreshFinish();
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    adapter.notifyDataSetChanged();
-                    abPullToRefreshView.onFooterLoadFinish();
                 }
+                abPullToRefreshView.onFooterLoadFinish();
+                abPullToRefreshView.onHeaderRefreshFinish();
             }
 
             @Override
@@ -203,11 +200,9 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
 
             @Override
             public void onFailure(int statusCode, String s, Throwable throwable) {
-                Log.i("cjn", "历史接单" + s);
                 Show.showTime(getActivity(), "网络连接超时");
                 abPullToRefreshView.onFooterLoadFinish();
                 abPullToRefreshView.onHeaderRefreshFinish();
-//                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
 
