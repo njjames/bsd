@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
@@ -90,14 +91,12 @@ public class BSD_WXYY_XM_POP extends PopupWindow implements AbPullToRefreshView.
     String neirong;
 
     //图片选择切换
-    RelativeLayout bsd_pop_shang, bsd_wxyy_pop_rl_chaxun, bsd_wxyy_pop_rl_fanhui;
+    TextView  bsd_wxyy_pop_rl_chaxun;
+    TextView bsd_pop_shang;
+    TextView bsd_wxyy_pop_rl_fanhui;
     private LinearLayout bsd_wxyy_pop_rl_xiangmu_quanbu, bsd_wxyy_pop_rl_xiangmu_1, bsd_wxyy_pop_rl_xiangmu_2, bsd_wxyy_pop_rl_xiangmu_3;
     ImageView bsd_wxyy_pop_im_xiangmu_quanbu, bsd_wxyy_pop_im_xiangmu_1, bsd_wxyy_pop_im_xiangmu_2, bsd_wxyy_pop_im_xiangmu_3;
     EditText bsd_wxyy_pop_et_neirong;
-
-
-
-
 
     public BSD_WXYY_XM_POP(final Activity context) {
         url=new URLS();
@@ -142,7 +141,7 @@ public class BSD_WXYY_XM_POP extends PopupWindow implements AbPullToRefreshView.
 
             }
         });
-        bsd_wxyy_pop_rl_fanhui = (RelativeLayout) contentView.findViewById(R.id.iv_back);
+        bsd_wxyy_pop_rl_fanhui = (TextView) contentView.findViewById(R.id.iv_back);
         bsd_wxyy_pop_rl_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,7 +152,7 @@ public class BSD_WXYY_XM_POP extends PopupWindow implements AbPullToRefreshView.
         bsd_wxyy_pop_et_neirong = (EditText) contentView.findViewById(R.id.et_wxxm_name);
         bsd_wxyy_pop_et_neirong.getText().toString();
         //查询按钮
-        bsd_wxyy_pop_rl_chaxun = (RelativeLayout) contentView.findViewById(R.id.tv_search);
+        bsd_wxyy_pop_rl_chaxun = (TextView) contentView.findViewById(R.id.tv_search);
         bsd_wxyy_pop_rl_chaxun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,7 +164,7 @@ public class BSD_WXYY_XM_POP extends PopupWindow implements AbPullToRefreshView.
                 reightdata();
             }
         });
-        bsd_pop_shang = (RelativeLayout) contentView.findViewById(R.id.bsd_pop_shang);
+        bsd_pop_shang = (TextView) contentView.findViewById(R.id.bsd_pop_shang);
         bsd_pop_shang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

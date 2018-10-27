@@ -52,7 +52,6 @@ public class BSD_KSBJ_CL_POP extends PopupWindow implements AbPullToRefreshView.
     public Activity context;
     int w;
     int h;
-    RelativeLayout bsd_di, bsd_tou;
     //关闭监听事件
     private Guanbi gb;
     String  price_id;
@@ -66,7 +65,7 @@ public class BSD_KSBJ_CL_POP extends PopupWindow implements AbPullToRefreshView.
 
 
     //返回
-    RelativeLayout bsd_wxyy_pop_rl_fanhui;
+    TextView bsd_wxyy_pop_rl_fanhui;
     //刷新
     private AbPullToRefreshView mAbPullToRefreshView = null;// 下拉刷新
     int page = 1;
@@ -78,7 +77,7 @@ public class BSD_KSBJ_CL_POP extends PopupWindow implements AbPullToRefreshView.
 
 EditText bsd_cailiao_chaxun;
     TextView bsd_cailiaoanniucha;
-    RelativeLayout bsd_pop_shang;
+    TextView bsd_pop_shang;
 
     public BSD_KSBJ_CL_POP.chuanlistcl getChuanlistcl() {
         return chuanlistcl;
@@ -119,29 +118,20 @@ URLS url;
         this.setBackgroundDrawable(dw);
 
 //         设置SelectPicPopupWindow弹出窗体可点击
-        this.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+//        this.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
         this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.update();
 // 设置SelectPicPopupWindow弹出窗体动画效果
 
-        bsd_pop_shang = (RelativeLayout) contentView.findViewById(R.id.bsd_pop_shang);
+        bsd_pop_shang = (TextView) contentView.findViewById(R.id.bsd_pop_shang);
         bsd_pop_shang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("jjj","11111111111111111111111");
                 fen="";
                 datayou();
-            }
-        });
-        bsd_tou = (RelativeLayout) contentView.findViewById(R.id.bsd_tou);
-        bsd_tou.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (BSD_KSBJ_CL_POP.this != null)
-                    BSD_KSBJ_CL_POP.this.dismiss();
-                gb.guanbi();
             }
         });
 
@@ -156,18 +146,9 @@ URLS url;
             }
         });
 
-        bsd_di = (RelativeLayout) contentView.findViewById(R.id.bsd_di);
-        bsd_di.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (BSD_KSBJ_CL_POP.this != null)
-                    BSD_KSBJ_CL_POP.this.dismiss();
-                gb.guanbi();
-            }
-        });
 
         //________________________________________________________
-        bsd_wxyy_pop_rl_fanhui = (RelativeLayout) contentView.findViewById(R.id.iv_back);
+        bsd_wxyy_pop_rl_fanhui = (TextView) contentView.findViewById(R.id.iv_back);
         bsd_wxyy_pop_rl_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

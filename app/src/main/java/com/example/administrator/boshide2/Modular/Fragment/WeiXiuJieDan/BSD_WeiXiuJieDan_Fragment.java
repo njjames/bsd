@@ -3,11 +3,9 @@ package com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -73,48 +71,39 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private static final String PARAM_KEY = "param_key";
     ScrollView scrollview;
     RelativeLayout beijing;
-
-    //////////////////////////////////////////////////////////////////
-    TextView bsd_wxjd_tv_chepai;//车牌
-    EditText bsd_wxjd_et_jinchanglicheng;//进厂里程
-    TextView bsd_wxjd_et_name;//车主
-    TextView bsd_wxjd_et_shouji;//手机
-    EditText bsd_wxjd_et_vin;//VIN码
-    TextView bsd_wxjd_tv_pinpai;//品牌
-    TextView bsd_wxjd_tv_chexi;//车系
-    TextView bsd_wxjd_tv_chezu;//车组
-    TextView bsd_wxjd_tv_chexing;//车型
-    EditText bsd_wxjd_et_qiankuan;//欠款
-    EditText bsd_wxjd_et_huiyuan;//会员卡号
+    private TextView bsd_wxjd_tv_chepai;//车牌
+    private EditText et_jinchanglicheng;//进厂里程
+    private EditText et_kehumc;//车主
+    private EditText et_shouji;//手机
+    private EditText et_vin;//VIN码
+    private TextView tv_pinpai;//品牌
+    private TextView tv_chexi;//车系
+    private TextView tv_chezu;//车组
+    private TextView tv_chexing;//车型
+    private EditText bsd_wxjd_et_qiankuan;//欠款
+    private EditText et_cardno;//会员卡号
     TextView tv_wxjd_clhj, tv_wxjd_xmhj, tv_wxjd_hj;//项目金额。材料金额，总金额
     //车牌号
     String Car;
     //维修接单基本信息实体类
     BSD_WeiXiuJieDan_Entity entity;
-    //单号
-    String danhao;
-    //项目维修
-    BSD_WXYY_XM_POP bsd_wxjd_xm_pop;
-    //材料选择
-    BSD_KSBJ_CL_POP bsd_wxjd_cl_pop;
     private ListView listViewXM;//维修项目
     private ListView listViewCL;//维修材料
     private BSD_WXJD_XM_adp adp_xm;
     private BSD_WXJD_CL_adp adp_cl;
     private List<BSD_WeiXiuJieDan_XM_Entity> list_XM = new ArrayList<>();
     private List<BSD_WeiXiuJieDan_CL_Entity> list_CL = new ArrayList<>();
-    int choufutianjia = 0;
-    TextView bsd_wxjd_cd;
+    TextView bsd_wxjd_save;
     public int jc_or_cd;
     TextView bsd_wxjd_cj;
-
     //修改工时弹框
     BSD_XiuGaiGongShi bsd_xiuGaiGongShi;
-
     private Dialog mWeiboDialog, mWeiboDialog2;
-    QueRen queRen;
-    //品牌   车系   车组   车型
-    LinearLayout bsd_wxjd_pinpai, bsd_ksbj_RLchexi, bsd_ksbj_chezu, bsd_ksbj_rl_chexing;
+    private QueRen queRen;
+    private LinearLayout ll_pinpai;
+    private LinearLayout ll_chexi;
+    private LinearLayout ll_chezu;
+    private LinearLayout ll_chexing;
     //品牌 车系车组 车行
     BSD_KSBJ_PinPai_delo bsd_ksbj_pinPai_delo;
     String cxbianhao;
@@ -124,7 +113,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private List<CustemObject> nameList = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter;
     private SpinerPopWindow mSpinerPopWindow;
-
     String chexiid;
     //车组
     List<Map<String, String>> listjbcz = new ArrayList<Map<String, String>>();
@@ -139,8 +127,8 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private AbstractSpinerAdapter mAdapter2;
     private SpinerPopWindow mSpinerPopWindow2;
     //工时费率
-    LinearLayout bsd_wxjd_rl_gsfl;
-    TextView bsd_wxjd_tv_gsfl;
+    LinearLayout ll_gsfl;
+    TextView tv_gsfl;
 
     List<Map<String, String>> listgslv = new ArrayList<Map<String, String>>();
 
@@ -150,10 +138,13 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     String gongshifeili_name;
     String gongshifeili_id;
 
-    LinearLayout bsd_wxjd_rl_gcsj;
+    LinearLayout ll_gcsj;
     TextView bsd_wxjd_rl_bycx;
-    TextView bsd_wxjd_tv_gcsj;
-    EditText bsd_wxjd_et_niankuan, bsd_wxjd_et_cunyou, bsd_wxjd_et_color, bsd_wxjd_et_miaoshu;
+    TextView tv_gcsj;
+    EditText et_niankuan;
+    EditText et_cunyou;
+    EditText et_color;
+    EditText et_miaoshu;
     TimeDialog timePickerShow;
     Queding_Quxiao queRen_quxiao;
     Queding_Quxiao queding_quxiao;
@@ -169,6 +160,9 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private TextView bsd_wxjd_clxx, bsd_wxjd_lswxjy, bsd_wxjd_lswx;
     private String params;
     private BSD_WeiXiuJieDan_Entity billEntiy;
+    private TextView title;
+    private TextView footerText;
+    private TextView billNo;
 
     public static BSD_WeiXiuJieDan_Fragment newInstance(String params) {
         BSD_WeiXiuJieDan_Fragment fragment = new BSD_WeiXiuJieDan_Fragment();
@@ -192,21 +186,15 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     @Override
     public void initView() {
         bsd_wxjd_rl_bycx = (TextView) view.findViewById(R.id.bsd_wxjd_rl_bycx);
-        bsd_wxjd_tv_gcsj = (TextView) view.findViewById(R.id.bsd_wxjd_tv_gcsj);
-        bsd_wxjd_rl_gcsj = (LinearLayout) view.findViewById(R.id.bsd_wxjd_rl_gcsj);
-        bsd_wxjd_rl_gcsj.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                timePickerShow.timePickerAlertDialog(bsd_wxjd_tv_gcsj);
-            }
-        });
-
+        tv_gcsj = (TextView) view.findViewById(R.id.tv_gcsj);
+        ll_gcsj = (LinearLayout) view.findViewById(R.id.ll_gcsj);
+        ll_gcsj.setOnClickListener(this);
         //读取vin码
         rl_duqu = (TextView) view.findViewById(R.id.tv_readvin);
         rl_duqu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String vin = bsd_wxjd_et_vin.getText().toString();
+                String vin = et_vin.getText().toString();
                 if ("".equals(vin)) {
                     Toast.makeText(getActivity(), "请输入vin码", Toast.LENGTH_LONG).show();
                 } else {
@@ -252,21 +240,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             }
         });
 
-        bsd_wxjd_et_niankuan = (EditText) view.findViewById(R.id.bsd_wxjd_et_niankuan);
-        bsd_wxjd_et_cunyou = (EditText) view.findViewById(R.id.bsd_wxjd_et_cunyou);
-        bsd_wxjd_et_color = (EditText) view.findViewById(R.id.bsd_wxjd_et_color);
-        bsd_wxjd_et_miaoshu = (EditText) view.findViewById(R.id.bsd_wxjd_et_miaoshu);
-        bsd_wxjd_rl_gsfl = (LinearLayout) view.findViewById(R.id.bsd_wxjd_rl_gsfl);
-        bsd_wxjd_tv_gsfl = (TextView) view.findViewById(R.id.bsd_wxjd_tv_gsfl);
-        bsd_wxjd_rl_gsfl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showGongSi3();
-
-            }
-        });
-        bsd_wxjd_cd = (TextView) view.findViewById(R.id.bsd_wxjd_cd);
-        bsd_wxjd_cd.setOnClickListener(this);
         //进厂
         bsd_wxjd_cj = (TextView) view.findViewById(R.id.bsd_wxjd_cj);
         bsd_wxjd_cj.setOnClickListener(new View.OnClickListener() {
@@ -274,9 +247,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             public void onClick(View view) {
                 //发送微信
                 weixin();
-
-                if (danhao == null || danhao.equals("")) {
-                } else {
 
                     //by  李赛
                     queding_quxiao = new Queding_Quxiao(getActivity(), "需要打印单据吗？");
@@ -300,177 +270,37 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                     });
 
                 }
-
-            }
         });
 
+        et_niankuan = (EditText) view.findViewById(R.id.et_niankuan);
+        et_cunyou = (EditText) view.findViewById(R.id.et_cunyou);
+        et_color = (EditText) view.findViewById(R.id.et_color);
+        et_miaoshu = (EditText) view.findViewById(R.id.et_miaoshu);
+        ll_gsfl = (LinearLayout) view.findViewById(R.id.ll_gsfl);
+        tv_gsfl = (TextView) view.findViewById(R.id.tv_gsfl);
+        ll_gsfl.setOnClickListener(this);
+        bsd_wxjd_save = (TextView) view.findViewById(R.id.bsd_wxjd_save);
+        bsd_wxjd_save.setOnClickListener(this);
         bsd_wxjd_tv_chepai = (TextView) view.findViewById(R.id.bsd_wxjd_tv_chepai);
-        bsd_wxjd_et_jinchanglicheng = (EditText) view.findViewById(R.id.bsd_wxjd_et_jinchanglicheng);
-        bsd_wxjd_et_name = (TextView) view.findViewById(R.id.bsd_wxjd_et_name);
-        bsd_wxjd_et_shouji = (TextView) view.findViewById(R.id.bsd_wxjd_et_shouji);
-        bsd_wxjd_et_vin = (EditText) view.findViewById(R.id.bsd_wxjd_et_vin);
-        bsd_wxjd_tv_pinpai = (TextView) view.findViewById(R.id.bsd_wxjd_tv_pinpai);
-        bsd_wxjd_tv_chexi = (TextView) view.findViewById(R.id.bsd_wxjd_tv_chexi);
-        bsd_wxjd_tv_chezu = (TextView) view.findViewById(R.id.bsd_wxjd_tv_chezu);
-        bsd_wxjd_tv_chexing = (TextView) view.findViewById(R.id.bsd_wxjd_tv_chexing);
-        bsd_wxjd_tv_chexing = (TextView) view.findViewById(R.id.bsd_wxjd_tv_chexing);
-        bsd_wxjd_et_huiyuan = (EditText) view.findViewById(R.id.bsd_wxjd_et_huiyuan);
+        et_jinchanglicheng = (EditText) view.findViewById(R.id.et_jinchanglicheng);
+        et_kehumc = (EditText) view.findViewById(R.id.et_kehumc);
+        et_shouji = (EditText) view.findViewById(R.id.et_shouji);
+        et_vin = (EditText) view.findViewById(R.id.et_vin);
+        tv_pinpai = (TextView) view.findViewById(R.id.tv_pinpai);
+        tv_chexi = (TextView) view.findViewById(R.id.tv_chexi);
+        tv_chezu = (TextView) view.findViewById(R.id.tv_chezu);
+        tv_chexing = (TextView) view.findViewById(R.id.tv_chexing);
+        et_cardno = (EditText) view.findViewById(R.id.et_cardno);
         tv_wxjd_clhj = (TextView) view.findViewById(R.id.tv_wxjd_clhj);
         tv_wxjd_hj = (TextView) view.findViewById(R.id.tv_wxjd_hj);
         tv_wxjd_xmhj = (TextView) view.findViewById(R.id.tv_wxjd_xmhj);
-        bsd_wxjd_pinpai = (LinearLayout) view.findViewById(R.id.bsd_wxjd_pinpai);
-        bsd_ksbj_RLchexi = (LinearLayout) view.findViewById(R.id.bsd_ksbj_RLchexi);
-        bsd_ksbj_chezu = (LinearLayout) view.findViewById(R.id.bsd_ksbj_chezu);
-        bsd_ksbj_rl_chexing = (LinearLayout) view.findViewById(R.id.bsd_ksbj_rl_chexing);
+        ll_pinpai = (LinearLayout) view.findViewById(R.id.ll_pinpai);
+        ll_chexi = (LinearLayout) view.findViewById(R.id.ll_chexi);
+        ll_chezu = (LinearLayout) view.findViewById(R.id.ll_chezu);
+        ll_chexing = (LinearLayout) view.findViewById(R.id.ll_chexing);
 
-        bsd_wxjd_xm_pop = new BSD_WXYY_XM_POP(getActivity());
-        //添加项目回调
-        bsd_wxjd_xm_pop.setClist(new BSD_WXYY_XM_POP.chuanlist() {
-            @Override
-            public void onYesClick(BSD_wxyy_xm_pop_entiy entity, double wxxmdj) {
-                Log.i("cjn", "查看集合的长度" + list_XM.size());
-                if (list_XM.size() > 0) {
-                    for (int i = 0; i < list_XM.size(); i++) {
-                        if (list_XM.get(i).getWxxm_no().equals(entity.getWxxm_no())) {
-
-                            choufutianjia = 1;
-                            break;
-                        }
-                    }
-                    if (choufutianjia == 1) {
-                        Log.i("cjn", "重复添加问题" + list_XM.size());
-                        Show.showTime(getActivity(), "添加重复");
-                        choufutianjia = 0;
-                    } else {
-                        BSD_WeiXiuJieDan_XM_Entity item = new BSD_WeiXiuJieDan_XM_Entity();
-                        item.setWxxm_mc(entity.getWxxm_mc());
-//                        item.setWxxm_mc("自定义名称可以吗");
-                        item.setWxxm_gs(entity.getWxxm_gs());
-                        item.setWxxm_je(wxxmdj);
-//                        String a = String.valueOf(wxxmdj / entity.getWxxm_gs());
-//                        if (a.equals("NaN")){
-//                            item.setWxxm_dj(wxxmdj);
-//                        }else {
-//                            item.setWxxm_dj(wxxmdj / entity.getWxxm_gs());
-//                        }
-                        if (entity.getWxxm_gs() == 0) {
-                            entity.setWxxm_gs(1.0);
-                        }
-                        item.setWxxm_dj(wxxmdj / entity.getWxxm_gs());
-                        item.setWxxm_cb(entity.getWxxm_cb());
-                        item.setWxxm_no(entity.getWxxm_no());
-                        item.setWxxm_zt("正常");
-                        list_XM.add(item);
-                        Show.showTime(getActivity(), "成功");
-                        adp_xm.notifyDataSetChanged();
-                        Log.i("cjn", "多条数据过来");
-                    }
-
-                } else {
-                    BSD_WeiXiuJieDan_XM_Entity item = new BSD_WeiXiuJieDan_XM_Entity();
-                    item.setWxxm_mc(entity.getWxxm_mc());
-//                    item.setWxxm_mc("自定义第一个名称");
-                    item.setWxxm_gs(entity.getWxxm_gs());
-                    item.setWxxm_je(wxxmdj);
-//                    String a = String.valueOf(wxxmdj / entity.getWxxm_gs());
-//                    if (a.equals("NaN")){
-//                        item.setWxxm_dj(wxxmdj);
-//                    }else {
-//                        item.setWxxm_dj(wxxmdj / entity.getWxxm_gs());
-//                    }
-
-
-                    if (entity.getWxxm_gs() == 0) {
-                        entity.setWxxm_gs(1.0);
-                    }
-                    item.setWxxm_dj(wxxmdj / entity.getWxxm_gs());
-                    item.setWxxm_no(entity.getWxxm_no());
-                    item.setWxxm_zt("正常");
-                    list_XM.add(item);
-                    Log.i("cjn", "查看这个集合的长度" + wxxmdj);
-                    Show.showTime(getActivity(), "成功");
-                    Log.i("cjn", "新来的一条数据" + item.getWxxm_dj());
-
-                    adp_xm.notifyDataSetChanged();
-                }
-                wxjd_xm_money();
-                adp_xm.notifyDataSetChanged();
-            }
-        });
-
-
-        bsd_wxjd_cl_pop = new BSD_KSBJ_CL_POP(getActivity());
-        bsd_wxjd_cl_pop.setChuanlistcl(new BSD_KSBJ_CL_POP.chuanlistcl() {
-            @Override
-            public void onYesClick(BSD_wxyy_cl_pop_entity entity, double jiaqian) {
-                if (list_CL.size() > 0) {
-                    for (int i = 0; i < list_CL.size(); i++) {
-                        if (list_CL.get(i).getPeij_no().equals(entity.getPeij_no())) {
-
-                            choufutianjia = 1;
-                            break;
-                        }
-                    }
-                    if (choufutianjia == 1) {
-                        Show.showTime(getActivity(), "添加重复");
-                        choufutianjia = 0;
-                    } else {
-                        BSD_WeiXiuJieDan_CL_Entity item = new BSD_WeiXiuJieDan_CL_Entity();
-                        item.setReco_no(entity.getReco_no1());
-                        item.setPeij_no(entity.getPeij_no());
-                        //名字
-                        item.setPeij_mc(entity.getPeij_mc());
-                        //数量
-                        item.setPeij_sl(1);
-                        //单价
-                        item.setPeij_dj(jiaqian);
-                        item.setPeij_je(jiaqian * item.getPeij_sl());
-                        //单位
-                        item.setPeij_dw(entity.getPeij_dw());
-                        item.setPeij_th(entity.getPeij_th());
-                        //状态
-                        item.setPeij_zt("正常");
-//                            item.setPeij_dw(entity.getWaib_dw());
-                        list_CL.add(item);
-                        Show.showTime(getActivity(), "成功");
-
-
-                    }
-
-
-                } else {
-                    BSD_WeiXiuJieDan_CL_Entity item = new BSD_WeiXiuJieDan_CL_Entity();
-                    item.setReco_no(entity.getReco_no1());
-                    item.setPeij_no(entity.getPeij_no());
-                    //名字
-                    item.setPeij_mc(entity.getPeij_mc());
-                    //数量
-                    item.setPeij_sl(1);
-                    //单价
-                    item.setPeij_je(jiaqian * item.getPeij_sl());
-                    item.setPeij_dj(jiaqian);
-                    //单位
-                    item.setPeij_th(entity.getPeij_th());
-                    //状态
-                    item.setPeij_zt("正常");
-                    item.setPeij_dw(entity.getPeij_dw());
-                    list_CL.add(item);
-                    Show.showTime(getActivity(), "成功");
-                }
-
-                adp_cl.setList(list_CL);
-                listViewCL.setAdapter(adp_cl);
-                wxjd_cl_money();
-                adp_cl.notifyDataSetChanged();
-
-            }
-        });
-
-        //数据atap
         listViewXM = (ListView) view.findViewById(R.id.lv_wxxm);
-        //维修材料
         listViewCL = (ListView) view.findViewById(R.id.lv_wxcl);
-        //维修材料
         adp_cl = new BSD_WXJD_CL_adp(getContext(), list_CL);
         adp_cl.setJia_jian(new BSD_WXJD_CL_adp.Jia_Jian() {
             @Override
@@ -517,7 +347,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         });
         listViewCL.setAdapter(adp_cl);
 
-        //维修项目
         adp_xm = new BSD_WXJD_XM_adp(getActivity(), list_XM);
         adp_xm.setUpGongShi(new BSD_WXJD_XM_adp.UpGongShi() {
             @Override
@@ -578,141 +407,71 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         //维修项目
         //滑动
         scrollview = (ScrollView) view.findViewById(R.id.scrollview);
-
-        //品牌弹框
-        bsd_ksbj_pinPai_delo = new BSD_KSBJ_PinPai_delo(getActivity());
-        bsd_wxjd_pinpai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bsd_ksbj_pinPai_delo.show();
-            }
-        });
-
-        bsd_ksbj_pinPai_delo.setToopromtOnClickListener(new BSD_KSBJ_PinPai_delo.ToopromtOnClickListener()
-
-        {
-            @Override
-            public void onYesClick(String aa, String bianhao) {
-                cxbianhao = bianhao;//车牌编号
-                pinpaiming = aa;//车牌名称
-                bsd_wxjd_tv_pinpai.setText(pinpaiming);
-                bsd_wxjd_tv_chexi.setText("");
-                bsd_wxjd_tv_chezu.setText("");
-                bsd_wxjd_tv_chexing.setText("");
-                bsd_ksbj_pinPai_delo.dismiss();
-                bsdcx(cxbianhao);
-            }
-        });
-        //车系
-        bsd_ksbj_RLchexi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (bsd_wxjd_tv_pinpai.getText().toString().equals("")) {
-                    Show.showTime(getActivity(), "请选择品牌");
-                } else {
-                    if (listjbcx.size() > 0) {
-                        showGongSi();
-                    } else {
-                        Show.showTime(getActivity(), "数据加载中请稍后");
-                    }
-                }
-            }
-        });
-        //车组
-        bsd_ksbj_chezu.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View view) {
-                if (bsd_wxjd_tv_chexi.getText().toString().equals("")) {
-                    Show.showTime(getActivity(), "请选择车系");
-                } else {
-                    if (listjbcz.size() > 0) {
-                        showGongSi1();
-                    } else {
-                        Show.showTime(getActivity(), "数据加载中请稍后");
-                    }
-                }
-            }
-        });
-        //车行
-        bsd_ksbj_rl_chexing.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View view) {
-                if (bsd_wxjd_tv_chezu.getText().toString().equals("")) {
-                    Show.showTime(getActivity(), "请选择车组");
-                } else {
-                    if (listjbchexing.size() > 0) {
-                        showGongSi2();
-                    } else {
-                        Show.showTime(getActivity(), "数据加载中请稍后");
-                    }
-                }
-            }
-        });
+        ll_pinpai.setOnClickListener(this);
+        ll_chexi.setOnClickListener(this);
+        ll_chezu.setOnClickListener(this);
+        ll_chexing.setOnClickListener(this);
         bsd_wxjd_rl_bycx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (bsd_wxjd_tv_chexing.getText().toString().equals("") ||
-                        bsd_wxjd_et_jinchanglicheng.getText().toString().equals("") ||
-                        bsd_wxjd_tv_gcsj.getText().toString().equals("")) {
+                if (tv_chexing.getText().toString().equals("") ||
+                        et_jinchanglicheng.getText().toString().equals("") ||
+                        tv_gcsj.getText().toString().equals("")) {
                     Show.showTime(getActivity(), "请输入完整信息");
                 } else {
                     bsd_cexifansuan();
                 }
             }
         });
+        title = (TextView) view.findViewById(R.id.tv_title);
+        footerText = (TextView) view.findViewById(R.id.tv_footertext);
+        billNo = (TextView) view.findViewById(R.id.tv_billNo);
     }
 
 
     @Override
     public void initData() {
         url = new URLS();
+        title.setText("美容快修");
+        footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
+                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         entity = new BSD_WeiXiuJieDan_Entity();
         entity = ((MainActivity) getActivity()).getWxjdentity();
         timePickerShow = new TimeDialog(getActivity());
         getBillInfoFromParam();
         updateBillInfoUI();
-        getGSFLData();
         xmdata();
         cldata();
     }
 
     private void updateBillInfoUI() {
+        billNo.setText(billEntiy.getWork_no());
         bsd_wxjd_tv_chepai.setText(billEntiy.getChe_no());
         String cheCx = billEntiy.getChe_cx();
         String[] cheCxs = cheCx.split("\\|");
         if (cheCxs.length >= 4) {
-            bsd_wxjd_tv_pinpai.setText(cheCxs[0]);
-            bsd_wxjd_tv_chexi.setText(cheCxs[1]);
-            bsd_wxjd_tv_chezu.setText(cheCxs[2]);
-            bsd_wxjd_tv_chexing.setText(cheCxs[3]);
-            //车系
-            bsdcx(cheCxs[0]);
-            //车组
-            bsdcz(cheCxs[1]);
-            //车行
-            bsd_chexingdata(cheCxs[3]);
+            tv_pinpai.setText(cheCxs[0]);
+            tv_chexi.setText(cheCxs[1]);
+            tv_chezu.setText(cheCxs[2]);
+            tv_chexing.setText(cheCxs[3]);
         }
         if (TextUtils.isEmpty(billEntiy.getChe_vin()) || billEntiy.getChe_vin().length() < 2) {
-            bsd_wxjd_et_vin.setText(Conts.VIN);
+            et_vin.setText(Conts.VIN);
         } else {
-            bsd_wxjd_et_vin.setText(billEntiy.getChe_vin());
+            et_vin.setText(billEntiy.getChe_vin());
         }
-        bsd_wxjd_et_jinchanglicheng.setText("" + billEntiy.getXche_lc());
-        bsd_wxjd_et_name.setText(billEntiy.getKehu_mc());
-        bsd_wxjd_et_shouji.setText(billEntiy.getKehu_dh());
-        bsd_wxjd_et_huiyuan.setText(billEntiy.getCard_no());
+        et_jinchanglicheng.setText("" + billEntiy.getXche_lc());
+        et_kehumc.setText(billEntiy.getKehu_mc());
+        et_shouji.setText(billEntiy.getKehu_dh());
+        et_cardno.setText(billEntiy.getCard_no());
         gongshifeili_name = billEntiy.getXche_sfbz();
         gongshifeili_id = String.valueOf(billEntiy.getXche_sffl());
-        bsd_wxjd_tv_gcsj.setText(billEntiy.getGcsj());
-        bsd_wxjd_et_niankuan.setText(billEntiy.getChe_nf());
-        bsd_wxjd_et_color.setText(billEntiy.getChe_wxys());
-        bsd_wxjd_et_cunyou.setText(billEntiy.getXche_cy());
-        bsd_wxjd_et_miaoshu.setText(billEntiy.getXche_bz());
-        bsd_wxjd_tv_gsfl.setText(billEntiy.getXche_sfbz());
+        tv_gcsj.setText(billEntiy.getGcsj());
+        et_niankuan.setText(billEntiy.getChe_nf());
+        et_color.setText(billEntiy.getChe_wxys());
+        et_cunyou.setText(billEntiy.getXche_cy());
+        et_miaoshu.setText(billEntiy.getXche_bz());
+        tv_gsfl.setText(billEntiy.getXche_sfbz());
         gongshifeili_name = billEntiy.getXche_sfbz();
         gongshifeili_id = String.valueOf(billEntiy.getXche_sffl());
     }
@@ -723,6 +482,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private void getBillInfoFromParam() {
         try {
             JSONObject item = new JSONObject(params);
+            billEntiy = new BSD_WeiXiuJieDan_Entity();
             billEntiy.setWork_no(item.getString("work_no"));
             billEntiy.setKehu_no(item.getString("kehu_no"));
             billEntiy.setKehu_mc(item.getString("kehu_mc"));
@@ -756,7 +516,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     public void duVin() {
         listvincx.clear();
         AbRequestParams params = new AbRequestParams();
-        params.put("vinCode", bsd_wxjd_et_vin.getText().toString());
+        params.put("vinCode", et_vin.getText().toString());
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcxnm_byvin, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
@@ -843,10 +603,10 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                         }
 
 
-                        bsd_wxjd_tv_pinpai.setText(s1[0]);
-                        bsd_wxjd_tv_chexi.setText(s1[1]);
-                        bsd_wxjd_tv_chezu.setText(s1[2]);
-                        bsd_wxjd_tv_chexing.setText(s1[3]);
+                        tv_pinpai.setText(s1[0]);
+                        tv_chexi.setText(s1[1]);
+                        tv_chezu.setText(s1[2]);
+                        tv_chexing.setText(s1[3]);
 
 
                     }
@@ -925,17 +685,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                 return layout;
             }
         });
-
-
         dialog.show();
-
-
-    }
-
-
-    private void showGongSi3() {
-        mSpinerPopWindow3.setWidth(bsd_wxjd_rl_gsfl.getWidth());
-        mSpinerPopWindow3.showAsDropDown(bsd_wxjd_rl_gsfl);
     }
 
     /**
@@ -956,13 +706,15 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             @Override
             public void onItemClick(int pos) {
                 String value = nameList3.get(pos).toString();
-                if (!bsd_wxjd_tv_gsfl.getText().toString().equals(value)) {
-                    bsd_wxjd_tv_gsfl.setText(value);
+                if (!tv_gsfl.getText().toString().equals(value)) {
+                    tv_gsfl.setText(value);
                     gongshifeili_name = listgslv.get(pos).get("feil_mc");
                     gongshifeili_id = listgslv.get(pos).get("feil_fl");
                 }
             }
         });
+        mSpinerPopWindow3.setWidth(ll_gsfl.getWidth());
+        mSpinerPopWindow3.showAsDropDown(ll_gsfl);
     }
 
     /**
@@ -997,12 +749,10 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -1010,8 +760,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
 
             }
         });
-
-
     }
 
 
@@ -1041,12 +789,8 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             public void onFailure(int i, String s, Throwable throwable) {
             }
         });
-
-
     }
 
-
-    //品牌    车系   车组     车型
 
     //项目金额
     double j = 0;
@@ -1082,368 +826,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         tv_wxjd_hj.setText(j + g + "");
         Log.i("cjn", "tv_wxjd_hj" + tv_wxjd_hj.getText().toString());
     }
-
-//品牌   车系   车组   车型
-
-    //品牌    车系   车组    车行
-//车型===================================================================
-    public void bsd_chexingdata(String chezuid) {
-        listjbchexing.clear();
-        AbRequestParams params = new AbRequestParams();
-        params.put("dm", chezuid);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_Chexing, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(s);
-                    if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            Map<String, String> map = new HashMap<String, String>();
-                            if (item.getString("chex_mc_std").length() > 1) {
-                                String a = item.getString("chex_mc") + "【" + item.getString("chex_mc_std") + "】";
-                                map.put("chex_dm", a);
-                                map.put("chex_mc", a);
-                                map.put("chex_bz", item.getString("chex_bz"));
-                                map.put("chex_mc_std", item.getString("chex_mc_std"));
-                            } else {
-                                map.put("chex_dm", item.getString("chex_dm"));
-                                map.put("chex_mc", item.getString("chex_mc"));
-                                map.put("chex_bz", item.getString("chex_bz"));
-                                map.put("chex_mc_std", item.getString("chex_mc_std"));
-                            }
-                            listjbchexing.add(map);
-                        }
-                        bumen2();
-                    } else {
-                        bumen2();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-
-            }
-        });
-
-
-    }
-
-    /**
-     * 基本信息车型
-     */
-    public void bumen2() {
-        nameList2.clear();
-        for (int i = 0; i < listjbchexing.size(); i++) {
-            CustemObject object = new CustemObject();
-            object.data = listjbchexing.get(i).get("chex_mc");
-            nameList2.add(object);
-        }
-        mAdapter2 = new CustemSpinerAdapter(getActivity());
-        mAdapter2.refreshData(nameList2, 0);
-
-        mSpinerPopWindow2 = new SpinerPopWindow(getActivity());
-        mSpinerPopWindow2.setAdatper(mAdapter2, 310);
-        mSpinerPopWindow2.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
-            @Override
-            public void onItemClick(int pos) {
-                String value = nameList2.get(pos).toString();
-                if (!bsd_wxjd_tv_chexing.getText().toString().equals(value)) {
-                    bsd_wxjd_tv_chexing.setText(value);
-                    Conts.chexing = bsd_wxjd_tv_chexing.getText().toString();
-                    chexingid = listjbchexing.get(pos).get("chex_bz");
-
-                }
-
-            }
-        });
-
-
-    }
-
-
-    private void showGongSi2() {
-        mSpinerPopWindow2.setWidth(bsd_ksbj_rl_chexing.getWidth());
-        mSpinerPopWindow2.showAsDropDown(bsd_ksbj_rl_chexing);
-    }
-
-
-//车组=======================================================================
-
-    private void showGongSi1() {
-        mSpinerPopWindow1.setWidth(bsd_ksbj_chezu.getWidth());
-        mSpinerPopWindow1.showAsDropDown(bsd_ksbj_chezu);
-    }
-
-    /**
-     * 基本信息车组接口
-     */
-    public void bsdcz(String chexiid) {
-        listjbcz.clear();
-//        BSD_CZ
-        Log.i("cjn", "车系的id是" + chexiid);
-        AbRequestParams params = new AbRequestParams();
-        params.put("dm", chexiid);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CZ, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-
-                Log.i("cjn", "车组的基本信息" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            Map<String, String> map = new HashMap<String, String>();
-
-                            map.put("chex_dm", item.getString("chex_dm"));
-                            map.put("chex_mc", item.getString("chex_mc"));
-                            listjbcz.add(map);
-                        }
-                        bumen1();
-                    } else {
-                        bumen1();
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-
-            }
-        });
-
-
-    }
-
-    /**
-     * 基本信息车组接口
-     */
-    public void bumen1() {
-        nameList1.clear();
-        for (int i = 0; i < listjbcz.size(); i++) {
-            CustemObject object = new CustemObject();
-            object.data = listjbcz.get(i).get("chex_mc");
-            nameList1.add(object);
-        }
-        mAdapter1 = new CustemSpinerAdapter(getActivity());
-        mAdapter1.refreshData(nameList1, 0);
-
-        mSpinerPopWindow1 = new SpinerPopWindow(getActivity());
-        mSpinerPopWindow1.setAdatper(mAdapter1, 310);
-        mSpinerPopWindow1.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
-            @Override
-            public void onItemClick(int pos) {
-                String value = nameList1.get(pos).toString();
-                if (!bsd_wxjd_tv_chezu.getText().toString().equals(value)) {
-                    bsd_wxjd_tv_chezu.setText(value);
-                    bsd_wxjd_tv_chexing.setText("");
-                    chezuid = listjbcz.get(pos).get("chex_dm");
-
-                    bsd_chexingdata(chezuid);
-
-                }
-
-            }
-        });
-
-
-    }
-
-
-//    车系=================================================
-
-    /**
-     * 基本信息车系接口
-     */
-
-    private void showGongSi() {
-        mSpinerPopWindow.setWidth(bsd_ksbj_RLchexi.getWidth());
-        mSpinerPopWindow.showAsDropDown(bsd_ksbj_RLchexi);
-    }
-
-    /**
-     * 基本信息车系接口
-     */
-    public void bumen() {
-        nameList.clear();
-        for (int i = 0; i < listjbcx.size(); i++) {
-            CustemObject object = new CustemObject();
-            object.data = listjbcx.get(i).get("chex_mc");
-            nameList.add(object);
-        }
-        mAdapter = new CustemSpinerAdapter(getActivity());
-        mAdapter.refreshData(nameList, 0);
-
-        mSpinerPopWindow = new SpinerPopWindow(getActivity());
-        mSpinerPopWindow.setAdatper(mAdapter, 310);
-        mSpinerPopWindow.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
-            @Override
-            public void onItemClick(int pos) {
-                chexiid = "";
-                String value = nameList.get(pos).toString();
-                if (!bsd_wxjd_tv_chexi.getText().toString().equals(value)) {
-                    bsd_wxjd_tv_chexi.setText(value);
-                    chexiid = listjbcx.get(pos).get("chex_dm");
-                    bsd_wxjd_tv_chezu.setText("");
-                    bsd_wxjd_tv_chexing.setText("");
-                    bsdcz(chexiid);
-                }
-            }
-        });
-
-
-    }
-
-    /**
-     * 基本信息车系接口
-     */
-
-    public void bsdcx(String cxbianhao) {
-        listjbcx.clear();
-        AbRequestParams params = new AbRequestParams();
-        Log.i("编111111111111111", "11111111111111" + cxbianhao);
-        params.put("dm", cxbianhao);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CX, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("1")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            Map<String, String> map = new HashMap<String, String>();
-
-                            map.put("chex_dm", item.getString("chex_dm"));
-                            map.put("chex_mc", item.getString("chex_mc"));
-                            listjbcx.add(map);
-                        }
-                    }
-                    bumen();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-
-            }
-        });
-
-    }
-
-
-//   ========================================
-
-
-//品牌    车系   车组    车行
-
-
-    //品牌   车系   车组   车型
-
-    public void initdata2() {
-        if (Conts.zt == 0) {
-            //没有数据的时候跳转过来的
-            if (Conts.cp == null || Conts.cp.equals("")) {
-                Car = "没有获取车牌";
-                bsd_wxjd_tv_chepai.setText(Car);
-            } else {
-                Car = Conts.cp;
-                bsd_wxjd_tv_chepai.setText(Car);
-            }
-
-        } else if (Conts.zt == 1) {
-//            有一个条数据跳转过来的
-
-            ArrayList arr = new ArrayList();
-
-            Conts.work_no = entity.getWork_no();
-            Car = entity.getChe_no();
-            Log.i("cjn", "维修接单详情车牌是" + Car);
-            bsd_wxjd_tv_chepai.setText(Car);
-            String che = Conts.bycx_cheliangmingcheng;
-            danhao = entity.getWork_no();
-            Log.i("cjn", "查看数据" + che);
-            String[] s1 = che.split("\\|");
-            for (int j = 0; j < s1.length; j++) {
-                arr.add(j, s1[j]);
-            }
-            if (arr.size() < 4) {
-            } else {
-                bsd_wxjd_tv_pinpai.setText(arr.get(0).toString());
-                bsd_wxjd_tv_chexi.setText(arr.get(1).toString());
-                bsd_wxjd_tv_chezu.setText(arr.get(2).toString());
-                bsd_wxjd_tv_chexing.setText(arr.get(3).toString());
-                Conts.chexing = bsd_wxjd_tv_chexing.getText().toString();
-                //车系
-                bsdcx(arr.get(0).toString());
-                //车组
-                bsdcz(arr.get(1).toString());
-                //车行
-                bsd_chexingdata(arr.get(2).toString());
-            }
-        }
-        bsd_wxjd_tv_gsfl.setText(entity.getXche_sfbz());
-
-        gongshifeili_name = entity.getXche_sfbz();
-        Conts.feilv_name = gongshifeili_name;
-
-        gongshifeili_id = String.valueOf(entity.getXche_sffl());
-        wxjd_xm_money();
-        wxjd_cl_money();
-    }
-
-    public void initdata() {
-
-    }
-
 
     /**
      * 维修材料列表
@@ -1497,10 +879,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
 
             }
         });
-
-
     }
-
 
     /**
      * 维修项目列表
@@ -1556,71 +935,310 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
 
     }
 
-    /**
-     * 解决滑动问题
-     */
-    public void huadong() {
-        //解决滑动问题
-        listViewCL.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                try {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            scrollview.requestDisallowInterceptTouchEvent(true); //禁止scrollview拦截事件，让listview可滑动
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            scrollview.requestDisallowInterceptTouchEvent(false);
-                            break;
-                        default:
-                            break;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return false;
-            }
-        });
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_pinpai:
+                showPinPaiDialog();
+                break;
+            case R.id.ll_chexi:
+                showCheXiData();
+                break;
+            case R.id.ll_chezu:
+                showCheZuData();
+                break;
+            case R.id.ll_chexing:
+                showCHeXingData();
+                break;
+            case R.id.ll_gsfl:
+                getGSFLData();
+                break;
+            case R.id.ll_gcsj:
+                timePickerShow.timePickerAlertDialog(tv_gcsj);
+                break;
+        }
+    }
 
+    private void showCHeXingData() {
+        if (tv_chezu.getText().toString().equals("")) {
+            Show.showTime(getActivity(), "请选择车组");
+        } else {
+            getCheXingData(tv_chezu.getText().toString());
+        }
+    }
 
-        //解决滑动问题。
-        listViewXM.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                try {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            scrollview.requestDisallowInterceptTouchEvent(true); //禁止scrollview拦截事件，让listview可滑动
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            scrollview.requestDisallowInterceptTouchEvent(false);
-                            break;
-                        default:
-                            break;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return false;
-            }
-        });
+    private void showCheZuData() {
+        if (tv_chexi.getText().toString().equals("")) {
+            Show.showTime(getActivity(), "请选择车系");
+        } else {
+            getCheZuData(tv_chexi.getText().toString());
+        }
+    }
+
+    private void showCheXiData() {
+        if (tv_pinpai.getText().toString().equals("")) {
+            Show.showTime(getActivity(), "请选择品牌");
+        } else {
+            getCheXiData(tv_pinpai.getText().toString());
+        }
 
     }
 
+    private void showPinPaiDialog() {
+        bsd_ksbj_pinPai_delo = new BSD_KSBJ_PinPai_delo(getActivity());
+        bsd_ksbj_pinPai_delo.setToopromtOnClickListener(new BSD_KSBJ_PinPai_delo.ToopromtOnClickListener() {
+            @Override
+            public void onYesClick(String aa, String bianhao) {
+                cxbianhao = bianhao;//车牌编号
+                pinpaiming = aa;//车牌名称
+                tv_pinpai.setText(pinpaiming);
+                tv_chexi.setText("");
+                tv_chezu.setText("");
+                tv_chexing.setText("");
+                bsd_ksbj_pinPai_delo.dismiss();
+            }
+        });
+        bsd_ksbj_pinPai_delo.show();
+    }
+    /**
+     * 根据车组获取车型信息
+     * @param chezuid
+     */
+    public void getCheXingData(String chezuid) {
+        listjbchexing.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("dm", chezuid);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_Chexing, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String s) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(s);
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            Map<String, String> map = new HashMap<String, String>();
+                            if (item.getString("chex_mc_std").length() > 1) {
+                                String a = item.getString("chex_mc") + "【" + item.getString("chex_mc_std") + "】";
+                                map.put("chex_dm", a);
+                                map.put("chex_mc", a);
+                                map.put("chex_bz", item.getString("chex_bz"));
+                                map.put("chex_mc_std", item.getString("chex_mc_std"));
+                            } else {
+                                map.put("chex_dm", item.getString("chex_dm"));
+                                map.put("chex_mc", item.getString("chex_mc"));
+                                map.put("chex_bz", item.getString("chex_bz"));
+                                map.put("chex_mc_std", item.getString("chex_mc_std"));
+                            }
+                            listjbchexing.add(map);
+                        }
+                    }
+                    updateCheXingData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-    //进场事件点击
-    @Override
-    public void onClick(View view) {
-        jc_or_cd = 0;
-        if (danhao == null || danhao.equals("")) {
-        } else {
+            @Override
+            public void onStart() {
 
-            updata();
+            }
 
+            @Override
+            public void onFinish() {
 
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+
+            }
+        });
+    }
+
+    /**
+     * 基本信息车型
+     */
+    public void updateCheXingData() {
+        nameList2.clear();
+        for (int i = 0; i < listjbchexing.size(); i++) {
+            CustemObject object = new CustemObject();
+            object.data = listjbchexing.get(i).get("chex_mc");
+            nameList2.add(object);
         }
+        mAdapter2 = new CustemSpinerAdapter(getActivity());
+        mAdapter2.refreshData(nameList2, 0);
+        mSpinerPopWindow2 = new SpinerPopWindow(getActivity());
+        mSpinerPopWindow2.setAdatper(mAdapter2, 310);
+        mSpinerPopWindow2.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
+            @Override
+            public void onItemClick(int pos) {
+                String value = nameList2.get(pos).toString();
+                if (!tv_chexing.getText().toString().equals(value)) {
+                    tv_chexing.setText(value);
+                    Conts.chexing = tv_chexing.getText().toString();
+                    chexingid = listjbchexing.get(pos).get("chex_bz");
+                }
+            }
+        });
+        mSpinerPopWindow2.setWidth(ll_chexing.getWidth());
+        mSpinerPopWindow2.showAsDropDown(ll_chexing);
+    }
 
+    /**
+     * 根据车系获取车组信息
+     * @param chexiid
+     */
+    public void getCheZuData(String chexiid) {
+        listjbcz.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("dm", chexiid);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CZ, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("chex_dm", item.getString("chex_dm"));
+                            map.put("chex_mc", item.getString("chex_mc"));
+                            listjbcz.add(map);
+                        }
+                    }
+                    updateChexZuData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+
+            }
+        });
+    }
+
+    /**
+     * 基本信息车组接口
+     */
+    public void updateChexZuData() {
+        nameList1.clear();
+        for (int i = 0; i < listjbcz.size(); i++) {
+            CustemObject object = new CustemObject();
+            object.data = listjbcz.get(i).get("chex_mc");
+            nameList1.add(object);
+        }
+        mAdapter1 = new CustemSpinerAdapter(getActivity());
+        mAdapter1.refreshData(nameList1, 0);
+        mSpinerPopWindow1 = new SpinerPopWindow(getActivity());
+        mSpinerPopWindow1.setAdatper(mAdapter1, 310);
+        mSpinerPopWindow1.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
+            @Override
+            public void onItemClick(int pos) {
+                String value = nameList1.get(pos).toString();
+                if (!tv_chezu.getText().toString().equals(value)) {
+                    chezuid = listjbcz.get(pos).get("chex_dm");
+                    tv_chezu.setText(value);
+                    tv_chexing.setText("");
+                }
+            }
+        });
+        mSpinerPopWindow1.setWidth(ll_chezu.getWidth());
+        mSpinerPopWindow1.showAsDropDown(ll_chezu);
+    }
+
+    /**
+     * 更新车系的数据并显示
+     */
+    public void updateCheXiData() {
+        nameList.clear();
+        for (int i = 0; i < listjbcx.size(); i++) {
+            CustemObject object = new CustemObject();
+            object.data = listjbcx.get(i).get("chex_mc");
+            nameList.add(object);
+        }
+        mAdapter = new CustemSpinerAdapter(getActivity());
+        mAdapter.refreshData(nameList, 0);
+        mSpinerPopWindow = new SpinerPopWindow(getActivity());
+        mSpinerPopWindow.setAdatper(mAdapter, 310);
+        mSpinerPopWindow.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
+            @Override
+            public void onItemClick(int pos) {
+                chexiid = "";
+                String value = nameList.get(pos).toString();
+                if (!tv_chexi.getText().toString().equals(value)) {
+                    tv_chexi.setText(value);
+                    chexiid = listjbcx.get(pos).get("chex_dm");
+                    tv_chezu.setText("");
+                    tv_chexing.setText("");
+                }
+            }
+        });
+        // 显示出来
+        mSpinerPopWindow.setWidth(ll_chexi.getWidth());
+        mSpinerPopWindow.showAsDropDown(ll_chexi);
+    }
+
+    /**
+     * 根据车牌号获取车系信息
+     * @param cxbianhao
+     */
+    public void getCheXiData(String cxbianhao) {
+        listjbcx.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("dm", cxbianhao);
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CX, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String s) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(s);
+                    if (jsonObject.get("status").toString().equals("1")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("chex_dm", item.getString("chex_dm"));
+                            map.put("chex_mc", item.getString("chex_mc"));
+                            listjbcx.add(map);
+                        }
+                    }
+                    updateCheXiData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+
+            }
+        });
     }
 
     String chepai;
@@ -1638,52 +1256,27 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     //存档操作
     private void updata() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        danhao = entity.getWork_no();
-
-//        TextView bsd_wxjd_tv_chepai;//车牌
-//        EditText bsd_wxjd_et_jinchanglicheng;//进厂里程
-//        TextView bsd_wxjd_et_name;//车主
-//        TextView bsd_wxjd_et_shouji;//手机
-//        EditText bsd_wxjd_et_vin;//VIN码
-//        TextView bsd_wxjd_tv_pinpai;//品牌
-//        TextView bsd_wxjd_tv_chexi;//车系
-//        TextView bsd_wxjd_tv_chezu;//车组
-//        TextView bsd_wxjd_tv_chexing;//车型
-//        EditText bsd_wxjd_et_qiankuan;//欠款
-//        EditText bsd_wxjd_et_huiyuan;//会员卡号
-
-
         chepai = bsd_wxjd_tv_chepai.getText().toString();
-
-        pinpai = bsd_wxjd_tv_pinpai.getText().toString();
-        chexi = bsd_wxjd_tv_chexi.getText().toString();
-        chezu = bsd_wxjd_tv_chezu.getText().toString();
-        chexing = bsd_wxjd_tv_chexing.getText().toString();
-        if (bsd_wxjd_tv_pinpai.getText().toString().equals("") ||
-                bsd_wxjd_tv_chexi.getText().toString().equals("") ||
-                bsd_wxjd_tv_chezu.getText().toString().equals("") ||
-                bsd_wxjd_tv_chexing.getText().toString().equals("")
-
-                ) {
+        pinpai = tv_pinpai.getText().toString();
+        chexi = tv_chexi.getText().toString();
+        chezu = tv_chezu.getText().toString();
+        chexing = tv_chexing.getText().toString();
+        if (tv_pinpai.getText().toString().equals("") ||
+                tv_chexi.getText().toString().equals("") ||
+                tv_chezu.getText().toString().equals("") ||
+                tv_chexing.getText().toString().equals("")) {
             che_cx = "";
         } else {
             che_cx = pinpai + "|" + chexi + "|" + chezu + "|" + chexing;
         }
-        VIN = bsd_wxjd_et_vin.getText().toString();
-        jinchanglicheng = bsd_wxjd_et_jinchanglicheng.getText().toString();
-        dinahua = bsd_wxjd_et_shouji.getText().toString();
-        chezhu = bsd_wxjd_et_name.getText().toString();
-        huiyuankahao = bsd_wxjd_et_huiyuan.getText().toString();
-
-//        VIN = bsd_wxjd_et_vin.getText().toString();
-//        jinchanglicheng = bsd_wxjd_et_jinchanglicheng.getText().toString();
-//        dinahua = bsd_wxjd_et_shouji.getText().toString();
-//        chezhu = bsd_wxjd_et_name.getText().toString();
-//        huiyuankahao = bsd_wxjd_et_huiyuan.getText().toString();
-
+        VIN = et_vin.getText().toString();
+        jinchanglicheng = et_jinchanglicheng.getText().toString();
+        dinahua = et_shouji.getText().toString();
+        chezhu = et_kehumc.getText().toString();
+        huiyuankahao = et_cardno.getText().toString();
         AbRequestParams params = new AbRequestParams();
         params.put("che_no", chepai);
-        params.put("work_no", danhao);
+//        params.put("work_no", danhao);
         params.put("che_cx", che_cx);
         params.put("che_vin", VIN);
         params.put("xche_lc", jinchanglicheng);
@@ -1694,21 +1287,21 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         params.put("xche_sffl", gongshifeili_id);
         params.put("kehu_no", Conts.kehu_no);
         params.put("xche_hjje", tv_wxjd_hj.getText().toString());
-        params.put("gcsj", bsd_wxjd_tv_gcsj.getText().toString());
-        params.put("card_no", bsd_wxjd_et_huiyuan.getText().toString());
+        params.put("gcsj", tv_gcsj.getText().toString());
+        params.put("card_no", et_cardno.getText().toString());
 
 
 //        接待登记主表work_pz_gz备注字段xche_bz存油xche_cy，
 
         //by  李赛     增加年款，颜色，存油，故障描述字段
-        Log.e("jdd", "年份aaa: " + bsd_wxjd_et_niankuan.getText().toString());
-        Log.e("jdd", "颜色aaa: " + bsd_wxjd_et_color.getText().toString());
-        Log.e("jdd", "存油aaa: " + bsd_wxjd_et_cunyou.getText().toString());
-        Log.e("jdd", "备注aaa: " + bsd_wxjd_et_miaoshu.getText().toString());
-        params.put("che_nf", bsd_wxjd_et_niankuan.getText().toString());
-        params.put("che_wxys", bsd_wxjd_et_color.getText().toString());
-        params.put("xche_cy", bsd_wxjd_et_cunyou.getText().toString());
-        params.put("xche_bz", bsd_wxjd_et_miaoshu.getText().toString());
+        Log.e("jdd", "年份aaa: " + et_niankuan.getText().toString());
+        Log.e("jdd", "颜色aaa: " + et_color.getText().toString());
+        Log.e("jdd", "存油aaa: " + et_cunyou.getText().toString());
+        Log.e("jdd", "备注aaa: " + et_miaoshu.getText().toString());
+        params.put("che_nf", et_niankuan.getText().toString());
+        params.put("che_wxys", et_color.getText().toString());
+        params.put("xche_cy", et_cunyou.getText().toString());
+        params.put("xche_bz", et_miaoshu.getText().toString());
 
 
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_jbxxtj, params, new AbStringHttpResponseListener() {
@@ -1716,7 +1309,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             public void onSuccess(int i, String s) {
                 Log.i("cjn", "查看返回的单号" + s.toString());
 //                if (list_XM.size() > 0) {
-                XMinData(s.toString().trim());
 //                } else {
 //                    WeiboDialogUtils.closeDialog(mWeiboDialog);
 //                    Show.showTime(getActivity(), "请添加材料");
@@ -1741,8 +1333,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                 Log.i("cjn", "失败信息：" + s.toString());
             }
         });
-
-
     }
 
 
@@ -1751,9 +1341,8 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
      */
     private void print() {
         mWeiboDialog2 = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        danhao = entity.getWork_no();
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", danhao);
+        params.put("work_no", entity.getWork_no());
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_print, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
@@ -1776,237 +1365,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                 WeiboDialogUtils.closeDialog(mWeiboDialog2);
                 Toast.makeText(getActivity(), "网络连接失败", Toast.LENGTH_SHORT).show();
                 Log.i("cjn", "失败信息：" + s.toString());
-            }
-        });
-
-
-    }
-
-
-    /**
-     * 添加材料
-     */
-//    String clcdjson;
-//
-//    public void CLinData(final String DH) {
-//        clcdjson = "{" + '"' + "data" + '"' + ":" + "[";
-//        for (int i = 0; i < list_CL.size() - 1; i++) {
-//            clcdjson = clcdjson + "{" + '"' + "work_no" + '"' + ":" + '"' + DH + '"' + "," + '"' +
-//                    "peij_no" + '"' + ":" + '"' + list_CL.get(i).getPeij_no() + '"' + "," + '"' +
-//                    "peij_mc" + '"' + ":" + '"' + list_CL.get(i).getPeij_mc() + '"' + "," + '"' +
-//                    "peij_sl" + '"' + ":" + '"' + list_CL.get(i).getPeij_sl() + '"' + "," + '"' +
-//                    "peij_dj" + '"' + ":" + '"' + list_CL.get(i).getPeij_dj() + '"' + "," + '"' +
-//                    "peij_je" + '"' + ":" + '"' + list_CL.get(i).getPeij_je() + '"' + "," + '"' +
-//                    "peij_th" + '"' + ":" + '"' + list_CL.get(i).getPeij_th() + '"' + "," + '"' +
-//                    "peij_dw" + '"' + ":" + '"' + list_CL.get(i).getPeij_dw() + '"' + "," + '"' +
-//                    "peij_zt" + '"' + ":" + '"' + "正常" + '"' + "}" + ",";
-//        }
-//        clcdjson = clcdjson + "{" + '"' + "work_no" + '"' + ":" + '"' + DH + '"' + "," + '"' +
-//                "peij_no" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_no() + '"' + "," + '"' +
-//                "peij_mc" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_mc() + '"' + "," + '"' +
-//                "peij_sl" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_sl() + '"' + "," + '"' +
-//                "peij_dj" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_dj() + '"' + "," + '"' +
-//                "peij_je" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_je() + '"' + "," + '"' +
-//                "peij_th" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_th() + '"' + "," + '"' +
-//                "peij_dw" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_dw() + '"' + "," + '"' +
-//                "peij_zt" + '"' + ":" + '"' + "正常" + '"' + "}" + "]" + "}";
-//        Log.i("cjn", "clcdjson========================" + clcdjson);
-//        AbRequestParams params = new AbRequestParams();
-//        params.put("json", clcdjson);
-//        params.put("work_no", danhao);
-//        params.put("che_cx", che_cx);
-//        params.put("che_vin", VIN);
-//        params.put("xche_lc", jinchanglicheng);
-//        params.put("kehu_mc", chezhu);
-//        params.put("kehu_dh", dinahua);
-//        Request.Post(URL.BSD_wxjd_addcl, params, new AbStringHttpResponseListener() {
-//
-//
-//                        @Override
-//                        public void onSuccess ( int i, String s){
-//                        Log.i("cjn", "CL是否成功" + s.toString());
-//
-//                        if (jc_or_cd == 0) {
-//                            if (s.toString().equals("存档成功")) {
-//                                WeiboDialogUtils.closeDialog(mWeiboDialog);
-//                                queRen = new QueRen(getActivity(), "存档成功");
-//                                queRen.show();
-//                                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-//                                    @Override
-//                                    public void onYesClick() {
-//                                        queRen.dismiss();
-//                                        ((MainActivity) getActivity()).upBSD_WXJD_log();
-//                                    }
-//                                });
-//
-//                            }
-//                        }
-//                        if (jc_or_cd == 1) {
-//                            jcdata(DH);
-//                        }
-//                    }
-//
-//                        @Override
-//                        public void onStart () {
-//
-//                    }
-//
-//                        @Override
-//                        public void onFinish () {
-//
-//                    }
-//
-//                        @Override
-//                        public void onFailure ( int i, String s, Throwable throwable){
-//                        Log.i("cjn", "请求失败" + s.toString());
-//                        WeiboDialogUtils.closeDialog(mWeiboDialog);
-//                    }
-//                    });
-//                }
-
-
-    /**
-     * 添加材料
-     */
-    String clcdjson;
-
-    public void CLinData(final String DH) {
-        if (list_CL.size() > 0) {
-
-            clcdjson = "{" + '"' + "data" + '"' + ":" + "[";
-            for (int i = 0; i < list_CL.size() - 1; i++) {
-                clcdjson = clcdjson + "{" + '"' + "work_no" + '"' + ":" + '"' + DH + '"' + "," + '"' +
-                        "peij_no" + '"' + ":" + '"' + list_CL.get(i).getPeij_no() + '"' + "," + '"' +
-                        "peij_mc" + '"' + ":" + '"' + list_CL.get(i).getPeij_mc() + '"' + "," + '"' +
-                        "peij_sl" + '"' + ":" + '"' + list_CL.get(i).getPeij_sl() + '"' + "," + '"' +
-                        "peij_dj" + '"' + ":" + '"' + list_CL.get(i).getPeij_dj() + '"' + "," + '"' +
-                        "peij_je" + '"' + ":" + '"' + list_CL.get(i).getPeij_je() + '"' + "," + '"' +
-                        "peij_th" + '"' + ":" + '"' + list_CL.get(i).getPeij_th() + '"' + "," + '"' +
-                        "peij_dw" + '"' + ":" + '"' + list_CL.get(i).getPeij_dw() + '"' + "," + '"' +
-                        "peij_zt" + '"' + ":" + '"' + "正常" + '"' + "}" + ",";
-            }
-            clcdjson = clcdjson + "{" + '"' + "work_no" + '"' + ":" + '"' + DH + '"' + "," + '"' +
-                    "peij_no" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_no() + '"' + "," + '"' +
-                    "peij_mc" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_mc() + '"' + "," + '"' +
-                    "peij_sl" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_sl() + '"' + "," + '"' +
-                    "peij_dj" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_dj() + '"' + "," + '"' +
-                    "peij_je" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_je() + '"' + "," + '"' +
-                    "peij_th" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_th() + '"' + "," + '"' +
-                    "peij_dw" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_dw() + '"' + "," + '"' +
-                    "peij_zt" + '"' + ":" + '"' + "正常" + '"' + "}" + "]" + "}";
-        } else {
-            clcdjson = "{" + '"' + "data" + '"' + ":" + '[' + ']' + "}";
-
-        }
-        Log.i("cjn", "clcdjson========================" + clcdjson);
-        AbRequestParams params = new AbRequestParams();
-        params.put("json", clcdjson);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_addcl, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "CL是否成功" + s.toString());
-
-                if (jc_or_cd == 0) {
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-                    queRen = new QueRen(getActivity(), "存档成功");
-                    queRen.show();
-                    queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                        @Override
-                        public void onYesClick() {
-                            queRen.dismiss();
-                            ((MainActivity) getActivity()).upBSD_WXJD_log();
-                        }
-                    });
-                }
-
-                if (jc_or_cd == 1) {
-                    Log.i("cjn", "走没走进厂方法");
-                    jcdata(DH);
-                }
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                WeiboDialogUtils.closeDialog(mWeiboDialog);
-                Log.i("cjn", "请求失败" + s.toString());
-            }
-        });
-    }
-
-
-    /**
-     * 添加项目
-     */
-    String json;
-
-    public void XMinData(final String DH) {
-        if (list_XM.size() > 0) {
-            json = "{" + '"' + "data" + '"' + ":" + "[";
-            for (int i = 0; i < list_XM.size() - 1; i++) {
-                json = json + "{" + '"' + "work_no" + '"' + ":" + '"' + DH + '"' + "," + '"' + "wxxm_mc" + '"' + ":" + '"' + list_XM.get(i).getWxxm_mc() + '"' + "," + '"' +
-                        "wxxm_gs" + '"' + ":" + '"' + list_XM.get(i).getWxxm_gs() + '"' + "," + '"' +
-                        "wxxm_dj" + '"' + ":" + '"' + list_XM.get(i).getWxxm_dj() + '"' + "," + '"' +
-                        "wxxm_no" + '"' + ":" + '"' + list_XM.get(i).getWxxm_no() + '"' + "," + '"' +
-                        "wxxm_je" + '"' + ":" + '"' + list_XM.get(i).getWxxm_je() + '"' + "," + '"' +
-                        "wxxm_cb" + '"' + ":" + '"' + list_XM.get(i).getWxxm_cb() + '"' + "," + '"' +
-                        "wxxm_zt" + '"' + ":" + '"' + "正常" + '"' + "," + '"' +
-                        "wxxm_tpye" + '"' + ":" + '"' + "正常" + '"' + "}" + ",";
-            }
-
-
-            json = json + "{" + '"' + "work_no" + '"' + ":" + '"' + DH + '"' + "," + '"' + "wxxm_mc" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_mc() + '"' + "," + '"' +
-                    "wxxm_gs" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_gs() + '"' + "," + '"' +
-                    "wxxm_dj" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_dj() + '"' + "," + '"' +
-                    "wxxm_no" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_no() + '"' + "," + '"' +
-                    "wxxm_je" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_je() + '"' + "," + '"' +
-                    "wxxm_cb" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_cb() + '"' + "," + '"' +
-                    "wxxm_zt" + '"' + ":" + '"' + "正常" + '"' + "," + '"' +
-                    "wxxm_tpye" + '"' + ":" + '"' + "正常"
-                    + '"' + "}" + "]" + "}";
-//        + "]" + "}"
-        } else {
-            json = "{" + '"' + "data" + '"' + ":" + '[' + ']' + "}";
-        }
-        Log.i("cjn", "最后一次查看json" + json);
-        AbRequestParams params = new AbRequestParams();
-        params.put("json", json);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_addxm, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "XM是否成功" + s.toString());
-//                if (list_CL.size() > 0) {
-                CLinData(DH);
-//                } else {
-//                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-//                    Show.showTime(getActivity(), "请添加项目");
-//                }
-
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "请求失败" + s.toString());
             }
         });
     }
@@ -2087,8 +1445,8 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     public void bsd_cexifansuan() {
         String id;
         AbRequestParams params = new AbRequestParams();
-        params.put("quanMing", bsd_wxjd_tv_chexing.getText().toString());
-        Log.i("cjn", "bsd_ksbj_cxing.getText().toString()" + bsd_wxjd_tv_chexing.getText().toString());
+        params.put("quanMing", tv_chexing.getText().toString());
+        Log.i("cjn", "bsd_ksbj_cxing.getText().toString()" + tv_chexing.getText().toString());
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_chexing_fansuan, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
@@ -2106,20 +1464,20 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
 
                     int a;
                     double b;
-                    b = Double.parseDouble(bsd_wxjd_et_jinchanglicheng.getText().toString().trim());
+                    b = Double.parseDouble(et_jinchanglicheng.getText().toString().trim());
                     a = (int) b;
                     Conts.bycx_licheng = "" + a;//里程
 //                    Conts.bycx_licheng = bsd_wxjd_et_jinchanglicheng.getText().toString().trim();//里程
-                    Conts.bycx_time = bsd_wxjd_tv_gcsj.getText().toString().trim();//时间
-                    Conts.bycx_pinpai = bsd_wxjd_tv_pinpai.getText().toString().trim();
-                    Conts.bycx_chexi = bsd_wxjd_tv_chexi.getText().toString().trim();
-                    Conts.bycx_chezu = bsd_wxjd_tv_chezu.getText().toString().trim();
-                    Conts.bycx_cxing = bsd_wxjd_tv_chexing.getText().toString().trim();
-                    Conts.bycx_VIN = bsd_wxjd_et_vin.getText().toString().trim();
-                    Conts.bycx_CarName = bsd_wxjd_et_name.getText().toString().trim();
-                    Conts.bycx_Shouji = bsd_wxjd_et_shouji.getText().toString().trim();
-                    Conts.bycx_huiyuan = bsd_wxjd_et_huiyuan.getText().toString().trim();
-                    Conts.bycx_cheliangmingcheng = bsd_wxjd_tv_pinpai.getText().toString().trim() + "|" + bsd_wxjd_tv_chexi.getText().toString().trim() + "|" + bsd_wxjd_tv_chezu.getText().toString().trim() + "|" + bsd_wxjd_tv_chexing.getText().toString().trim();
+                    Conts.bycx_time = tv_gcsj.getText().toString().trim();//时间
+                    Conts.bycx_pinpai = tv_pinpai.getText().toString().trim();
+                    Conts.bycx_chexi = tv_chexi.getText().toString().trim();
+                    Conts.bycx_chezu = tv_chezu.getText().toString().trim();
+                    Conts.bycx_cxing = tv_chexing.getText().toString().trim();
+                    Conts.bycx_VIN = et_vin.getText().toString().trim();
+                    Conts.bycx_CarName = et_kehumc.getText().toString().trim();
+                    Conts.bycx_Shouji = et_shouji.getText().toString().trim();
+                    Conts.bycx_huiyuan = et_cardno.getText().toString().trim();
+                    Conts.bycx_cheliangmingcheng = tv_pinpai.getText().toString().trim() + "|" + tv_chexi.getText().toString().trim() + "|" + tv_chezu.getText().toString().trim() + "|" + tv_chexing.getText().toString().trim();
 
                     ((MainActivity) getActivity()).upBSD_bycx();
 
