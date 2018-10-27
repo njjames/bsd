@@ -988,23 +988,9 @@ public class MainActivity extends FragmentActivity {
         return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
     }
 
-    /**
-     * 显示美容快修单历史详情
-     * @param params
-     */
-    public void showMrkxXqFragment(String params) {
-        DownJianPan.DJP(this);
-        change(BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment.newInstance(params));
-    }
-
     public void showKSBJFragment(String params) {
         DownJianPan.DJP(this);
         change(BSD_kuaisubaojia_Fragment.newInstance(params));
-    }
-
-    public void showKsbjXqFragment(String params) {
-        DownJianPan.DJP(this);
-        change(BSD_kuaisubaojia_xiangqing_Fragment.newInstance(params));
     }
 
     public void showWXXQFragment(String params) {
@@ -1015,5 +1001,29 @@ public class MainActivity extends FragmentActivity {
     public void showWxddFragment(String params) {
         DownJianPan.DJP(this);
         change(BSD_WeiXiuYeWuDiaoDu_Fragment.newInstance(params));
+    }
+
+    public void showWxjdFragment(String params) {
+        DownJianPan.DJP(this);
+        change(BSD_WeiXiuJieDan_Fragment.newInstance(params));
+    }
+
+    /**
+     * 显示美容快修单历史详情
+     * @param params
+     */
+    public void showMrkxXqFragment(String params) {
+        DownJianPan.DJP(this);
+        change(BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment.newInstance(params));
+    }
+
+    public void showKsbjXqFragment(String params) {
+        DownJianPan.DJP(this);
+        change(BSD_kuaisubaojia_xiangqing_Fragment.newInstance(params));
+    }
+
+    public void showWxjdXqFragment(String params) {
+        DownJianPan.DJP(this);
+        change(BSD_WeiXiuJieDan_xiangqing_Fragment.newInstance(params));
     }
 }

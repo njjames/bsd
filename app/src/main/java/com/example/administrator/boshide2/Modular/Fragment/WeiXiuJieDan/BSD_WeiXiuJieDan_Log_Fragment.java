@@ -100,7 +100,7 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
         bsd_im_sdsr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).showManualInputFragment(Conts.BILLTYPE_KSBJ);
+                ((MainActivity) getActivity()).showManualInputFragment(Conts.BILLTYPE_WXJD);
             }
         });
         bsd_im_zdsb.setOnClickListener(new View.OnClickListener() {

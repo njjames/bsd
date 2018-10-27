@@ -45,7 +45,6 @@ public class ManualInputFragment extends BaseFragment {
     public static final String INPUT_LICENSE_COMPLETE = "me.kevingo.licensekeyboard.input.comp";
     public static final String INPUT_LICENSE_KEY = "LICENSE";
     private static final String PARAM_KEY = "param_key";
-
     private EditText inputbox1;
     private EditText inputbox2;
     private EditText inputbox3;

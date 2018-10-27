@@ -85,8 +85,8 @@
 
             <TextView
                 style="@style/mysearchtitlestyle"
-                android:layout_weight="1.5"
-                android:text="接单日期" />
+                android:layout_weight="1"
+                android:text="车牌号" />
 
             <TextView
                 style="@style/mysearchtitlestyle"
@@ -95,8 +95,8 @@
 
             <TextView
                 style="@style/mysearchtitlestyle"
-                android:layout_weight="1"
-                android:text="车牌号" />
+                android:layout_weight="1.5"
+                android:text="接单日期" />
 
             <TextView
                 style="@style/mysearchtitlestyle"

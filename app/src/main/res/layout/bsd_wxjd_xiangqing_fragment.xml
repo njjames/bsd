@@ -114,7 +114,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_2"
+            android:layout_marginTop="@dimen/qb_px_4"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -201,7 +201,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/qb_px_2">
+            android:layout_marginTop="@dimen/qb_px_4">
 
             <LinearLayout
                 android:id="@+id/relativeLayout23"
@@ -312,14 +312,15 @@
 
                 <ListView
                     android:id="@+id/lv_wxxm"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_26"
                     android:background="@drawable/bsd_xiamianyuan"
+                    android:orientation="horizontal"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -330,22 +331,30 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tv_wxxm_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:text="(共0条记录)"
+                        android:layout_marginLeft="@dimen/qb_px_4"/>
+
+                    <TextView
                         android:id="@+id/tv_wxjd_xmhj"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
                         android:layout_marginRight="@dimen/qb_px_10"
                         android:text="元"
                         android:textColor="#F7714C"
                         android:textSize="16sp" />
-                </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <View
                 android:id="@+id/bsd_onzhongjian"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qb_px_1"
-                android:layout_marginTop="@dimen/qb_px_2"
+                android:layout_marginTop="@dimen/qb_px_1"
                 android:background="#F7714C" />
 
             <LinearLayout
@@ -388,14 +397,15 @@
 
                 <ListView
                     android:id="@+id/lv_wxcl"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_26"
                     android:background="@drawable/bsd_xiamianyuan"
+                    android:orientation="horizontal"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -406,15 +416,23 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tv_wxcl_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:text="(共0条记录)"
+                        android:layout_marginLeft="@dimen/qb_px_4"/>
+
+                    <TextView
                         android:id="@+id/tv_wxjd_clhj"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
                         android:layout_marginRight="@dimen/qb_px_10"
                         android:text="元"
                         android:textColor="#F7714C"
                         android:textSize="16sp" />
-                </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

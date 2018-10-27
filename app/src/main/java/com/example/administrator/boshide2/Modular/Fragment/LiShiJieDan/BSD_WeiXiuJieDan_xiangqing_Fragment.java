@@ -1,6 +1,7 @@
 package com.example.administrator.boshide2.Modular.Fragment.LiShiJieDan;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -58,6 +59,7 @@ import java.util.Map;
  */
 
 public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
+    private static final String PARAM_KEY = "param_key";
     private TextView bsd_wxjd_chepai;//车牌
     private TextView bsd_wxjd_jinchanglicheng;//进厂里程
     private TextView bsd_wxjd_name;//车主
@@ -73,7 +75,6 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
     private TextView tv_wxjd_hj;
     private TextView bsd_wxjd_gsfl;
     private TextView bsd_wxjd_jdrq;
-    private BSD_WeiXiuJieDan_Entity entity;
     private ListView listxm;//维修项目
     private ListView listcl;//维修材料
     private BSD_WXJD_XM_xiangqingadp adp_xm;
@@ -85,6 +86,24 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
     private TextView title;
     private TextView footerText;
     private TextView billNo;
+    private BSD_WeiXiuJieDan_Entity billEntiy;
+    private String params;
+    private TextView tv_wxclCount;
+    private TextView tv_wxxmCount;
+
+    public static BSD_WeiXiuJieDan_xiangqing_Fragment newInstance(String params) {
+        BSD_WeiXiuJieDan_xiangqing_Fragment fragment = new BSD_WeiXiuJieDan_xiangqing_Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY, params);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        params = getArguments().getString(PARAM_KEY);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -125,6 +144,8 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
         title = (TextView) view.findViewById(R.id.tv_title);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
         billNo = (TextView) view.findViewById(R.id.tv_billNo);
+        tv_wxxmCount = (TextView) view.findViewById(R.id.tv_wxxm_count);
+        tv_wxclCount = (TextView) view.findViewById(R.id.tv_wxcl_count);
     }
 
     @Override
@@ -133,10 +154,14 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
         title.setText("历史接单详情");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
-        entity = new BSD_WeiXiuJieDan_Entity();
-        entity = ((MainActivity) getActivity()).getWxjdentity();
-        Conts.work_no = entity.getWork_no();
-        String cheCx = entity.getChe_cx();
+        getBillInfoFromParam();
+        updateBillInfoUI();
+        xmdata();
+        cldata();
+    }
+
+    private void updateBillInfoUI() {
+        String cheCx = billEntiy.getChe_cx();
         String[] cheCxs = cheCx.split("\\|");
         if (cheCxs.length >= 4) {
             bsd_wxjd_pinpai.setText(cheCxs[0]);
@@ -144,16 +169,38 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
             bsd_wxjd_chezu.setText(cheCxs[2]);
             bsd_wxjd_chexing.setText(cheCxs[3]);
         }
-        bsd_wxjd_chepai.setText(entity.getChe_no());
-        bsd_wxjd_vin.setText(entity.getChe_vin());
-        bsd_wxjd_jinchanglicheng.setText("" + entity.getXche_lc());
-        bsd_wxjd_name.setText(entity.getKehu_mc());
-        bsd_wxjd_shouji.setText(entity.getKehu_dh());
-        bsd_wxjd_huiyuan.setText(entity.getCard_no());
-        bsd_wxjd_gsfl.setText(entity.getXche_sfbz());
-        bsd_wxjd_jdrq.setText(entity.getXche_jdrq());
-        xmdata();
-        cldata();
+        bsd_wxjd_chepai.setText(billEntiy.getChe_no());
+        bsd_wxjd_vin.setText(billEntiy.getChe_vin());
+        bsd_wxjd_jinchanglicheng.setText("" + billEntiy.getXche_lc());
+        bsd_wxjd_name.setText(billEntiy.getKehu_mc());
+        bsd_wxjd_shouji.setText(billEntiy.getKehu_dh());
+        bsd_wxjd_huiyuan.setText(billEntiy.getCard_no());
+        bsd_wxjd_gsfl.setText(billEntiy.getXche_sfbz());
+        bsd_wxjd_jdrq.setText(billEntiy.getXche_jdrq());
+        billNo.setText(billEntiy.getWork_no());
+        tv_wxjd_hj.setText(billEntiy.getXche_hjje() + "");
+    }
+
+    private void getBillInfoFromParam() {   // 注意这个里面取值的字段都需要小写
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(params);
+            billEntiy = new BSD_WeiXiuJieDan_Entity();
+            billEntiy.setWork_no(jsonObject.getString("work_no"));
+            billEntiy.setChe_no(jsonObject.getString("che_no"));
+            billEntiy.setChe_vin(jsonObject.getString("che_vin"));
+            billEntiy.setChe_cx(jsonObject.getString("che_cx"));
+            billEntiy.setKehu_no(jsonObject.getString("kehu_no"));
+            billEntiy.setKehu_mc(jsonObject.getString("kehu_mc"));
+            billEntiy.setKehu_dh(jsonObject.getString("kehu_dh"));
+            billEntiy.setCard_no(jsonObject.getString("card_no"));
+            billEntiy.setXche_lc(jsonObject.getInt("xche_lc"));
+            billEntiy.setXche_sfbz(jsonObject.getString("xche_sfbz"));
+            billEntiy.setXche_jdrq(jsonObject.getString("xche_jdrq"));
+            billEntiy.setXche_hjje(jsonObject.getDouble("xche_hjje"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -162,8 +209,8 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
     public void cldata() {
         list_CL.clear();
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", entity.getWork_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_lscl, params, new AbStringHttpResponseListener() {
+        params.put("work_no", billEntiy.getWork_no());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_cllb, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
                 try {
@@ -185,6 +232,7 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
                             entity.setPeij_zt(item.getString("peij_zt"));
                             list_CL.add(entity);
                         }
+                        wxclPrice();
                         adp_cl.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
@@ -215,8 +263,8 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
     public void xmdata() {
         list_XM.clear();
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", entity.getWork_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_lsxm, params, new AbStringHttpResponseListener() {
+        params.put("work_no", billEntiy.getWork_no());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_xmlb, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aaa, String s) {
                 try {
@@ -236,6 +284,7 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
                             entity.setWxxm_dj(item.getDouble("wxxm_dj"));
                             list_XM.add(entity);
                         }
+                        wxxmPrice();
                         adp_xm.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
@@ -258,6 +307,23 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
                 Log.e("返回值", "查询项目失败了"+s);
             }
         });
+    }
 
+    public void wxclPrice() {
+        double jg = 0;
+        for (int i = 0; i < list_CL.size(); i++) {
+            jg = jg + (list_CL.get(i).getPeij_dj() * list_CL.get(i).getPeij_sl());
+        }
+        tv_wxjd_clhj.setText(jg + "元");
+        tv_wxclCount.setText("(共" + list_CL.size() + "条记录)");
+    }
+
+    public void wxxmPrice() {
+        double bb = 0;
+        for (int i = 0; i < list_XM.size(); i++) {
+            bb = bb + (list_XM.get(i).getWxxm_dj() * list_XM.get(i).getWxxm_gs());
+        }
+        tv_wxjd_xmhj.setText(bb + "元");
+        tv_wxxmCount.setText("(共" + list_XM.size() + "条记录)");
     }
 }

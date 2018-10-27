@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ import java.net.URL;
  */
 
 public class BSD_LianXiWoMen_Fragment extends Fragment {
-    RelativeLayout bsd_lsbj_fanhui;
+    LinearLayout bsd_lsbj_fanhui;
     URLS url;
     String html;
     TextView bsd_my;
@@ -52,7 +53,7 @@ public class BSD_LianXiWoMen_Fragment extends Fragment {
         init();
         title = (TextView) view.findViewById(R.id.tv_title);
         title.setText("联系我们");
-        bsd_lsbj_fanhui = (RelativeLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
+        bsd_lsbj_fanhui = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

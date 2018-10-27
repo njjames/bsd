@@ -442,7 +442,6 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
 
     }
 
-
     /*
      * 保存车辆、客户信息
      */
@@ -519,6 +518,9 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                 break;
             case Conts.BILLTYPE_WXDD:
                 ((MainActivity) getActivity()).showWxddFragment(paramBillNo);
+                break;
+            case Conts.BILLTYPE_WXJD:
+                data_wxjd(paramCheNo, paramBillNo);
                 break;
         }
 //        if ("mrkx".equals(paramBillType)) {
@@ -779,106 +781,28 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     /*
     *根据车牌获取数据，打开维修接待
     */
-    public void data_wxjd(final String cp, final View view) {
-        Log.e("jd", "data方法 ");
+    public void data_wxjd(final String cardNo, String billNo) {
         list_wxjd.clear();
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("pai", cp);
+        params.put("che_no", cardNo);
         params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
-        Log.i("cjn", "维修接单车牌是" + cp + "gongsiNO" + MyApplication.shared.getString("GongSiNo", "")
-                + "------caozuoyuan_xm" + MyApplication.shared.getString("name", ""));
-        Log.e("jd", "ip地址和路径："+MyApplication.shared.getString("ip", "") + url.BSD_wxjd_jbxx);
+        params.put("work_no", billNo);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_jbxx, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int aa, String s) {
-                Log.i("cjn", "成功1");
-                Log.e("jd", "维修单基本信息ss: " + s.toString());
+            public void onSuccess(int code, String data) {
                 try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("1")) {
-                        Log.e("jd", "33333");
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            //这块拿到的是维系接单的详细表
-                            Log.e("jd", "444");
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-                            entiy.setWork_no(item.getString("work_no"));
-                            entiy.setKehu_no(item.getString("kehu_no"));
-                            entiy.setKehu_mc(item.getString("kehu_mc"));
-                            Log.e("jd", "555");
-                            entiy.setKehu_xm(item.getString("kehu_xm"));
-                            entiy.setKehu_dz(item.getString("kehu_dz"));
-                            entiy.setKehu_yb(item.getString("kehu_yb"));
-                            entiy.setKehu_dh(item.getString("kehu_dh"));
-                            entiy.setChe_no(item.getString("che_no"));
-                            entiy.setChe_cx(item.getString("che_cx"));
-                            entiy.setChe_vin(item.getString("che_vin"));
-                            entiy.setXche_lc(item.getInt("xche_lc"));
-                            entiy.setXche_jdrq(item.getString("xche_jdrq"));
-                            entiy.setXche_sfbz(item.getString("xche_sfbz"));
-                            entiy.setXche_sffl(item.getDouble("xche_sffl"));
-                            entiy.setGcsj(item.getString("gcsj"));
-                            entiy.setCard_no(item.getString("card_no"));
-                            //by  李赛
-                            entiy.setXche_cy(item.getString("xche_cy"));    //存油
-                            entiy.setChe_wxys(item.getString("che_wxys"));    //颜色
-                            Log.e("jd", "颜色=="+item.getString("che_wxys"));
-                            entiy.setXche_bz(item.getString("xche_bz"));     //备注
-                            Log.e("jd", "备注=="+item.getString("xche_bz"));
-                            entiy.setChe_nf(item.getString("che_nf"));      //年份
-                            Log.e("jd", " 年份：" + item.getString("che_nf"));
-
-                            list_wxjd.add(entiy);
-
-                        }
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
+                    JSONObject jsonObject = new JSONObject(data);
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        mainActivity.showWxjdFragment(jsonObject.getString("data"));
                     } else {
                         Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }
-                    if (jsonObject.get("total").toString().equals("1")) {
-                        BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-                        entiy = list_wxjd.get(0);
-
-                        mainActivity.setWxjdentity(entiy);//传了个实体
-//
-                        if (null == entiy.getWork_no() || entiy.getWork_no().equals("") || entiy.getWork_no().equals("null")) {
-                            Toast.makeText(getActivity(), "网络超时请重试", Toast.LENGTH_SHORT).show();
-                        } else {
-
-                            mainActivity.upwxjd(view);
-                        }
-                        Conts.zt = 1;
-                        Conts.cp = cp;
-
-                    } else if (jsonObject.get("total").toString().equals("0")) {
-
-                        mainActivity.upwxjd(view);
-                        //请求
-
-                        Conts.cp = cp;
-                        Conts.zt = 0;
-
-
-                    } else {
-
-                        BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-                        entiy = list_wxjd.get(0);
-                        entiy = list_wxjd.get(0);
-                        mainActivity.setWxjdentity(entiy);//传了个实体
-//
-                        mainActivity.upwxjd(view);
-                        Conts.zt = 1;
-                        Conts.cp = cp;
-                    }
-                    //在这里请求
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override

@@ -1,5 +1,6 @@
 package com.example.administrator.boshide2.Modular.Fragment.LiShiJieDan;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.telephony.TelephonyManager;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.view.pullview.AbPullToRefreshView;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
@@ -24,6 +27,7 @@ import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiJieDan.Adapter.BSD_lsjd_adp;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
 
 import org.json.JSONArray;
@@ -40,19 +44,21 @@ import static android.content.Context.TELEPHONY_SERVICE;
  */
 
 public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRefreshView.OnFooterLoadListener, AbPullToRefreshView.OnHeaderRefreshListener {
-    RelativeLayout bsd_lsbj_fanhui;
-    ListView bsd_lsbj_lv;
-    List<BSD_WeiXiuJieDan_Entity> data = new ArrayList<BSD_WeiXiuJieDan_Entity>();
-    BSD_lsjd_adp adapter;
-    AbPullToRefreshView abPullToRefreshView = null;
-    int page = 1;
-    URLS url;
-    EditText bsd_lsjd_cp, bsd_lsjd_cz;
-    TextView iv_search;
+    private LinearLayout bsd_lsbj_fanhui;
+    private ListView bsd_lsbj_lv;
+    private List<BSD_WeiXiuJieDan_Entity> data = new ArrayList<BSD_WeiXiuJieDan_Entity>();
+    private BSD_lsjd_adp adapter;
+    private AbPullToRefreshView abPullToRefreshView = null;
+    private int page = 1;
+    private URLS url;
+    private EditText bsd_lsjd_cp;
+    private EditText bsd_lsjd_cz;
+    private TextView iv_search;
     private TextView title;
     private TextView footerText;
     private String cheNo = "";
     private String kehuMc = "";
+    private Dialog mWeiboDialog;
 
     @Override
     protected int getLayoutId() {
@@ -83,16 +89,11 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-                entiy = data.get(i);
-                ((MainActivity) getActivity()).setWxjdentity(entiy);//传了个实体
-                Conts.zt = 1;
-                Conts.cp = entiy.getChe_no();
-                ((MainActivity) getActivity()).uowxjdxiangqing();
+                ((MainActivity) getActivity()).showWxjdXqFragment(JSON.toJSON(data.get(i)).toString());
             }
         });
         // 返回
-        bsd_lsbj_fanhui = (RelativeLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
+        bsd_lsbj_fanhui = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,6 +141,7 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
      * 获取历史接单
      */
     public void getData() {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         data.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("pageNumber", page);
@@ -159,11 +161,6 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
                             entiy.setWork_no(item.getString("work_no"));
                             entiy.setKehu_no(item.getString("kehu_no"));
                             entiy.setKehu_mc(item.getString("kehu_mc"));
-//                            entiy.setKehu_mc(item.getString("kehu_mc"));
-//                            entiy.setKehu_xm(item.getString("kehu_xm"));
-//                            entiy.setKehu_dz(item.getString("kehu_dz"));
-//                            entiy.setKehu_yb(item.getString("kehu_yb"));
-//                            entiy.setKehu_dh(item.getString("kehu_dh"));
                             entiy.setChe_no(item.getString("che_no"));
                             entiy.setChe_cx(item.getString("che_cx"));
                             entiy.setChe_vin(item.getString("che_vin"));
@@ -175,6 +172,7 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
                             entiy.setXche_sffl(item.getDouble("xche_sffl"));
                             entiy.setXche_pgcz(item.getString("xche_pgcz"));
                             entiy.setXche_wxjd(item.getString("xche_wxjd"));
+                            entiy.setXche_hjje(item.getDouble("xche_hjje"));
                             data.add(entiy);
                         }
                     } else {
@@ -186,6 +184,7 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
                 }
                 abPullToRefreshView.onFooterLoadFinish();
                 abPullToRefreshView.onHeaderRefreshFinish();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -203,6 +202,7 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
                 Show.showTime(getActivity(), "网络连接超时");
                 abPullToRefreshView.onFooterLoadFinish();
                 abPullToRefreshView.onHeaderRefreshFinish();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
 
@@ -211,7 +211,6 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
 
     @Override
     public void onFooterLoad(AbPullToRefreshView abPullToRefreshView) {
-
         page++;
         getData();
     }

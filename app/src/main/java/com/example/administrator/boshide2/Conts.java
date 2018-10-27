@@ -112,4 +112,5 @@ public class Conts {
     public static final String BILLTYPE_MRKX = "mrkx";
     public static final String BILLTYPE_KSBJ = "ksbj";
     public static final String BILLTYPE_WXDD = "wxdd";
+    public static final String BILLTYPE_WXJD = "wxjd";
 }
