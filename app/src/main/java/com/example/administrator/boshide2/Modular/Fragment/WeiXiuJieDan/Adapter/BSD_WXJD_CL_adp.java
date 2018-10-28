@@ -47,6 +47,7 @@ public class BSD_WXJD_CL_adp extends BaseAdapter {
 
 
     public final class Holder {
+        TextView bsd_xzcl_no;
         TextView bsd_xzcl_name;
         TextView bsd_xzcl_shuliang;
         TextView bsd_xzcl_danjia;
@@ -62,6 +63,7 @@ public class BSD_WXJD_CL_adp extends BaseAdapter {
         if (contetview == null) {
             holder = new Holder();
             contetview = layoutInflater.inflate(R.layout.bsd_wxjd_xzcl_item, null);
+            holder.bsd_xzcl_no = (TextView) contetview.findViewById(R.id.bsd_xzcl_no);
             holder.bsd_xzcl_name = (TextView) contetview.findViewById(R.id.bsd_xzcl_name);
             holder.bsd_xzcl_shuliang = (TextView) contetview.findViewById(R.id.bsd_xzcl_shuliang);
             holder.bsd_xzcl_danjia = (TextView) contetview.findViewById(R.id.bsd_xzcl_danjia);
@@ -73,6 +75,7 @@ public class BSD_WXJD_CL_adp extends BaseAdapter {
         } else {
             holder = (Holder) contetview.getTag();
         }
+        holder.bsd_xzcl_no.setText(list.get(i).getPeij_no());
         holder.bsd_xzcl_name.setText(list.get(i).getPeij_mc());
         holder.bsd_xzcl_shuliang.setText("" + list.get(i).getPeij_sl());
         holder.bsd_xzcl_shuliang.setOnClickListener(new View.OnClickListener() {

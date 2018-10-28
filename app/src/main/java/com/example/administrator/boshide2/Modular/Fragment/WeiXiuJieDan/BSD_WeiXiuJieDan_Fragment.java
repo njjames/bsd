@@ -340,7 +340,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             }
             @Override
             public void onDelete(final int position) {
-                promptdiaog = new TooPromptdiaog(getContext(), "是否删除");
+                promptdiaog = new TooPromptdiaog(getContext(), "确定删除吗？");
                 promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick() {
@@ -611,7 +611,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     @Override
     public void initData() {
         url = new URLS();
-        title.setText("美容快修");
+        title.setText("接待登记");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         timePickerShow = new TimeDialog(getActivity());
@@ -1343,6 +1343,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                         wxxmItem.setWxxm_cb(item.getWxxm_cb());
                         wxxmItem.setWxxm_je(item.getWxxm_zddj());
                         wxxmItem.setWxxm_zt("正常");
+                        wxxmItem.setWxxm_Tpye("正常");
                         needAddList.add(wxxmItem);
                     }
                 }

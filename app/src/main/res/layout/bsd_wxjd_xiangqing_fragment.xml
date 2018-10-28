@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/qb_px_4"
         android:paddingRight="@dimen/qb_px_4"
-        android:paddingTop="@dimen/qb_px_6">
+        android:paddingTop="@dimen/qb_px_4">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -262,7 +262,7 @@
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_1"
-            android:layout_marginTop="@dimen/qb_px_4"
+            android:layout_marginTop="@dimen/qb_px_2"
             android:background="#F7714C" />
 
         <LinearLayout
@@ -320,8 +320,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_26"
                     android:background="@drawable/bsd_xiamianyuan"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -334,10 +334,10 @@
                         android:id="@+id/tv_wxxm_count"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/qb_px_4"
                         android:layout_weight="1"
-                        android:textSize="14sp"
                         android:text="(共0条记录)"
-                        android:layout_marginLeft="@dimen/qb_px_4"/>
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_wxjd_xmhj"
@@ -405,8 +405,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_26"
                     android:background="@drawable/bsd_xiamianyuan"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -419,10 +419,10 @@
                         android:id="@+id/tv_wxcl_count"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/qb_px_4"
                         android:layout_weight="1"
-                        android:textSize="14sp"
                         android:text="(共0条记录)"
-                        android:layout_marginLeft="@dimen/qb_px_4"/>
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_wxjd_clhj"
