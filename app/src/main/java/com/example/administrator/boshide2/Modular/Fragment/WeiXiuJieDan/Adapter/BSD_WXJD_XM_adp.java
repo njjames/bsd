@@ -30,6 +30,9 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
     UpGongShi upGongShi;
     UpGongShiDanJia upGongShiDanJia;
     UpXmmc upXmmc;
+    private OnOperateItemListener onOperateItemListener;
+    private int currentPosition;
+
     public void setXmDelete(XmDelete xmDelete) {
         this.xmDelete = xmDelete;
     }
@@ -105,7 +108,9 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
         holder.bsd_xzcl_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                upXmmc.onYesClick(i,list.get(i).getWxxm_mc());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateWxxmMc(i);
+                }
             }
         });
 
@@ -142,8 +147,9 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
         holder.bsd_xzcl_je.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                upGongShiDanJia.onYesClick(i,list.get(i).getWxxm_mc(),list.get(i).getWxxm_je());
-
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateYgsf(i);
+                }
             }
         });
 
@@ -153,19 +159,9 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
         holder.bsd_xzcl_caozuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                promptdiaog=new TooPromptdiaog(context,"是否删除");
-                promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-
-                        list.remove(i);
-                        notifyDataSetChanged();
-                        promptdiaog.dismiss();
-                        xmDelete.onYesClick();
-                    }
-                });
-
-                promptdiaog.show();
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onDelete(i);
+                }
             }
         });
         return contetview;
@@ -188,5 +184,22 @@ public class BSD_WXJD_XM_adp extends BaseAdapter {
         public  void  onYesClick(int i,String name);
     }
 
+    public interface OnOperateItemListener {
+        void onPaiGong(String wxxmNo);
+
+        void onDelete(int position);
+
+        void onUpdateYgsf(int position);
+
+        void onUpdateWxxmMc(int position);
+    }
+
+    public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {
+        this.onOperateItemListener = onOperateItemListener;
+    }
+
+    public void setCurrentPosition(int position) {
+        this.currentPosition = position;
+    }
 
 }

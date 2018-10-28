@@ -96,8 +96,7 @@ public class BSD_wxywdd_wxcl extends BaseFragment {
 
             @Override
             public void onSearchStock(String peij_no) {
-                BSD_MeiRongKuaiXiu_KuCun_Fragment  kcDialog = BSD_MeiRongKuaiXiu_KuCun_Fragment.newInstance(peij_no);
-                kcDialog.show(getFragmentManager(),"kcDialog");
+                BSD_MeiRongKuaiXiu_KuCun_Fragment.newInstance(peij_no).show(getFragmentManager(),"kcDialog");
             }
 
             @Override

@@ -105,7 +105,6 @@
                 <ImageView
                     android:id="@+id/iv4"
                     style="@style/myeditdowimgstyle" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -169,7 +168,8 @@
                 android:id="@+id/relativeLayout9"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
-                android:layout_marginLeft="@dimen/qb_px_10">
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textView8"
@@ -240,6 +240,12 @@
 
                 <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/bsd_wxjd_rl_bycx"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="0.5"
+                android:text="保养查询" />
         </LinearLayout>
 
         <LinearLayout
@@ -335,6 +341,12 @@
 
                 <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/bsd_wxjd_clxx"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="0.5"
+                android:text="车辆信息" />
         </LinearLayout>
 
         <LinearLayout
@@ -363,18 +375,6 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/bsd_wxjd_rl_bycx"
-                style="@style/myeditnormalbtnstyle"
-                android:layout_weight="1"
-                android:text="保养查询" />
-
-            <TextView
-                android:id="@+id/bsd_wxjd_clxx"
-                style="@style/myeditnormalbtnstyle"
-                android:layout_weight="1"
-                android:text="车辆信息" />
-
-            <TextView
                 android:id="@+id/bsd_wxjd_lswx"
                 style="@style/myeditnormalbtnstyle"
                 android:layout_weight="1"
@@ -384,7 +384,20 @@
                 android:id="@+id/bsd_wxjd_lswxjy"
                 style="@style/myeditnormalbtnstyle"
                 android:layout_weight="1"
-                android:text="历史维修建议" />
+                android:text="历史维修建议"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_add_wxxm"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="1"
+                android:text="添加维修项目" />
+
+            <TextView
+                android:id="@+id/tv_add_wxcl"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="1"
+                android:text="添加维修用料" />
 
             <TextView
                 android:id="@+id/bsd_wxjd_save"
@@ -476,30 +489,37 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qb_px_26"
-                android:background="@drawable/bsd_xiamianyuan">
+                android:background="@drawable/bsd_xiamianyuan"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/qb_px_10"
                     android:text="合计:"
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_wxxm_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/qb_px_4"
+                    android:text="(共0条记录)"
+                    android:textSize="14sp"/>
+
+                <TextView
                     android:id="@+id/tv_wxjd_xmhj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/qb_px_10"
                     android:text="元"
                     android:textColor="#F7714C"
                     android:textSize="16sp" />
-            </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -564,32 +584,39 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qb_px_26"
-                android:background="@drawable/bsd_xiamianyuan">
+                android:background="@drawable/bsd_xiamianyuan"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/qb_px_10"
                     android:text="合计:"
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_wxcl_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/qb_px_4"
+                    android:text="(共0条记录)"
+                    android:textSize="14sp"/>
+
+                <TextView
                     android:id="@+id/tv_wxjd_clhj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/qb_px_10"
                     android:text="元"
                     android:textColor="#F7714C"
                     android:textSize="16sp" />
-            </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <!-- 底部结束 -->
+
     <include layout="@layout/content_footer_layout" />
 </LinearLayout>

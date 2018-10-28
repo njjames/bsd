@@ -749,41 +749,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 //        change_CL();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        if (Conts.QX_baoyangxinxii == 1) {
-//            bsd_mrxk_bycx.setVisibility(View.VISIBLE);
-//        } else {
-//            bsd_mrxk_bycx.setVisibility(View.INVISIBLE);
-//        }
-//
-//        bsd_mrkx_zongjia.setText("");
-//        Conts.MRKX_XM_ZK = 1;
-//        Conts.MRKX_CL_ZK = 1;
-//        Conts.MRKX_kahao = "";
-//        Conts.MRKX_shengYu_jinQian = 0;
-//        zong_zj = 0;
-//        isSaveBill = false;
-//        if (Conts.bycx_fanhuitype == 1) {
-//            Conts.bycx_fanhuitype = 0;
-//            bsd_mrkx_tv_pp.setText(Conts.bycx_pinpai);
-//            bsd_mrkx_tv_chexi.setText(Conts.bycx_chexi);
-//            bsd_mrkx_tv_chezu.setText(Conts.bycx_chezu);
-//            bsd_mrkx_tv_chexing.setText(Conts.bycx_cxing);
-//            bsd_mrkx_ed_lc.setText(Conts.bycx_licheng);
-//            bsd_mrxk_tv_djtime.setText(Conts.bycx_time);
-//            bsd_mrkx_et_vin.setText(Conts.bycx_VIN);
-//            bsd_mrkx_ed_lianxiren.setText(Conts.bycx_CarName);
-//            bsd_mrkx_lianxifangshi.setText(Conts.bycx_Shouji);
-//            bsd_mrkx_et_huiyuankahao.setText(Conts.bycx_huiyuan);
-//            bsd_mrkx_tv_gsfl.setText(Conts.bycx_gongshifeili);
-//        }
-
-    }
-    /*
-     *判断是怎me进来的
-     */
     public void updateBillInfo() {
         Conts.work_no = billEntiy.getWork_no();
         bsd_ywwwdd_cp.setText(billEntiy.getChe_no());
