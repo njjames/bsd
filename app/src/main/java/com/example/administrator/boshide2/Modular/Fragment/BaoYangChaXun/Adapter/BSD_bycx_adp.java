@@ -48,10 +48,10 @@ public class BSD_bycx_adp extends BaseAdapter {
         this.up_ksbj_sc = up_ksbj_sc;
     }
 
-    public BSD_bycx_adp(Context context) {
+    public BSD_bycx_adp(Context context, List<Map<String,String >>list) {
         this.context = context;
-
         this.layoutInflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     @Override

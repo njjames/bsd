@@ -215,6 +215,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@null</item>
         <item name="android:textColorHint">#B1B0B0</item>
+        <item name="android:textColor">@color/text_clxx</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:singleLine">true</item>

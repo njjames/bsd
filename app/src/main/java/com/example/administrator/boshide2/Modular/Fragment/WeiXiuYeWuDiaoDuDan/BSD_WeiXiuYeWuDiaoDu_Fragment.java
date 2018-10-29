@@ -154,7 +154,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         bsd_zadd_wg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                queding_quxiao = new Queding_Quxiao(getActivity(), "确认是否完工");
+                queding_quxiao = new Queding_Quxiao(getActivity(), "确认完工吗？");
                 queding_quxiao.show();
                 queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
                     @Override

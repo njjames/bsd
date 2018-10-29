@@ -87,7 +87,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
     RelativeLayout beijing;
     // 切换碎片页
     LinearLayout bsd_lsbj;
-    TextView tv_shibie, tv_chepai, tv_wxxm_money, tv_wxcl_money;//自動識別,维修项目金额，维修材料金额
+    TextView tv_chepai, tv_wxxm_money, tv_wxcl_money;//自動識別,维修项目金额，维修材料金额
     LinearLayout rea_pinpai;
     //当前选中的列表项位置
     int clickPsition = -1;
@@ -380,8 +380,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         bsd_ksbj_cx = (TextView) view.findViewById(R.id.bsd_ksbj_cx);
         bsd_ksbj_cz = (TextView) view.findViewById(R.id.bsd_ksbj_cz);
         bsd_ksbj_cxing = (TextView) view.findViewById(R.id.bsd_ksbj_cxing);
-
-        tv_shibie = (TextView) view.findViewById(R.id.tv_shibie);
         tv_wxxm_money = (TextView) view.findViewById(R.id.tv_wxxm_money);
         tv_wxcl_money = (TextView) view.findViewById(R.id.tv_wxcl_money);
         //品牌

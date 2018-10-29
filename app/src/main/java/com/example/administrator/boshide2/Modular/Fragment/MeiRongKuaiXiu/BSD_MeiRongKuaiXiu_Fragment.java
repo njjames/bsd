@@ -1797,7 +1797,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             public void onSuccess(int i, String s) {
                 boolean status = s.contains("保存成功");
                 if (status) {
-                    Log.i("cjn", "成功了   2222222222");
                     queRen = new QueRen(getActivity(), "存档成功");
                     queRen.show();
                     queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {

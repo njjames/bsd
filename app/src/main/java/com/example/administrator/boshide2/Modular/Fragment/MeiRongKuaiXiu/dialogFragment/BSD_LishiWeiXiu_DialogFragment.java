@@ -2,13 +2,10 @@ package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialo
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,23 +15,20 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
-import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
-import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_ety;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.WXLS_Bean;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.WXLS_XM_Bean;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.WXLS_YL_Bean;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.adapter.WXLS_Adapter;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.adapter.WXLS_WXXM_Adapter;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.adapter.WXLS_WXYL_Adapter;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD_WeiXiuYueYue_entiy;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 
@@ -43,7 +37,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -57,7 +50,7 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
     private Dialog mWeiboDialog,xmWeiboDialog,ylWeiboDialog;
     private WXLS_Adapter wxls_adapter;//维修历史
     private List<WXLS_Bean> wxlsBeanList;
-    private Button but_yes;
+    private TextView tv_close;
     private ListView lv_lishi;
     private WXLS_WXXM_Adapter wxxm_adapter;//维修项目
     private List<WXLS_XM_Bean> wxlsXmBeanList;
@@ -105,33 +98,13 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
     }
 
     public void initView(View view) {
-        but_yes = (Button) view.findViewById(R.id.btn_yes);
-        but_yes.setOnClickListener(this);
+        tv_close = (TextView) view.findViewById(R.id.tv_close);
+        tv_close.setOnClickListener(this);
         //历史维修主表
         lv_lishi = (ListView) view.findViewById(R.id.lv_lishi_weixiiu);
         wxlsBeanList = new ArrayList<>();
         wxls_adapter = new WXLS_Adapter(getActivity(), wxlsBeanList);
         lv_lishi.setAdapter(wxls_adapter);
-
-        // 都不要了，就按传进来的参数查询
-//        if ("mrkx".equals(type) | "wxjd".equals(type) | "wxywdd".equals(type)) {    //美容快修、维修接单、业务调度用的是同一个bean；
-//            entityWxjd = new BSD_WeiXiuJieDan_Entity();
-//            entityWxjd = ((MainActivity) getActivity()).getWxjdentity();
-//            Log.i("wxls", "entityWxjd  null???= " + entityWxjd);
-//            chePai = entityWxjd.getChe_no();
-//            Log.i("wxls", "initView:111里的type= " + type);
-//        } else if ("wxyy".equals(type)) {
-//            entityWxyy = new BSD_WeiXiuYueYue_entiy();
-//            entityWxyy = ((MainActivity) getActivity()).getEntiy();
-//            chePai = entityWxyy.getChe_no();
-//            Log.i("wxls", "initView:222里的type= " + type);
-//        } else if ("ksbj".equals(type)) {
-//            entityKsbj = new BSD_KuaiSuBaoJia_ety();
-//            entityKsbj = ((MainActivity) getActivity()).getKsbjenity();
-//            chePai = entityKsbj.getChe_no();
-//            Log.i("wxls", "initView:333里的type= " + type);
-//        }
-
         //项目
         ListView lv_wxxmls = (ListView) view.findViewById(R.id.lv_wxxmls);
         wxlsXmBeanList = new ArrayList<>();
@@ -142,7 +115,6 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
         wxlsYlBeanList = new ArrayList<>();
         wxyl_adapter = new WXLS_WXYL_Adapter(getActivity(), wxlsYlBeanList);
         lv_wxclls.setAdapter(wxyl_adapter);
-
         lv_lishi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -156,7 +128,6 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
                 setWXLSXMData(wxlsBeanList.get(position).getDanhao());//项目
             }
         });
-
         //维修历史主表
         getWXLSData(param);
     }
@@ -273,8 +244,6 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
         });
     }
 
-
-
     /**
      * 维修用料数据接口
      */
@@ -323,17 +292,12 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
         });
     }
 
-
-
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case   R.id.btn_yes:
+            case R.id.tv_close:
                 getDialog().dismiss();
                 break;
-
         }
     }
 

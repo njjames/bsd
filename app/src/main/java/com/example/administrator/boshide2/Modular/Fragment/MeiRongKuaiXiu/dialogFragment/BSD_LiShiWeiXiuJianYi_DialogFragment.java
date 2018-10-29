@@ -24,7 +24,6 @@ import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
-import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_ety;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.WXLS_Bean;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.WXLS_XM_Bean;
@@ -56,7 +55,7 @@ public class BSD_LiShiWeiXiuJianYi_DialogFragment extends DialogFragment impleme
     WXLS_Adapter wxls_adapter;//维修历史
     List<WXLS_Bean> wxls_been;
     //    WXDH_Adapter wxdh_adapter;//单号
-    Button but_yes;
+    TextView tv_close;
     ListView lv_lishi;
     BSD_WeiXiuJieDan_Entity entityWxjd;   //美容快修、维修接单、维修业务调度都用的这个bean；
     BSD_KuaiSuBaoJia_ety entityKsbj;
@@ -107,12 +106,11 @@ public class BSD_LiShiWeiXiuJianYi_DialogFragment extends DialogFragment impleme
 
 
     public  void   initView(View  view){
-
         tv_title= (TextView) view.findViewById(R.id.tv_title);
         tv_title.setText("历史维修建议");
 
-        but_yes= (Button) view.findViewById(R.id.btn_yes);
-        but_yes.setOnClickListener(this);
+        tv_close = (TextView) view.findViewById(R.id.tv_close);
+        tv_close.setOnClickListener(this);
 
         //历史维修主表
         lv_lishi = (ListView) view.findViewById(R.id.lv_lishi_weixiiu);
@@ -326,14 +324,10 @@ public class BSD_LiShiWeiXiuJianYi_DialogFragment extends DialogFragment impleme
         });
     }
 
-
-
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case   R.id.btn_yes:
+            case R.id.tv_close:
                 getDialog().dismiss();
                 break;
         }

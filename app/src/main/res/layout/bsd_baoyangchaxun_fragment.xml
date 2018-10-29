@@ -1,271 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F1F1">
+    android:background="@drawable/dialog_back_gr"
+    android:orientation="vertical"
+    android:padding="@dimen/qb_px_4">
 
-    <!-- 头部 -->
     <RelativeLayout
-        android:id="@+id/relativeLayout23"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y55"
-        android:background="#FFFFFF">
-
-        <RelativeLayout
-            android:id="@+id/bsd_bycx_fanhui"
-            android:layout_width="@dimen/x60"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/x5">
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="@dimen/x5"
-                android:layout_height="@dimen/y25"
-                android:scaleType="fitXY"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/bsd_fanhui" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/x2"
-                android:layout_toEndOf="@+id/imageView5"
-                android:text="返回"
-                android:textColor="#636364"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="保养信息"
-            android:textColor="#636364"
-            android:textSize="20sp" />
+            android:gravity="center"
+            android:text="保养查询"
+            android:textColor="@color/text_black"
+            android:textSize="20sp"
+            android:padding="@dimen/qb_px_4"
+            android:layout_centerInParent="true"/>
 
+        <TextView
+            android:id="@+id/tv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关   闭"
+            android:textColor="#F7714C"
+            android:background="@drawable/jinchang"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/qb_px_6"
+            android:paddingTop="@dimen/qb_px_6"
+            android:paddingBottom="@dimen/qb_px_6"
+            android:paddingLeft="@dimen/qb_px_12"
+            android:paddingRight="@dimen/qb_px_12"
+            android:textSize="16sp"
+            android:layout_margin="@dimen/qb_px_2"/>
     </RelativeLayout>
-    <!-- 头部 结束-->
-    <RelativeLayout
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/button"/>
+
+    <LinearLayout
         android:id="@+id/bsd_lsbj_zhong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bsd_lsbj_di"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/relativeLayout23"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/y30"
-        android:layout_marginLeft="@dimen/x5"
-        android:layout_marginRight="@dimen/x5"
-        android:layout_marginTop="@dimen/y10"
-        android:background="@drawable/bsd_lsbj_body"
-        android:paddingLeft="@dimen/x5"
-        android:paddingRight="@dimen/x5">
-
-        <TextView
-            android:id="@+id/bsd_bycx_top1_tv"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/y45"
-            android:layout_toLeftOf="@+id/bsd_bycx_youpin"
-            android:text="" />
-
-        <TextView
-            android:layout_below="@+id/bsd_bycx_top1_tv"
-            android:id="@+id/bsd_bycx_top_tv"
-            android:layout_toLeftOf="@+id/bsd_bycx_youpin"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/y45"
-            android:text="" />
-
-        <RelativeLayout
-            android:id="@+id/bsd_bycx_youpin"
-            android:layout_width="@dimen/x50"
-            android:layout_height="@dimen/y50"
-            android:background="@drawable/cundang"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/y20">
-
-            <TextView
-                android:id="@+id/tv_shibie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="发动机油品"
-                android:textColor="#FFFFFF" />
-        </RelativeLayout>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/qb_px_4">
 
         <LinearLayout
-            android:id="@+id/ll_top"
-            android:layout_below="@+id/bsd_bycx_top_tv"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/y45"
-            android:orientation="horizontal">
+            style="@style/myeditlinearlayoutstyle">
 
-            <RelativeLayout
-                android:id="@+id/bsd_xm111"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
+            <TextView
+                style="@style/myeditinfonamestyle"
+                android:text="remark:"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="保养公里" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/bsd_xm222"
-                android:layout_width="0dp"
-                android:layout_weight="1.5"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="保养项目名称" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/bsd_xm333"
-                android:layout_width="0dp"
-                android:layout_weight="1.5"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="原厂零件号" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/bsd_xm444"
-                android:layout_width="0dp"
-                android:layout_weight="0.8"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="单位" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/bsd_xm555"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="保养用量" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/bsd_xm666"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="指导价钱" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/bsd_xm777"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="工时费" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/bsd_xm888"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:background="@drawable/biankuang_title_bg">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="合计金额" />
-
-            </RelativeLayout>
-
-
+            <TextView
+                android:id="@+id/bsd_bycx_top1_tv"
+                style="@style/myeditinfovaluestyle" />
         </LinearLayout>
 
+        <LinearLayout
+            style="@style/myeditlinearlayoutstyle"
+            android:layout_marginLeft="@dimen/qb_px_10">
 
+            <TextView
+                style="@style/myeditinfonamestyle"
+                android:text="byState:"/>
 
-        <ListView
-            android:id="@+id/bsd_bycx_lv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_top" />
-    </RelativeLayout>
-
-
-
-
-
-    <!--中间结束-->
-
-
-    <!--最下面的小文字 -->
-    <RelativeLayout
-        android:id="@+id/bsd_lsbj_di"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:layout_alignParentBottom="true">
+            <TextView
+                android:id="@+id/bsd_bycx_top_tv"
+                style="@style/myeditinfovaluestyle" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/bsd_10_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:text="售后服务电话: 0311-83998032      保修 (非工作时间) : 15176436937   13930122976" />
-    </RelativeLayout>
-</RelativeLayout>
+            android:id="@+id/bsd_bycx_youpin"
+            style="@style/myeditnormalbtnstyle"
+            android:layout_weight="0.2"
+            android:text="发动机油品"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/button"
+        android:layout_marginTop="@dimen/qb_px_4"/>
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_30"
+        android:layout_below="@+id/bsd_bycx_top_tv"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="保养公里" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1.5"
+            android:text="保养项目名称" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1.5"
+            android:text="原厂零件号" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="0.8"
+            android:text="单位" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="保养用量" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="指导价钱" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="工时费" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="合计金额" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/bsd_bycx_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

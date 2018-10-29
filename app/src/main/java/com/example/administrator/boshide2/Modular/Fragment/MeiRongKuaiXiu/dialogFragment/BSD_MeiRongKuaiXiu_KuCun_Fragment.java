@@ -47,8 +47,7 @@ public class BSD_MeiRongKuaiXiu_KuCun_Fragment extends DialogFragment {
     private Dialog mWeiboDialog;
     private Context context;
     private BSD_wxcl_kc_apater mAdapter;
-    private ArrayList<BSD_WXCL_CK_Entity> mList = new ArrayList();;
-    private String peij_no;
+    private ArrayList<BSD_WXCL_CK_Entity> mList = new ArrayList();
     private URLS url;
     private BSD_WXCL_CK_Entity ck_entity;
     private double currentKc, pjdj, je, kcsx, kcxx;
@@ -76,7 +75,6 @@ public class BSD_MeiRongKuaiXiu_KuCun_Fragment extends DialogFragment {
         url = new URLS();
         View view = inflater.from(context).inflate(R.layout.bsd_mrkx_wxcl_kc, null);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        peij_no = getArguments().getString("peij_no");
         initView(view);
         return view;
     }

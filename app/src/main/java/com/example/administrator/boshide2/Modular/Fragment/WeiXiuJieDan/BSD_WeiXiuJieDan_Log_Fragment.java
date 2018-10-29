@@ -145,7 +145,7 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
     @Override
     public void initData() {
         url = new URLS();
-        title.setText("维修预约");
+        title.setText("维修接单");
         titleLishi.setText("历史预约");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
