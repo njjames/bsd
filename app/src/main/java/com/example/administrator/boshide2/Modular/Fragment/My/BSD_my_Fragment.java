@@ -53,8 +53,6 @@ public class BSD_my_Fragment extends BaseFragment {
     LinearLayout bsd_lxwm;
     //检查更新
     LinearLayout bsd_jcgx;
-    //修改密码弹出框
-    ChangepswDialog changepswDialog;
     //检查更新弹框
     JianChaGengXin jianChaGengXin;
     //确认更新弹出框
@@ -81,6 +79,7 @@ public class BSD_my_Fragment extends BaseFragment {
     private EditText oldPsw;
     private EditText newPsw;
     private EditText rePsw;
+    private ChangepswDialog changepswDialog;
 
     @Override
     protected int getLayoutId() {
@@ -182,76 +181,8 @@ public class BSD_my_Fragment extends BaseFragment {
      * 修改密码的对话框
      */
     private void showChangepswDialog() {
-        CustomDialog.Builder builder = new CustomDialog.Builder(getHostActicity());
-        CustomDialog dialog = builder.style(R.style.mydialog)
-                .view(R.layout.dialog_changepsw_layout)
-                .cancelTouchout(false)
-                .widthDimenRes(R.dimen.qb_px_300)
-                .heightDimenRes(R.dimen.qb_px_276)
-                .addViewOnclick(R.id.tv_confirm, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        changepsw();
-                    }
-                })
-                .addViewOnclick(R.id.tv_cancel, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        CustomDialog.dismissDialog();
-                    }
-                })
-                .build();
-        View view = dialog.getView();
-        oldPsw = (EditText) view.findViewById(R.id.et_xiugaimima_yuan);
-        newPsw = (EditText) view.findViewById(R.id.et_xiugaimima_xin);
-        rePsw = (EditText) view.findViewById(R.id.et_xiugaimima_xintoo);
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        dialog.show();
-    }
-
-    private void changepsw() {
-        String oldPass = oldPsw.getText().toString();
-        final String newPass = newPsw.getText().toString();
-        String rePass = rePsw.getText().toString();
-        if (!oldPass.equals(MyApplication.shared.getString("psd", ""))) {
-            Show.showTime(getActivity(), "原密码不正确");
-        } else if (!rePass.equals(newPass)) {
-            Show.showTime(getActivity(), "两次新密码输入的不一样");
-        } else {
-            mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getContext(), "加载中...");
-            AbRequestParams params = new AbRequestParams();
-            params.put("id", MyApplication.shared.getString("userid", ""));
-            params.put("newPsd", newPass);
-            Request.Post(MyApplication.shared.getString("ip", "") + url.PSWEDIT, params, new AbStringHttpResponseListener() {
-                @Override
-                public void onSuccess(int code, String data) {
-                    if(data.equals("true")){
-                        // 修改成功之后，把最新的密码修改到sp中
-                        MyApplication.editor.putString("psd", newPass);
-                        MyApplication.editor.commit();
-                        Toast.makeText(getContext(),"修改密码成功",Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(getContext(),"修改密码失败",Toast.LENGTH_SHORT).show();
-                    }
-                    CustomDialog.dismissDialog();
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-                }
-
-                @Override
-                public void onStart() {
-                }
-
-                @Override
-                public void onFinish() {
-                }
-
-                @Override
-                public void onFailure(int statusCode, String s, Throwable throwable) {
-                    Show.showTime(getActivity(), "网络连接超时");
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-                }
-            });
-        }
+        changepswDialog = new ChangepswDialog(getHostActicity());
+        changepswDialog.show();
     }
 
     @Override
@@ -273,7 +204,6 @@ public class BSD_my_Fragment extends BaseFragment {
                     JSONObject json=new JSONObject(s);
                     if (json.get("status").toString().equals("1")) {
                         JSONObject item=json.getJSONObject("data");
-
                         Iterator<String>keys=item.keys();
                         String key = null;
                         String value = null;
@@ -321,7 +251,6 @@ public class BSD_my_Fragment extends BaseFragment {
         }
         mAdapter2 = new CustemSpinerAdapter(getActivity());
         mAdapter2.refreshData(nameList2, 0);
-
         mSpinerPopWindow2 = new SpinerPopWindow(getActivity());
         mSpinerPopWindow2.setAdatper(mAdapter2, 310);
         mSpinerPopWindow2.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
@@ -333,11 +262,9 @@ public class BSD_my_Fragment extends BaseFragment {
                     MyApplication.editor.putString("jiagedengji",value);
                     jiaqianbaocundata(list.get(pos).get("id"),list.get(pos).get("name"));
                      Show.showTime(getActivity(), "您选择了," + value);
-
                 }
             }
         });
-
     }
 
 
@@ -367,8 +294,6 @@ public class BSD_my_Fragment extends BaseFragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override

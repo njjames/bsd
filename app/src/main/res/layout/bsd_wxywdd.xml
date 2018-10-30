@@ -240,7 +240,8 @@
                 android:id="@+id/bsd_wxywdd_lswxjy"
                 style="@style/myeditnormalbtnstyle"
                 android:layout_weight="1"
-                android:text="历史维修建议" />
+                android:text="历史维修建议"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_stopwx"

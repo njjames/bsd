@@ -26,36 +26,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="@dimen/qb_px_4">
+        android:layout_marginTop="@dimen/qb_px_4">
 
         <LinearLayout
             android:id="@+id/rl_query"
-            android:layout_width="@dimen/qb_px_200"
-            android:layout_height="@dimen/qb_px_34"
-            android:background="@drawable/bsd_chepaiyuan"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginLeft="@dimen/qb_px_2">
+            style="@style/myeditlinearlayoutstyle">
 
             <TextView
                 android:id="@+id/textView7"
-                style="@style/myconditionname"
-                android:padding="@dimen/qb_px_4"
+                style="@style/myeditinfonamestyle"
                 android:text="姓名:" />
 
             <EditText
                 android:id="@+id/et_pg_query"
-                style="@style/myconditionvalue"
-                android:hint="请输入员工姓名"
-                android:textColorHint="#B1B0B0"
-                android:textSize="14sp" />
+                style="@style/myeditinfovaluestyle"
+                android:hint="请输入员工姓名" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/but_pg_query"
             android:layout_width="@dimen/qb_px_60"
-            android:layout_height="@dimen/qb_px_32"
+            android:layout_height="@dimen/qb_px_30"
             android:layout_marginLeft="@dimen/qb_px_10"
             android:background="@drawable/cundang"
             android:text="查询"
@@ -66,34 +58,32 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_1"
-        android:background="#F7714C" />
+        android:background="#F7714C"
+        android:layout_marginTop="@dimen/qb_px_4"/>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_34"
-        android:layout_marginTop="@dimen/qb_px_4">
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/mysearchtitlestyle"
             android:layout_weight="1"
+            style="@style/mysearchtitlestyle"
             android:text="员工"
-            android:textColor="#000"
-            android:textSize="16sp" />
+            android:textColor="#444"/>
 
         <TextView
-            style="@style/mysearchtitlestyle"
             android:layout_weight="1"
+            style="@style/mysearchtitlestyle"
             android:text="部门"
-            android:textColor="#000"
-            android:textSize="16sp" />
+            android:textColor="#444"/>
 
         <TextView
-            style="@style/mysearchtitlestyle"
             android:layout_weight="0.5"
+            style="@style/mysearchtitlestyle"
             android:text="选择"
-            android:textColor="#000"
-            android:textSize="16sp" />
+            android:textColor="#444"/>
     </LinearLayout>
 
     <ListView
@@ -134,5 +124,4 @@
             android:text="取消"
             android:textColor="#FFFFFF" />
     </RelativeLayout>
-
 </LinearLayout>

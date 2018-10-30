@@ -54,7 +54,7 @@ public class BSD_WeiXiuYeWuDiaoDuDian_delg extends Dialog {
         super(context, R.style.mydialog);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         url=new URLS();
-        view = getLayoutInflater().inflate(R.layout.bsdweixiuyewudiaodu_delg, null, false);
+        view = getLayoutInflater().inflate(R.layout.dialog_paigong_layout, null, false);
         bsd_zcdd_pg_lv = (ListView) view.findViewById(R.id.bsd_zcdd_pg_lv);
         bsd_zcdd_top= (TextView) view.findViewById(R.id.bsd_zcdd_top);
 

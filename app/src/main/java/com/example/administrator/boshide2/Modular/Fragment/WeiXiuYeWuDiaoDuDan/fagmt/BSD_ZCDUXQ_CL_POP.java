@@ -52,7 +52,6 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
     public Activity context;
     int width;
     int height;
-    private FrameLayout bsd_di, bsd_tou;
     //关闭监听事件
     private Guanbi onGuanBiListener;
     String price_id;
@@ -64,8 +63,6 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
     private TreeListViewAdapter mclAdapter;
     //ListView
     ListView bsd_wxyy_pop_you_lv, bsd_clpop_lv;
-
-
     //返回
     private TextView iv_back;
     //刷新
@@ -80,16 +77,7 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
     private TextView tv_search;
     private ImageView iv_allCategory;
     private RelativeLayout rl_allCategory;
-
-    public chuanlistcl getChuanlistcl() {
-        return chuanlistcl;
-    }
-
-    public void setChuanlistcl(chuanlistcl chuanlistcl) {
-        this.chuanlistcl = chuanlistcl;
-    }
-
-    URLS url;
+    private URLS url;
 
     private List<BSD_wxyy_cl_pop_entity> tempLists = new ArrayList<>();
 
@@ -97,7 +85,6 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
         this.context = context;
         initView();
         initData();
-
     }
 
     public void initView() {
@@ -113,17 +100,12 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
         this.setHeight(height);
         this.setBackgroundDrawable(new ColorDrawable(0xb0ffffff));
 
-//         设置SelectPicPopupWindow弹出窗体可点击
+        //         设置SelectPicPopupWindow弹出窗体可点击
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.update();
-// 设置SelectPicPopupWindow弹出窗体动画效果
-
-        bsd_tou = (FrameLayout) contentView.findViewById(R.id.bsd_tou);
-        bsd_di = (FrameLayout) contentView.findViewById(R.id.bsd_di);
-
+        // 设置SelectPicPopupWindow弹出窗体动画效果
         et_clname = (EditText) contentView.findViewById(R.id.et_clname);
-
         tv_search = (TextView) contentView.findViewById(R.id.tv_search);
         tv_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,9 +114,8 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
                 getDetialsInfo();
             }
         });
-
         mAbPullToRefreshView = (AbPullToRefreshView) contentView.findViewById(R.id.bsd_wxyy_cl_mPullRefreshView);
-// 设置监听器
+        // 设置监听器
         mAbPullToRefreshView.setOnHeaderRefreshListener(this);
         mAbPullToRefreshView.setOnFooterLoadListener(this);
         // 设置进度条的样式
@@ -193,7 +174,6 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
             }
         });
         bsd_wxyy_pop_you_lv.setAdapter(detailsAdapter);
-
         iv_back = (TextView) contentView.findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override

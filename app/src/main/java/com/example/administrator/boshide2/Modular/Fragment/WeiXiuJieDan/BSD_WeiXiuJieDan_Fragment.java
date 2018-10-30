@@ -43,6 +43,7 @@ import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Adapter.
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.BSD_WeiXiuYeWuDiaoDu_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_XM_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
@@ -74,7 +75,6 @@ import java.util.Map;
 
 public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnClickListener {
     private static final String PARAM_KEY = "param_key";
-    ScrollView scrollview;
     RelativeLayout beijing;
     private TextView bsd_wxjd_tv_chepai;//车牌
     private EditText et_jclc;//进厂里程
@@ -87,20 +87,17 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private TextView tv_chexing;//车型
     private EditText bsd_wxjd_et_qiankuan;//欠款
     private EditText et_cardno;//会员卡号
-    TextView tv_wxjd_clhj;
-    TextView tv_wxjd_xmhj;
-    TextView tv_wxjd_hj;//项目金额。材料金额，总金额
-    //车牌号
-    String Car;
+    private TextView tv_wxjd_clhj;
+    private TextView tv_wxjd_xmhj;
+    private TextView tv_wxjd_hj;//项目金额。材料金额，总金额
     private ListView listViewXM;//维修项目
     private ListView listViewCL;//维修材料
     private BSD_WXJD_XM_adp adp_xm;
     private BSD_WXJD_CL_adp adp_cl;
     private List<BSD_WeiXiuJieDan_XM_Entity> list_XM = new ArrayList<>();
     private List<BSD_WeiXiuJieDan_CL_Entity> list_CL = new ArrayList<>();
-    TextView bsd_wxjd_save;
-    public int jc_or_cd;
-    TextView bsd_wxjd_jc;
+    private TextView bsd_wxjd_save;
+    private TextView bsd_wxjd_jc;
     private Dialog mWeiboDialog;
     private QueRen queRen;
     private LinearLayout ll_pinpai;
@@ -108,57 +105,50 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private LinearLayout ll_chezu;
     private LinearLayout ll_chexing;
     //品牌 车系车组 车行
-    BSD_KSBJ_PinPai_delo bsd_ksbj_pinPai_delo;
-    String cxbianhao;
-    String pinpaiming;
+    private BSD_KSBJ_PinPai_delo bsd_ksbj_pinPai_delo;
+    private String cxbianhao;
+    private String pinpaiming;
     //这是车系
-    List<Map<String, String>> listjbcx = new ArrayList<Map<String, String>>();
+    private List<Map<String, String>> listjbcx = new ArrayList<Map<String, String>>();
     private List<CustemObject> nameList = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter;
     private SpinerPopWindow mSpinerPopWindow;
-    String chexiid;
+    private String chexiid;
     //车组
-    List<Map<String, String>> listjbcz = new ArrayList<Map<String, String>>();
-    String chezuid;
+    private List<Map<String, String>> listjbcz = new ArrayList<Map<String, String>>();
+    private String chezuid;
     private List<CustemObject> nameList1 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter1;
     private SpinerPopWindow mSpinerPopWindow1;
     //车型
-    List<Map<String, String>> listjbchexing = new ArrayList<Map<String, String>>();
-    String chexingid;
+    private List<Map<String, String>> listjbchexing = new ArrayList<Map<String, String>>();
+    private String chexingid;
     private List<CustemObject> nameList2 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter2;
     private SpinerPopWindow mSpinerPopWindow2;
     //工时费率
-    LinearLayout ll_gsfl;
-    TextView tv_gsfl;
-
-    List<Map<String, String>> listgslv = new ArrayList<Map<String, String>>();
-
+    private LinearLayout ll_gsfl;
+    private TextView tv_gsfl;
+    private List<Map<String, String>> listgslv = new ArrayList<Map<String, String>>();
     private List<CustemObject> nameList3 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter3;
     private SpinerPopWindow mSpinerPopWindow3;
-    String gongshifeili_name;
-    String gongshifeili_id;
-
-    LinearLayout ll_gcsj;
-    TextView bsd_wxjd_rl_bycx;
-    TextView tv_gcsj;
-    EditText et_niankuan;
-    EditText et_cunyou;
-    EditText et_color;
-    EditText et_miaoshu;
-    TimeDialog timePickerShow;
-    Queding_Quxiao queRen_quxiao;
-    Queding_Quxiao queding_quxiao;
-    private String isPrint;
-    URLS url;
-
+    private String gongshifeili_name;
+    private String gongshifeili_id;
+    private LinearLayout ll_gcsj;
+    private TextView bsd_wxjd_rl_bycx;
+    private TextView tv_gcsj;
+    private EditText et_niankuan;
+    private EditText et_cunyou;
+    private EditText et_color;
+    private EditText et_miaoshu;
+    private TimeDialog timePickerShow;
+    private Queding_Quxiao queding_quxiao;
+    private URLS url;
     //根据VIN返回车型信息
-    List<Map<String, String>> listvincx = new ArrayList<>();
-    String cxnm;      //车型内码
-    TextView rl_duqu;
-
+    private List<Map<String, String>> listvincx = new ArrayList<>();
+    private String cxnm;      //车型内码
+    private TextView rl_duqu;
     //车辆信息、历史维修、历史维修建议
     private TextView bsd_wxjd_clxx, bsd_wxjd_lswxjy, bsd_wxjd_lswx;
     private String params;
@@ -344,8 +334,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         });
         listViewXM.setAdapter(adp_xm);
         beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
-        //滑动
-        scrollview = (ScrollView) view.findViewById(R.id.scrollview);
         ll_pinpai.setOnClickListener(this);
         ll_chexi.setOnClickListener(this);
         ll_chezu.setOnClickListener(this);
@@ -998,7 +986,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                         }
                     }
                     adp_cl.notifyDataSetChanged();
-                    wxjd_cl_money();
+                    wxclPrice();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1050,7 +1038,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                         }
                     }
                     adp_xm.notifyDataSetChanged();
-                    wxjd_xm_money();
+                    wxxmPrice();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1769,7 +1757,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         });
     }
 
-
     /**
      * 打印维修接待单
      */
@@ -1802,7 +1789,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     }
 
     /**
-     * 进场
+     * 进厂
      */
     public void jinchang() {
         AbRequestParams params = new AbRequestParams();
@@ -1812,6 +1799,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             public void onSuccess(int i, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
+                    // 进厂成功之后，发送微信，弹出提示框是否打印
                     if (jsonObject.get("data").toString().trim().equals("进厂成功")) {
                         //发送微信
                         weixin();
@@ -1862,25 +1850,21 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
-
-
     }
 
     private void showTiaoZhuanXQDialog() {
-        queRen_quxiao = new Queding_Quxiao(getActivity(), "是否跳转到单据详情");
-        queRen_quxiao.show();
-        queRen_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
+        queding_quxiao = new Queding_Quxiao(getActivity(), "是否跳转到单据详情");
+        queding_quxiao.show();
+        queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
             @Override
             public void onConfirm() {
-                Conts.wxjdtiaozhuan = 1;
-                Conts.cp = Car;
-                ((MainActivity) getActivity()).upwxywdd();
-                queRen_quxiao.dismiss();
+                queding_quxiao.dismiss();
+                ((MainActivity) getHostActicity()).showWxddFragment(billEntiy.getWork_no());
             }
 
             @Override
             public void onCancel() {
-                queRen_quxiao.dismiss();
+                queding_quxiao.dismiss();
                 ((MainActivity) getActivity()).upBSD_WXJD_log();
             }
         });

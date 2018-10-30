@@ -80,13 +80,13 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
             @Override
             public void onPaiGong(final String wxxmNo) {
                 PaiGongDialog paiGongDialog = new PaiGongDialog(getContext(), PaiGongDialog.PAIGONG_SINGLE);
-                paiGongDialog.setWorkNo(Conts.work_no);
+                paiGongDialog.setWorkNo(param);
                 paiGongDialog.setWxxmNo(wxxmNo);
                 paiGongDialog.setOnPaiGongListener(new PaiGongDialog.OnPaiGongListener() {
                     @Override
                     public void onSuccess() {
                         if (onRefreashPaiGongListener != null) {
-                            onRefreashPaiGongListener.onRefreash(Conts.work_no, wxxmNo);
+                            onRefreashPaiGongListener.onRefreash(param, wxxmNo);
                         }
                     }
                 });

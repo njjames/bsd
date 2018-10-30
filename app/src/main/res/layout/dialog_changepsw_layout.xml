@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="match_parent"
@@ -15,7 +14,7 @@
         android:gravity="center"
         android:text="修改密码"
         android:textColor="#7E7E7F"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
 
     <View
         android:id="@+id/shanghong"

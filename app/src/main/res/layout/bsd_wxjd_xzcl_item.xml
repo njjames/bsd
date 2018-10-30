@@ -22,17 +22,19 @@
         android:id="@+id/bsd_xzcl_shuliang"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="数量" />
+        android:text="数量"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
     <TextView
         android:id="@+id/bsd_xzcl_danjia"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="单价" />
+        android:text="单价"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
     <TextView
         android:id="@+id/bsd_xzcl_dw"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         style="@style/mysearchinfostyle"
         android:text="单位" />
 
@@ -40,7 +42,7 @@
         android:id="@+id/bsd_xzcl_je"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="金额" />
+        android:text="金额"/>
 
 
     <ImageView

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="@dimen/qb_px_8">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="@dimen/qb_px_4"
+            android:text="配件库存情况"
+            android:textColor="@color/text_black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/qb_px_2"
+            android:layout_marginRight="@dimen/qb_px_6"
+            android:background="@drawable/jinchang"
+            android:paddingBottom="@dimen/qb_px_6"
+            android:paddingLeft="@dimen/qb_px_12"
+            android:paddingRight="@dimen/qb_px_12"
+            android:paddingTop="@dimen/qb_px_6"
+            android:text="关   闭"
+            android:textColor="#F7714C"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/below_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="#F7714C" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/qb_px_4">
+
+        <LinearLayout
+            style="@style/myconditionboxstyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_36"
+            android:layout_weight="1">
+
+            <TextView
+                style="@style/myconditionname"
+                android:text="编码:" />
+
+            <TextView
+                android:id="@+id/bsd_wxcl_kc_bianma"
+                style="@style/myconditionvalue"
+                android:gravity="center_vertical"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/myconditionboxstyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_36"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_weight="1">
+
+            <TextView
+                style="@style/myconditionname"
+                android:text="图号:" />
+
+            <TextView
+                android:id="@+id/bsd_wxcl_kc_tuhao"
+                style="@style/myconditionvalue"
+                android:gravity="center_vertical"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/myconditionboxstyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_36"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_weight="0.6">
+
+            <TextView
+                style="@style/myconditionname"
+                android:text="品牌:" />
+
+            <TextView
+                android:id="@+id/bsd_wxcl_kc_pinpai"
+                style="@style/myconditionvalue"
+                android:gravity="center_vertical"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_4"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            style="@style/myconditionboxstyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_36"
+            android:layout_weight="1">
+
+            <TextView
+                style="@style/myconditionname"
+                android:text="名称:" />
+
+            <TextView
+                android:id="@+id/bsd_wxcl_kc_mingcheng"
+                style="@style/myconditionvalue"
+                android:gravity="center_vertical"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/myconditionboxstyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_36"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_weight="1">
+
+            <TextView
+                style="@style/myconditionname"
+                android:text="车型:" />
+
+            <com.example.administrator.boshide2.Modular.View.MarqueeView
+                android:id="@+id/bsd_wxcl_kc_chexing"
+                style="@style/myeditinfomarqeestyle"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/myconditionboxstyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_36"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_weight="0.6">
+
+            <TextView
+                style="@style/myconditionname"
+                android:text="单位:" />
+
+            <TextView
+                android:id="@+id/bsd_wxcl_kc_danwei"
+                style="@style/myconditionvalue"
+                android:gravity="center_vertical"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_marginTop="@dimen/qb_px_4"
+        android:background="@color/beijing" />
+
+    <LinearLayout
+        android:id="@+id/bsd_lsbj_toubuju"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_34"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="仓库名称" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="当前库存" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="平均单价" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="金额" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="库存上限" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="库存下限" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="库位" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/bsd_wxcl_kc_lv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/beijing" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_30"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1"
+            android:text="合计：" />
+
+        <TextView
+            android:id="@+id/tv_kcSum"
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_djSum"
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_jeSum"
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_sxSum"
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_xxSum"
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1" />
+
+        <TextView
+            style="@style/mysearchtitlestyle"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

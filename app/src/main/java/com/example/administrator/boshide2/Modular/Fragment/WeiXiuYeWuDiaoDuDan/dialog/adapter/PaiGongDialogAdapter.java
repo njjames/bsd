@@ -21,11 +21,9 @@ import java.util.Map;
  */
 
 public class PaiGongDialogAdapter extends BaseAdapter {
-    Context context;
-    PaiGong paiGong;
-    List<Map<String, String>> list;
+    private Context context;
+    private List<Map<String, String>> list;
     private List<String> chooseLists = new ArrayList<>();
-
 
     public PaiGongDialogAdapter(Context context, List<Map<String, String>> list) {
         this.context = context;
@@ -47,17 +45,17 @@ public class PaiGongDialogAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int i, View contetview, ViewGroup viewGroup) {
+    public View getView(final int i, View convertView, ViewGroup viewGroup) {
         Holder holder=null;
-        if (contetview == null) {
+        if (convertView == null) {
             holder = new Holder();
-            contetview = LayoutInflater.from(context).inflate(R.layout.dialog_paigong_item, null);
-            holder.tv_name= (TextView) contetview.findViewById(R.id.tv_name);
-            holder.tv_dept= (TextView) contetview.findViewById(R.id.tv_dept);
-            holder.iv_paigong= (ImageView) contetview.findViewById(R.id.iv_paigong);
-            contetview.setTag(holder);
+            convertView = LayoutInflater.from(context).inflate(R.layout.dialog_paigong_item, null);
+            holder.tv_name= (TextView) convertView.findViewById(R.id.tv_name);
+            holder.tv_dept= (TextView) convertView.findViewById(R.id.tv_dept);
+            holder.iv_paigong= (ImageView) convertView.findViewById(R.id.iv_paigong);
+            convertView.setTag(holder);
         }else {
-            holder = (Holder) contetview.getTag();
+            holder = (Holder) convertView.getTag();
         }
         holder.tv_name.setText(list.get(i).get("reny_xm"));
         holder.tv_dept.setText(list.get(i).get("dept_mc"));
@@ -74,21 +72,17 @@ public class PaiGongDialogAdapter extends BaseAdapter {
                 }
             }
         });
-        return contetview;
+        return convertView;
     }
 
-    class Holder {
+    public final class Holder {
         TextView tv_name;
         TextView tv_dept;
         ImageView iv_paigong;
     }
 
     public interface  PaiGong{
-        public void onYesClick(String renyDm);
-    }
-
-    public void setPaiGong(PaiGong paiGong) {
-        this.paiGong = paiGong;
+        void onYesClick(String renyDm);
     }
 
     public List<String> getChooseLists() {

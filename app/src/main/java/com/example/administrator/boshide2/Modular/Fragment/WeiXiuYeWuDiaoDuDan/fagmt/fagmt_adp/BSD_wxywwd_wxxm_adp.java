@@ -68,22 +68,22 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int i, View contetview, ViewGroup viewGroup) {
+    public View getView(final int i, View convertView, ViewGroup viewGroup) {
         Holder holder = null;
-        if (contetview == null) {
+        if (convertView == null) {
             textView = new RelativeLayout(context);
             holder = new Holder();
-            contetview = layoutInflater.inflate(R.layout.bsd_wxywdd_wxxm_item, null);
-            holder.bsd_xsbj_name = (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
-            holder.bsd_kxbj_bzsj = (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
-            holder.bsd_kxbj_gsdj = (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
-            holder.bsd_kxbj_je = (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.iv_delete = (ImageView) contetview.findViewById(R.id.iv_delete);
-            holder.bsd_kxbj_pg = (ImageView) contetview.findViewById(R.id.bsd_kxbj_pg);
-            holder.iv_selected =(ImageView) contetview.findViewById(R.id.iv_selected);
-            contetview.setTag(holder);
+            convertView = layoutInflater.inflate(R.layout.bsd_wxywdd_wxxm_item, null);
+            holder.bsd_xsbj_name = (TextView) convertView.findViewById(R.id.bsd_xsbj_name);
+            holder.bsd_kxbj_bzsj = (TextView) convertView.findViewById(R.id.bsd_kxbj_bzsj);
+            holder.bsd_kxbj_gsdj = (TextView) convertView.findViewById(R.id.bsd_kxbj_gsdj);
+            holder.bsd_kxbj_je = (TextView) convertView.findViewById(R.id.bsd_kxbj_je);
+            holder.iv_delete = (ImageView) convertView.findViewById(R.id.iv_delete);
+            holder.bsd_kxbj_pg = (ImageView) convertView.findViewById(R.id.bsd_kxbj_pg);
+            holder.iv_selected =(ImageView) convertView.findViewById(R.id.iv_selected);
+            convertView.setTag(holder);
         } else {
-            holder = (Holder) contetview.getTag();
+            holder = (Holder) convertView.getTag();
         }
         holder.bsd_xsbj_name.setText(list.get(i).getWxxm_mc());
         holder.bsd_xsbj_name.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +141,7 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
         } else {
             holder.iv_selected.setVisibility(View.INVISIBLE);
         }
-        return contetview;
+        return convertView;
     }
 
     public interface DanXiangPaiGong {

@@ -146,7 +146,20 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         tv_stopwx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopWX();
+                queding_quxiao = new Queding_Quxiao(getActivity(), "确认要终止维修吗？");
+                queding_quxiao.show();
+                queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
+                    @Override
+                    public void onConfirm() {
+                        queding_quxiao.dismiss();
+                        stopWX();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        queding_quxiao.dismiss();
+                    }
+                });
             }
         });
         // 完工
@@ -175,9 +188,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         bsd_wxywdd_clxx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"车辆信息",Toast.LENGTH_LONG).show();
-                //跳转到编辑车辆、客户信息界面
-                Conts.danju_type="wxywdd";
                 BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXDD, billEntiy.getWork_no())
                         .show(getFragmentManager(), "dialog_fragment");
 
@@ -194,8 +204,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         bsd_wxywdd_lswxjy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new BSD_LiShiWeiXiuJianYi_DialogFragment().
-                        show(getFragmentManager(),"mrkx_lswxjy");
+                new BSD_LiShiWeiXiuJianYi_DialogFragment().show(getFragmentManager(),"mrkx_lswxjy");
             }
         });
         bsd_ywwwdd_cp = (TextView) view.findViewById(R.id.bsd_ywwwdd_cp);
@@ -230,10 +239,12 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         bsd_wxywdd_you_lv.setAdapter(adapter);
         tv_wxxmAdd = (TextView) view.findViewById(R.id.tv_wxxm_add);
         tv_wxllAdd = (TextView) view.findViewById(R.id.tv_wxll_add);
-        iv_wxxmAdd = (ImageView) view.findViewById(R.id.iv_wxxm_add);
-        iv_wxllAdd = (ImageView) view.findViewById(R.id.iv_wxll_add);
         tv_wxxmAdd.setOnClickListener(this);
         tv_wxllAdd.setOnClickListener(this);
+        iv_wxxmAdd = (ImageView) view.findViewById(R.id.iv_wxxm_add);
+        iv_wxllAdd = (ImageView) view.findViewById(R.id.iv_wxll_add);
+        iv_wxxmAdd.setOnClickListener(this);
+        iv_wxllAdd.setOnClickListener(this);
         title = (TextView) view.findViewById(R.id.tv_title);
         billNo = (TextView) view.findViewById(R.id.tv_billNo);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
@@ -589,17 +600,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
             public void onFailure(int i, String s, Throwable throwable) {
             }
         });
-    }
-
-    //切换碎片事务的方法
-    private void change(Fragment f) {
-        getActivity().getSupportFragmentManager()//碎片管理者
-                //开启事务
-                .beginTransaction()
-                //替换方法
-                .replace(R.id.bsd_clxq_lswx, f)
-                //提交事务
-                .commit();
     }
 
     /**
@@ -1031,7 +1031,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                     } else {
                         Show.showTime(getActivity(), "此维修单已不存在");
                     }
-                    change(BSD_wxxm);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1049,92 +1048,11 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                change(BSD_wxxm);
                 Show.showTime(getActivity(), "网络连接超时");
                 Log.i("cjn", "基本信息请求失败");
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
-
-
-    }
-
-    /**
-     * 跳转之后的详情页面
-     */
-    public void tiaozhuanjiedan() {
-        list.clear();
-//        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        AbRequestParams params = new AbRequestParams();
-        params.put("pai", Conts.cp);
-        params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
-        params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
-        Log.i("cjnn", "查看车牌" + Conts.cp + "---查看gongsiNo" + MyApplication.shared.getString("GongSiNo", "")
-                + "-----caozuoyuan_xm" + MyApplication.shared.getString("name", ""));
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_jbxxs, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-                Log.i("cjn", "信息++++++++++++" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-
-                    if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            //这块拿到的是维系接单的详细表
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-                            entiy.setWork_no(item.getString("work_no"));
-                            entiy.setKehu_no(item.getString("kehu_no"));
-                            entiy.setKehu_mc(item.getString("kehu_mc"));
-                            entiy.setKehu_xm(item.getString("kehu_xm"));
-                            entiy.setKehu_dz(item.getString("kehu_dz"));
-                            entiy.setKehu_yb(item.getString("kehu_yb"));
-                            entiy.setKehu_dh(item.getString("kehu_dh"));
-                            entiy.setChe_no(item.getString("che_no"));
-                            entiy.setChe_cx(item.getString("che_cx"));
-                            entiy.setChe_vin(item.getString("che_vin"));
-                            entiy.setXche_lc(item.getInt("xche_lc"));
-                            entiy.setXche_cz(item.getString("xche_cz"));
-                            entiy.setXche_yjwgrq(item.getString("xche_jdrq"));
-                            entiy.setXche_ywlx(item.getString("substate"));
-                            list.add(entiy);
-                        }
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
-
-                    } else {
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
-                        Show.showTime(getActivity(), jsonObject.get("message").toString());
-                    }
-
-                    change(BSD_wxxm);
-                    Conts.work_no = list.get(0).getWork_no();
-
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                change(BSD_wxxm);
-                Show.showTime(getActivity(), "网络连接超时");
-                Log.i("cjn", "基本信息请求失败");
-                WeiboDialogUtils.closeDialog(mWeiboDialog);
-            }
-        });
-
 
     }
 

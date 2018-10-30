@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/qb_px_32"
+    android:minHeight="@dimen/qb_px_32"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/bsd_tv_kc_ckmc"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="仓库名称" />
+
+    <TextView
+        android:id="@+id/bsd_tv_kc_dqkc"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="当前库存" />
+
+    <TextView
+        android:id="@+id/bsd_tv_kc_pjdj"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="平均单价" />
+
+    <TextView
+        android:id="@+id/bsd_tv_kc_je"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="金额" />
+
+    <TextView
+        android:id="@+id/bsd_tv_kc_kcsx"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="库存上限" />
+
+    <TextView
+        android:id="@+id/bsd_tv_kc_kcxx"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="库存下限" />
+
+    <TextView
+        android:id="@+id/bsd_tv_kc_kw"
+        style="@style/mysearchinfostyle"
+        android:layout_weight="1"
+        android:text="库位" />
+</LinearLayout>

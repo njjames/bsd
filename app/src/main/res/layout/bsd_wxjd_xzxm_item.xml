@@ -16,13 +16,15 @@
         android:id="@+id/bsd_xzcl_name"
         android:layout_weight="1.2"
         style="@style/mysearchinfostyle"
-        android:text="项目名称" />
+        android:text="项目名称"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
     <TextView
         android:id="@+id/bsd_xzcl_gs"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="工时" />
+        android:text="工时"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
     <TextView
         android:id="@+id/bsd_xzcl_danjia"
@@ -34,7 +36,8 @@
         android:id="@+id/bsd_xzcl_je"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
-        android:text="金额" />
+        android:text="金额"
+        android:background="@drawable/biankuang_info_canwrite_bg"/>
 
     <TextView
         android:id="@+id/bsd_xzcl_zt"
