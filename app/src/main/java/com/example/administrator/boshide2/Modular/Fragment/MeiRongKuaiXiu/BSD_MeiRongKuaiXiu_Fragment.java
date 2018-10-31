@@ -2603,7 +2603,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 showWxxm();
                 break;
             case R.id.iv_wxll_add: // 添加维修用料
-                showWxll();
+                showWxcl();
                 break;
         }
     }
@@ -2611,11 +2611,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     /**
      * 显示维修领料窗口
      */
-    private void showWxll() {
+    private void showWxcl() {
         bsd_zcduxq_cl_pop = new BSD_ZCDUXQ_CL_POP(getActivity());
         bsd_zcduxq_cl_pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
-        //BSD_wxcl
         list_CL = BSD_wxcl.getList_CL();
         List<BSD_wxyy_cl_pop_entity> tempLists = new ArrayList<>();
         if (list_CL != null) {
@@ -2628,12 +2627,9 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
         }
         bsd_zcduxq_cl_pop.setTempLists(tempLists);
+        bsd_zcduxq_cl_pop.setCheNo(billEntiy.getChe_no());
+        bsd_zcduxq_cl_pop.setKehuNo(billEntiy.getKehu_no());
         bsd_zcduxq_cl_pop.gb(new BSD_ZCDUXQ_CL_POP.Guanbi() {
-            @Override
-            public void guanbi() {
-
-            }
-
             @Override
             public void onGuanBi(List<BSD_wxyy_cl_pop_entity> tempList) {
                 list_CL = BSD_wxcl.getList_CL();

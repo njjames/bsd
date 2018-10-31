@@ -2,13 +2,10 @@ package com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -50,15 +47,11 @@ import java.util.List;
 public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener, View.OnClickListener {
     //行布局选中效果
     private Dialog mWeiboDialog;
-    private View contentView;
+    private View view;
     public Activity context;
-    private int width;
-    private int height;
     private ListView bsd_pop_lv, bsd_lv;
     private BSD_WXYY_XM_Popzuo_adp adapter;
     private List<String> list = new ArrayList<>();
-    private FrameLayout bsd_di;
-    private FrameLayout bsd_tou;
     List<HashMap<String, String>> data = new ArrayList<>();
     private BSD_KSBJ_XM_PopYou_adp detailsAdapter;
     private Guanbi onGuanBiListener;
@@ -101,47 +94,23 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
     }
 
     public void initView() {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        contentView = inflater.inflate(R.layout.bsd_wxyy_xm_popwin, null);
-        width = context.getWindowManager().getDefaultDisplay().getWidth();
-        height = context.getWindowManager().getDefaultDisplay().getHeight();
+        view = LayoutInflater.from(context).inflate(R.layout.bsd_wxyy_xm_popwin, null);
         //获得 LayoutInflater 的实例
-        this.setContentView(contentView);
+        this.setContentView(view);
         // 设置SelectPicPopupWindow弹出窗体的宽
-        this.setWidth(width);
+        this.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
         // 设置SelectPicPopupWindow弹出窗体的高
-        this.setHeight(height);
-        //设置SelectPicPopupWindow弹出窗体的背景
+        this.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
+        // 设置SelectPicPopupWindow弹出窗体的背景
         this.setBackgroundDrawable(new ColorDrawable(0xb0ffffff));
-//         设置SelectPicPopupWindow弹出窗体可点击
+        // 设置SelectPicPopupWindow弹出窗体可点击
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.update();
-        // 设置SelectPicPopupWindow弹出窗体动画效果
-
-        bsd_tou = (FrameLayout) contentView.findViewById(R.id.bsd_tou);
-        // 不让点击空白处返回
-//        bsd_tou.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (BSD_ZCDUXQ_XM_POP.this != null)
-//                    BSD_ZCDUXQ_XM_POP.this.dismiss();
-//                gb.guanbi();
-//            }
-//        });
-        bsd_di = (FrameLayout) contentView.findViewById(R.id.bsd_di);
-//        bsd_di.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (BSD_ZCDUXQ_XM_POP.this != null)
-//                    BSD_ZCDUXQ_XM_POP.this.dismiss();
-//                gb.guanbi();
-//            }
-//        });
-        et_wxxmName = (EditText) contentView.findViewById(R.id.et_wxxm_name);
+        et_wxxmName = (EditText) view.findViewById(R.id.et_wxxm_name);
         et_wxxmName.getText().toString();
         //查询按钮
-        tv_search = (TextView) contentView.findViewById(R.id.tv_search);
+        tv_search = (TextView) view.findViewById(R.id.tv_search);
         tv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,22 +119,22 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
                 getDetialsInfo();
             }
         });
-        bsd_wxyy_pop_rl_xiangmu_quanbu = (LinearLayout) contentView.findViewById(R.id.ll_all_wxxm);
-        bsd_wxyy_pop_rl_xiangmu_1 = (LinearLayout) contentView.findViewById(R.id.ll_by_wxxm);
-        bsd_wxyy_pop_rl_xiangmu_2 = (LinearLayout) contentView.findViewById(R.id.ll_wx_wxxm);
-        bsd_wxyy_pop_rl_xiangmu_3 = (LinearLayout) contentView.findViewById(R.id.ll_wjg_wxxm);
+        bsd_wxyy_pop_rl_xiangmu_quanbu = (LinearLayout) view.findViewById(R.id.ll_all_wxxm);
+        bsd_wxyy_pop_rl_xiangmu_1 = (LinearLayout) view.findViewById(R.id.ll_by_wxxm);
+        bsd_wxyy_pop_rl_xiangmu_2 = (LinearLayout) view.findViewById(R.id.ll_wx_wxxm);
+        bsd_wxyy_pop_rl_xiangmu_3 = (LinearLayout) view.findViewById(R.id.ll_wjg_wxxm);
 
-        bsd_wxyy_pop_im_xiangmu_quanbu = (ImageView) contentView.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_quanbu);
-        bsd_wxyy_pop_im_xiangmu_1 = (ImageView) contentView.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_1);
-        bsd_wxyy_pop_im_xiangmu_2 = (ImageView) contentView.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_2);
-        bsd_wxyy_pop_im_xiangmu_3 = (ImageView) contentView.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_3);
+        bsd_wxyy_pop_im_xiangmu_quanbu = (ImageView) view.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_quanbu);
+        bsd_wxyy_pop_im_xiangmu_1 = (ImageView) view.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_1);
+        bsd_wxyy_pop_im_xiangmu_2 = (ImageView) view.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_2);
+        bsd_wxyy_pop_im_xiangmu_3 = (ImageView) view.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_3);
 
         bsd_wxyy_pop_rl_xiangmu_quanbu.setOnClickListener(this);
         bsd_wxyy_pop_rl_xiangmu_1.setOnClickListener(this);
         bsd_wxyy_pop_rl_xiangmu_2.setOnClickListener(this);
         bsd_wxyy_pop_rl_xiangmu_3.setOnClickListener(this);
 
-        mAbPullToRefreshView = (AbPullToRefreshView) contentView.findViewById(R.id.bsd_wxyy_xm_mPullRefreshView);
+        mAbPullToRefreshView = (AbPullToRefreshView) view.findViewById(R.id.bsd_wxyy_xm_mPullRefreshView);
         // 设置监听器
         mAbPullToRefreshView.setOnHeaderRefreshListener(this);
         mAbPullToRefreshView.setOnFooterLoadListener(this);
@@ -176,17 +145,17 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
         mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
                 context.getResources().getDrawable(R.drawable.progress_circular));
 
-        ll_allWxxm = (LinearLayout) contentView.findViewById(R.id.ll_all_wxxm);
-        ll_byWxxm = (LinearLayout) contentView.findViewById(R.id.ll_by_wxxm);
-        ll_wxWxxm = (LinearLayout) contentView.findViewById(R.id.ll_wx_wxxm);
-        ll_wjgWxxm = (LinearLayout) contentView.findViewById(R.id.ll_wjg_wxxm);
+        ll_allWxxm = (LinearLayout) view.findViewById(R.id.ll_all_wxxm);
+        ll_byWxxm = (LinearLayout) view.findViewById(R.id.ll_by_wxxm);
+        ll_wxWxxm = (LinearLayout) view.findViewById(R.id.ll_wx_wxxm);
+        ll_wjgWxxm = (LinearLayout) view.findViewById(R.id.ll_wjg_wxxm);
         ll_allWxxm.setOnClickListener(this);
         ll_byWxxm.setOnClickListener(this);
         ll_wxWxxm.setOnClickListener(this);
         ll_wjgWxxm.setOnClickListener(this);
 
-        iv_allCategory = (ImageView) contentView.findViewById(R.id.iv_category_all);
-        rl_allCategory = (RelativeLayout) contentView.findViewById(R.id.rl_category_all);
+        iv_allCategory = (ImageView) view.findViewById(R.id.iv_category_all);
+        rl_allCategory = (RelativeLayout) view.findViewById(R.id.rl_category_all);
         rl_allCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,7 +168,7 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
                 getDetialsInfo();
             }
         });
-        bsd_lv = (ListView) contentView.findViewById(R.id.bsd_lv);
+        bsd_lv = (ListView) view.findViewById(R.id.bsd_lv);
         detailsAdapter = new BSD_KSBJ_XM_PopYou_adp(context, detailsLists);
         detailsAdapter.setOnAddListener(new BSD_KSBJ_XM_PopYou_adp.OnAddListener() {
             @Override
@@ -216,7 +185,7 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
         });
         bsd_lv.setAdapter(detailsAdapter);
         // 返回
-        iv_back = (TextView) contentView.findViewById(R.id.iv_back);
+        iv_back = (TextView) view.findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -438,7 +407,7 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
      */
     public void updateCategrory() {
         // 还想是因为这个Adapter不能notify，所以这样写了（也可能不是）
-        bsd_pop_lv = (ListView) contentView.findViewById(R.id.bsd_wxyy_zuo_pop_lv);
+        bsd_pop_lv = (ListView) view.findViewById(R.id.bsd_wxyy_zuo_pop_lv);
         try {
             mAdapter = new SimpleTreeAdapter<FileBean>(bsd_pop_lv, context, categoryLists, 10);
             mAdapter.setOnTreeNodeClickListener(new TreeListViewAdapter.OnTreeNodeClickListener() {

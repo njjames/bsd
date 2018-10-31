@@ -33,6 +33,7 @@ import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
 import com.example.administrator.boshide2.Modular.Fragment.BaoYangChaXun.BSD_BaoYangChaXun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
+import com.example.administrator.boshide2.Modular.Fragment.ChooseWxclDialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWinow.BSD_KSBJ_PinPai_delo;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
@@ -150,7 +151,9 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private String cxnm;      //车型内码
     private TextView rl_duqu;
     //车辆信息、历史维修、历史维修建议
-    private TextView bsd_wxjd_clxx, bsd_wxjd_lswxjy, bsd_wxjd_lswx;
+    private TextView bsd_wxjd_clxx;
+    private TextView bsd_wxjd_lswxjy;
+    private TextView bsd_wxjd_lswx;
     private String params;
     private BSD_WeiXiuJieDan_Entity billEntiy;
     private TextView title;
@@ -164,9 +167,10 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private double totalJe;
     private TextView tv_wxxm_count;
     private TextView tv_wxcl_count;
-    private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
     private TooPromptdiaog promptdiaog;
     private UpdateItemInfoDialog updateItemInfoDialog;
+    private LinearLayout bsd_lsbj_fanhui;
+    private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
 
     public static BSD_WeiXiuJieDan_Fragment newInstance(String params) {
         BSD_WeiXiuJieDan_Fragment fragment = new BSD_WeiXiuJieDan_Fragment();
@@ -189,6 +193,8 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
 
     @Override
     public void initView() {
+        bsd_lsbj_fanhui = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
+        bsd_lsbj_fanhui.setOnClickListener(this);
         tv_gcsj = (TextView) view.findViewById(R.id.tv_gcsj);
         ll_gcsj = (LinearLayout) view.findViewById(R.id.ll_gcsj);
         ll_gcsj.setOnClickListener(this);
@@ -711,32 +717,20 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
      */
     public void getcx_by_cxdm() {
         AbRequestParams params = new AbRequestParams();
-        Log.e("sss", "cxnm是：" + cxnm);
         params.put("chex_dm", cxnm);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcx_byvindm, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    Log.e("vin", "onSuccess获取车牌车系等信息：" + s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
                         String data = jsonObject.getString("data");
-                        Log.e("vin", "车牌车系json串：" + data);
                         //给车牌、车系、车组、车型赋值；
-                        ArrayList arr = new ArrayList();
                         String[] s1 = data.split("\\|");
-                        Log.e("vin", "品牌：" + s1[0] + ",车系" + s1[1] + ",车组" + s1[2] + ",车系" + s1[3]);
-                        for (int j = 0; j < s1.length; j++) {
-                            arr.add(j, s1[j]);
-                        }
-
-
                         tv_pinpai.setText(s1[0]);
                         tv_chexi.setText(s1[1]);
                         tv_chezu.setText(s1[2]);
                         tv_chexing.setText(s1[3]);
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1064,6 +1058,9 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.bsd_lsbj_fanhui:
+                ((MainActivity) getActivity()).upBSD_WXJD_log();
+                break;
             case R.id.ll_pinpai:
                 showPinPaiDialog();
                 break;
@@ -1166,12 +1163,9 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             }
         }
         bsd_zcduxq_cl_pop.setTempLists(tempLists);
+        bsd_zcduxq_cl_pop.setCheNo(billEntiy.getChe_no());
+        bsd_zcduxq_cl_pop.setKehuNo(billEntiy.getKehu_no());
         bsd_zcduxq_cl_pop.gb(new BSD_ZCDUXQ_CL_POP.Guanbi() {
-            @Override
-            public void guanbi() {
-
-            }
-
             @Override
             public void onGuanBi(List<BSD_wxyy_cl_pop_entity> tempList) {
                 List<BSD_WeiXiuJieDan_CL_Entity> needAddList = new ArrayList<>();

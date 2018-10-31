@@ -1,10 +1,17 @@
-package com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt;
+package com.example.administrator.boshide2.Modular.Fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,9 +23,11 @@ import android.widget.TextView;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.view.pullview.AbPullToRefreshView;
+import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
+import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Adapter.SimpleTreeAdapter;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.PopAdapter.BSD_WXYY_CL_PopYou_adp;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_WeiXiuYuYue_Cl_FileBEan;
@@ -41,58 +50,71 @@ import java.util.List;
  * Created by Administrator on 2017-4-18.
  */
 
-public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
-    //行布局选中效果
+public class ChooseWxclDialogFragment extends DialogFragment implements AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
+    private static final String PARAM_KEY_CHENO = "param_key_cheno";
+    private static final String PARAM_KEY_KEHUNO = "param_key_kehuno";
     private Dialog mWeiboDialog;
-    private View view;
-    public Activity context;
-    int width;
-    int height;
-    private Guanbi onGuanBiListener;
+    private Context context;
+    private OnGuanBiListener onGuanBiListener;
     List<FileBean> categoryLists = new ArrayList<>();
-    private List<FileBean> mclDatas = new ArrayList<FileBean>();
     private TreeListViewAdapter mclAdapter;
-    //ListView
     ListView bsd_wxyy_pop_you_lv, bsd_clpop_lv;
-    //返回
     private TextView iv_back;
-    //刷新
     private AbPullToRefreshView mAbPullToRefreshView = null;// 下拉刷新
     private int pageIndex = 1;
     private String lbdm;
     private List<BSD_wxyy_cl_pop_entity> detailsLists = new ArrayList<>();
     private BSD_WXYY_CL_PopYou_adp detailsAdapter;
-    double jiaqian;
     private EditText et_clname;
     private TextView tv_search;
     private ImageView iv_allCategory;
     private RelativeLayout rl_allCategory;
     private URLS url;
+    private List<BSD_wxyy_cl_pop_entity> tempLists = new ArrayList<>();
     private String cheNo;
     private String kehuNo;
+    private View view;
 
-    private List<BSD_wxyy_cl_pop_entity> tempLists = new ArrayList<>();
+    public static ChooseWxclDialogFragment newInstance(String cheNo, String kehuNo, List<BSD_wxyy_cl_pop_entity> tempLists) {
+        ChooseWxclDialogFragment dialogFragment = new ChooseWxclDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY_CHENO, cheNo);
+        bundle.putString(PARAM_KEY_KEHUNO, kehuNo);
+        dialogFragment.setArguments(bundle);
+        dialogFragment.tempLists = tempLists;
+        return dialogFragment;
+    }
 
-    public BSD_ZCDUXQ_CL_POP(final Activity context) {
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
         this.context = context;
+        cheNo = getArguments().getString(PARAM_KEY_CHENO);
+        kehuNo = getArguments().getString(PARAM_KEY_KEHUNO);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.bsd_wxyy_cl_popwin, null);
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         initView();
         initData();
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //隐藏输入法
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = LinearLayout.LayoutParams.MATCH_PARENT;
+        params.height = LinearLayout.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes(params);
     }
 
     public void initView() {
-        view = LayoutInflater.from(context).inflate(R.layout.bsd_wxyy_cl_popwin, null);
-        //获得 LayoutInflater 的实例
-        this.setContentView(view);
-        // 设置SelectPicPopupWindow弹出窗体的宽
-        this.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-        // 设置SelectPicPopupWindow弹出窗体的高
-        this.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
-        this.setBackgroundDrawable(new ColorDrawable(0xb0ffffff));
-        // 设置SelectPicPopupWindow弹出窗体可点击
-        this.setFocusable(true);
-        this.setOutsideTouchable(true);
-        this.update();
-        // 设置SelectPicPopupWindow弹出窗体动画效果
         et_clname = (EditText) view.findViewById(R.id.et_clname);
         tv_search = (TextView) view.findViewById(R.id.tv_search);
         tv_search.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +149,9 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
         });
         bsd_wxyy_pop_you_lv = (ListView) view.findViewById(R.id.bsd_wxyy_pop_you_lv);
         detailsAdapter = new BSD_WXYY_CL_PopYou_adp(context, detailsLists);
+        for (BSD_wxyy_cl_pop_entity tempList : tempLists) {
+            detailsAdapter.addTempMapItem(tempList.getPeij_no(), tempList.getPeij_sl());
+        }
         detailsAdapter.setOnAddListener(new BSD_WXYY_CL_PopYou_adp.OnAddListener() {
             @Override
             public void onAdd(BSD_wxyy_cl_pop_entity entity) {
@@ -167,7 +192,7 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
             @Override
             public void onClick(View view) {
                 onGuanBiListener.onGuanBi(tempLists);
-                BSD_ZCDUXQ_CL_POP.this.dismiss();
+                close();
             }
         });
     }
@@ -194,7 +219,7 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxyy_xljq, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
-                jiaqian = Double.parseDouble(data.toString());
+                double jiaqian = Double.parseDouble(data.toString());
                 BSD_wxyy_cl_pop_entity tempItem = new BSD_wxyy_cl_pop_entity();
                 tempItem.setReco_no1(entity.getReco_no1());
                 tempItem.setPeij_no(entity.getPeij_no());
@@ -208,7 +233,7 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
                 int firstVisiblePosition = bsd_wxyy_pop_you_lv.getFirstVisiblePosition();
                 detailsAdapter.notifyDataSetChanged();
                 bsd_wxyy_pop_you_lv.setSelection(firstVisiblePosition);
-                Show.showTime(context, "添加成功");
+                Show.showTime(getActivity(), "添加成功");
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
@@ -227,6 +252,8 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
+
+
     }
 
     /**
@@ -273,6 +300,7 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
 
             }
         });
+
     }
 
     /**
@@ -330,10 +358,12 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
                         }
                         detailsAdapter.notifyDataSetChanged();
                     } else {
-                        Show.showTime(context, json.get("message").toString());
+                        Show.showTime(getActivity(), json.get("message").toString());
+                        subPage();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    subPage();
                 }
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
                 mAbPullToRefreshView.onFooterLoadFinish();
@@ -353,8 +383,15 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
                 mAbPullToRefreshView.onFooterLoadFinish();
                 mAbPullToRefreshView.onHeaderRefreshFinish();
+                subPage();
             }
         });
+    }
+
+    private void subPage() {
+        if (pageIndex > 1) {
+            pageIndex--;
+        }
     }
 
     @Override
@@ -371,12 +408,12 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
 
     }
 
-    public interface Guanbi {
+    public interface OnGuanBiListener {
         void onGuanBi(List<BSD_wxyy_cl_pop_entity> tempList);
     }
 
-    public void gb(Guanbi guanbi) {
-        this.onGuanBiListener = guanbi;
+    public void setOnGuanBiListener(OnGuanBiListener onGuanBiListener) {
+        this.onGuanBiListener = onGuanBiListener;
 
     }
 
@@ -392,11 +429,7 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
         detailsAdapter.notifyDataSetChanged();
     }
 
-    public void setCheNo(String cheNo) {
-        this.cheNo = cheNo;
-    }
-
-    public void setKehuNo(String kehuNo) {
-        this.kehuNo = kehuNo;
+    private void close() {
+        this.dismiss();
     }
 }

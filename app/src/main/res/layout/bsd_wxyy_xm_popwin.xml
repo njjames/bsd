@@ -6,17 +6,14 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/bsd_tou"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_16"
-        android:background="#666666" />
+        android:layout_height="@dimen/qb_px_10">
+    </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/bsd_poptouming"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/pop">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:id="@+id/bsd_pop_zuo"
@@ -117,7 +114,6 @@
                         android:hint="请输入项目名称"
                         android:textColorHint="#B1B0B0" />
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:id="@+id/ll_all_wxxm"
@@ -225,8 +221,7 @@
             <LinearLayout
                 android:id="@+id/ll_top"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/qb_px_30"
-                android:layout_marginTop="@dimen/qb_px_2">
+                android:layout_height="@dimen/qb_px_30">
 
                 <TextView
                     style="@style/mysearchtitlestyle"
@@ -259,17 +254,10 @@
                     android:textSize="14sp"/>
             </LinearLayout>
 
-            <View
-                android:id="@+id/view3"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qb_px_1"
-                android:background="#C9C9C9" />
-
-
             <com.ab.view.pullview.AbPullToRefreshView
                 android:id="@+id/bsd_wxyy_xm_mPullRefreshView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="#FFFFFF">
 
@@ -278,6 +266,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </com.ab.view.pullview.AbPullToRefreshView>
+
+            <View
+                android:id="@+id/bsd_v_zhong_xia"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F7714C" />
 
             <TextView
                 android:id="@+id/iv_back"
@@ -296,8 +290,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/bsd_di"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_16"
-        android:background="#666666" />
+        android:layout_height="@dimen/qb_px_10">
+    </FrameLayout>
 </LinearLayout>

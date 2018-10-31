@@ -829,12 +829,9 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
             }
         }
         bsd_zcduxq_cl_pop.setTempLists(tempLists);
+        bsd_zcduxq_cl_pop.setKehuNo(billEntiy.getKehu_no());
+        bsd_zcduxq_cl_pop.setCheNo(billEntiy.getChe_no());
         bsd_zcduxq_cl_pop.gb(new BSD_ZCDUXQ_CL_POP.Guanbi() {
-            @Override
-            public void guanbi() {
-
-            }
-
             @Override
             public void onGuanBi(List<BSD_wxyy_cl_pop_entity> tempList) {
                 List<BSD_KuaiSuBaoJia_CL_entity> needAddList = new ArrayList<>();

@@ -63,7 +63,7 @@ public class PaiGongDialog extends Dialog {
     public PaiGongDialog(final Context context, final int type) {
         super(context, R.style.mydialog);
         View view = getLayoutInflater().inflate(R.layout.dialog_paigong_layout, null, false);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         setContentView(view);
         setCanceledOnTouchOutside(true);
         WindowManager.LayoutParams params = this.getWindow().getAttributes();

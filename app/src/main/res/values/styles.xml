@@ -11,7 +11,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="mydialog" parent="android:style/Theme.Dialog">
-
         <!-- 背景透明 -->
         <item name="android:windowBackground">@android:color/transparent</item>
         <!-- 没有标题 -->
