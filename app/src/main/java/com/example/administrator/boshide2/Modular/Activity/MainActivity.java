@@ -248,7 +248,8 @@ public class MainActivity extends FragmentActivity {
                 CustomDialog dialog = builder.style(R.style.mydialog)
                         .view(R.layout.dialog_caozuoyuaninfo_layout)
                         .widthDimenRes(R.dimen.qb_px_280)
-                        .heightDimenRes(R.dimen.qb_px_220)
+//                        .heightDimenRes(R.dimen.qb_px_220)
+                        .heightdp(LinearLayout.LayoutParams.WRAP_CONTENT)
                         .cancelTouchout(true)
                         .addViewOnclick(R.id.tv_confirm, new View.OnClickListener() {
                             @Override

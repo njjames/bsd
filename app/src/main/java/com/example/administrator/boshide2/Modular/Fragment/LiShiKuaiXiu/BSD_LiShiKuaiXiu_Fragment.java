@@ -134,7 +134,7 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
     @Override
     public void initData() {
         url = new URLS();
-        title.setText("历史维修");
+        title.setText("历史快修");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         searchWXLS();

@@ -137,11 +137,8 @@
     <style name="myinforowstyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/bodyshangyuan</item>
         <item name="android:paddingLeft">@dimen/qb_px_6</item>
         <item name="android:paddingRight">@dimen/qb_px_6</item>
-        <item name="android:paddingTop">@dimen/qb_px_4</item>
-        <item name="android:paddingBottom">@dimen/qb_px_2</item>
         <item name="android:orientation">vertical</item>
     </style>
 

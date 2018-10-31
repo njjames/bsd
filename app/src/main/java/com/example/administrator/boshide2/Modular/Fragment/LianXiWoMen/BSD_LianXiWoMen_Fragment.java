@@ -38,11 +38,11 @@ public class BSD_LianXiWoMen_Fragment extends Fragment {
     TextView bsd_my_daiam;
     Html.ImageGetter imgGetter;
     private TextView title;
+    private TextView footerText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bsd_lxwm_fragment, null);
-        bsdtext(view);
         url=new URLS();
         bsd_my= (TextView) view.findViewById(R.id.bsd_my);
         bsd_my_daiam= (TextView) view.findViewById(R.id.bsd_my_daiam);
@@ -53,6 +53,9 @@ public class BSD_LianXiWoMen_Fragment extends Fragment {
         init();
         title = (TextView) view.findViewById(R.id.tv_title);
         title.setText("联系我们");
+        footerText = (TextView) view.findViewById(R.id.tv_footertext);
+        footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
+                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         bsd_lsbj_fanhui = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +100,6 @@ public class BSD_LianXiWoMen_Fragment extends Fragment {
                         bsd_my.setText(Html.fromHtml(html, imgGetter, null));
                     }
 
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -121,17 +123,6 @@ public class BSD_LianXiWoMen_Fragment extends Fragment {
             }
         });
 
-
-
     }
-
-    TextView bsd_01_text;
-
-    public void bsdtext(View view) {
-        bsd_01_text = (TextView) view.findViewById(R.id.bsd_06_text);
-        bsd_01_text.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
-                "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
-    }
-
 
 }

@@ -133,7 +133,7 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends BaseFragment {
     @Override
     public void initData() {
         url = new URLS();
-        title.setText("维修详情");
+        title.setText("历史快修详情");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         getBillInfoFromParam();

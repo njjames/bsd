@@ -109,7 +109,7 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
     @Override
     public void initData() {
         url = new URLS();
-        title.setText("美容快修");
+        title.setText("历史报价");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         searchLSBJ();

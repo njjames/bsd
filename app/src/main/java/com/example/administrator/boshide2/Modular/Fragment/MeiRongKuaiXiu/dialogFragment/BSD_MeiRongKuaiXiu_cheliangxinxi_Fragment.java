@@ -522,6 +522,9 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             case Conts.BILLTYPE_WXJD:
                 data_wxjd(paramCheNo, paramBillNo);
                 break;
+            case Conts.BILLTYPE_WXYY:
+                data_wxyy(paramCheNo, paramBillNo);
+                break;
         }
 //        if ("mrkx".equals(paramBillType)) {
 //            // 去获取草稿单据
@@ -674,17 +677,17 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     /*
     *根据车牌获取数据，打开维修预约
     */
-    public void data_wxyy(final String carp, final View view) {
+    public void data_wxyy(final String cardNo, String billNo) {
         list_wxyy.clear();
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("pai", carp);
+        params.put("pai", cardNo);
         params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
+        params.put("work_no", billNo);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxyy_LieBiao, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
-                Log.i("cjn", "查看数据！！！！！！！！！" + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
@@ -707,56 +710,14 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                             entity.setGcsj(item.getString("gcsj"));
                             list_wxyy.add(entity);
                         }
-
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
                     } else {
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
                         Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }
-
-                    if (jsonObject.get("total").toString().equals("1")) {
-                        BSD_WeiXiuYueYue_entiy entiy = new BSD_WeiXiuYueYue_entiy();
-                        entiy = list_wxyy.get(0);
-//                        ((MainActivity) getActivity()).setEntiy(entiy);//传了个实体
-                        mainActivity.setEntiy(entiy);
-                        if (null == entiy.getYuyue_no() || entiy.getYuyue_no().equals("") || entiy.getYuyue_no().equals("null")) {
-                            Toast.makeText(getActivity(), "网络超时请重试", Toast.LENGTH_SHORT).show();
-                        } else {
-                            mainActivity.upyuyue(view);
-                        }
-
-
-                        Conts.zt = 1;
-                        Conts.cp = carp;
-
-                    } else if (jsonObject.get("total").toString().equals("0")) {
-
-                        mainActivity.upyuyue(view);
-                        //请求
-
-                        Conts.cp = carp;
-                        Conts.zt = 0;
-
-                        Log.i("cjn", "这里是没有数据操作");
-                    } else {
-
-                        BSD_WeiXiuYueYue_entiy entiy = new BSD_WeiXiuYueYue_entiy();
-                        entiy = list_wxyy.get(0);
-                        entiy = list_wxyy.get(0);
-                        mainActivity.setEntiy(entiy);//传了个实体
-//
-                        mainActivity.upyuyue(view);
-                        Log.i("cjn", "这里是一条数据操作+" + entiy.getYuyue_no().toString());
-                        Conts.zt = 1;
-                        Conts.cp = carp;
-                        Log.i("cjn", "这里是两条数据以上操作");
-                    }
-                    //在这里请求
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override

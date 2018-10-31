@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@drawable/bsd_lsbj_body"
         android:fadeScrollbars="false"
         android:scrollbars="vertical">
 
@@ -21,7 +22,8 @@
 
             <LinearLayout
                 android:id="@+id/bsd_cheliangxinxi"
-                style="@style/myinforowstyle">
+                style="@style/myinforowstyle"
+                android:layout_marginTop="@dimen/qb_px_2">
 
                 <TextView
                     android:id="@+id/bsd_cxq_che"
@@ -43,8 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingTop="@dimen/qb_px_4"
-                    android:paddingBottom="@dimen/qb_px_4">
+                    android:layout_marginTop="@dimen/qb_px_2">
 
                     <LinearLayout
                         android:id="@+id/relativeLayout1"
@@ -133,7 +134,8 @@
 
             <LinearLayout
                 android:id="@+id/bus_userxinxi"
-                style="@style/myinforowstyle">
+                style="@style/myinforowstyle"
+                android:layout_marginTop="@dimen/qb_px_2">
 
                 <TextView
                     android:id="@+id/bsd_cxq_user"
@@ -155,8 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingTop="@dimen/qb_px_4"
-                    android:paddingBottom="@dimen/qb_px_4">
+                    android:layout_marginTop="@dimen/qb_px_2">
 
                     <LinearLayout
                         android:id="@+id/relativeLayout11"
@@ -245,7 +246,8 @@
 
             <LinearLayout
                 android:id="@+id/bus_baoyangxinxi"
-                style="@style/myinforowstyle">
+                style="@style/myinforowstyle"
+                android:layout_marginTop="@dimen/qb_px_2">
 
                 <TextView
                     android:id="@+id/bsd_cxq_user2"
@@ -267,8 +269,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingTop="@dimen/qb_px_4"
-                    android:paddingBottom="@dimen/qb_px_4">
+                    android:layout_marginTop="@dimen/qb_px_2">
 
                     <LinearLayout
                         android:id="@+id/relativeLayout712"
@@ -389,7 +390,8 @@
 
             <LinearLayout
                 android:id="@+id/bsd_qiehuan1"
-                style="@style/myinforowstyle">
+                style="@style/myinforowstyle"
+                android:layout_marginTop="@dimen/qb_px_4">
 
                 <LinearLayout
                     android:layout_width="match_parent"

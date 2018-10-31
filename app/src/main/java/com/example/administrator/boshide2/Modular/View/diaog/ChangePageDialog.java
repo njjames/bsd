@@ -6,6 +6,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.boshide2.R;
@@ -32,6 +33,10 @@ public class ChangePageDialog extends Dialog implements View.OnClickListener {
 		tips.setText(tipsstr);
 		setContentView(view);
 		setCanceledOnTouchOutside(false);
+		WindowManager.LayoutParams params = this.getWindow().getAttributes();
+		params.width = getContext().getResources().getDimensionPixelSize(R.dimen.qb_px_360);
+		params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+		this.getWindow().setAttributes(params);
 	}
 	@Override
 	public void onClick(View v) {
@@ -50,9 +55,9 @@ public class ChangePageDialog extends Dialog implements View.OnClickListener {
 	}
 
 	public interface OnResultClickListener {
-		public void onConfirm();
+		void onConfirm();
 
-		public void onCancel();
+		void onCancel();
 	}
 
 	public void setOnResultClickListener(OnResultClickListener onResultClickListener) {

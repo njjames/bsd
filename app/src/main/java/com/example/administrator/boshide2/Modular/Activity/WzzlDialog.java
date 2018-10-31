@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ab.http.AbRequestParams;
@@ -24,7 +25,6 @@ import com.example.administrator.boshide2.Tools.Show;
  */
 public class WzzlDialog extends Dialog {
     private View view;
-    //	WZZL
     EditText bsd_wzzl_et_ip, bsd_wzzl_et_user, bsd_wzzl_et_password, bsd_wzzl_et_dk;
     CheckBox checkBox;
     TextView bsd_wzzl_tv_qx, bsd_wzzl_tijiao;
@@ -90,7 +90,7 @@ public class WzzlDialog extends Dialog {
 //        params.width = WindowManager.LayoutParams.WRAP_CONTENT;//宽高可设置具体大小
 //        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.width = getContext().getResources().getDimensionPixelOffset(R.dimen.qb_px_500);
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
         this.getWindow().setAttributes(params);
         initData();//初始化页面数据
     }

@@ -96,20 +96,5 @@
             android:layout_alignParentRight="true" />
     </RelativeLayout>
     <!-- 中间结束 -->
-    <!-- 底部开始 -->
-    <RelativeLayout
-        android:id="@+id/bsd_m_xia"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_20">
-
-            <TextView
-                android:id="@+id/bsd_06_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="售后服务电话: 0311-83998032      保修 (非工作时间) : 15176436937   13930122976" />
-
-    </RelativeLayout>
-    <!-- 底部结束 -->
-
+    <include layout="@layout/content_footer_layout" />
 </LinearLayout>

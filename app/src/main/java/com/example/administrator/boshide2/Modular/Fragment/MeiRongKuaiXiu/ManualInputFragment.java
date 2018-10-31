@@ -95,7 +95,7 @@ public class ManualInputFragment extends BaseFragment {
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upBSD_mrkx_log();
+                back();
             }
         });
         inputbox1 = (EditText) view.findViewById(R.id.et_car_license_inputbox1);
@@ -162,6 +162,23 @@ public class ManualInputFragment extends BaseFragment {
         }
         title = (TextView) view.findViewById(R.id.tv_title);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
+    }
+
+    private void back() {
+        switch (billType) {
+            case Conts.BILLTYPE_MRKX:
+                ((MainActivity) getActivity()).upBSD_mrkx_log();
+                break;
+            case Conts.BILLTYPE_KSBJ:
+                ((MainActivity) getActivity()).upBSD_KSBJ_Log();
+                break;
+            case Conts.BILLTYPE_WXJD:
+                ((MainActivity) getActivity()).upBSD_WXJD_log();
+                break;
+            case Conts.BILLTYPE_WXYY:
+                ((MainActivity) getActivity()).upBSD_WXyy_log();
+                break;
+        }
     }
 
     private void checkCarNoCanused(final String cheNo) {
@@ -242,220 +259,6 @@ public class ManualInputFragment extends BaseFragment {
                 inputboxs[j].setText(cpPrefix.charAt(j) + "");
             }
         }
-        //设置光标到指定位置；
-//        inputboxs[cpPrefix.length()].setFocusable(true);
-//        inputboxs[cpPrefix.length()].setFocusableInTouchMode(true);
-//        inputboxs[cpPrefix.length()].requestFocus();
-//        inputboxs[cpPrefix.length()].findFocus();
-
-
     }
-
-//    /*
-//    *根据车牌返回车辆信息和客户信息
-//    */
-//    public void cheoruser(String license) {
-//        Log.e("mr", "获取用户no方法" );
-//        AbRequestParams params = new AbRequestParams();
-//        params.put("che_no", license);
-//        Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_wxjd_clandkh, params, new AbStringHttpResponseListener() {
-//            @Override
-//            public void onSuccess(int a, String s) {
-//                try {
-//                    JSONObject jsonObject = new JSONObject(s);
-//                    Log.e("mr", "onSuccess查询车辆客户返回值: "+s );
-//                    Toast.makeText(getActivity(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
-//                    if (jsonObject.get("status").toString().equals("1")) {
-//                        JSONObject jsonarray = jsonObject.getJSONObject("data");
-//                      //客户实体
-//                        JSONObject   kehuObject=jsonarray.getJSONObject("kehu");
-//                        BSD_KeHu_Entity  kehuentiy = new BSD_KeHu_Entity();
-//                        Conts.kehu_no = kehuObject.getString("kehu_no");
-//
-//                        kehuentiy.setKehu_mc(kehuObject.getString("kehu_mc"));
-//                        kehuentiy.setKehu_lxr(kehuObject.getString("kehu_xm"));
-//                        kehuentiy.setKehu_shouji(kehuObject.getString("kehu_sj"));
-//                        kehuentiy.setKehu_dianhua(kehuObject.getString("kehu_dh"));
-//
-//                       //车辆实体
-//                         JSONObject   carObject=jsonarray.getJSONObject("cheliang");
-//                         BSD_Car_Entity   carentity=new BSD_Car_Entity();
-//                         Conts.cp = carObject.getString("che_no");
-//                         carentity.setChe_no(carObject.getString("che_no"));
-//                         carentity.setChe_vin(carObject.getString("che_vin"));
-//                         carentity.setChe_color(carObject.getString("che_wxys"));
-//                         carentity.setChe_gcrq(carObject.getString("che_gcrq"));
-//                         carentity.setChe_nf(carObject.getString("che_nf"));
-//                         Log.e("mr", "年份sss："+carObject.getString("che_nf") );
-//                         carentity.setChe_jqxrq(carObject.getString("che_jiaoqx_dqrq"));
-//                         carentity.setChe_syxdq(carObject.getString("che_shangyex_dqrq"));
-//                         carentity.setChe_xcbyrq(carObject.getString("che_next_byrq"));
-//                         carentity.setChe_xcjcrq(carObject.getString("che_jianche_dqrq"));
-//                         carentity.setChe_pinpai(carObject.getString("che_cx"));  //车系、车型、品牌、车组是一个字段；
-//                        //传了个客户实体
-//                        ((MainActivity) getActivity()).setKhentity(kehuentiy);
-//                        //传了个车辆实体
-//                        ((MainActivity) getActivity()).setCarentity(carentity);
-//                        Log.e("mr", "...... " );
-//                        //跳转到编辑车辆、客户信息界面
-//                        Conts.danju_type="mrkx";
-//
-//
-////                        ((MainActivity) getActivity()).upBSD_mrkx_clxx();
-//                        //跳转到编辑车辆、客户信息对话框
-//                        //隐藏输入法
-//                        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
-//                                WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-//
-//                        new BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment()
-//                                .show(getFragmentManager(), "dialog_fragment");
-//
-//
-//
-//
-//                    }
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onStart() {
-//
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s, Throwable throwable) {
-//                Log.e("mr", "onFailure方法");
-//            }
-//        });
-//
-//
-//    }
-//
-//
-//    public void data(final String cp, final View view){
-//        list.clear();
-//        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-//        AbRequestParams params = new AbRequestParams();
-//        params.put("che_no",cp);
-//        params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
-//        params.put("caozuoyuan_xm",MyApplication.shared.getString("name", ""));
-//        Log.i("cjn","维修接单车牌是"+cp+"gongsiNO"+MyApplication.shared.getString("GongSiNo", "")
-//        +"------caozuoyuan_xm"+MyApplication.shared.getString("name", ""));
-//
-//        Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_MRKX_IN, params, new AbStringHttpResponseListener() {
-//            @Override
-//            public void onSuccess(int aa, String s) {
-//
-//                Log.i("jjj","成功1"+s);
-//
-//                try {
-//                    JSONObject jsonObject = new JSONObject(s);
-//                    if (jsonObject.get("message").toString().equals("查询成功")) {
-//                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-//                        for (int i = 0; i < jsonarray.length(); i++) {
-//                            //这块拿到的是维系接单的详细表
-//                            JSONObject item = jsonarray.getJSONObject(i);
-//                            BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-//                            entiy.setWork_no(item.getString("work_no"));
-//                            entiy.setKehu_no(item.getString("kehu_no"));
-//                            entiy.setKehu_mc(item.getString("kehu_mc"));
-//                            entiy.setKehu_xm(item.getString("kehu_xm"));
-//                            entiy.setKehu_dz(item.getString("kehu_dz"));
-//                            entiy.setKehu_yb(item.getString("kehu_yb"));
-//                            entiy.setKehu_dh(item.getString("kehu_dh"));
-//                            entiy.setChe_no(item.getString("che_no"));
-//                            entiy.setChe_cx(item.getString("che_cx"));
-//                            entiy.setChe_vin(item.getString("che_vin"));
-//                            entiy.setXche_lc(item.getInt("xche_lc"));
-//                            entiy.setXche_jdrq(item.getString("xche_jdrq"));
-//                            entiy.setXche_sfbz(item.getString("xche_sfbz"));
-//                            entiy.setXche_sffl(item.getDouble("xche_sffl"));
-//                            entiy.setCangk_dm(item.getString("cangk_dm"));
-//                            entiy.setCangk_mc(item.getString("cangk_mc"));
-//                            entiy.setGcsj(item.getString("gcsj"));
-//
-//                            list.add(entiy);
-//
-//                            Log.i("jjj","1111111111111"+list.get(0).getKehu_mc());
-//                        }
-//                        WeiboDialogUtils.closeDialog(mWeiboDialog);
-//                        if (jsonObject.get("total").toString().equals("1")) {
-//                            BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-//                            entiy = list.get(0);
-//                            Conts.work_no=entiy.getWork_no();
-//                            Log.i("jjj","成功asaaaaaaaaaaaaaaaa"+list.get(0).getKehu_mc());
-//                            ((MainActivity) getActivity()).setWxjdentity(list.get(0));//传了个实体
-////
-//                            if (null==entiy.getWork_no()||entiy.getWork_no().equals("")||entiy.getWork_no().equals("null")){
-//                                Toast.makeText(getActivity(),"网络超时请重试",Toast.LENGTH_SHORT).show();
-//                            }   else {
-//                                ((MainActivity) getActivity()).upBSD_mrkx();
-//                            }
-//
-//                            Conts.zt = 1;
-//                            Conts.cp = cp;
-//
-//                        } else if (jsonObject.get("total").toString().equals("0")) {
-//                            ((MainActivity) getActivity()).upBSD_mrkx();
-//                            //请求
-//
-//                            Conts.cp = cp;
-//                            Conts.zt = 0;
-//
-//
-//                        } else {
-//
-//                            BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-//                            entiy = list.get(0);
-//                            ((MainActivity) getActivity()).setWxjdentity(entiy);//传了个实体
-////
-//                            ((MainActivity) getActivity()).upBSD_mrkx();
-//                            Conts.zt = 1;
-//                            Conts.cp = cp;
-//                        }
-//                    }else {
-//                        Show.showTime(getActivity(), jsonObject.get("message").toString());
-//                    }
-//
-//                    //在这里请求
-//
-//
-//
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onStart() {
-//
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s, Throwable throwable) {
-//                Log.i("cjn","失败"+s);
-//                WeiboDialogUtils.closeDialog(mWeiboDialog);
-//            }
-//        });
-//
-//
-//    }
-//
 
 }

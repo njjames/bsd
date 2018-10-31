@@ -81,9 +81,8 @@
         <LinearLayout
             android:id="@+id/bsd_lsbj_toubuju"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_32"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/qb_px_2">
+            android:layout_height="@dimen/qb_px_30"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_weight="1.2"

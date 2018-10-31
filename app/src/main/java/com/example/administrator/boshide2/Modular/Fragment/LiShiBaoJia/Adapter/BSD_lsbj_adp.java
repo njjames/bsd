@@ -81,6 +81,11 @@ public class BSD_lsbj_adp extends BaseAdapter {
         holder.bsd_kxbj_fwgw.setText(list.get(i).getList_czy());
         holder.bsd_kxbj_je.setText("" + list.get(i).getList_hjje());
         holder.bsd_kxbj_phone.setText(list.get(i).getKehu_dh());
+        if (list.get(i).getKehu_dh().equals("")) {
+            holder.iv_phone.setVisibility(View.INVISIBLE);
+        } else {
+            holder.iv_phone.setVisibility(View.VISIBLE);
+        }
         holder.iv_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

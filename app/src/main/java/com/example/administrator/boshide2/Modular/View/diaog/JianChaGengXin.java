@@ -5,19 +5,20 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.http.AbStringHttpResponseListener;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.AppUtils;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.UpdataManager.DialogHelper;
 import com.example.administrator.boshide2.UpdataManager.UpdateManager;
@@ -35,14 +36,15 @@ public class JianChaGengXin extends Dialog implements View.OnClickListener {
     private View view;
     TextView bt_toopromptdiaog_quedding;
     TextView bt_toopromptdiaog_quxiao;
-    TextView bsd_xiugaimma_shang, bsd_zuixian;
+    TextView tv_currentVersion;
+    TextView tv_newVersion;
     private ToopromtOnClickListener toopromtOnClickListener;
     private UpdateManager updateMan;
     private ProgressDialog updateProgressDialog;
     String version;//最新版本号
     String url;//下载地址
-    String Dversion;//当前版本号
-    Context checkUpdate;
+    String currentVersion;//当前版本号
+    Context context;
     URLS urls;
     String json;
     private Dialog mWeiboDialog;
@@ -50,49 +52,35 @@ public class JianChaGengXin extends Dialog implements View.OnClickListener {
     public JianChaGengXin(Context context) {
         super(context, R.style.mydialog);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        // TODO Auto-generated constructor stub
         view = getLayoutInflater().inflate(R.layout.jianchagengxin, null, false);
+        setContentView(view);
+        setCanceledOnTouchOutside(false);
+        this.context = context;
         urls = new URLS();
         bt_toopromptdiaog_quedding = (TextView) view.findViewById(R.id.tv_confirm);
         bt_toopromptdiaog_quedding.setOnClickListener(this);
         bt_toopromptdiaog_quxiao = (TextView) view.findViewById(R.id.tv_cancel);
         bt_toopromptdiaog_quxiao.setOnClickListener(this);
-
-//        banben();
-
+        tv_currentVersion = (TextView) view.findViewById(R.id.tv_currentVersion);
+        tv_newVersion = (TextView) view.findViewById(R.id.tv_newVersion);
+        currentVersion = AppUtils.getVersionName(getContext());
+        if (currentVersion != null) {
+            tv_currentVersion.setText("当前版本号:" + currentVersion);
+        } else {
+            Toast.makeText(getContext(), "获取当前版本信息失败", Toast.LENGTH_SHORT).show();
+        }
         new Thread() {
             @Override
             public void run() {
-                Log.i("cjn", "是否成功" + sendGet());
                 json= sendGet();
                 handler.sendMessage(handler.obtainMessage(10));
-
-
             }
         }.start();
-
-
-        setContentView(view);
-        setCanceledOnTouchOutside(false);
-        checkUpdate = context;
-        WindowManager.LayoutParams params =
-                this.getWindow().getAttributes();
-        params.width = (int) getContext().getResources().getDimension(R.dimen.x230);
-        params.height = (int) getContext().getResources().getDimension(R.dimen.y300);
+        WindowManager.LayoutParams params = this.getWindow().getAttributes();
+        params.width = getContext().getResources().getDimensionPixelSize(R.dimen.qb_px_300);
+        params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
         this.getWindow().setAttributes(params);
-
-        bsd_xiugaimma_shang = (TextView) view.findViewById(R.id.bsd_xiugaimma_shang);
-        bsd_zuixian = (TextView) view.findViewById(R.id.bsd_zuixian);
-        try {
-            getVersionName();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
     }
-
-
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -104,7 +92,7 @@ public class JianChaGengXin extends Dialog implements View.OnClickListener {
                     JSONObject jsonObject = new JSONObject(json);
                     JSONObject jsonarray = jsonObject.getJSONObject("data");
                     version = jsonarray.getString("version");
-                    bsd_zuixian.setText("最新版本号:" + version);
+                    tv_newVersion.setText("最新版本号:" + version);
                     url = jsonarray.getString("url");
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -116,38 +104,20 @@ public class JianChaGengXin extends Dialog implements View.OnClickListener {
 
     };
 
-
-
-    private String getVersionName() throws Exception {
-        // 获取packagemanager的实例
-        PackageManager packageManager = getContext().getPackageManager();
-        // getPackageName()是你当前类的包名，0代表是获取版本信息
-        PackageInfo packInfo = packageManager.getPackageInfo(getContext().getPackageName(), 0);
-        Dversion = packInfo.versionName;
-        bsd_xiugaimma_shang.setText("当前版本:" + Dversion);
-        Log.i("Dversion", "当前版本: "+Dversion);
-
-        return version;
-
-    }
-
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.tv_confirm:
-                this.dismiss();
-                if (Dversion.equals(version)) {
-                    toopromtOnClickListener.onYesClick();
+                if (currentVersion.equals(version)) {
+                    Toast.makeText(getContext(), "当前已是最新版本", Toast.LENGTH_SHORT).show();
                 } else {
                     mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getContext(), "下载中...");
-                    updateMan = new UpdateManager(checkUpdate, url, appUpdateCb);
+                    updateMan = new UpdateManager(context, url, appUpdateCb);
                     updateMan.checkUpdate();
                 }
-
+                this.dismiss();
                 break;
             case R.id.tv_cancel:
-                Log.i("cjn", "点击小时");
                 this.dismiss();
                 break;
         }
@@ -166,18 +136,15 @@ public class JianChaGengXin extends Dialog implements View.OnClickListener {
      * 版本更新
      */
     public void banben() {
-        Log.i("cjn", "走了吗");
         Request.Post("http://update.bossed.com.cn:1999/yanjiuyuan/bsdDown/Files/wd2185/getAppVersion.html", null, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                Log.i("cjn", "查看这个s" + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     JSONObject jsonarray = jsonObject.getJSONObject("data");
                     version = jsonarray.getString("version");
-                    bsd_zuixian.setText("最新版本号:" + version);
+                    tv_newVersion.setText("最新版本号:" + version);
                     url = jsonarray.getString("url");
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -205,7 +172,7 @@ public class JianChaGengXin extends Dialog implements View.OnClickListener {
         public void checkUpdateCompleted(Boolean hasUpdate, CharSequence updateInfo) {
             if (hasUpdate) {
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-                updateProgressDialog = new ProgressDialog(checkUpdate);
+                updateProgressDialog = new ProgressDialog(context);
                 updateProgressDialog.setMessage("正在更新");
                 updateProgressDialog.setIndeterminate(false);
                 updateProgressDialog.setCanceledOnTouchOutside(false);
@@ -246,7 +213,7 @@ public class JianChaGengXin extends Dialog implements View.OnClickListener {
 
             } else {
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-                DialogHelper.Confirm(checkUpdate, R.string.dialog_error_title, R.string.dialog_downfailed_msg,
+                DialogHelper.Confirm(context, R.string.dialog_error_title, R.string.dialog_downfailed_msg,
                         R.string.dialog_downfailed_btnnext, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int which) {

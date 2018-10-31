@@ -131,7 +131,7 @@ public class BSD_weixiuyuyue_Log_Fragment extends BaseFragment {
         bsd_im_sdsr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getHostActicity()).showManualInputFragment(Conts.BILLTYPE_KSBJ);
+                ((MainActivity) getHostActicity()).showManualInputFragment(Conts.BILLTYPE_WXYY);
             }
         });
         bsd_im_zdsb.setOnClickListener(new View.OnClickListener() {
