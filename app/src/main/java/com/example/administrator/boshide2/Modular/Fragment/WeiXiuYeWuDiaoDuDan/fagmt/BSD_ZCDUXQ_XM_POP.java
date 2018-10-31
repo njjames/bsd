@@ -45,47 +45,46 @@ import java.util.List;
  */
 
 public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener, View.OnClickListener {
-    //行布局选中效果
     private Dialog mWeiboDialog;
     private View view;
     public Activity context;
     private ListView bsd_pop_lv, bsd_lv;
-    private BSD_WXYY_XM_Popzuo_adp adapter;
-    private List<String> list = new ArrayList<>();
-    List<HashMap<String, String>> data = new ArrayList<>();
     private BSD_KSBJ_XM_PopYou_adp detailsAdapter;
-    private Guanbi onGuanBiListener;
+    private OnGuanbiListener onGuanBiListener;
     //左边数据
     private TreeListViewAdapter mAdapter;
     private List<FileBean> categoryLists = new ArrayList<FileBean>();
     private List<BSD_WeiXiuYuYue_XM_FileBean> listxm_tree = new ArrayList<BSD_WeiXiuYuYue_XM_FileBean>();
-    //获取维修项目单价
-    double wxxmdj;
     private String currentLbdm;
     private int currentLx = 0;
     //右边数据
-    //关闭监听事件
     private AbPullToRefreshView mAbPullToRefreshView = null;// 下拉刷新
     private int pageIndex = 1;
-    List<BSD_wxyy_xm_pop_entiy> detailsLists = new ArrayList<BSD_wxyy_xm_pop_entiy>();
+    private List<BSD_wxyy_xm_pop_entiy> detailsLists = new ArrayList<BSD_wxyy_xm_pop_entiy>();
     private LinearLayout ll_wjgWxxm;
     private LinearLayout ll_wxWxxm;
     private LinearLayout ll_byWxxm;
     private LinearLayout ll_allWxxm;
     private ImageView iv_allCategory;
-
-    private chuanlist clist;
-    String neirong;
     //图片选择切换
-    LinearLayout bsd_wxyy_pop_rl_xiangmu_quanbu, bsd_wxyy_pop_rl_xiangmu_1, bsd_wxyy_pop_rl_xiangmu_2, bsd_wxyy_pop_rl_xiangmu_3;
-    ImageView bsd_wxyy_pop_im_xiangmu_quanbu, bsd_wxyy_pop_im_xiangmu_1, bsd_wxyy_pop_im_xiangmu_2, bsd_wxyy_pop_im_xiangmu_3;
+    private LinearLayout bsd_wxyy_pop_rl_xiangmu_quanbu;
+    private LinearLayout bsd_wxyy_pop_rl_xiangmu_1;
+    private LinearLayout bsd_wxyy_pop_rl_xiangmu_2;
+    private LinearLayout bsd_wxyy_pop_rl_xiangmu_3;
+    private ImageView bsd_wxyy_pop_im_xiangmu_quanbu;
+    private ImageView bsd_wxyy_pop_im_xiangmu_1;
+    private ImageView bsd_wxyy_pop_im_xiangmu_2;
+    private ImageView bsd_wxyy_pop_im_xiangmu_3;
     private EditText et_wxxmName;
     private RelativeLayout rl_allCategory;
     private TextView tv_search;
     private TextView iv_back;
     private URLS url;
-
     private List<BSD_wxyy_xm_pop_entiy> tempLists = new ArrayList<>(); // 用来临时存储选择的维修项目
+    private String cheCx;
+    private String cheNo;
+    private String cheFl;
+    private String workNo;
 
     public BSD_ZCDUXQ_XM_POP(final Activity context) {
         this.context = context;
@@ -108,13 +107,13 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
         this.setOutsideTouchable(true);
         this.update();
         et_wxxmName = (EditText) view.findViewById(R.id.et_wxxm_name);
-        et_wxxmName.getText().toString();
         //查询按钮
         tv_search = (TextView) view.findViewById(R.id.tv_search);
         tv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 点击查询时，显示第一页的数据
+                detailsLists.clear();
                 pageIndex = 1;
                 getDetialsInfo();
             }
@@ -163,6 +162,7 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
                 // 不仅要请求右边的数据，还要刷新左边的类别
                 getCategoryInfo();
                 // 刷新右边的数据， 并且请求第一页的数据
+                detailsLists.clear();
                 pageIndex = 1;
                 currentLbdm ="";
                 getDetialsInfo();
@@ -209,7 +209,6 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
         getDetialsInfo();
     }
 
-
     /**
      * 获取维修项目单价
      * @param entiy
@@ -218,15 +217,15 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(context, "加载中...");
         AbRequestParams params = new AbRequestParams();
         params.put("wxxm_no",entiy.getWxxm_no());
-        params.put("che_cx", Conts.chexing);
-        params.put("che_no", Conts.cp);
+        params.put("che_cx", cheCx);
+        params.put("che_no", cheNo);
         params.put("fenlei", 3);  //分类
-        params.put("feil_mc", Conts.feilv_name);   //费率名称
-        params.put("no",Conts.work_no);
+        params.put("feil_mc", cheFl);   //费率名称
+        params.put("no", workNo);
         Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_xm_dj, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
-                wxxmdj = Double.parseDouble(data);
+                double wxxmdj = Double.parseDouble(data);
                 // 不能在原来的entiy上修改，不然数据源也就修改了，需要新建一个对放到临时表中
                 BSD_wxyy_xm_pop_entiy tempItem = new BSD_wxyy_xm_pop_entiy();
                 // 设置维修单上需要的字段
@@ -269,23 +268,10 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
         });
     }
 
-    public void showPopupWindow(View parent, int hight) {
-        if (!this.isShowing() || this != null) {
-            // 以下拉方式显示popupwindow
-            this.showAsDropDown(parent, 0, hight);
-//            WindowManager.LayoutParams lp = context.getWindow().getAttributes();
-//            lp.alpha = 0.4f;
-//            context.getWindow().setAttributes(lp);
-        } else {
-            this.dismiss();
-        }
-    }
-
-
-
     //下拉刷新
     @Override
     public void onHeaderRefresh(AbPullToRefreshView abPullToRefreshView) {
+        detailsLists.clear();
         pageIndex = 1;
         getDetialsInfo();
     }
@@ -330,29 +316,6 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
                 break;
         }
     }
-
-
-
-    /**
-     * 确认添加项目
-     */
-//    @Override
-//    public void onClick(View view) {
-//        list_pop_xm1.clear();
-//        for (int i = 0; i < detailsLists.size(); i++) {
-//            if (detailsLists.get(i).getItem() == 1) {
-//                BSD_wxyy_xm_pop_entiy entity =detailsLists.get(i);
-//                list_pop_xm1.add(entity);
-//            }
-//
-//        }
-//
-//        clist.onAdd();
-//
-//
-////        Log.i("cjn","查看拿到的选中项"+list_pop_xm1.get(0).getWxxm_mc());
-//
-//    }
 
     /**
      * 请求类别信息，也就是左边列表数据
@@ -415,6 +378,7 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
                 public void onClick(Node node, int position) {
                     // 隐藏全部项目的选择图标
                     iv_allCategory.setVisibility(View.INVISIBLE);
+                    detailsLists.clear();
                     currentLbdm = node.getId();
                     pageIndex = 1;
                     getDetialsInfo();
@@ -442,7 +406,6 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        detailsLists.clear();
                         JSONArray jsonArray = jsonObject.getJSONArray("data");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject item = jsonArray.getJSONObject(i);
@@ -485,22 +448,12 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
         });
     }
 
-    public interface chuanlist {
-        public void onYesClick(BSD_wxyy_xm_pop_entiy entity, double wxxmdj);
+    public interface OnGuanbiListener {
+        void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList);
     }
 
-    public void setClist(chuanlist clist) {
-        this.clist = clist;
-    }
-
-    public interface Guanbi {
-        public void guanbi();
-
-        public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList);
-    }
-
-    public void gb(Guanbi guanbi) {
-        this.onGuanBiListener = guanbi;
+    public void setOnGuanbiListener(OnGuanbiListener onGuanbiListener) {
+        this.onGuanBiListener = onGuanbiListener;
     }
 
     public List<BSD_wxyy_xm_pop_entiy> getTempLists() {
@@ -513,5 +466,21 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
             detailsAdapter.addChooedWxxm(tempList.getWxxm_no());
         }
         detailsAdapter.notifyDataSetChanged();
+    }
+
+    public void setCheCx(String cheCx) {
+        this.cheCx = cheCx;
+    }
+
+    public void setCheNo(String cheNo) {
+        this.cheNo = cheNo;
+    }
+
+    public void setCheFl(String cheFl) {
+        this.cheFl = cheFl;
+    }
+
+    public void setWorkNo(String workNo) {
+        this.workNo = workNo;
     }
 }

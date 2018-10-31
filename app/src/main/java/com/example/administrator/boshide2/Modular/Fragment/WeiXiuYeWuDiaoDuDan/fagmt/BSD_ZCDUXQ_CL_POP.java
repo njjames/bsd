@@ -40,29 +40,20 @@ import java.util.List;
 /**
  * Created by Administrator on 2017-4-18.
  */
-
 public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
-    //行布局选中效果
     private Dialog mWeiboDialog;
     private View view;
     public Activity context;
-    int width;
-    int height;
     private Guanbi onGuanBiListener;
-    List<FileBean> categoryLists = new ArrayList<>();
-    private List<FileBean> mclDatas = new ArrayList<FileBean>();
+    private List<FileBean> categoryLists = new ArrayList<>();
     private TreeListViewAdapter mclAdapter;
-    //ListView
-    ListView bsd_wxyy_pop_you_lv, bsd_clpop_lv;
-    //返回
+    private ListView bsd_wxyy_pop_you_lv, bsd_clpop_lv;
     private TextView iv_back;
-    //刷新
     private AbPullToRefreshView mAbPullToRefreshView = null;// 下拉刷新
     private int pageIndex = 1;
     private String lbdm;
     private List<BSD_wxyy_cl_pop_entity> detailsLists = new ArrayList<>();
     private BSD_WXYY_CL_PopYou_adp detailsAdapter;
-    double jiaqian;
     private EditText et_clname;
     private TextView tv_search;
     private ImageView iv_allCategory;
@@ -194,7 +185,7 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxyy_xljq, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
-                jiaqian = Double.parseDouble(data.toString());
+                double jiaqian = Double.parseDouble(data.toString());
                 BSD_wxyy_cl_pop_entity tempItem = new BSD_wxyy_cl_pop_entity();
                 tempItem.setReco_no1(entity.getReco_no1());
                 tempItem.setPeij_no(entity.getPeij_no());
@@ -285,13 +276,10 @@ public class BSD_ZCDUXQ_CL_POP extends PopupWindow implements AbPullToRefreshVie
             mclAdapter.setOnTreeNodeClickListener(new TreeListViewAdapter.OnTreeNodeClickListener() {
                 @Override
                 public void onClick(Node node, int position) {
-                    if (node.isLeaf()) {
-                        //这里写的是点击item刷新数据的操作
-                        //右面数据请求
-                        detailsLists.clear();
-                        lbdm = node.getId();
-                        getDetialsInfo();
-                    }
+                    iv_allCategory.setVisibility(View.INVISIBLE);
+                    detailsLists.clear();
+                    lbdm = node.getId();
+                    getDetialsInfo();
                 }
 
             });

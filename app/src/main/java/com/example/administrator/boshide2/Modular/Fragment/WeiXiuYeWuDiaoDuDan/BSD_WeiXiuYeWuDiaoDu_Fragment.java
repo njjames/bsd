@@ -3,7 +3,6 @@ package com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
@@ -624,13 +623,13 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 showWxxm();
                 break;
             case R.id.iv_wxll_add: // 添加维修用料
-                showWxll();
+                showWxcl();
                 break;
         }
 
     }
 
-    private void showWxll() {
+    private void showWxcl() {
         bsd_zcduxq_cl_pop = new BSD_ZCDUXQ_CL_POP(getActivity());
         bsd_zcduxq_cl_pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
@@ -671,7 +670,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                     // 如果没有找到，则是需要添加的集合
                     if (!hasAdd) {
                         BSD_WeiXiuJieDan_CL_Entity wxclItem = new BSD_WeiXiuJieDan_CL_Entity();
-                        wxclItem.setWork_no(Conts.work_no);
+                        wxclItem.setWork_no(billEntiy.getWork_no());
                         wxclItem.setPeij_no(item.getPeij_no());
                         wxclItem.setPeij_mc(item.getPeij_mc());
                         wxclItem.setPeij_sl(addPeijSl);
@@ -796,13 +795,12 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
             }
         }
         bsd_zcduxq_xm_pop.setTempLists(tempLists);
+        bsd_zcduxq_xm_pop.setCheCx(billEntiy.getChe_cx());
+        bsd_zcduxq_xm_pop.setCheNo(billEntiy.getChe_no());
+        bsd_zcduxq_xm_pop.setCheFl(billEntiy.getXche_sfbz());
+        bsd_zcduxq_xm_pop.setWorkNo(billEntiy.getWork_no());
         // 设置点击返回的回调
-        bsd_zcduxq_xm_pop.gb(new BSD_ZCDUXQ_XM_POP.Guanbi() {
-            @Override
-            public void guanbi() {
-
-            }
-
+        bsd_zcduxq_xm_pop.setOnGuanbiListener(new BSD_ZCDUXQ_XM_POP.OnGuanbiListener() {
             @Override
             public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList) {
                 // 获取到当前work_ll_gz中显示的维修项目
@@ -821,7 +819,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                     // 如果没有找到，则是需要添加的集合
                     if (!hasAdd) {
                         BSD_WeiXiuJieDan_XM_Entity wxxmItem = new BSD_WeiXiuJieDan_XM_Entity();
-                        wxxmItem.setWork_no(Conts.work_no);
+                        wxxmItem.setWork_no(billEntiy.getWork_no());
                         wxxmItem.setWxxm_no(item.getWxxm_no());
                         wxxmItem.setWxxm_mc(item.getWxxm_mc());
                         wxxmItem.setWxxm_yje(item.getWxxm_zddj());

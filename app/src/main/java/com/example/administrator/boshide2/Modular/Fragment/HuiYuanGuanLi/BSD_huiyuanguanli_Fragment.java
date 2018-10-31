@@ -330,8 +330,6 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
 
             }
         });
-
-
     }
 
     private void showCardKindData() {

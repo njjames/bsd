@@ -90,18 +90,12 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/qb_px_4"
-                android:paddingTop="@dimen/qb_px_4">
+                android:layout_marginTop="@dimen/qb_px_4">
 
                 <LinearLayout
                     android:id="@+id/relativeLayout15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/qb_px_36"
-                    android:layout_weight="1"
-                    android:background="@drawable/bsd_chepaiyuan"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="@dimen/qb_px_2">
+                    android:layout_marginLeft="@dimen/qb_px_2"
+                    style="@style/myeditlinearlayoutstyle">
 
                     <TextView
                         android:id="@+id/textView16"
@@ -111,14 +105,13 @@
                     <EditText
                         android:id="@+id/et_wxxm_name"
                         style="@style/myeditinfovaluestyle"
-                        android:hint="请输入项目名称"
-                        android:textColorHint="#B1B0B0" />
+                        android:hint="请输入项目名称"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_all_wxxm"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/qb_px_36"
+                    android:layout_height="@dimen/qb_px_32"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="@dimen/qb_px_10">
 
@@ -140,7 +133,7 @@
                 <LinearLayout
                     android:id="@+id/ll_by_wxxm"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/qb_px_36"
+                    android:layout_height="@dimen/qb_px_32"
                     android:layout_marginLeft="@dimen/qb_px_10"
                     android:gravity="center_vertical">
 
@@ -161,7 +154,7 @@
                 <LinearLayout
                     android:id="@+id/ll_wx_wxxm"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/qb_px_36"
+                    android:layout_height="@dimen/qb_px_32"
                     android:layout_marginLeft="@dimen/qb_px_10"
                     android:gravity="center_vertical">
 
@@ -182,7 +175,7 @@
                 <LinearLayout
                     android:id="@+id/ll_wjg_wxxm"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/qb_px_36"
+                    android:layout_height="@dimen/qb_px_32"
                     android:layout_marginLeft="@dimen/qb_px_10"
                     android:gravity="center_vertical">
 
@@ -216,7 +209,8 @@
                 android:id="@+id/bsd_v_zhong"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qb_px_1"
-                android:background="#F7714C" />
+                android:background="#F7714C"
+                android:layout_marginTop="@dimen/qb_px_4"/>
 
             <LinearLayout
                 android:id="@+id/ll_top"

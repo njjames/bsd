@@ -23,7 +23,6 @@ import com.example.administrator.boshide2.Tools.DownJianPan;
 /**
  * @车辆详情碎片页 Created by Administrator on 2017-4-13.
  */
-
 public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnClickListener {
     LinearLayout bsd_lsbj_fanhui;
     TextView bus_clxq_tv_cltp, bus_clxq_tv_wxls;

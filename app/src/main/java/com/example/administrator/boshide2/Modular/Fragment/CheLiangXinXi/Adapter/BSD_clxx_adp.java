@@ -58,7 +58,7 @@ public class BSD_clxx_adp extends BaseAdapter {
             holder = (Holder) contetview.getTag();
         }
         BSD_CLXX_ety item=list.get(i);
-        holder.tv_reco_no.setText("" + i);
+        holder.tv_reco_no.setText("" + (i + 1));
         holder.bsd_xsbj_cheno.setText(item.getChe_no());
         holder.bsd_xsbj_kehumc.setText(item.getKehu_mc());
         holder.bsd_kxbj_kehuxm.setText(item.getKehu_xm());

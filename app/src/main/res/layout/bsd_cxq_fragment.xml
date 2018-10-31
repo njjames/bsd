@@ -6,21 +6,13 @@
 
     <include layout="@layout/content_title_back_layout" />
 
-    <View
-        android:id="@+id/bsd_v1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E0E0E0" />
-
     <com.example.administrator.boshide2.Modular.View.MyScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fadeScrollbars="false"
-        android:scrollbars="vertical"
-        android:paddingLeft="@dimen/qb_px_4"
-        android:paddingRight="@dimen/qb_px_4">
+        android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +43,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:padding="@dimen/qb_px_4">
+                    android:paddingTop="@dimen/qb_px_4"
+                    android:paddingBottom="@dimen/qb_px_4">
 
                     <LinearLayout
                         android:id="@+id/relativeLayout1"
@@ -162,7 +155,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:padding="@dimen/qb_px_4">
+                    android:paddingTop="@dimen/qb_px_4"
+                    android:paddingBottom="@dimen/qb_px_4">
 
                     <LinearLayout
                         android:id="@+id/relativeLayout11"
@@ -273,7 +267,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:padding="@dimen/qb_px_4">
+                    android:paddingTop="@dimen/qb_px_4"
+                    android:paddingBottom="@dimen/qb_px_4">
 
                     <LinearLayout
                         android:id="@+id/relativeLayout712"
@@ -435,8 +430,7 @@
                     android:id="@+id/bus_vi1"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_1"
-                    android:background="#F7714C"
-                    android:layout_marginTop="@dimen/qb_px_1"/>
+                    android:background="#F7714C"/>
 
                 <FrameLayout
                     android:id="@+id/bsd_clxq_lswx"

@@ -2763,13 +2763,12 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
         }
         bsd_zcduxq_xm_pop.setTempLists(tempLists);
+        bsd_zcduxq_xm_pop.setCheCx(billEntiy.getChe_cx());
+        bsd_zcduxq_xm_pop.setCheNo(billEntiy.getChe_no());
+        bsd_zcduxq_xm_pop.setCheFl(billEntiy.getXche_sfbz());
+        bsd_zcduxq_xm_pop.setWorkNo(billEntiy.getWork_no());
         // 设置点击返回的回调
-        bsd_zcduxq_xm_pop.gb(new BSD_ZCDUXQ_XM_POP.Guanbi() {
-            @Override
-            public void guanbi() {
-
-            }
-
+        bsd_zcduxq_xm_pop.setOnGuanbiListener(new BSD_ZCDUXQ_XM_POP.OnGuanbiListener() {
             @Override
             public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList) {
                 // 获取到当前work_ll_gz中显示的维修项目
@@ -2788,7 +2787,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                     // 如果没有找到，则是需要添加的集合
                     if (!hasAdd) {
                         BSD_WeiXiuJieDan_XM_Entity wxxmItem = new BSD_WeiXiuJieDan_XM_Entity();
-                        wxxmItem.setWork_no(Conts.work_no);
+                        wxxmItem.setWork_no(billEntiy.getWork_no());
                         wxxmItem.setWxxm_no(item.getWxxm_no());
                         wxxmItem.setWxxm_mc(item.getWxxm_mc());
                         wxxmItem.setWxxm_yje(item.getWxxm_zddj());

@@ -1333,7 +1333,7 @@ public class BSD_weixiuyuyue_xiangqing_Fragment extends Fragment  {
 //
 //                    bsd_wxxm.setEnabled(false);
 //                    bsd_wxyy_xm_pop.showPopupWindow(beijing, 0);
-//                    bsd_wxyy_xm_pop.gb(new BSD_WXYY_XM_POP.Guanbi() {
+//                    bsd_wxyy_xm_pop.setOnGuanbiListener(new BSD_WXYY_XM_POP.OnGuanbiListener() {
 //                        @Override
 //                        public void guanbi() {
 //                            bsd_wxxm.setEnabled(true);
@@ -1350,7 +1350,7 @@ public class BSD_weixiuyuyue_xiangqing_Fragment extends Fragment  {
 //
 //                bsd_wxxm1.setEnabled(false);
 //                bsd_wxyy_cl_pop.showPopupWindow(beijing, 0);
-//                bsd_wxyy_cl_pop.gb(new BSD_WXYY_CL_POP.Guanbi() {
+//                bsd_wxyy_cl_pop.setOnGuanbiListener(new BSD_WXYY_CL_POP.OnGuanbiListener() {
 //                    @Override
 //                    public void guanbi() {
 //                        bsd_wxxm1.setEnabled(true);

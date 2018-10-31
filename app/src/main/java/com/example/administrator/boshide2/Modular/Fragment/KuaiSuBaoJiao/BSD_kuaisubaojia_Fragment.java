@@ -943,13 +943,12 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
             }
         }
         bsd_zcduxq_xm_pop.setTempLists(tempLists);
+        bsd_zcduxq_xm_pop.setCheCx(billEntiy.getChe_cx());
+        bsd_zcduxq_xm_pop.setCheNo(billEntiy.getChe_no());
+        bsd_zcduxq_xm_pop.setCheFl(billEntiy.getList_sfbz());
+        bsd_zcduxq_xm_pop.setWorkNo(billEntiy.getWork_no());
         // 设置点击返回的回调
-        bsd_zcduxq_xm_pop.gb(new BSD_ZCDUXQ_XM_POP.Guanbi() {
-            @Override
-            public void guanbi() {
-
-            }
-
+        bsd_zcduxq_xm_pop.setOnGuanbiListener(new BSD_ZCDUXQ_XM_POP.OnGuanbiListener() {
             @Override
             public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList) {
                 List<BSD_KuaiSuBaoJia_XM_entity> needAddList = new ArrayList<>();

@@ -13,19 +13,13 @@ import com.example.administrator.boshide2.R;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017-4-18.
- */
-
-/**
  * 博士德维修项目适配器
  */
 public class BSD_hygl_adp extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
-    List<BSD_HYGL_ety> list;
+    private LayoutInflater layoutInflater;
+    private List<BSD_HYGL_ety> list;
 
     public BSD_hygl_adp(Context context, List<BSD_HYGL_ety> list) {
-        this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.list = list;
     }

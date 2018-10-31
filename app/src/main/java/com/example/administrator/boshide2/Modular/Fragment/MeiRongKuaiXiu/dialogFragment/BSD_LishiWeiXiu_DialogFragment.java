@@ -42,7 +42,6 @@ import java.util.List;
 /**
  * Created by Administrator on 2017-11-14.
  */
-
 public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements View.OnClickListener {
     private static final String PARAMS_KEY = "params_key";
     private Context context;

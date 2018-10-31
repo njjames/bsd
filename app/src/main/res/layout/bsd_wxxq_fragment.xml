@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/qb_px_4"
         android:paddingRight="@dimen/qb_px_4"
-        android:paddingTop="@dimen/qb_px_4">
+        android:paddingTop="@dimen/qb_px_6">
 
         <LinearLayout
             android:id="@+id/ll_top_1"
@@ -227,14 +227,12 @@
 
         </LinearLayout>
 
-
         <View
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_1"
-            android:layout_marginTop="@dimen/qb_px_2"
+            android:layout_marginTop="@dimen/qb_px_4"
             android:background="#F7714C" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -329,7 +327,7 @@
                 android:id="@+id/bsd_onzhongjian"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qb_px_1"
-                android:layout_marginTop="@dimen/qb_px_2"
+                android:layout_marginTop="@dimen/qb_px_1"
                 android:background="#F7714C" />
 
             <LinearLayout

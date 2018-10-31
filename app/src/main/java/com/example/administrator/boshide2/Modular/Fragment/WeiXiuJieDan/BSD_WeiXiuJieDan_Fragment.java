@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +32,6 @@ import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
 import com.example.administrator.boshide2.Modular.Fragment.BaoYangChaXun.BSD_BaoYangChaXun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
-import com.example.administrator.boshide2.Modular.Fragment.ChooseWxclDialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWinow.BSD_KSBJ_PinPai_delo;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
@@ -44,7 +42,6 @@ import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Adapter.
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.BSD_WeiXiuYeWuDiaoDu_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_XM_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
@@ -73,7 +70,6 @@ import java.util.Map;
 /**
  * @维修接单碎片页 Created by Administrator on 2017-4-13.
  */
-
 public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnClickListener {
     private static final String PARAM_KEY = "param_key";
     RelativeLayout beijing;
@@ -1286,13 +1282,12 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             }
         }
         bsd_zcduxq_xm_pop.setTempLists(tempLists);
+        bsd_zcduxq_xm_pop.setCheCx(billEntiy.getChe_cx());
+        bsd_zcduxq_xm_pop.setCheNo(billEntiy.getChe_no());
+        bsd_zcduxq_xm_pop.setCheFl(billEntiy.getXche_sfbz());
+        bsd_zcduxq_xm_pop.setWorkNo(billEntiy.getWork_no());
         // 设置点击返回的回调
-        bsd_zcduxq_xm_pop.gb(new BSD_ZCDUXQ_XM_POP.Guanbi() {
-            @Override
-            public void guanbi() {
-
-            }
-
+        bsd_zcduxq_xm_pop.setOnGuanbiListener(new BSD_ZCDUXQ_XM_POP.OnGuanbiListener() {
             @Override
             public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList) {
                 List<BSD_WeiXiuJieDan_XM_Entity> needAddList = new ArrayList<>();
