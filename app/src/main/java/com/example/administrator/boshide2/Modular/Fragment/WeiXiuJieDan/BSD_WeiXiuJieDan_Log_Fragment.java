@@ -35,7 +35,7 @@ import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialog
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_Car_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_KeHu_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
-import com.example.administrator.boshide2.Modular.View.diaog.Car_Shi_Bie;
+import com.example.administrator.boshide2.Modular.View.diaog.OCRInfoDialog;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.OcrUtil;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
@@ -76,6 +76,7 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
     private TextView title;
     private TextView titleLishi;
     private TextView footerText;
+    private OCRInfoDialog mOCRInfoDialog;
 
     @Override
     protected int getLayoutId() {
@@ -193,9 +194,7 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
                         }
                     }
                 }.start();
-            }
-
-            if (tiaozhuan == 2) {
+            } else if (tiaozhuan == 2) {
                 String sdStatus = Environment.getExternalStorageState();
                 if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
                     return;
@@ -203,7 +202,6 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
                 String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                 Bundle bundle = data.getExtras();
                 Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
-
                 FileOutputStream b = null;
                 File file = new File("/sdcard/myImage/");
                 file.mkdirs();// 创建文件夹
@@ -217,8 +215,10 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
                     e.printStackTrace();
                 } finally {
                     try {
-                        b.flush();
-                        b.close();
+                        if (b != null) {
+                            b.flush();
+                            b.close();
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -233,16 +233,10 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
                             JSONObject jsonObject = new JSONObject(chepai);
                             if (jsonObject.get("error_code").toString().equals("000000")) {
                                 JSONObject json = (JSONObject) jsonObject.get("result");
-
                                 chepaihao = json.getString("PlateNo");
-                                Log.i("cjn", "车牌为" + chepaihao);
                                 handler.sendMessage(handler.obtainMessage(10));
-
-
                             } else if (jsonObject.get("error_code").toString().equals("900501")) {
-
                                 handler.sendMessage(handler.obtainMessage(11));
-
                             }
 
                         } catch (JSONException e) {
@@ -262,28 +256,14 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 10) { // 更改选中商品的总价格
-                final Car_Shi_Bie car_shi_bie = new Car_Shi_Bie(getActivity(), chepaihao);
-                car_shi_bie.show();
-
-                car_shi_bie.setSetUp(new Car_Shi_Bie.SetUp() {
+                mOCRInfoDialog = new OCRInfoDialog(getActivity(), chepaihao);
+                mOCRInfoDialog.show();
+                mOCRInfoDialog.setOnBackListener(new OCRInfoDialog.OnBackListener() {
                     @Override
-                    public void onup() {
-
-                        ((MainActivity) getActivity()).upBSD_WXJD_srjp();
-                        car_shi_bie.dismiss();
-                    }
-                });
-
-
-                car_shi_bie.setSetYes(new Car_Shi_Bie.SetYes() {
-                    @Override
-                    public void onyes(String chepai) {
-
-//                        data(chepaihao);
+                    public void onConfirm(String chepai) {
                         chepaihao = chepai;
                         cheoruser(chepaihao);
-
-                        car_shi_bie.dismiss();
+                        mOCRInfoDialog.dismiss();
                     }
                 });
 
@@ -291,52 +271,9 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
             if (msg.what == 11) {
                 Show.showTime(getActivity(), "车牌识别失败,请重新拍照！");
             }
-
         }
 
     };
-//    public void getCarInfo(String license) {
-//        AbRequestParams params = new AbRequestParams();
-//        params.put("che_no", license);
-//        Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_wxyy_kehubianhao, params, new AbStringHttpResponseListener() {
-//            @Override
-//            public void onSuccess(int a, String s) {
-//                try {
-//                    JSONObject jsonObject = new JSONObject(s);
-//                    if (jsonObject.get("status").toString().equals("1")) {
-//                        JSONObject jsonarray = jsonObject.getJSONObject("data");
-//
-//
-//                        Conts.kehu_no = jsonarray.getString("kehu_no");
-//
-//
-//                    }
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onStart() {
-//
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s, Throwable throwable) {
-//
-//            }
-//        });
-//
-//
-//    }
-//
 
 
     /*

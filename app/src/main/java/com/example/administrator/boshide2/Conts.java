@@ -5,6 +5,7 @@ package com.example.administrator.boshide2;
  */
 
 public class Conts {
+
     public static  String  feilv_name;
     public static String danju_type;   //
     public static String SBID;
@@ -114,4 +115,7 @@ public class Conts {
     public static final String BILLTYPE_WXYY = "wxyy";
     public static final String BILLTYPE_WXDD = "wxdd";
     public static final String BILLTYPE_WXJD = "wxjd";
+
+    public static final int REQUESTCODE_OCR = 1;
+    public static final int REQUESTCODE_XCB = 0;
 }

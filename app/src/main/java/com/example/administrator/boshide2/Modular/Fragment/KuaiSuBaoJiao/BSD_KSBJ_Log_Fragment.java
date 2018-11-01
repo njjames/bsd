@@ -13,17 +13,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,12 +36,11 @@ import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWino
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_Car_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_KeHu_Entity;
-import com.example.administrator.boshide2.Modular.View.diaog.Car_Shi_Bie;
+import com.example.administrator.boshide2.Modular.View.diaog.OCRInfoDialog;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.OcrUtil;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
-import com.nostra13.universalimageloader.utils.L;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -275,27 +270,18 @@ public class BSD_KSBJ_Log_Fragment extends BaseFragment {
         public void handleMessage(final Message msg) {
             super.handleMessage(msg);
             if (msg.what == 10) {
-                final Car_Shi_Bie car_shi_bie = new Car_Shi_Bie(getActivity(), chepaihao);
-                car_shi_bie.show();
+                final OCRInfoDialog OCRInfoDialog = new OCRInfoDialog(getActivity(), chepaihao);
+                OCRInfoDialog.show();
 
-                car_shi_bie.setSetUp(new Car_Shi_Bie.SetUp() {
+                OCRInfoDialog.setOnBackListener(new OCRInfoDialog.OnBackListener() {
                     @Override
-                    public void onup() {
-//                        ((MainActivity) getActivity()).upsrjm();
-//                        car_shi_bie.dismiss();
-                    }
-                });
-
-
-                car_shi_bie.setSetYes(new Car_Shi_Bie.SetYes() {
-                    @Override
-                    public void onyes(String   chepai) {
+                    public void onConfirm(String   chepai) {
 
 //                        data(chepaihao);
                         chepaihao=chepai;
                         cheoruser(chepaihao);
 
-                        car_shi_bie.dismiss();
+                        OCRInfoDialog.dismiss();
                     }
                 });
 

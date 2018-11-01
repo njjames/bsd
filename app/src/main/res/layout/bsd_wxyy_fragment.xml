@@ -39,7 +39,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bsd_wxyy_pp"
+                android:id="@+id/ll_pinpai"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
@@ -59,7 +59,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bsd_wxyy_rl_chexi"
+                android:id="@+id/ll_chexi"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_10"
                 android:layout_weight="1.5">
@@ -80,7 +80,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bsd_wxyy_rl_chezu"
+                android:id="@+id/ll_chezu"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_10"
                 android:layout_weight="2">
@@ -101,7 +101,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bsd_wxyy_cl_chexing"
+                android:id="@+id/ll_chexing"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_10"
                 android:layout_weight="2">

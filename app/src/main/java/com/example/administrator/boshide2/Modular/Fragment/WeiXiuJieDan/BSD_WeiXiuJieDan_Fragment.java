@@ -1088,7 +1088,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                 showLSWX();
                 break;
             case R.id.bsd_wxjd_clxx:
-                showCardInfo();
+                showCarInfo();
                 break;
             case R.id.bsd_wxjd_rl_bycx:
                 showBYCX();
@@ -1128,7 +1128,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         }
     }
 
-    private void showCardInfo() {
+    private void showCarInfo() {
         BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXJD, billEntiy.getWork_no())
                 .show(getFragmentManager(), "dialog_fragment");
     }

@@ -14,12 +14,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,7 +37,7 @@ import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_KeHu_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
-import com.example.administrator.boshide2.Modular.View.diaog.Car_Shi_Bie;
+import com.example.administrator.boshide2.Modular.View.diaog.OCRInfoDialog;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.OcrUtil;
 import com.example.administrator.boshide2.Tools.PermissionUtils;
@@ -84,6 +81,7 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
     private TextView title;
     private TextView titleLishi;
     private TextView footerText;
+    private OCRInfoDialog mOCRInfoDialog;
 
     @Override
     protected int getLayoutId() {
@@ -124,7 +122,7 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
             public void onClick(View view) {
                 tiaozhuan = 2;
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, Conts.REQUESTCODE_OCR);
             }
         });
         //  打开相机
@@ -138,15 +136,12 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
                         File dir = new File("/sdcard/myImage/");
                         if (!dir.exists())
                             dir.mkdirs();
-
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        File f = new File(dir, name);//localTempImgDir
-//                        localTempImageFileName
-//                                是自己定义的名字
+                        File f = new File(dir, name);
                         Uri u = Uri.fromFile(f);
                         intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
-                        startActivityForResult(intent, 0);
+                        startActivityForResult(intent, Conts.REQUESTCODE_XCB);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -169,99 +164,32 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == Activity.RESULT_OK) {
-//            tiaozhuan==1行车本识别
-            if (tiaozhuan == 1) {
+            if (requestCode == Conts.REQUESTCODE_OCR) {
+                getCardNoByOCR(data);
+            } else if (requestCode == Conts.REQUESTCODE_XCB) {
                 File f = new File("/sdcard/myImage/" + name);
                 filename = f.toString();
                 Uri uri = null;
                 transImage(filename, "/sdcard/myImage/" + name);
-
                 new Thread() {
                     @Override
                     public void run() {
                         //把网络访问的代码放在这里
                         chepai = OcrUtil.getOcrData(filename, MyApplication.shared.getString("ocrUrlxcb", ""));
-                        Log.i("cjn", "行车本为" + chepai);
                         try {
                             JSONObject jsonObject = new JSONObject(chepai);
                             if (jsonObject.get("error_code").toString().equals("000000")) {
                                 JSONObject json = (JSONObject) jsonObject.get("result");
-
                                 chepaihao = json.getString("PlateNo");
                                 Conts.VIN = json.getString("Vin");
                                 String b = json.getString("VehicleModels");
                                 b = b.replace("牌", "");
                                 Conts.BSD_chexing = b;
-                                Log.i("cjn", "车牌为" + chepaihao);
                                 handler.sendMessage(handler.obtainMessage(10));
-
-
                             } else if (jsonObject.get("error_code").toString().equals("900501")) {
-
                                 handler.sendMessage(handler.obtainMessage(11));
-
                             }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
-            }
-
-//            tiaozhuan==2车牌识别  OCR
-            if (tiaozhuan == 2) {
-                String sdStatus = Environment.getExternalStorageState();
-                if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-                    return;
-                }
-                String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                Bundle bundle = data.getExtras();
-                Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
-
-                FileOutputStream b = null;
-                File file = new File("/sdcard/myImage/");
-                file.mkdirs();// 创建文件夹
-                String fileName = "/sdcard/myImage/" + name;
-                filename = fileName;
-                try {
-                    b = new FileOutputStream(fileName);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        b.flush();
-                        b.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                new Thread() {
-                    @Override
-                    public void run() {
-                        //把网络访问的代码放在这里
-                        chepai = OcrUtil.getOcrData(filename, MyApplication.shared.getString("ocrUrl", ""));
-                        try {
-                            JSONObject jsonObject = new JSONObject(chepai);
-                            if (jsonObject.get("error_code").toString().equals("000000")) {
-                                JSONObject json = (JSONObject) jsonObject.get("result");
-
-                                chepaihao = json.getString("PlateNo");
-                                Log.i("cjn", "车牌为" + chepaihao);
-                                handler.sendMessage(handler.obtainMessage(10));
-
-
-                            } else if (jsonObject.get("error_code").toString().equals("900501")) {
-
-                                handler.sendMessage(handler.obtainMessage(11));
-
-                            }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -270,7 +198,54 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
             }
         }
 
+    }
 
+    private void getCardNoByOCR(Intent data) {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+            return;
+        }
+        String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+        Bundle bundle = data.getExtras();
+        Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
+        FileOutputStream b = null;
+        File file = new File("/sdcard/myImage/");
+        file.mkdirs();// 创建文件夹
+        String fileName = "/sdcard/myImage/" + name;
+        filename = fileName;
+        try {
+            b = new FileOutputStream(fileName);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (b != null) {
+                    b.flush();
+                    b.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        new Thread() {
+            @Override
+            public void run() {
+                //把网络访问的代码放在这里
+                chepai = OcrUtil.getOcrData(filename, MyApplication.shared.getString("ocrUrl", ""));
+                try {
+                    JSONObject jsonObject = new JSONObject(chepai);
+                    if (jsonObject.get("error_code").toString().equals("000000")) {
+                        JSONObject json = (JSONObject) jsonObject.get("result");
+                        chepaihao = json.getString("PlateNo");
+                        handler.sendMessage(handler.obtainMessage(10));
+                    } else if (jsonObject.get("error_code").toString().equals("900501")) {
+                        handler.sendMessage(handler.obtainMessage(11));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     @Override
@@ -284,36 +259,17 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what == 10) { // 更改选中商品的总价格
-                final Car_Shi_Bie car_shi_bie = new Car_Shi_Bie(getActivity(), chepaihao);
-                car_shi_bie.show();
-
-                car_shi_bie.setSetUp(new Car_Shi_Bie.SetUp() {
+            if (msg.what == 10) { // 表示获取车牌号成功
+                mOCRInfoDialog = new OCRInfoDialog(getActivity(), chepaihao);
+                mOCRInfoDialog.show();
+                mOCRInfoDialog.setOnBackListener(new OCRInfoDialog.OnBackListener() {
                     @Override
-                    public void onup() {
-                        //跳转美容快修
-//                        Log.i("cjn","不对跳转键盘输入");
-//                        ((MainActivity) getActivity()).upBSD_mrkx_jpsr();
-//                        car_shi_bie.dismiss();
-
-
-                    }
-                });
-
-
-                car_shi_bie.setSetYes(new Car_Shi_Bie.SetYes() {
-                    @Override
-                    public void onyes(String chepai) {
-                        Log.i("cjn", "正确走查询跳转美容快修页面");
-//                        data(chepaihao);
+                    public void onConfirm(String chepai) {
                         chepaihao = chepai;
-                        Log.i("cphm", "onyes: 车牌好是---" + chepaihao);
                         cheoruser(chepaihao);
-
-                        car_shi_bie.dismiss();
+                        mOCRInfoDialog.dismiss();
                     }
                 });
-
             }
             if (msg.what == 11) {
                 Show.showTime(getActivity(), "车牌识别失败,请重新拍照！");
@@ -322,50 +278,6 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
         }
 
     };
-//    //获取kehu_no
-//    public void getCarInfo(String license) {
-//        AbRequestParams params = new AbRequestParams();
-//        params.put("che_no", license);
-//        Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_wxyy_kehubianhao, params, new AbStringHttpResponseListener() {
-//            @Override
-//            public void onSuccess(int a, String s) {
-//                try {
-//                    JSONObject jsonObject = new JSONObject(s);
-//                    if (jsonObject.get("status").toString().equals("1")) {
-//                        JSONObject jsonarray = jsonObject.getJSONObject("data");
-//                        Conts.kehu_no = jsonarray.getString("kehu_no");
-//
-//
-//                        //跳转到编辑车辆、客户信息界面---李赛；
-//                        ((MainActivity) getActivity()).upBSD_mrkx_clxx();
-//
-//                    }
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onStart() {
-//
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s, Throwable throwable) {
-//
-//            }
-//        });
-//
-//
-//    }
-//
 
 
     /*

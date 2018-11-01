@@ -35,7 +35,7 @@ import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialog
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_Car_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_KeHu_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD_WeiXiuYueYue_entiy;
-import com.example.administrator.boshide2.Modular.View.diaog.Car_Shi_Bie;
+import com.example.administrator.boshide2.Modular.View.diaog.OCRInfoDialog;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.OcrUtil;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
@@ -264,28 +264,16 @@ public class BSD_weixiuyuyue_Log_Fragment extends BaseFragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 10) { // 更改选中商品的总价格
-                final Car_Shi_Bie car_shi_bie = new Car_Shi_Bie(getActivity(), chepaihao);
-                car_shi_bie.show();
-
-                car_shi_bie.setSetUp(new Car_Shi_Bie.SetUp() {
+                final OCRInfoDialog OCRInfoDialog = new OCRInfoDialog(getActivity(), chepaihao);
+                OCRInfoDialog.show();
+                OCRInfoDialog.setOnBackListener(new OCRInfoDialog.OnBackListener() {
                     @Override
-                    public void onup() {
-//
-//                        ((MainActivity) getActivity()).upBSD_WXYY_srjp();
-//                        car_shi_bie.dismiss();
-                    }
-                });
-
-
-                car_shi_bie.setSetYes(new Car_Shi_Bie.SetYes() {
-                    @Override
-                    public void onyes(String  chepai) {
+                    public void onConfirm(String  chepai) {
 
 //                        data(chepaihao);
                         chepaihao=chepai;
                         cheoruser(chepaihao);
-
-                        car_shi_bie.dismiss();
+                        OCRInfoDialog.dismiss();
                     }
                 });
 
