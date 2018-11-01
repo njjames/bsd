@@ -148,6 +148,7 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
         params.put("pageNumber", pageIndex);
         params.put("che_no", cheNo);
         params.put("type", 1);
+        params.put("caozuoyuanid", Integer.parseInt(MyApplication.shared.getString("id", "")));
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_LSWX, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int sss, String s) {
@@ -160,12 +161,11 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
                             JSONObject json = jsonarray.getJSONObject(i);
                             BSD_LSWX_ety lswx_ety = new BSD_LSWX_ety();
                             lswx_ety.setWork_no(json.getString("work_no"));
-                            lswx_ety.setKehu_mc(json.getString("kemu_mc"));
+                            lswx_ety.setKehu_mc(json.getString("kehu_mc"));
                             lswx_ety.setChe_no(json.getString("che_no"));
                             lswx_ety.setXche_jsrq(json.getString("xche_jsrq"));
                             lswx_ety.setXche_jcr(json.getString("xche_jcr"));
                             lswx_ety.setXche_hjje(json.getString("xche_hjje"));
-                            lswx_ety.setKehu_bxno(json.getString("kehu_bxno"));
                             lswx_ety.setXche_jdrq(json.getString("xche_jdrq"));
                             lswx_ety.setKehu_mc(json.getString("kehu_mc"));
                             lswx_ety.setKehu_dh(json.getString("kehu_dh"));
@@ -175,13 +175,6 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
                             lswx_ety.setZhifu_card_no(json.getString("zhifu_card_no"));//储值卡号
                             lswx_ety.setFlag_cardjs(json.getBoolean("flag_cardjs"));//储值卡结算标志
                             lswx_ety.setZhifu_card_xj(json.getString("zhifu_card_xj"));//补现金
-
-//                            lswx_ety.setKehu_mc(json.optString("kehu_mc"));
-//                            lswx_ety.setKehu_dh(json.optString("kehu_dh"));
-//                            lswx_ety.setChe_no(json.optString("che_no"));
-//                            lswx_ety.setXche_jdrq(json.optString("xche_jdrq"));
-//                            lswx_ety.setXche_jsfs(json.optString("xche_jsfs"));
-//                            lswx_ety.setXche_jb(json.optString("xche_jb"));
                             data.add(lswx_ety);
                         }
                     }

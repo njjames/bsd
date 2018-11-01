@@ -687,33 +687,14 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
         params.put("work_no", billNo);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxyy_LieBiao, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int a, String s) {
+            public void onSuccess(int a, String data) {
                 try {
-                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject jsonObject = new JSONObject(data);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            BSD_WeiXiuYueYue_entiy entity = new BSD_WeiXiuYueYue_entiy();
-                            entity.setYuyue_no(item.getString("yuyue_no"));
-                            entity.setKehu_mc(item.getString("kehu_mc"));
-                            entity.setKehu_no(item.getString("kehu_no"));
-                            entity.setKehu_dh(item.getString("kehu_dh"));
-                            entity.setChe_no(item.getString("che_no"));
-                            entity.setChe_vin(item.getString("che_vin"));
-                            entity.setChe_cx(item.getString("che_cx"));
-                            entity.setYuyue_yjjcrq(item.getString("yuyue_yjjcrq"));
-                            entity.setYuyue_yjjclc(item.getInt("yuyue_yjjclc"));
-                            entity.setYuyue_jlrq(item.getString("yuyue_jlrq"));
-                            entity.setYuyue_sffl(item.getDouble("yuyue_sffl"));
-                            entity.setYuyue_sfbz(item.getString("yuyue_sfbz"));
-                            entity.setGcsj(item.getString("gcsj"));
-                            list_wxyy.add(entity);
-                        }
+                        mainActivity.showWxyyFragment(jsonObject.getString("data"));
                     } else {
                         Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -732,7 +713,6 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "维修预约出错"+s);
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });

@@ -75,7 +75,7 @@ public class BSD_lswx_adp extends BaseAdapter {
         holder.bsd_kxbj_cheno.setText(item.getChe_no());//车牌
         holder.bsd_kxbj_jdrq.setText(item.getXche_jdrq());//接待日期
         holder.bsd_kxbj_fwgw.setText(item.getXche_jcr());//服务顾问
-        holder.bsd_kxbj_phone.setText(item.getKehu_bxno());//联系方式
+        holder.bsd_kxbj_phone.setText(item.getKehu_dh());//联系方式
         holder.bsd_kxbj_je.setText(item.getXche_hjje());//合计金额
         return contetview;
     }

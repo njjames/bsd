@@ -7,7 +7,13 @@
     <LinearLayout
         android:id="@+id/bsd_lsbj_toubuju"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_30">
+        android:layout_height="@dimen/qb_px_30"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="1"
+            style="@style/mysearchtitlestyle"
+            android:text="维修单号" />
 
         <TextView
             android:layout_weight="1"
@@ -23,11 +29,6 @@
             android:layout_weight="1"
             style="@style/mysearchtitlestyle"
             android:text="电话" />
-
-        <TextView
-            android:layout_weight="1"
-            style="@style/mysearchtitlestyle"
-            android:text="车牌" />
 
         <TextView
             android:layout_weight="1.2"
@@ -48,6 +49,6 @@
     <ListView
         android:id="@+id/bsd_lsbj_lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/qb_px_200">
     </ListView>
 </LinearLayout>

@@ -16,14 +16,11 @@ import java.util.List;
  * Created by Administrator on 2017-4-20.
  * 车辆信息-详情页-维修历史
  */
-
 public class BSD_CheLiangLiShiWeiXiu_adp extends BaseAdapter {
     private LayoutInflater layoutInflater;
-    private Context context;
     private List<BSD_LSWX_ety> list;
 
     public BSD_CheLiangLiShiWeiXiu_adp(Context context, List<BSD_LSWX_ety> list) {
-        this.context = context;
         this.list = list;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -49,13 +46,12 @@ public class BSD_CheLiangLiShiWeiXiu_adp extends BaseAdapter {
         if (contetview == null) {
             holder = new Holder();
             contetview=layoutInflater.inflate(R.layout.bsd_clxq_item,null);
+            holder.bsd_xsbj_no= (TextView) contetview.findViewById(R.id.bsd_xsbj_no);
             holder.bsd_xsbj_name= (TextView) contetview.findViewById(R.id.bsd_xsbj_name);
-            holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
-            holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
+            holder.bsd_kxbj_phone= (TextView) contetview.findViewById(R.id.bsd_kxbj_phone);
             holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
-            holder.bsd_kxbj_qian= (TextView) contetview.findViewById(R.id.bsd_kxbj_phone);
-            holder.bsd_kxbj_qian1= (TextView) contetview.findViewById(R.id.bsd_kxbj_qian1);
+            holder.bsd_kxbj_jdrq= (TextView) contetview.findViewById(R.id.bsd_kxbj_jdrq);
+            holder.bsd_kxbj_jbr= (TextView) contetview.findViewById(R.id.bsd_kxbj_jbr);
             holder.chezhu = (TextView) contetview.findViewById(R.id.tv_chezhu);
             contetview.setTag(holder);
         } else {
@@ -63,25 +59,23 @@ public class BSD_CheLiangLiShiWeiXiu_adp extends BaseAdapter {
         }
 
         BSD_LSWX_ety item=list.get(i);
+        holder.bsd_xsbj_no.setText(item.getWork_no());
         holder.bsd_xsbj_name.setText(item.getKehu_mc());
-        holder.bsd_kxbj_bzsj.setText(item.getKehu_bxno());
-        holder.bsd_kxbj_gsdj.setText(item.getChe_no());
+        holder.bsd_kxbj_phone.setText(item.getKehu_dh());
         holder.chezhu.setText(item.getChe_zjno());
-        // holder.bsd_kxbj_cz.setText(item.getXche_jsfs());
-        holder.bsd_kxbj_qian.setText(item.getXche_jdrq());
+        holder.bsd_kxbj_jdrq.setText(item.getXche_jdrq());
         holder.bsd_kxbj_je.setText(item.getXche_hjje());
-        holder.bsd_kxbj_qian1.setText(item.getXche_jcr());
+        holder.bsd_kxbj_jbr.setText(item.getXche_jcr());
         return contetview;
     }
 
-    class Holder {
-        TextView bsd_kxbj_qian1;
+    public final class Holder {
+        TextView bsd_xsbj_no;
+        TextView bsd_kxbj_jbr;
         TextView bsd_xsbj_name;
-        TextView bsd_kxbj_bzsj;
-        TextView bsd_kxbj_gsdj;
+        TextView bsd_kxbj_phone;
         TextView bsd_kxbj_je;
-        TextView bsd_kxbj_qian;
-        TextView bsd_kxbj_cz;
+        TextView bsd_kxbj_jdrq;
         TextView chezhu;
     }
 }

@@ -43,10 +43,7 @@ public class BSD_CheLiangWeiXiuLiShi extends BaseFragment {
     private static final String PARAM_KEY = "param_key";
     private ListView bsd_lsbj_lv;
     private BSD_CheLiangLiShiWeiXiu_adp adapter;
-    private ScrollView scrollView;
     private List<BSD_LSWX_ety> datas = new ArrayList<BSD_LSWX_ety>();
-    private String chepai;//传入的车牌参数
-    //转圈
     private Dialog mWeiboDialog;
     private URLS url;
     private String param;
@@ -72,42 +69,14 @@ public class BSD_CheLiangWeiXiuLiShi extends BaseFragment {
 
     @Override
     public void initView() {
-        scrollView = (android.widget.ScrollView) getActivity().findViewById(R.id.scrollview);
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
         adapter = new BSD_CheLiangLiShiWeiXiu_adp(getActivity(), datas);
         bsd_lsbj_lv.setAdapter(adapter);
-        bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            }
-        });
-        //解决滑动问题。
-        bsd_lsbj_lv.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                try {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            scrollView.requestDisallowInterceptTouchEvent(true); //禁止scrollview拦截事件，让listview可滑动
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            scrollView.requestDisallowInterceptTouchEvent(false);
-                            break;
-                        default:
-                            break;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return false;
-            }
-        });
     }
 
     @Override
     public void initData() {
         url = new URLS();
-        chepai = MyApplication.shared.getString("che_no", "");//从全局变量里面取出来车牌
         datas.clear();
         WXLS();
     }
@@ -117,6 +86,8 @@ public class BSD_CheLiangWeiXiuLiShi extends BaseFragment {
         AbRequestParams params = new AbRequestParams();
         params.put("pageNumber", 1);
         params.put("che_no", param);
+        params.put("type", -1);
+        params.put("caozuoyuanid", Integer.parseInt(MyApplication.shared.getString("id", "")));
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CL_WX, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
@@ -129,10 +100,8 @@ public class BSD_CheLiangWeiXiuLiShi extends BaseFragment {
                             BSD_LSWX_ety lswx_ety = new BSD_LSWX_ety();
                             lswx_ety.setWork_no(json.optString("work_no"));
                             lswx_ety.setKehu_no(json.optString("kehu_no"));
-                            lswx_ety.setKehu_bxno(json.optString("kehu_bxno"));
                             lswx_ety.setKehu_mc(json.optString("kehu_mc"));
                             lswx_ety.setChe_no(json.optString("che_no"));
-                            lswx_ety.setXche_last_jdrq(json.optString("xche_last_jdrq"));
                             lswx_ety.setXche_hjje(json.optString("xche_hjje"));
                             lswx_ety.setXche_jcr(json.optString("xche_jcr"));
                             lswx_ety.setXche_jdrq(json.getString("xche_jdrq"));

@@ -138,6 +138,7 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
         params.put("pageNumber", page);
         params.put("che_no", wx_chepai);
         params.put("type", 0);
+        params.put("caozuoyuanid", Integer.parseInt(MyApplication.shared.getString("id", "")));
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CL_WX, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int sss, String s) {
@@ -154,7 +155,6 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
                             lswx_ety.setXche_jsrq(json.getString("xche_jsrq"));
                             lswx_ety.setXche_jcr(json.getString("xche_jcr"));
                             lswx_ety.setXche_hjje(json.getString("xche_hjje"));
-                            lswx_ety.setKehu_bxno(json.getString("kehu_bxno"));
                             lswx_ety.setXche_jdrq(json.getString("xche_jdrq"));
                             lswx_ety.setKehu_mc(json.getString("kehu_mc"));
                             lswx_ety.setKehu_dh(json.getString("kehu_dh"));

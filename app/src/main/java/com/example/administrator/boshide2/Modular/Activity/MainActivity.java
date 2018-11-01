@@ -1009,6 +1009,11 @@ public class MainActivity extends FragmentActivity {
         change(BSD_WeiXiuJieDan_Fragment.newInstance(params));
     }
 
+    public void showWxyyFragment(String params) {
+        DownJianPan.DJP(this);
+        change(BSD_WeiXiuJieDan_Fragment.newInstance(params));
+    }
+
     /**
      * 显示美容快修单历史详情
      * @param params
