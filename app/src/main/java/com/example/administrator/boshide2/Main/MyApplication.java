@@ -16,8 +16,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-
         Request.intoRequest(getApplicationContext());
         shared = getSharedPreferences("BSD_APP", MODE_PRIVATE);
         editor = shared.edit();

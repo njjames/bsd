@@ -71,18 +71,15 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
     private String filename;
     private String chepai;
     private String chepaihao;
-    int tiaozhuan;
     private Dialog mWeiboDialog;
     private LinearLayout bsd_mrkx_lishikuaiuxi;
     private List<BSD_WeiXiuJieDan_Entity> list = new ArrayList<BSD_WeiXiuJieDan_Entity>();
-    private RelativeLayout bsd_lsbj;
-    private String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+    private String name = "";
     private URLS url;
     private TextView title;
     private TextView titleLishi;
     private TextView footerText;
     private OCRInfoDialog mOCRInfoDialog;
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_choose_car_layout;
@@ -100,7 +97,6 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
         bsd_im_zdsb = (ImageView) view.findViewById(R.id.bsd_im_zdsb);
         bsd_im_sdsr = (ImageView) view.findViewById(R.id.bsd_im_sdsr);
         bsd_im_xcbsb = (ImageView) view.findViewById(R.id.bsd_im_xcbsb);
-        bsd_lsbj = (RelativeLayout) view.findViewById(R.id.bsd_lsbj);
         title = (TextView) view.findViewById(R.id.tv_title);
         titleLishi = (TextView) view.findViewById(R.id.tv_title_lishi);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
@@ -120,16 +116,13 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
         bsd_im_zdsb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tiaozhuan = 2;
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, Conts.REQUESTCODE_OCR);
             }
         });
-        //  打开相机
         bsd_im_xcbsb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tiaozhuan = 1;
                 String status = Environment.getExternalStorageState();
                 if (status.equals(Environment.MEDIA_MOUNTED)) {
                     try {
@@ -137,6 +130,7 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
                         if (!dir.exists())
                             dir.mkdirs();
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                         File f = new File(dir, name);
                         Uri u = Uri.fromFile(f);
                         intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
@@ -146,7 +140,7 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
                         e.printStackTrace();
                     }
                 } else {
-
+                    Toast.makeText(getHostActicity(), "SD卡不可用", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -170,12 +164,10 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
             } else if (requestCode == Conts.REQUESTCODE_XCB) {
                 File f = new File("/sdcard/myImage/" + name);
                 filename = f.toString();
-                Uri uri = null;
                 transImage(filename, "/sdcard/myImage/" + name);
                 new Thread() {
                     @Override
                     public void run() {
-                        //把网络访问的代码放在这里
                         chepai = OcrUtil.getOcrData(filename, MyApplication.shared.getString("ocrUrlxcb", ""));
                         try {
                             JSONObject jsonObject = new JSONObject(chepai);
@@ -362,246 +354,6 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
                 Log.e("mr", "onFailure方法");
             }
         });
-
-
-    }
-
-
-    //根据车牌获取数据
-    public void data(final String cp) {
-        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        AbRequestParams params = new AbRequestParams();
-        params.put("che_no", cp);
-        params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
-        params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_IN, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-                Log.i("cjn", "成功1");
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("1")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            //这块拿到的是维系接单的详细表
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-                            entiy.setWork_no(item.getString("work_no"));
-                            entiy.setKehu_no(item.getString("kehu_no"));
-                            entiy.setKehu_mc(item.getString("kehu_mc"));
-                            entiy.setKehu_xm(item.getString("kehu_xm"));
-                            entiy.setKehu_dz(item.getString("kehu_dz"));
-                            entiy.setKehu_yb(item.getString("kehu_yb"));
-                            entiy.setKehu_dh(item.getString("kehu_dh"));
-                            entiy.setChe_no(item.getString("che_no"));
-                            entiy.setChe_cx(item.getString("che_cx"));
-                            entiy.setChe_vin(item.getString("che_vin"));
-                            entiy.setXche_lc(item.getInt("xche_lc"));
-                            entiy.setGcsj(item.getString("gcsj"));
-
-                            list.add(entiy);
-
-                        }
-                        WeiboDialogUtils.closeDialog(mWeiboDialog);
-                    } else {
-//                        Show.showTime(getActivity(), jsonObject.get("message").toString());
-                    }
-                    if (jsonObject.get("total").toString().equals("1")) {
-                        entiy = list.get(0);
-                        Log.i("cjn", "键盘输入车牌存上了吗" + entiy.getChe_no());
-                        ((MainActivity) getActivity()).setWxjdentity(entiy);//传了个实体
-                        Conts.zt = 1;
-                        Conts.cp = cp;
-                        chexing();//车行
-
-                    } else if (jsonObject.get("total").toString().equals("0")) {
-
-                        ((MainActivity) getActivity()).upBSD_mrkx();
-                        //请求
-
-                        Conts.cp = cp;
-                        Conts.zt = 0;
-                    } else {
-                        BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-                        entiy = list.get(0);
-                        entiy = list.get(0);
-                        ((MainActivity) getActivity()).setWxjdentity(entiy);//传了个实体
-//
-                        ((MainActivity) getActivity()).upBSD_mrkx();
-                        Conts.zt = 1;
-                        Conts.cp = cp;
-                    }
-                    //在这里请求
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "失败");
-                WeiboDialogUtils.closeDialog(mWeiboDialog);
-            }
-        });
-
-
-    }
-
-
-    /**
-     * 车行几条数据查询
-     */
-
-    public void chexing() {
-        listche.clear();
-        AbRequestParams params = new AbRequestParams();
-        params.put("chex_mc", Conts.BSD_chexing);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_public_getcheIDBycheXingMingCheng, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-                Log.i("cjn", "成功");
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.getString("message").equals("查询成功")) {
-                        if (jsonObject.getInt("total") == 0) {
-//                            Toast.makeText(getContext(), "没有查到车辆信息", Toast.LENGTH_SHORT).show();
-                            if (null == entiy.getWork_no() || entiy.getWork_no().equals("") || entiy.getWork_no().equals("null")) {
-                                Toast.makeText(getActivity(), "网络超时请重试", Toast.LENGTH_SHORT).show();
-                            } else {
-                                ((MainActivity) getActivity()).upBSD_mrkx();
-                            }
-
-
-                        }
-                        if (jsonObject.getInt("total") == 1) {
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            JSONObject g = jsonArray.getJSONObject(0);
-                            Conts.BSD_chexingDM = g.getString("chex_bz");
-                            //一条，数据，的情况下走的流程
-                            huoquequancheng();
-
-                        }
-                        if (jsonObject.getInt("total") > 1) {
-                            //多条，数据走的方法
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                HashMap<String, String> map = new HashMap<String, String>();
-                                map.put("chex_dm", object.getString("chex_dm"));
-                                map.put("chex_bz", object.getString("chex_bz"));
-                                map.put("chex_mc_std", object.getString("chex_mc_std"));
-                                map.put("name", object.getString("chex_dm") + "【" + object.getString("chex_mc_std") + "】");
-                                listche.add(map);
-                            }
-                            bsd_ksbj_chexins = new BSD_ksbj_chexins(getContext(), listche);
-                            bsd_ksbj_chexins.show();
-                            bsd_ksbj_chexins.setXuanZECheXing(new BSD_ksbj_chexins.XuanZECheXing() {
-                                @Override
-                                public void onyes(String id) {
-                                    Conts.BSD_chexingDM = id;
-                                    huoquequancheng();
-
-                                }
-                            });
-
-                        }
-
-
-                    } else {
-                        Log.i("cjn", "查询失败");
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                handler.sendMessage(handler.obtainMessage(12));
-
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "失败" + s);
-            }
-        });
-
-
-    }
-
-    /**
-     * 获取全称
-     */
-    public void huoquequancheng() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("chex_dm", Conts.BSD_chexingDM);
-        Log.i("cjn", "获取全称阐述" + Conts.BSD_chexingDM);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_public_get4JIjiegouMingcheng, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "获取全称" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.getString("message").toString().equals("查询失败")) {
-                        if (jsonObject.getString("data").length() > 1) {
-                            entiy.setChe_cx(jsonObject.getString("data"));
-                            Conts.BSD_chexingQC = jsonObject.getString("data");
-
-                            if (null == entiy.getWork_no() || entiy.getWork_no().equals("") || entiy.getWork_no().equals("null")) {
-                                Toast.makeText(getActivity(), "网络超时请重试", Toast.LENGTH_SHORT).show();
-                            } else {
-                                ((MainActivity) getActivity()).upBSD_mrkx();
-                            }
-                            bsd_ksbj_chexins.dismiss();
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-
-            }
-        });
-
-
     }
 
     /**
