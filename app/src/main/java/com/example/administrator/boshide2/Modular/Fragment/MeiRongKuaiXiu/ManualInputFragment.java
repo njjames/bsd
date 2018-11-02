@@ -21,8 +21,6 @@ import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_Car_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_KeHu_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.Modular.View.KeyBoard.KeyboardUtil;
@@ -124,7 +122,7 @@ public class ManualInputFragment extends BaseFragment {
             @Override
             public void onYesClick(String cheNo) {
                 Conts.cp = cheNo;
-                checkCarNoCanused(cheNo);
+                checkCarCanused(cheNo);
                 Conts.danju_type="mrkx";
             }
         });
@@ -181,12 +179,12 @@ public class ManualInputFragment extends BaseFragment {
         }
     }
 
-    private void checkCarNoCanused(final String cheNo) {
+    private void checkCarCanused(final String cheNo) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
         params.put("che_no", cheNo);
         params.put("caozuoyuanID", MyApplication.shared.getString("id", ""));
-        Request.Post(MyApplication.shared.getString("ip", "")+url.CHECK_CAR_CANUSED, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "")+URLS.CHECK_CAR_CANUSED, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 try {

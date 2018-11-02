@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ab.http.AbRequestParams;
@@ -117,7 +116,7 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends BaseFragment {
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).uplskx();
+                ((MainActivity) getActivity()).upLSKX();
             }
         });
         tv_clZje = (TextView) view.findViewById(R.id.tv_wxxq_wxcl_jine);

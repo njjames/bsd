@@ -550,7 +550,7 @@ public class MainActivity extends FragmentActivity {
     /**
      * 跳转历史快修
      */
-    public void uplskx() {
+    public void upLSKX() {
         DownJianPan.DJP(MainActivity.this);
         change(BSD_lskx);
     }
@@ -592,21 +592,16 @@ public class MainActivity extends FragmentActivity {
 
     /**
      * 跳转历史报价
-     *
-     * @param view
      */
-    public void upqhf(View view) {
+    public void upLSBJ() {
         DownJianPan.DJP(MainActivity.this);
         change(BSD_lsbj);
     }
 
     /**
      * 跳转预约历史
-     *
-     * @param view
      */
-    public void upjiedan(View view) {
-
+    public void upLSYY() {
         DownJianPan.DJP(MainActivity.this);
         change(BSD_lsyy);
     }
@@ -652,10 +647,8 @@ public class MainActivity extends FragmentActivity {
 
     /**
      * 跳转历史接单
-     *
-     * @param view
      */
-    public void uplishijiedan(View view) {
+    public void upLSJD() {
         DownJianPan.DJP(MainActivity.this);
         change(BSD_lsjd);
     }

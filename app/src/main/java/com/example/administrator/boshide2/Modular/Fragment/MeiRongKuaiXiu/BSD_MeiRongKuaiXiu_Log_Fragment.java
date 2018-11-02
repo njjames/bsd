@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,10 +41,8 @@ import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.OcrUtil;
 import com.example.administrator.boshide2.Tools.PermissionUtils;
 import com.example.administrator.boshide2.Tools.PermissionsManager;
-import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,6 +77,7 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
     private TextView titleLishi;
     private TextView footerText;
     private OCRInfoDialog mOCRInfoDialog;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_choose_car_layout;
@@ -104,7 +102,7 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
         bsd_mrkx_lishikuaiuxi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).uplskx();
+                ((MainActivity) getActivity()).upLSKX();
             }
         });
         bsd_im_sdsr.setOnClickListener(new View.OnClickListener() {
@@ -266,11 +264,8 @@ public class BSD_MeiRongKuaiXiu_Log_Fragment extends BaseFragment {
             if (msg.what == 11) {
                 Show.showTime(getActivity(), "车牌识别失败,请重新拍照！");
             }
-
         }
-
     };
-
 
     /*
     *根据车牌返回车辆信息和客户信息

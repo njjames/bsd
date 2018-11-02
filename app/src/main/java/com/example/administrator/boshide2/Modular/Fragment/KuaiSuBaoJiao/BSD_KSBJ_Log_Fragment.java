@@ -98,7 +98,7 @@ public class BSD_KSBJ_Log_Fragment extends BaseFragment {
         bsd_lsbj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upqhf(view);
+                ((MainActivity) getActivity()).upLSBJ();
             }
         });
         bsd_im_sdsr.setOnClickListener(new View.OnClickListener() {

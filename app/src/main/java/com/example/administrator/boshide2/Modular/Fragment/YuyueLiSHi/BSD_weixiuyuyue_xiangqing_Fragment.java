@@ -27,7 +27,6 @@ import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.BSD_weixiuyuyue_JianPanShuRu_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD_WeiXiuYuYue_Cl_entity;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD_WeiXiuYueYue_entiy;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD_WeiXiyYuYue_XM_entity;
@@ -388,7 +387,7 @@ public class BSD_weixiuyuyue_xiangqing_Fragment extends Fragment  {
         bsd_weixiuyuyeu_fh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upjiedan(view);
+                ((MainActivity) getActivity()).upLSYY();
             }
         });
 
@@ -982,7 +981,7 @@ public class BSD_weixiuyuyue_xiangqing_Fragment extends Fragment  {
 //        bsd_lsbj.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                ((MainActivity) getActivity()).upjiedan(view);
+//                ((MainActivity) getActivity()).upLSYY(view);
 //            }
 //        });
         bsd_wxyy_cl_pop = new BSD_WXYY_CL_POP(getActivity());

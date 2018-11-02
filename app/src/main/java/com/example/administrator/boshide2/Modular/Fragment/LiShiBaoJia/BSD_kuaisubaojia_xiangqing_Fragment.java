@@ -1,17 +1,11 @@
 package com.example.administrator.boshide2.Modular.Fragment.LiShiBaoJia;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ab.http.AbRequestParams;
@@ -20,17 +14,12 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
-import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
-import com.example.administrator.boshide2.Modular.Entity.CustemObject;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_CL_entity;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_XM_entity;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_ety;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiBaoJia.Adapter.BSD_wxxm_xiangqiang_adp;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiBaoJia.Adapter.BSD_xzcl_xiangqing_adp;
-import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
-import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
-import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.Show;
 
@@ -40,7 +29,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @快速报价碎片页 Created by Administrator on 2017-4-13.
@@ -94,7 +82,7 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
         bsd_lishibaojiaxiangqing_fh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upqhf(view);
+                ((MainActivity) getActivity()).upLSBJ();
             }
         });
 

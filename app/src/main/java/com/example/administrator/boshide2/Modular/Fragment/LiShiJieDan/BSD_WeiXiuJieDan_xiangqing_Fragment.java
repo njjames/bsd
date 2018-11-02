@@ -1,57 +1,33 @@
 package com.example.administrator.boshide2.Modular.Fragment.LiShiJieDan;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
-import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
-import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
-import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
-import com.example.administrator.boshide2.Modular.Entity.CustemObject;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiJieDan.Adapter.BSD_WXJD_CL_xiangqing_adp;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiJieDan.Adapter.BSD_WXJD_XM_xiangqingadp;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.PopWindow.BSD_WXJD_CL_POP;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.PopWindow.BSD_WXJD_XM_POP;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_WXYY_XM_POP;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_xm_pop_entiy;
-import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
-import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
-import com.example.administrator.boshide2.Modular.View.timepicker.TimePickerShow;
 import com.example.administrator.boshide2.R;
-import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
-import com.example.administrator.boshide2.Tools.Show;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -117,7 +93,7 @@ public class BSD_WeiXiuJieDan_xiangqing_Fragment extends BaseFragment{
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).uplishijiedan(view);
+                ((MainActivity) getActivity()).upLSJD();
             }
         });
         bsd_wxjd_chepai = (TextView) view.findViewById(R.id.bsd_wxjd_chepai);

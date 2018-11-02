@@ -1980,7 +1980,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         bsd_lsbj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upqhf(view);
+                ((MainActivity) getActivity()).upLSBJ();
 
             }
         });

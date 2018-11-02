@@ -95,7 +95,7 @@ public class BSD_WeiXiuJieDan_Log_Fragment extends BaseFragment {
         bsd_lsbj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).uplishijiedan(view);
+                ((MainActivity) getActivity()).upLSJD();
             }
         });
         bsd_im_sdsr.setOnClickListener(new View.OnClickListener() {
