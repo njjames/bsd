@@ -1011,7 +1011,7 @@ public class MainActivity extends FragmentActivity {
 
     public void showWxyyFragment(String params) {
         DownJianPan.DJP(this);
-        change(BSD_WeiXiuJieDan_Fragment.newInstance(params));
+        change(BSD_weixiuyuyue_Fragment.newInstance(params));
     }
 
     /**

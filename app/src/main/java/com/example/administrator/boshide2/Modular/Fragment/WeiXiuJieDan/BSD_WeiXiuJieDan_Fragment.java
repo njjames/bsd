@@ -661,7 +661,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                         JSONArray jsonarray = jsonObject.getJSONArray("data");
                         Map<String, String> map;
                         for (int i = 0; i < jsonarray.length(); i++) {
-                            Log.e("vin", "2222");
                             JSONObject item = jsonarray.getJSONObject(i);
                             map = new HashMap<>();
                             map.put("cxMcStd", item.getString("chex_mc_std"));   //车系
@@ -703,8 +702,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                 Log.e("vin", "onfailure失败了");
             }
         });
-
-
     }
 
 
@@ -745,7 +742,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             public void onFailure(int i, String s, Throwable throwable) {
             }
         });
-
     }
 
     /*
@@ -762,7 +758,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         params.width = 900;
         params.height = 500;
         dialog.getWindow().setAttributes(params);
-
 
         ListView lv = (ListView) window.findViewById(R.id.bsd_clxx_lv_for_select_cx);
         lv.setAdapter(new BaseAdapter() {

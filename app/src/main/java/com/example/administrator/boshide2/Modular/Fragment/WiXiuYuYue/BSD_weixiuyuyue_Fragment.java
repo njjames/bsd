@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
@@ -40,7 +41,9 @@ import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWino
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
+import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_XM_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Adapter.BSD_WXYY_CL_adp;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Adapter.BSD_WXYY_XM_adp;
@@ -49,6 +52,7 @@ import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD_WeiXiyYuYue_XM_entity;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_WXYY_XM_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
+import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_xm_pop_entiy;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Sql.BSD_WeiXiyYueYue_XM_entity_Dao;
 import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
@@ -66,6 +70,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -212,6 +217,8 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
     private TextView footerText;
     private BSD_WeiXiuYueYue_entiy billEntiy;
     private BSD_ZCDUXQ_XM_POP bsd_zcduxq_xm_pop;
+    private TextView billNo;
+    private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
 
     public static BSD_weixiuyuyue_Fragment newInstance(String params) {
         BSD_weixiuyuyue_Fragment fragment = new BSD_weixiuyuyue_Fragment();
@@ -265,7 +272,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         adp_cl.setShuliangzongjia(new BSD_WXYY_CL_adp.shuliangzongjia() {
             @Override
             public void onYesClick(int shuliang, double zongjia) {
-                hejiCL();
+                wxclPrice();
             }
         });
         adp_cl.setUpdanjia(new BSD_WXYY_CL_adp.Updanjia() {
@@ -278,7 +285,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                     public void onYesClick(double gongshi) {
                         list_CL.get(i).setPeij_dj(gongshi);
                         list_CL.get(i).setPeij_je(gongshi * list_CL.get(i).getPeij_sl());
-                        hejiCL();
+                        wxclPrice();
                         adp_cl.notifyDataSetChanged();
                         bsd_xiuGaiGongShi.dismiss();
 
@@ -289,7 +296,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         adp_cl.setDeleteCL(new BSD_WXYY_CL_adp.DeleteCL() {
             @Override
             public void onYesClick() {
-                hejiCL();
+                wxclPrice();
             }
         });
         listcl.setAdapter(adp_cl);
@@ -305,7 +312,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                     @Override
                     public void onYesClick(double gongshi) {
                         list_XM.get(i).setWxxm_gs(gongshi);
-                        hejiXM();
+                        wxxmPrice();
                         bsd_xiuGaiGongShi.dismiss();
                         adp_xm.notifyDataSetChanged();
                     }
@@ -323,7 +330,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                     public void onYesClick(double gongshi) {
                         list_XM.get(i).setWxxm_je(gongshi);
                         zj();
-                        hejiXM();
+                        wxxmPrice();
                         bsd_xiuGaiGongShi.dismiss();
                         adp_xm.notifyDataSetChanged();
                     }
@@ -335,7 +342,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         adp_xm.setShanchuXM(new BSD_WXYY_XM_adp.ShanchuXM() {
             @Override
             public void onYesClick() {
-                hejiXM();
+                wxxmPrice();
             }
         });
         listxm.setAdapter(adp_xm);
@@ -396,6 +403,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         bsd_wxyy_rl_bycx.setOnClickListener(this);
         title = (TextView) view.findViewById(R.id.tv_title);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
+        billNo = (TextView) view.findViewById(R.id.tv_billNo);
     }
 
     @Override
@@ -413,6 +421,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
     }
 
     private void updateBillInfoUI() {
+        billNo.setText(billEntiy.getYuyue_no());
         bsd_wxyy_cp.setText(billEntiy.getChe_no());
         String cheCx = billEntiy.getChe_cx();
         String[] cheCxs = cheCx.split("\\|");
@@ -477,22 +486,18 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
             public void onSuccess(int aa, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    Log.e("vin", "onSuccess读取的：" + s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
                         JSONArray jsonarray = jsonObject.getJSONArray("data");
                         Map<String, String> map;
                         for (int i = 0; i < jsonarray.length(); i++) {
-                            Log.e("vin", "2222");
                             JSONObject item = jsonarray.getJSONObject(i);
                             map = new HashMap<>();
                             map.put("cxMcStd", item.getString("chex_mc_std"));   //车系
                             map.put("cxDm", item.getString("chex_dm"));     //车系代码
                             map.put("cxMc", item.getString("chex_mc"));   //车系名称
-                            Log.e("vins", "dm:" + item.getString("chex_dm"));
                             listvincx.add(map);
                         }
                         if (listvincx.size() == 1) {
-                            Log.e("vin", "1条记录");
                             //如果只查到一条记录，通过chex_dm查询相应的品牌、车系、车组、车型信息；
                             cxnm = listvincx.get(0).get("cxDm");      //车型内码
                             //                            cxmc=listvincx.get(0).get("cxMc");      //车型名称
@@ -500,7 +505,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                             getcx_by_cxdm();
                         } else if (listvincx.size() > 1) {
                             //如果查到多条记录，弹出对话框，显示chex_mc和chex_mc_std；
-                            Log.e("vin", "listvincx的长度：" + listvincx.size());
                             showDialogSelectCx();
                         }
                     }
@@ -528,8 +532,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                 Log.e("vin", "onfailure失败了");
             }
         });
-
-
     }
 
     /**
@@ -564,13 +566,12 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                             entity.setWxxm_dj(item.getDouble("wxxm_dj"));
                             list_XM.add(entity);
                         }
-                        adp_xm.notifyDataSetChanged();
                     }
-                    hejiXM();
+                    adp_xm.notifyDataSetChanged();
+                    wxxmPrice();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -588,7 +589,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                 Show.showTime(getActivity(), "网络连接超时");
             }
         });
-
     }
 
 
@@ -1110,7 +1110,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
     //项目合计
     double jg = 0;
 
-    public void hejiXM() {
+    public void wxxmPrice() {
         double j = 0;
         for (int i = 0; i < list_XM.size(); i++) {
             j = j + (list_XM.get(i).getWxxm_je());
@@ -1123,7 +1123,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
     //材料合计
     double jgxl = 0;
 
-    public void hejiCL() {
+    public void wxclPrice() {
         double xl = 0;
         for (int i = 0; i < list_CL.size(); i++) {
             xl = xl + (list_CL.get(i).getPeij_dj() * list_CL.get(i).getPeij_sl());
@@ -1157,22 +1157,17 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                             entity.setReco_no(item.getString("reco_no"));
                             entity.setYuyue_no(item.getString("yuyue_no"));
                             entity.setPeij_no(item.getString("peij_no"));
-                            //名字
                             entity.setPeij_mc(item.getString("peij_mc"));
-                            //数量
                             entity.setPeij_sl(item.getDouble("peij_sl"));
-                            //单价
                             entity.setPeij_dj(item.getDouble("peij_dj"));
-                            //图号
                             entity.setPeij_th(item.getString("peij_th"));
-                            //状态
                             entity.setPeij_zt(item.getString("peij_zt"));
                             entity.setPeij_dw(item.getString("peij_dw"));
                             list_CL.add(entity);
                         }
-                        adp_cl.notifyDataSetChanged();
                     }
-                    hejiCL();
+                    adp_cl.notifyDataSetChanged();
+                    wxclPrice();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1526,7 +1521,116 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
     }
 
     private void showWxcl() {
+        bsd_zcduxq_cl_pop = new BSD_ZCDUXQ_CL_POP(getActivity());
+        bsd_zcduxq_cl_pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        List<BSD_wxyy_cl_pop_entity> tempLists = new ArrayList<>();
+        if (list_CL != null) {
+            for (BSD_WeiXiuYuYue_Cl_entity item : list_CL) {
+                BSD_wxyy_cl_pop_entity tempItem = new BSD_wxyy_cl_pop_entity();
+                tempItem.setPeij_no(item.getPeij_no());
+                tempItem.setPeij_sl(item.getPeij_sl());
+                tempItem.setPeij_ydj(item.getPeij_dj());
+                tempLists.add(tempItem);
+            }
+        }
+        bsd_zcduxq_cl_pop.setTempLists(tempLists);
+        bsd_zcduxq_cl_pop.setCheNo(billEntiy.getChe_no());
+        bsd_zcduxq_cl_pop.setKehuNo(billEntiy.getKehu_no());
+        bsd_zcduxq_cl_pop.gb(new BSD_ZCDUXQ_CL_POP.Guanbi() {
+            @Override
+            public void onGuanBi(List<BSD_wxyy_cl_pop_entity> tempList) {
+                List<BSD_WeiXiuYuYue_Cl_entity> needAddList = new ArrayList<>();
+                // 循环返回的数据，找不需要新添加的
+                for (BSD_wxyy_cl_pop_entity item : tempList) {
+                    boolean hasAdd = false;
+                    double addPeijSl = item.getPeij_sl();
+                    for (BSD_WeiXiuYuYue_Cl_entity listCLItem : list_CL) {
+                        if (listCLItem.getPeij_no().equals(item.getPeij_no())) {
+                            if (listCLItem.getPeij_sl() == item.getPeij_sl()) {
+                                // 如果相等，则表示存在，直接退出，否则继续循环
+                                hasAdd = true;
+                            } else {
+                                addPeijSl = item.getPeij_sl() - listCLItem.getPeij_sl();
+                            }
+                            break;
+                        }
+                    }
+                    // 如果没有找到，则是需要添加的集合
+                    if (!hasAdd) {
+                        BSD_WeiXiuYuYue_Cl_entity wxclItem = new BSD_WeiXiuYuYue_Cl_entity();
+                        wxclItem.setYuyue_no(billEntiy.getWork_no());
+                        wxclItem.setPeij_no(item.getPeij_no());
+                        wxclItem.setPeij_mc(item.getPeij_mc());
+                        wxclItem.setPeij_sl(addPeijSl);
+                        wxclItem.setPeij_dj(item.getPeij_ydj());
+                        wxclItem.setPeij_je(addPeijSl * item.getPeij_ydj());
+                        wxclItem.setPeij_dw(item.getPeij_dw());
+                        wxclItem.setPeij_th(item.getPeij_th());
+                        wxclItem.setPeij_zt("正常");
+                        needAddList.add(wxclItem);
+                    }
+                }
+                // 请求接口，把数据添加到数据库中
+                if (needAddList.size() > 0) {
+                    saveNewWxclToDB(needAddList);
+                }
+            }
+        });
+        bsd_zcduxq_cl_pop.showAtLocation(beijing, Gravity.TOP, 0, 0);
+    }
 
+    private void saveNewWxclToDB(final List<BSD_WeiXiuYuYue_Cl_entity> needAddList) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");
+        AbRequestParams params = new AbRequestParams();
+        Object json = JSON.toJSON(needAddList);
+        params.put("addLists", json.toString());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxyy_clcd, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                if (data.equals("success")) {
+                    boolean isAdd = true;
+                    for (BSD_WeiXiuYuYue_Cl_entity item : needAddList) {
+                        for (BSD_WeiXiuYuYue_Cl_entity listClItem : list_CL) {
+                            if (listClItem.getPeij_no().equals(item.getPeij_no())) {
+                                isAdd = false;
+                                listClItem.setPeij_sl(listClItem.getPeij_sl() + item.getPeij_sl());
+                                listClItem.setPeij_je(listClItem.getPeij_je() + item.getPeij_je());
+                                break;
+                            }
+                        }
+                        if (isAdd) {
+                            list_CL.add(item);
+                        }
+                    }
+                    Iterator<BSD_WeiXiuYuYue_Cl_entity> iterator = list_CL.iterator();
+                    while (iterator.hasNext()) {
+                        BSD_WeiXiuYuYue_Cl_entity next = iterator.next();
+                        if (next.getPeij_sl() == 0) {
+                            iterator.remove();
+                        }
+                    }
+                    adp_cl.notifyDataSetChanged();
+                    wxclPrice();
+                }
+                bsd_zcduxq_cl_pop.dismiss();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
     }
 
     private void showWxxm() {
@@ -1550,7 +1654,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         bsd_zcduxq_xm_pop.setOnGuanbiListener(new BSD_ZCDUXQ_XM_POP.OnGuanbiListener() {
             @Override
             public void onGuanBi(List<BSD_wxyy_xm_pop_entiy> tempList) {
-                List<BSD_WeiXiuJieDan_XM_Entity> needAddList = new ArrayList<>();
+                List<BSD_WeiXiyYuYue_XM_entity> needAddList = new ArrayList<>();
                 // 循环返回的数据，找不需要新添加的
                 for (BSD_wxyy_xm_pop_entiy item : tempList) {
                     boolean hasAdd = false;
@@ -1563,8 +1667,8 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                     }
                     // 如果没有找到，则是需要添加的集合
                     if (!hasAdd) {
-                        BSD_WeiXiuJieDan_XM_Entity wxxmItem = new BSD_WeiXiuJieDan_XM_Entity();
-                        wxxmItem.setWork_no(billEntiy.getWork_no());
+                        BSD_WeiXiyYuYue_XM_entity wxxmItem = new BSD_WeiXiyYuYue_XM_entity();
+                        wxxmItem.setYuyue_no(billEntiy.getYuyue_no());
                         wxxmItem.setWxxm_no(item.getWxxm_no());
                         wxxmItem.setWxxm_mc(item.getWxxm_mc());
                         wxxmItem.setWxxm_gs(item.getWxxm_gs());
@@ -1572,7 +1676,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                         wxxmItem.setWxxm_cb(item.getWxxm_cb());
                         wxxmItem.setWxxm_je(item.getWxxm_zddj());
                         wxxmItem.setWxxm_zt("正常");
-                        wxxmItem.setWxxm_Tpye("正常");
                         needAddList.add(wxxmItem);
                     }
                 }
@@ -1585,8 +1688,38 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         bsd_zcduxq_xm_pop.showAtLocation(beijing, Gravity.TOP, 0, 0);
     }
 
-    private void saveNewWxxmToDB(List<BSD_WeiXiuJieDan_XM_Entity> needAddList) {
+    private void saveNewWxxmToDB(final List<BSD_WeiXiyYuYue_XM_entity> needAddList) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");
+        final AbRequestParams params = new AbRequestParams();
+        Object json = JSON.toJSON(needAddList);
+        params.put("addLists", json.toString());
+        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxyy_CD, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                // 保存成功
+                if (data.equals("success")) {
+                    // 1.将新维修项目添加到work_ll_gz的集合中;
+                    list_XM.addAll(needAddList);
+                    adp_xm.notifyDataSetChanged();
+                    wxxmPrice();
+                }
+                bsd_zcduxq_xm_pop.dismiss();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
 
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
     }
 
     private void showBYCX() {
