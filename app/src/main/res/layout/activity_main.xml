@@ -115,7 +115,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/bsd_rl_9"
+                android:id="@+id/rl_mrkx"
                 style="@style/myleftboxstyle">
 
                 <ImageView
@@ -126,11 +126,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/qb_px_1"
                 android:background="#686A6D" />
 
             <RelativeLayout
-                android:id="@+id/bsd_rl_1"
+                android:id="@+id/rl_ksbj"
                 style="@style/myleftboxstyle">
 
                 <ImageView
@@ -141,11 +141,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/qb_px_1"
                 android:background="#686A6D" />
 
             <RelativeLayout
-                android:id="@+id/bsd_rl_2"
+                android:id="@+id/rl_wxyy"
                 style="@style/myleftboxstyle">
 
                 <ImageView
@@ -157,11 +157,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/qb_px_1"
                 android:background="#686A6D" />
 
             <RelativeLayout
-                android:id="@+id/bsd_rl_3"
+                android:id="@+id/rl_wxjd"
                 style="@style/myleftboxstyle">
 
                 <ImageView
@@ -173,11 +173,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/qb_px_1"
                 android:background="#686A6D" />
 
             <RelativeLayout
-                android:id="@+id/bsd_rl_4"
+                android:id="@+id/rl_zcdd"
                 style="@style/myleftboxstyle">
 
                 <ImageView
@@ -189,11 +189,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/qb_px_1"
                 android:background="#686A6D" />
 
             <RelativeLayout
-                android:id="@+id/bsd_rl_5"
+                android:id="@+id/rl_hygl"
                 style="@style/myleftboxstyle">
 
                 <ImageView
@@ -205,11 +205,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/qb_px_1"
                 android:background="#686A6D" />
 
             <RelativeLayout
-                android:id="@+id/bsd_rl_6"
+                android:id="@+id/rl_lswx"
                 style="@style/myleftboxstyle">
 
                 <ImageView
@@ -221,11 +221,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/qb_px_1"
                 android:background="#686A6D" />
 
             <RelativeLayout
-                android:id="@+id/bsd_rl_7"
+                android:id="@+id/rl_clxx"
                 style="@style/myleftboxstyle">
 
                 <ImageView
@@ -237,11 +237,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/qb_px_1"
                 android:background="#686A6D" />
 
             <RelativeLayout
-                android:id="@+id/bsd_rl_8"
+                android:id="@+id/rl_my"
                 style="@style/myleftboxstyle">
 
                 <ImageView
@@ -250,11 +250,6 @@
                     android:src="@drawable/bsd_my_2" />
 
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#686A6D" />
         </LinearLayout>
 
         <!--中间碎片内容-->

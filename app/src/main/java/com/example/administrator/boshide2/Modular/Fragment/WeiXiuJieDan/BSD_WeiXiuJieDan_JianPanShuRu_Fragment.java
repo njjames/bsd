@@ -84,7 +84,7 @@ URLS url;
             @Override
             public void onClick(View view) {
 
-                ((MainActivity) getActivity()).upBSD_WXJD_log(view);
+                ((MainActivity) getActivity()).upBSD_WXJD_log();
             }
         });
         inputbox1 = (EditText) view.findViewById(R.id.et_car_license_inputbox1);
@@ -328,14 +328,14 @@ URLS url;
                             Toast.makeText(getActivity(), "网络超时请重试", Toast.LENGTH_SHORT).show();
                         } else {
 
-                            ((MainActivity) getActivity()).upwxjd(view);
+                            ((MainActivity) getActivity()).upwxjd();
                         }
                         Conts.zt = 1;
                         Conts.cp = cp;
 
                     } else if (jsonObject.get("total").toString().equals("0")) {
 
-                        ((MainActivity) getActivity()).upwxjd(view);
+                        ((MainActivity) getActivity()).upwxjd();
                         //请求
 
                         Conts.cp = cp;
@@ -349,7 +349,7 @@ URLS url;
                         entiy = list.get(0);
                         ((MainActivity) getActivity()).setWxjdentity(entiy);//传了个实体
 //
-                        ((MainActivity) getActivity()).upwxjd(view);
+                        ((MainActivity) getActivity()).upwxjd();
                         Conts.zt = 1;
                         Conts.cp = cp;
                     }

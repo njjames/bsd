@@ -97,7 +97,7 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).uplishijiedanlog(view);
+                ((MainActivity) getActivity()).upBSD_WXJD_log();
             }
         });
         abPullToRefreshView = (AbPullToRefreshView) view.findViewById(R.id.lsfreshview);

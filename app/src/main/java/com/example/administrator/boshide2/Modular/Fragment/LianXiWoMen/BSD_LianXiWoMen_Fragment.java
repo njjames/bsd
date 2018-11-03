@@ -60,7 +60,7 @@ public class BSD_LianXiWoMen_Fragment extends Fragment {
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upmy(view);
+                ((MainActivity) getActivity()).upBSD_MY_page();
             }
         });
         data();

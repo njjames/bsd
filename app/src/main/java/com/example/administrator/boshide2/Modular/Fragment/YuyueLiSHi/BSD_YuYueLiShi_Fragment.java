@@ -83,7 +83,7 @@ public class BSD_YuYueLiShi_Fragment extends BaseFragment implements OnFooterLoa
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upqhflog(view);
+                ((MainActivity) getActivity()).upBSD_WXYY_log();
             }
         });
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

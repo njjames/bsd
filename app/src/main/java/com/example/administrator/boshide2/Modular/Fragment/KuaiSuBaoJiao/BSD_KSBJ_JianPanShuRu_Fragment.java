@@ -68,7 +68,7 @@ public class BSD_KSBJ_JianPanShuRu_Fragment extends BaseFragment {
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upBSD_KSBJ_Log(view);
+                ((MainActivity) getActivity()).upBSD_KSBJ_Log();
             }
         });
         inputbox1 = (EditText) view.findViewById(R.id.et_car_license_inputbox1);

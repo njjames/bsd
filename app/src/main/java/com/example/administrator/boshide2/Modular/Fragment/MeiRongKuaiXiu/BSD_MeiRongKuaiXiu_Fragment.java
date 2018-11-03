@@ -1663,7 +1663,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick() {
-                        ((MainActivity) getActivity()).upBSD_mrkx_log();
+                        ((MainActivity) getActivity()).upBSD_MRKX_log();
                         queRen.dismiss();
                         //调用微信接口
                         weixin();
@@ -1689,7 +1689,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick() {
-                        ((MainActivity) getActivity()).upBSD_mrkx_log();
+                        ((MainActivity) getActivity()).upBSD_MRKX_log();
                         queRen.dismiss();
                     }
                 });
@@ -1878,7 +1878,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 if (status) {
                     BSD_wxcl = null;
                     BSD_wxxm = null;
-                    ((MainActivity) getActivity()).upBSD_mrkx_log();
+                    ((MainActivity) getActivity()).upBSD_MRKX_log();
                 }
             }
 

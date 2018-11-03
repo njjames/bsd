@@ -53,8 +53,8 @@
         <item name="android:layout_centerInParent">true</item>
         <item name="android:layout_marginLeft">@dimen/qb_px_8</item>
         <item name="android:layout_marginRight">@dimen/qb_px_8</item>
-        <item name="android:layout_marginTop">@dimen/qb_px_6</item>
-        <item name="android:layout_marginBottom">@dimen/qb_px_6</item>
+        <item name="android:layout_marginTop">@dimen/qb_px_8</item>
+        <item name="android:layout_marginBottom">@dimen/qb_px_8</item>
     </style>
 
     <style name="myleftboxstyle">
@@ -62,7 +62,6 @@
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">#38495c</item>
-        <item name="android:onClick">clickbox</item>
     </style>
 
     <style name="mychoosecarimgstyle">

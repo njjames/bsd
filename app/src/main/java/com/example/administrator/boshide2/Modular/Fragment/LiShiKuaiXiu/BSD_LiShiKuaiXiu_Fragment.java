@@ -75,7 +75,7 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upBSD_mrkx_log();
+                ((MainActivity) getActivity()).upBSD_MRKX_log();
             }
         });
 

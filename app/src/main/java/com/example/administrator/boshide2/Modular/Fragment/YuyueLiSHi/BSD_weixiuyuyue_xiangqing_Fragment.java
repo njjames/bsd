@@ -1565,7 +1565,7 @@ public class BSD_weixiuyuyue_xiangqing_Fragment extends Fragment  {
                     @Override
                     public void onYesClick() {
                         queRen.dismiss();
-                        ((MainActivity) getActivity()).upBSD_WXyy_log();
+                        ((MainActivity) getActivity()).upBSD_WXYY_log();
                     }
                 });
 

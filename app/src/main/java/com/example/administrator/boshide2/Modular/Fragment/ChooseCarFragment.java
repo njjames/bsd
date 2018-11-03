@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -59,8 +58,6 @@ public class ChooseCarFragment extends BaseFragment implements View.OnClickListe
     private String filename;
     private String carNo;
     private LinearLayout ll_historyInfo;
-    private String name = "";
-    private URLS url;
     private TextView title;
     private TextView historyTitle;
     private TextView footerText;
@@ -97,7 +94,6 @@ public class ChooseCarFragment extends BaseFragment implements View.OnClickListe
 
             }
         });
-        url = new URLS();
         iv_zdsb = (ImageView) view.findViewById(R.id.bsd_im_zdsb);
         iv_sdsr = (ImageView) view.findViewById(R.id.bsd_im_sdsr);
         iv_xcbsb = (ImageView) view.findViewById(R.id.bsd_im_xcbsb);
@@ -107,42 +103,13 @@ public class ChooseCarFragment extends BaseFragment implements View.OnClickListe
         ll_historyInfo = (LinearLayout) view.findViewById(R.id.ll_lishi);
         ll_historyInfo.setOnClickListener(this);
         iv_sdsr.setOnClickListener(this);
-        iv_zdsb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, Conts.REQUESTCODE_OCR);
-            }
-        });
-        iv_xcbsb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String status = Environment.getExternalStorageState();
-                if (status.equals(Environment.MEDIA_MOUNTED)) {
-                    try {
-                        File dir = new File("/sdcard/myImage/");
-                        if (!dir.exists())
-                            dir.mkdirs();
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                        File f = new File(dir, name);
-                        Uri u = Uri.fromFile(f);
-                        intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
-                        startActivityForResult(intent, Conts.REQUESTCODE_XCB);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toast.makeText(getHostActicity(), "SD卡不可用", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        iv_zdsb.setOnClickListener(this);
+        iv_xcbsb.setOnClickListener(this);
     }
 
     @Override
     public void initData() {
-        mMainActivity = (MainActivity) getActivity();
+        mMainActivity = (MainActivity) getHostActicity();
         initTitle();
     }
 
@@ -314,6 +281,12 @@ public class ChooseCarFragment extends BaseFragment implements View.OnClickListe
         }
     };
 
+    /**
+     * 检测车牌是否可用
+     * 如果可以用，会显示出车辆信息窗口
+     * 如果不可用，就是显示此车存在，但是没有权限
+     * @param cheNo
+     */
     private void checkCarCanused(final String cheNo) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();

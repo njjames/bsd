@@ -165,7 +165,7 @@ public class ManualInputFragment extends BaseFragment {
     private void back() {
         switch (billType) {
             case Conts.BILLTYPE_MRKX:
-                ((MainActivity) getActivity()).upBSD_mrkx_log();
+                ((MainActivity) getActivity()).upBSD_MRKX_log();
                 break;
             case Conts.BILLTYPE_KSBJ:
                 ((MainActivity) getActivity()).upBSD_KSBJ_Log();
@@ -174,7 +174,7 @@ public class ManualInputFragment extends BaseFragment {
                 ((MainActivity) getActivity()).upBSD_WXJD_log();
                 break;
             case Conts.BILLTYPE_WXYY:
-                ((MainActivity) getActivity()).upBSD_WXyy_log();
+                ((MainActivity) getActivity()).upBSD_WXYY_log();
                 break;
         }
     }

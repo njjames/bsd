@@ -16,17 +16,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.ab.http.AbStringHttpResponseListener;
+import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
-import com.example.administrator.boshide2.Modular.Fragment.BaoYangChaXun.BSD_BaoYangChaXun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.CheLiangXinXi.BSD_cheliangxinxi_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.CheLiangXinXi.Entity.BSD_CLXX_ety;
-import com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng.BSD_CheXiangQing_Fragment;
+import com.example.administrator.boshide2.Modular.Fragment.ChooseCarFragment;
 import com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.BSD_huiyuanguanli_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.BSD_KSBJ_JianPanShuRu_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.BSD_KSBJ_Log_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.BSD_ksbj_smsr_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.BSD_kuaisubaojia_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_ety;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiBaoJia.BSD_kuaisubaojia_xiangqing_Fragment;
@@ -40,23 +37,16 @@ import com.example.administrator.boshide2.Modular.Fragment.LiShiWeiXiu.Entity.BS
 import com.example.administrator.boshide2.Modular.Fragment.LianXiWoMen.BSD_LianXiWoMen_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.BSD_MeiRongKuaiXiu_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.ManualInputFragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.BSD_MeiRongKuaiXiu_Log_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_Car_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_KeHu_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.My.BSD_my_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.BSD_WeiXiuJieDan_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.BSD_WeiXiuJieDan_JianPanShuRu_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.BSD_WeiXiuJieDan_Log_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuXiangQing.BSD_WeiXiuXiangQing_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.BSD_WeiXiuYeWuDiaoDu_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.BSD_weixiuyuyue_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.BSD_weixiuyuyue_JianPanShuRu_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.BSD_weixiuyuyue_Log_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD_WeiXiuYueYue_entiy;
 import com.example.administrator.boshide2.Modular.Fragment.YuyueLiSHi.BSD_YuYueLiShi_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.YuyueLiSHi.BSD_weixiuyuyue_xiangqing_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.ZaiChangDiaoDU.BSD_zaichangdiaodu_Fragment;
 import com.example.administrator.boshide2.Modular.View.diaog.ChangePageDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.CustomDialog;
@@ -75,19 +65,27 @@ import org.json.JSONObject;
  * @2017-4-13
  */
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
     //碎片数组
     private Fragment[] fragments;
     ImageView bsd_im_9, bsd_im_1, bsd_im_2, bsd_im_3, bsd_im_4, bsd_im_5, bsd_im_6, bsd_im_7, bsd_im_8;
     //图标的数组
     private ImageView[] arr_iv;// 图标的数组
 
-    RelativeLayout bsd_rl_9, bsd_rl_1, bsd_rl_2, bsd_rl_3, bsd_rl_4, bsd_rl_5, bsd_rl_6, bsd_rl_7, bsd_rl_8;
+    RelativeLayout rl_mrkx;
+    RelativeLayout rl_ksbj;
+    RelativeLayout rl_wxyy;
+    RelativeLayout rl_wxjd;
+    RelativeLayout rl_zcdd;
+    RelativeLayout rl_hygl;
+    RelativeLayout rl_lswx;
+    RelativeLayout rl_clxx;
+    RelativeLayout rl_my;
 
     private RelativeLayout[] arr_rl;//点击布局
     //点击布局的id
-    private int[] arr_id_box = {R.id.bsd_rl_9, R.id.bsd_rl_1, R.id.bsd_rl_2, R.id.bsd_rl_3, R.id.bsd_rl_4,
-            R.id.bsd_rl_5, R.id.bsd_rl_6, R.id.bsd_rl_7, R.id.bsd_rl_8};
+    private int[] arr_id_box = {R.id.rl_mrkx, R.id.rl_ksbj, R.id.rl_wxyy, R.id.rl_wxjd, R.id.rl_zcdd,
+            R.id.rl_hygl, R.id.rl_lswx, R.id.rl_clxx, R.id.rl_my};
 
     private String[] arr_name_box = {"美容快修", "快速报价", "维修预约", "维修接待", "在厂调度",
             "会员管理", "历史维修", "车辆信息", "我的管理"};
@@ -105,13 +103,22 @@ public class MainActivity extends FragmentActivity {
     public RelativeLayout relativeLayout;
     public BSD_CLXX_ety clxx_ety;
     String work_no;//历史维修单号
-    private int firstBoxIndex = 0;
-    private int currentBoxIndex = 0;
+    private int firstPageIndex = 0;
+    private int currentPageIndex = 0;
     private Queding_Quxiao queding_quxiao;
     private String[] lAuthorization = null; //左侧box的权限
     private URLS urls;
     private ChangePageDialog changePageDialog;
     private LinearLayout caozuoyuanInfo;
+    private ChooseCarFragment mPageWXJDFragment;
+    private ChooseCarFragment mPageWXYYFragment;
+    private ChooseCarFragment mPageKSBJFragment;
+    private ChooseCarFragment mPageMRKXFragment;
+    private BSD_zaichangdiaodu_Fragment mPageZCDDFragment;
+    private BSD_huiyuanguanli_Fragment mPageHYGLFragment;
+    private BSD_lishiweixiu_Fragment mPageLSWXFragment;
+    private BSD_cheliangxinxi_Fragment mPageCLXXFragment;
+    private BSD_my_Fragment mPageMYFragment;
 
     public BSD_WeiXiuYueYue_entiy getEntiy() {
         return entiy;
@@ -184,7 +191,7 @@ public class MainActivity extends FragmentActivity {
         urls = new URLS();
         Bundle b = this.getIntent().getExtras();
         lAuthorization = b.getStringArray("QD");
-        initFragment();
+        initFragment(firstPageIndex);
         init();
         jinyoushuju();
     }
@@ -342,35 +349,46 @@ public class MainActivity extends FragmentActivity {
         arr_iv[7] = bsd_im_7;
         arr_iv[8] = bsd_im_8;
         //获取点击的相对布局，为以后点击没想更换颜色做准备
-        bsd_rl_1 = (RelativeLayout) findViewById(R.id.bsd_rl_1);
-        bsd_rl_2 = (RelativeLayout) findViewById(R.id.bsd_rl_2);
-        bsd_rl_3 = (RelativeLayout) findViewById(R.id.bsd_rl_3);
-        bsd_rl_4 = (RelativeLayout) findViewById(R.id.bsd_rl_4);
-        bsd_rl_5 = (RelativeLayout) findViewById(R.id.bsd_rl_5);
-        bsd_rl_6 = (RelativeLayout) findViewById(R.id.bsd_rl_6);
-        bsd_rl_7 = (RelativeLayout) findViewById(R.id.bsd_rl_7);
-        bsd_rl_8 = (RelativeLayout) findViewById(R.id.bsd_rl_8);
-        bsd_rl_9 = (RelativeLayout) findViewById(R.id.bsd_rl_9);
+        rl_mrkx = (RelativeLayout) findViewById(R.id.rl_mrkx);
+        rl_ksbj = (RelativeLayout) findViewById(R.id.rl_ksbj);
+        rl_wxyy = (RelativeLayout) findViewById(R.id.rl_wxyy);
+        rl_wxjd = (RelativeLayout) findViewById(R.id.rl_wxjd);
+        rl_zcdd = (RelativeLayout) findViewById(R.id.rl_zcdd);
+        rl_hygl = (RelativeLayout) findViewById(R.id.rl_hygl);
+        rl_lswx = (RelativeLayout) findViewById(R.id.rl_lswx);
+        rl_clxx = (RelativeLayout) findViewById(R.id.rl_clxx);
+        rl_my = (RelativeLayout) findViewById(R.id.rl_my);
+        rl_mrkx.setOnClickListener(this);
+        rl_ksbj.setOnClickListener(this);
+        rl_wxyy.setOnClickListener(this);
+        rl_wxjd.setOnClickListener(this);
+        rl_zcdd.setOnClickListener(this);
+        rl_hygl.setOnClickListener(this);
+        rl_lswx.setOnClickListener(this);
+        rl_clxx.setOnClickListener(this);
+        rl_my.setOnClickListener(this);
         arr_rl = new RelativeLayout[9];
-        arr_rl[0] = bsd_rl_9;
-        arr_rl[1] = bsd_rl_1;
-        arr_rl[2] = bsd_rl_2;
-        arr_rl[3] = bsd_rl_3;
-        arr_rl[4] = bsd_rl_4;
-        arr_rl[5] = bsd_rl_5;
-        arr_rl[6] = bsd_rl_6;
-        arr_rl[7] = bsd_rl_7;
-        arr_rl[8] = bsd_rl_8;
+        arr_rl[0] = rl_mrkx;
+        arr_rl[1] = rl_ksbj;
+        arr_rl[2] = rl_wxyy;
+        arr_rl[3] = rl_wxjd;
+        arr_rl[4] = rl_zcdd;
+        arr_rl[5] = rl_hygl;
+        arr_rl[6] = rl_lswx;
+        arr_rl[7] = rl_clxx;
+        arr_rl[8] = rl_my;
 
         for (int i = (lAuthorization.length - 1); i >= 0; i--) {
             if (lAuthorization[i].equals("0")) {
                 arr_rl[i].setVisibility(View.GONE);
             } else {
-                firstBoxIndex = i; // 用来获取左侧第一个显示的box的位置
+                firstPageIndex = i; // 用来获取左侧第一个显示的box的位置
             }
         }
-        checkHighLight(firstBoxIndex);
-        change(fragments[firstBoxIndex]);
+        checkHighLight(firstPageIndex);
+        currentPageIndex = firstPageIndex;
+//        change(fragments[firstPageIndex]);
+        initFragment(firstPageIndex);
     }
 
 
@@ -390,47 +408,7 @@ public class MainActivity extends FragmentActivity {
         this.work_no = work_no;
     }
 
-    /**
-     * 切换碎片的点击方法
-     * @param view
-     */
-    public void clickbox(View view) {
-        // 循环 存储着id的的数组，根据点击的id获取到位置
-        for (int i = 0; i < arr_id_box.length; i++) {
-            if (view.getId() == arr_id_box[i]) {
-                final int clickBoxIndex = i;
-                DownJianPan.DJP(MainActivity.this);
-                if (zaichangtiaozhuan == 1) {
-                    currentBoxIndex = 4;
-                    zaichangtiaozhuan = 0;
-                    Log.i("njc", "跳转问题111：clickBoxIndex==" + clickBoxIndex + "===currentBoxIndex===" + currentBoxIndex);
-                } else {
-                    // 如果点击的不是当前的box，则弹出提示框，并退出循环
-                    if (clickBoxIndex != currentBoxIndex) {
-                        String clickname = getBoxNameByIndex(clickBoxIndex);
-                        String currentname = getBoxNameByIndex(currentBoxIndex);
-                        changePageDialog = new ChangePageDialog(MainActivity.this, currentname, clickname);
-                        changePageDialog.setOnResultClickListener(new ChangePageDialog.OnResultClickListener() {
-                            @Override
-                            public void onConfirm() {
-                                change(fragments[clickBoxIndex]);
-                                checkHighLight(clickBoxIndex);
-                                changePageDialog.dismiss();
-                                currentBoxIndex = clickBoxIndex;
-                            }
 
-                            @Override
-                            public void onCancel() {
-                                changePageDialog.dismiss();
-                            }
-                        });
-                        changePageDialog.show();
-                        break;
-                    }
-                }
-            }
-        }
-    }
 
     private String getBoxNameByIndex(int index) {
         return arr_name_box[index];
@@ -441,130 +419,132 @@ public class MainActivity extends FragmentActivity {
      */
     int zaichangtiaozhuan = 0;
 
-    private void initFragment() {
-        //快速报价
-        BSD_ksbj = new BSD_kuaisubaojia_Fragment();
-        //维修预约
-        BSD_wxyy = new BSD_weixiuyuyue_Fragment();
-        //维修接单
-        BSD_wxjd = new BSD_WeiXiuJieDan_Fragment();
-        //在厂调度
-        BSD_zcdd = new BSD_zaichangdiaodu_Fragment();
-        //会员管理
-        BSD_hygl = new BSD_huiyuanguanli_Fragment();
-        //历史维修
-        BSD_lswx = new BSD_lishiweixiu_Fragment();
-        //车辆信息
-        BSD_clxx = new BSD_cheliangxinxi_Fragment();
-        //我的管理
-        BSD_my = new BSD_my_Fragment();
-        //历史报价
-        BSD_lsbj = new BSD_lishibaojia_Fragment();
-        //预约历史
-        BSD_lsyy = new BSD_YuYueLiShi_Fragment();
-        //历史接单
-        BSD_lsjd = new BSD_lishijiedan_Fragment();
-        //维修详情
-        BSD_wxxq = new BSD_WeiXiuXiangQing_Fragment();
-        //车辆详情
-        BSD_cxq = new BSD_CheXiangQing_Fragment();
-        //联系我们
-        BSD_lxwm = new BSD_LianXiWoMen_Fragment();
-        //快速扫描的入口
-        BSD_ksbj_smsr = new BSD_ksbj_smsr_Fragment();
-
-        //键盘输入
-        BSD_srjp = new BSD_KSBJ_JianPanShuRu_Fragment();
-        //快速报价
-        BSD_KSBJ_Log = new BSD_KSBJ_Log_Fragment();
-        //维修预约
-        BSD_wxyy_log = new BSD_weixiuyuyue_Log_Fragment();
-        //维修预约键盘输入
-        BSD_wxyy_srjp = new BSD_weixiuyuyue_JianPanShuRu_Fragment();
-        //维修接单
-        BSD_wxjd_log = new BSD_WeiXiuJieDan_Log_Fragment();
-        //维修接单键盘输入
-        BSD_wxjd_srjp = new BSD_WeiXiuJieDan_JianPanShuRu_Fragment();
-        //保养查询
-        BSD_bycx = new BSD_BaoYangChaXun_Fragment();
-        //快速报价详情
-        BSD_ksbj_xiangqing = new BSD_kuaisubaojia_xiangqing_Fragment();
-        //维修预约详情
-        BSD_wxyy_xiangqing = new BSD_weixiuyuyue_xiangqing_Fragment();
-        //维修接单详情
-        BSD_wxjd_xiangqing = new BSD_WeiXiuJieDan_xiangqing_Fragment();
-        // 美容快修
-        BSD_mrby_Log = new BSD_MeiRongKuaiXiu_Log_Fragment();
-        // 手动输入页面
-        BSD_mrkx_jpsr = new ManualInputFragment();
-        //美容快修主页面
-        BSD_mrkx = new BSD_MeiRongKuaiXiu_Fragment();
-        //美容快修编辑车辆、客户信息界面
-        BSD_mrkx_clxx = new BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment();
-        //历史快修
-        BSD_lskx = new BSD_LiShiKuaiXiu_Fragment();
-
-        BSD_mrkx_xq = new BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment();
-
-        fragments = new Fragment[29];
-        fragments[0] = BSD_mrby_Log;
-        fragments[1] = BSD_KSBJ_Log;
-        fragments[2] = BSD_wxyy_log;
-        fragments[3] = BSD_wxjd_log;
-        fragments[4] = BSD_zcdd;
-        fragments[5] = BSD_hygl;
-        fragments[6] = BSD_lswx;
-        fragments[7] = BSD_clxx;
-        fragments[8] = BSD_my;
-        fragments[9] = BSD_lsbj;
-        fragments[10] = BSD_lsyy;
-        fragments[11] = BSD_lsjd;
-        fragments[12] = BSD_wxxq;
-        fragments[13] = BSD_cxq;
-        fragments[14] = BSD_lxwm;
-        fragments[15] = BSD_ksbj_smsr;
-        fragments[16] = BSD_wxywdd;
-        fragments[17] = BSD_srjp;
-        fragments[18] = BSD_ksbj;
-        fragments[19] = BSD_wxyy;
-        fragments[20] = BSD_wxyy_srjp;
-        fragments[21] = BSD_wxjd;
-        fragments[22] = BSD_wxjd_srjp;
-        fragments[23] = BSD_bycx;
-        fragments[24] = BSD_ksbj_xiangqing;
-        fragments[25] = BSD_wxyy_xiangqing;
-        fragments[26] = BSD_wxjd_xiangqing;
-        fragments[27] = BSD_mrkx_jpsr;
-        fragments[28] = BSD_mrkx;
+    private void initFragment(int firstPageIndex) {
+        switch (firstPageIndex) {
+            case 0:
+                upBSD_MRKX_log();
+                break;
+            case 1:
+                upBSD_KSBJ_Log();
+                break;
+            case 2:
+                upBSD_WXYY_log();
+                break;
+            case 3:
+                upBSD_WXJD_log();
+                break;
+            case 4:
+                upBSD_ZCDD_page();
+                break;
+            case 5:
+                upBSD_HYGL_page();
+                break;
+            case 6:
+                upBSD_LSWX_page();
+                break;
+            case 7:
+                upBSD_CLXX_page();
+                break;
+            case 8:
+                upBSD_MY_page();
+                break;
+        }
+//        //快速报价
+//        BSD_ksbj = new BSD_kuaisubaojia_Fragment();
+//        //维修预约
+//        BSD_wxyy = new BSD_weixiuyuyue_Fragment();
+//        //维修接单
+//        BSD_wxjd = new BSD_WeiXiuJieDan_Fragment();
+//        //在厂调度
+//        BSD_zcdd = new BSD_zaichangdiaodu_Fragment();
+//        //会员管理
+//        BSD_hygl = new BSD_huiyuanguanli_Fragment();
+//        //历史维修
+//        BSD_lswx = new BSD_lishiweixiu_Fragment();
+//        //车辆信息
+//        BSD_clxx = new BSD_cheliangxinxi_Fragment();
+//        //我的管理
+//        BSD_my = new BSD_my_Fragment();
+//        //历史报价
+//        BSD_lsbj = new BSD_lishibaojia_Fragment();
+//        //预约历史
+//        BSD_lsyy = new BSD_YuYueLiShi_Fragment();
+//        //历史接单
+//        BSD_lsjd = new BSD_lishijiedan_Fragment();
+//        //维修详情
+//        BSD_wxxq = new BSD_WeiXiuXiangQing_Fragment();
+//        //车辆详情
+//        BSD_cxq = new BSD_CheXiangQing_Fragment();
+//        //联系我们
+//        BSD_lxwm = new BSD_LianXiWoMen_Fragment();
+//        //快速扫描的入口
+//        BSD_ksbj_smsr = new BSD_ksbj_smsr_Fragment();
+//
+//        //键盘输入
+//        BSD_srjp = new BSD_KSBJ_JianPanShuRu_Fragment();
+//        //快速报价
+//        BSD_KSBJ_Log = new BSD_KSBJ_Log_Fragment();
+//        //维修预约
+//        BSD_wxyy_log = new BSD_weixiuyuyue_Log_Fragment();
+//        //维修预约键盘输入
+//        BSD_wxyy_srjp = new BSD_weixiuyuyue_JianPanShuRu_Fragment();
+//        //维修接单
+//        BSD_wxjd_log = new BSD_WeiXiuJieDan_Log_Fragment();
+//        //维修接单键盘输入
+//        BSD_wxjd_srjp = new BSD_WeiXiuJieDan_JianPanShuRu_Fragment();
+//        //保养查询
+//        BSD_bycx = new BSD_BaoYangChaXun_Fragment();
+//        //快速报价详情
+//        BSD_ksbj_xiangqing = new BSD_kuaisubaojia_xiangqing_Fragment();
+//        //维修预约详情
+//        BSD_wxyy_xiangqing = new BSD_weixiuyuyue_xiangqing_Fragment();
+//        //维修接单详情
+//        BSD_wxjd_xiangqing = new BSD_WeiXiuJieDan_xiangqing_Fragment();
+//        // 美容快修
+//        BSD_mrby_Log = new BSD_MeiRongKuaiXiu_Log_Fragment();
+//        // 手动输入页面
+//        BSD_mrkx_jpsr = new ManualInputFragment();
+//        //美容快修主页面
+//        BSD_mrkx = new BSD_MeiRongKuaiXiu_Fragment();
+//        //美容快修编辑车辆、客户信息界面
+//        BSD_mrkx_clxx = new BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment();
+//        //历史快修
+//        BSD_lskx = new BSD_LiShiKuaiXiu_Fragment();
+//
+//        BSD_mrkx_xq = new BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment();
+//
+//        fragments = new Fragment[29];
+//        fragments[0] = BSD_mrby_Log;
+//        fragments[1] = BSD_KSBJ_Log;
+//        fragments[2] = BSD_wxyy_log;
+//        fragments[3] = BSD_wxjd_log;
+//        fragments[4] = BSD_zcdd;
+//        fragments[5] = BSD_hygl;
+//        fragments[6] = BSD_lswx;
+//        fragments[7] = BSD_clxx;
+//        fragments[8] = BSD_my;
+//        fragments[9] = BSD_lsbj;
+//        fragments[10] = BSD_lsyy;
+//        fragments[11] = BSD_lsjd;
+//        fragments[12] = BSD_wxxq;
+//        fragments[13] = BSD_cxq;
+//        fragments[14] = BSD_lxwm;
+//        fragments[15] = BSD_ksbj_smsr;
+//        fragments[16] = BSD_wxywdd;
+//        fragments[17] = BSD_srjp;
+//        fragments[18] = BSD_ksbj;
+//        fragments[19] = BSD_wxyy;
+//        fragments[20] = BSD_wxyy_srjp;
+//        fragments[21] = BSD_wxjd;
+//        fragments[22] = BSD_wxjd_srjp;
+//        fragments[23] = BSD_bycx;
+//        fragments[24] = BSD_ksbj_xiangqing;
+//        fragments[25] = BSD_wxyy_xiangqing;
+//        fragments[26] = BSD_wxjd_xiangqing;
+//        fragments[27] = BSD_mrkx_jpsr;
+//        fragments[28] = BSD_mrkx;
     }
 
-
-    /**
-     * 跳转历史快修
-     */
-    public void upmrkx_xq() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_mrkx_xq);
-    }
-
-    /**
-     * 跳转历史快修
-     */
-    public void upLSKX() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_lskx);
-    }
-
-
-    /**
-     * 跳转快速报价
-     *
-     * @param view
-     */
-    public void upksbj(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_ksbj);
-    }
 
     /**
      * 跳转快速报价
@@ -575,66 +555,11 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * 跳转快速报价lgo
-     */
-    public void upksbjlog() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_KSBJ_Log);
-    }
-
-    /**
-     * 跳转快速报价详情
-     */
-    public void upksbjxiangqing() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_ksbj_xiangqing);
-    }
-
-    /**
-     * 跳转历史报价
-     */
-    public void upLSBJ() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_lsbj);
-    }
-
-    /**
-     * 跳转预约历史
-     */
-    public void upLSYY() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_lsyy);
-    }
-
-    /**
-     * 跳转历史报价log
-     *
-     * @param view
-     */
-    public void upqhflog(View view) {
-
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxyy_log);
-    }
-
-    /**
      * 跳转预约历史详情
      */
     public void wxyyxiangqing() {
-
         DownJianPan.DJP(MainActivity.this);
         change(BSD_wxyy_xiangqing);
-    }
-
-
-    /**
-     * 跳转维修预约
-     *
-     * @param view
-     */
-    public void upyuyue(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxyy);
     }
 
     /**
@@ -646,42 +571,6 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * 跳转历史接单
-     */
-    public void upLSJD() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_lsjd);
-    }
-
-    /**
-     * 跳转历史接单log
-     *
-     * @param view
-     */
-    public void uplishijiedanlog(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxjd_log);
-    }
-
-    /**
-     * 跳转历史接单详情
-     */
-    public void uowxjdxiangqing() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxjd_xiangqing);
-    }
-
-    /**
-     * 跳转维修接单
-     *
-     * @param view
-     */
-    public void upwxjd(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxjd);
-    }
-
-    /**
      * 跳转维修接单
      */
     public void upwxjd() {
@@ -690,23 +579,35 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * 跳转维修详情
-     *
-     * @param view
+     * 跳转历史快修
      */
-    public void upwxxq(View view) {
+    public void upLSKX() {
         DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxxq);
+        change(new BSD_LiShiKuaiXiu_Fragment());
     }
 
     /**
-     * 跳转历史维修
-     *
-     * @param view
+     * 跳转历史报价
      */
-    public void uplswx(View view) {
+    public void upLSBJ() {
         DownJianPan.DJP(MainActivity.this);
-        change(BSD_lswx);
+        change(new BSD_lishibaojia_Fragment());
+    }
+
+    /**
+     * 跳转预约历史
+     */
+    public void upLSYY() {
+        DownJianPan.DJP(MainActivity.this);
+        change(new BSD_YuYueLiShi_Fragment());
+    }
+
+    /**
+     * 跳转历史接单
+     */
+    public void upLSJD() {
+        DownJianPan.DJP(MainActivity.this);
+        change(new BSD_lishijiedan_Fragment());
     }
 
     /**
@@ -719,154 +620,11 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * 跳转车辆信息列表
-     *
-     * @param view
-     */
-    public void upclxx(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_clxx);
-    }
-
-
-    /**
      * 跳转联系我们
-     *
-     * @param view
      */
-    public void uplxwm(View view) {
+    public void uplxwm() {
         DownJianPan.DJP(MainActivity.this);
-        change(BSD_lxwm);
-    }
-
-    /**
-     * 跳转我的guanli
-     *
-     * @param view
-     */
-    public void upmy(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_my);
-    }
-
-    /**
-     * 跳转维修业务调度页面
-     */
-    public void upwxywdd(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxywdd);
-    }
-
-    /**
-     * 跳转维
-     */
-    public void upwxywdd() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxywdd);
-    }
-
-    /**
-     * 跳转在场调度页面
-     */
-    public void upzcdd(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_zcdd);
-    }
-
-    /**
-     * 跳转在场调度页面
-     */
-    public void upzcdd() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_zcdd);
-    }
-
-    /**
-     * 跳转输入界面
-     */
-    public void upsrjm(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_srjp);
-    }
-
-    /**
-     * 跳转输入界面
-     */
-    public void upsrjm() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_srjp);
-    }
-
-    /**
-     * 跳转输入界面
-     */
-    public void upBSD_KSBJ_Log(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_KSBJ_Log);
-    }
-
-    /**
-     * 跳转输入界面
-     */
-    public void upBSD_KSBJ_Log() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_KSBJ_Log);
-    }
-
-    /**
-     * 微信预约手动输入
-     */
-    public void upBSD_WXYY_srjp(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxyy_srjp);
-    }
-
-    /**
-     * 微信预约手动输入
-     */
-    public void upBSD_WXYY_srjp() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxyy_srjp);
-    }
-
-    /**
-     * 维修预约跳转车牌识别和手动输入
-     */
-    public void upBSD_WXyy_log(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxyy_log);
-    }
-
-    /**
-     * 维修预约跳转车牌识别和手动输入
-     */
-    public void upBSD_WXyy_log() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxyy_log);
-    }
-
-    /**
-     * 维修接单跳转车牌识别和手动输入
-     */
-    public void upBSD_WXJD_log(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxjd_log);
-    }
-
-    /**
-     * 维修接单跳转车牌识别和手动输入
-     */
-    public void upBSD_WXJD_log() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxjd_log);
-    }
-
-    /**
-     * 维修接单手动输入
-     */
-    public void upBSD_WXJD_srjp(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxjd_srjp);
+        change(new BSD_LianXiWoMen_Fragment());
     }
 
     /**
@@ -879,80 +637,12 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * 维修接单手动输入
-     */
-    public void upBSD_WXJD_srjp() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_wxjd_srjp);
-    }
-
-    /**
      * 保养查询
      */
     public void upBSD_bycx() {
         DownJianPan.DJP(MainActivity.this);
         change(BSD_bycx);
     }
-
-    /**
-     * 美容快修键盘输入
-     */
-    public void upBSD_mrkx_jpsr() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_mrkx_jpsr);
-    }
-
-    public void upBSD_mrkx_log() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_mrby_Log);
-    }
-
-
-
-
-
-
-    /**
-     * 编辑车辆、客户信息界面
-     */
-    public void upBSD_mrkx_clxx() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_mrkx_clxx);
-    }
-
-
-
-
-
-
-    /**
-     * 美容快修主页
-     */
-    public void upBSD_mrkx() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_mrkx);
-    }
-
-    /**
-     * 启动美容快修主页（草稿单）
-     * @param params  参数是草稿单的json字符串
-     */
-    public void showMrkxFragment(String params) {
-        DownJianPan.DJP(this);
-        change(BSD_MeiRongKuaiXiu_Fragment.newInstance(params));
-    }
-
-
-//    //切换碎片事务的方法
-//    private void changedata(Fragment f,BSD_WeiXiuYueYue_entiy entiy) {
-//        this.getSupportFragmentManager()//碎片管理者
-//                //开启事务
-//                .beginTransaction()
-//                //替换方法
-//                .replace(R.id.login_content, f)
-//                //提交事务
-//                .commit();
-//    }
 
     //切换碎片事务的方法
     private void change(Fragment fragment) {
@@ -980,6 +670,15 @@ public class MainActivity extends FragmentActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK)
             return true;//不执行父类点击事件
         return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
+    }
+
+    /**
+     * 启动美容快修主页（草稿单）
+     * @param params  参数是草稿单的json字符串
+     */
+    public void showMrkxFragment(String params) {
+        DownJianPan.DJP(this);
+        change(BSD_MeiRongKuaiXiu_Fragment.newInstance(params));
     }
 
     public void showKSBJFragment(String params) {
@@ -1024,5 +723,188 @@ public class MainActivity extends FragmentActivity {
     public void showWxjdXqFragment(String params) {
         DownJianPan.DJP(this);
         change(BSD_WeiXiuJieDan_xiangqing_Fragment.newInstance(params));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rl_mrkx:
+                switchPage(0);
+                break;
+            case R.id.rl_ksbj:
+                switchPage(1);
+                break;
+            case R.id.rl_wxyy:
+                switchPage(2);
+                break;
+            case R.id.rl_wxjd:
+                switchPage(3);
+                break;
+            case R.id.rl_zcdd:
+                switchPage(4);
+                break;
+            case R.id.rl_hygl:
+                switchPage(5);
+                break;
+            case R.id.rl_lswx:
+                switchPage(6);
+                break;
+            case R.id.rl_clxx:
+                switchPage(7);
+                break;
+            case R.id.rl_my:
+                switchPage(8);
+                break;
+        }
+    }
+
+    private void switchPage(final int pageIndex) {
+        if (pageIndex != currentPageIndex) {
+            String clickname = getBoxNameByIndex(pageIndex);
+            String currentname = getBoxNameByIndex(currentPageIndex);
+            changePageDialog = new ChangePageDialog(this, currentname, clickname);
+            changePageDialog.setOnResultClickListener(new ChangePageDialog.OnResultClickListener() {
+                @Override
+                public void onConfirm() {
+                    currentPageIndex = pageIndex;
+                    switch (pageIndex) {
+                        case 0:
+                            upBSD_MRKX_log();
+                            break;
+                        case 1:
+                            upBSD_KSBJ_Log();
+                            break;
+                        case 2:
+                            upBSD_WXYY_log();
+                            break;
+                        case 3:
+                            upBSD_WXJD_log();
+                            break;
+                        case 4:
+                            upBSD_ZCDD_page();
+                            break;
+                        case 5:
+                            upBSD_HYGL_page();
+                            break;
+                        case 6:
+                            upBSD_LSWX_page();
+                            break;
+                        case 7:
+                            upBSD_CLXX_page();
+                            break;
+                        case 8:
+                            upBSD_MY_page();
+                            break;
+                    }
+                    checkHighLight(pageIndex);
+                    changePageDialog.dismiss();
+                }
+
+                @Override
+                public void onCancel() {
+                    changePageDialog.dismiss();
+                }
+            });
+            changePageDialog.show();
+        }
+    }
+
+    /**
+     * 显示我的页面
+     */
+    public void upBSD_MY_page() {
+        DownJianPan.DJP(this);
+        if (mPageMYFragment == null) {
+            mPageMYFragment = new BSD_my_Fragment();
+        }
+        change(mPageMYFragment);
+    }
+
+    /**
+     * 显示车辆信息页面
+     */
+    public void upBSD_CLXX_page() {
+        DownJianPan.DJP(this);
+        if (mPageCLXXFragment == null) {
+            mPageCLXXFragment = new BSD_cheliangxinxi_Fragment();
+        }
+        change(mPageCLXXFragment);
+    }
+
+    /**
+     * 显示历史维修页面
+     */
+    public void upBSD_LSWX_page() {
+        DownJianPan.DJP(this);
+        if (mPageLSWXFragment == null) {
+            mPageLSWXFragment = new BSD_lishiweixiu_Fragment();
+        }
+        change(mPageLSWXFragment);
+    }
+
+    /**
+     * 显示会员管理页面
+     */
+    public void upBSD_HYGL_page() {
+        DownJianPan.DJP(this);
+        if (mPageHYGLFragment == null) {
+            mPageHYGLFragment = new BSD_huiyuanguanli_Fragment();
+        }
+        change(mPageHYGLFragment);
+    }
+
+    /**
+     * 显示在场调度页面
+     */
+    public void upBSD_ZCDD_page() {
+        DownJianPan.DJP(this);
+        if (mPageZCDDFragment == null) {
+            mPageZCDDFragment = new BSD_zaichangdiaodu_Fragment();
+        }
+        change(mPageZCDDFragment);
+    }
+
+    /**
+     * 跳转美容快修选择车辆界面
+     */
+    public void upBSD_MRKX_log() {
+        DownJianPan.DJP(this);
+        if (mPageMRKXFragment == null) {
+            mPageMRKXFragment = ChooseCarFragment.newInstance(Conts.BILLTYPE_MRKX);
+        }
+        change(mPageMRKXFragment);
+    }
+
+    /**
+     * 跳转快速报价选择车辆界面
+     */
+    public void upBSD_KSBJ_Log() {
+        DownJianPan.DJP(this);
+        if (mPageKSBJFragment == null) {
+            mPageKSBJFragment = ChooseCarFragment.newInstance(Conts.BILLTYPE_KSBJ);
+        }
+        change(mPageKSBJFragment);
+    }
+
+    /**
+     * 跳转维修接单选择车辆界面
+     */
+    public void upBSD_WXYY_log() {
+        DownJianPan.DJP(this);
+        if (mPageWXYYFragment == null) {
+            mPageWXYYFragment = ChooseCarFragment.newInstance(Conts.BILLTYPE_WXYY);
+        }
+        change(mPageWXYYFragment);
+    }
+
+    /**
+     * 跳转维修预约选择车辆界面
+     */
+    public void upBSD_WXJD_log() {
+        DownJianPan.DJP(this);
+        if (mPageWXJDFragment == null) {
+            mPageWXJDFragment = ChooseCarFragment.newInstance(Conts.BILLTYPE_WXJD);
+        }
+        change(mPageWXJDFragment);
     }
 }

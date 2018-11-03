@@ -88,7 +88,7 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upclxx(view);
+                ((MainActivity) getActivity()).upBSD_CLXX_page();
             }
         });
     }

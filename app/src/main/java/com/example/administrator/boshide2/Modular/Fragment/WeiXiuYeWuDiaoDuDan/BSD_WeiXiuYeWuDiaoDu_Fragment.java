@@ -137,7 +137,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upzcdd(view);
+                ((MainActivity) getActivity()).upBSD_ZCDD_page();
             }
         });
         // 终止维修
@@ -454,7 +454,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                             @Override
                             public void onYesClick() {
                                 queRen.dismiss();
-                                ((MainActivity) getActivity()).upzcdd();
+                                ((MainActivity) getActivity()).upBSD_ZCDD_page();
                             }
                         });
                     }
@@ -513,7 +513,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                             @Override
                             public void onCancel() {
                                 queding_quxiao.dismiss();
-                                ((MainActivity) getActivity()).upzcdd();
+                                ((MainActivity) getActivity()).upBSD_ZCDD_page();
                             }
                         });
                     }
@@ -553,7 +553,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                     @Override
                     public void onYesClick() {
                         queRen.dismiss();
-                        ((MainActivity) getActivity()).upzcdd();
+                        ((MainActivity) getActivity()).upBSD_ZCDD_page();
                     }
                 });
             }

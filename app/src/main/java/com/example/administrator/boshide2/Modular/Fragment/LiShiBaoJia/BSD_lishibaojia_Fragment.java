@@ -89,7 +89,7 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).upksbjlog();
+                ((MainActivity) getActivity()).upBSD_KSBJ_Log();
             }
         });
         // 查询

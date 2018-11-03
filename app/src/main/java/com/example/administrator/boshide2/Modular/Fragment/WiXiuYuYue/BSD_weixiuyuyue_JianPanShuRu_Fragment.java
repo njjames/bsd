@@ -69,7 +69,7 @@ public class BSD_weixiuyuyue_JianPanShuRu_Fragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ((MainActivity) getActivity()).upBSD_WXyy_log(view);
+                ((MainActivity) getActivity()).upBSD_WXYY_log();
             }
         });
         inputbox1 = (EditText) view.findViewById(R.id.et_car_license_inputbox1);

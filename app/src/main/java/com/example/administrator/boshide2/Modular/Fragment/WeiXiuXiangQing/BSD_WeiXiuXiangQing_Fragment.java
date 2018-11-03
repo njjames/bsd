@@ -99,7 +99,7 @@ public class BSD_WeiXiuXiangQing_Fragment extends BaseFragment {
         bsd_lsbj_fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).uplswx(view);
+                ((MainActivity) getActivity()).upBSD_LSWX_page();
             }
         });
         bsd_lswx_danhao = (TextView) view.findViewById(R.id.bsd_lswx_danhao);

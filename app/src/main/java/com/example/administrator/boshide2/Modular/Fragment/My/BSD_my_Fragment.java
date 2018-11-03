@@ -144,7 +144,7 @@ public class BSD_my_Fragment extends BaseFragment {
         bsd_lxwm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).uplxwm(view);
+                ((MainActivity) getActivity()).uplxwm();
             }
         });
         //检查更新

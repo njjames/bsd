@@ -506,7 +506,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
             @Override
             public void onClick(View view) {
                 saveBillInfoBeforeBack();
-                ((MainActivity)getHostActicity()).upksbjlog();
+                ((MainActivity)getHostActicity()).upBSD_KSBJ_Log();
             }
         });
         // 添加项目
@@ -573,7 +573,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                 boolean status = data.contains("保存成功");
                 // 保存成功则跳转fragment，应该没有失败的情况，有再添加
                 if (status) {
-                    ((MainActivity) getActivity()).upksbjlog();
+                    ((MainActivity) getActivity()).upBSD_KSBJ_Log();
                 }
             }
 
@@ -2122,49 +2122,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
     }
 
 
-//    /**
-//     * 如果有有单号，则进行以下操作
-//     * 没有接口
-//     */
-//    public void updata() {
-//        danhao=entity.getList_no();
-//        chepai = bsd_ksbj_cp.getText().toString();
-//
-//        pinpai = bsd_ksbj_pp.getText().toString();
-//        chexi = bsd_ksbj_cx.getText().toString();
-//        chezhu = bsd_ksbj_cz.getText().toString();
-//        chexing = bsd_ksbj_cxing.getText().toString();
-//        che_cx = pinpai + "|" + chexi + "|" + chezu + "|" + chexing;
-//
-//        VIN = bsd_ksbj_vin.getText().toString();
-//        jinchanglicheng = bsd_ksbj_lc.getText().toString();
-//        dinahua = bsd_ksbj_dh.getText().toString();
-//
-//        AbRequestParams params = new AbRequestParams();
-//        params.put("", danhao);//快速报价单号
-//        params.put("che_cx", che_cx);//品牌，车系，车组，车行，che_cx
-//        params.put("che_vin", VIN);//VIN码
-//        params.put("yuyue_yjjclc", jinchanglicheng);//进厂里程
-//        params.put("kehu_mc", chezhu);//客户司机
-//        params.put("kehu_dh", dinahua);//手机号
-//
-//
-//    }
-
-//    /**
-//     * 传入单号点击存档时候时使用
-//     * cl的东西
-//     * BSD_wxyy_clcd
-//     */
-//    String clcdjson;
-//
-//
-//
-//
-//
-//    }
-
-
     /**
      * 保存单据信息
      */
@@ -2402,7 +2359,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                         WeiboDialogUtils.closeDialog(mWeiboDialog);
                         Conts.wxjdtiaozhuan = 1;
                         Conts.cp = Car;
-                        ((MainActivity) getActivity()).upwxywdd();
+                        ((MainActivity) getActivity()).showWxddFragment(billEntiy.getWork_no());
                         queRen_quxiao.dismiss();
                     }
 

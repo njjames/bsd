@@ -733,7 +733,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                                 Conts.wxjdtiaozhuan = 1;
                                 WeiboDialogUtils.closeDialog(mWeiboDialog);
                                 Conts.cp = Car;
-                                ((MainActivity) getActivity()).upwxywdd();
+                                ((MainActivity) getActivity()).showWxddFragment(billEntiy.getWork_no());
                                 queRen_quxiao.dismiss();
                             }
 
@@ -741,7 +741,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                             public void onCancel() {
                                 WeiboDialogUtils.closeDialog(mWeiboDialog);
                                 // ((MainActivity) getActivity()).upBSD_WXyy_log();
-                                ((MainActivity) getActivity()).upBSD_WXyy_log();
+                                ((MainActivity) getActivity()).upBSD_WXYY_log();
                                 queRen_quxiao.dismiss();
                             }
                         });
@@ -1365,7 +1365,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                         @Override
                         public void onYesClick() {
                             queRen.dismiss();
-                            ((MainActivity) getActivity()).upBSD_WXyy_log();
+                            ((MainActivity) getActivity()).upBSD_WXYY_log();
                         }
                     });
                 }
