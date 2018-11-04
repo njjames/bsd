@@ -119,7 +119,7 @@
                 style="@style/myleftboxstyle">
 
                 <ImageView
-                    android:id="@+id/bsd_im_9"
+                    android:id="@+id/bsd_im_0"
                     style="@style/myleftboximgstyle"
                     android:src="@drawable/bsd_mrkx_2"/>
             </RelativeLayout>

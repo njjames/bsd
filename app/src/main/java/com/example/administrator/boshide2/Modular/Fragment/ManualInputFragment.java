@@ -1,4 +1,4 @@
-package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu;
+package com.example.administrator.boshide2.Modular.Fragment;
 
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -20,7 +20,6 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
-import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.Modular.View.KeyBoard.KeyboardUtil;
