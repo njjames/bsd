@@ -174,10 +174,8 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
         //隐藏输入法
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        WindowManager.LayoutParams params =
-                getDialog().getWindow().getAttributes();
+        WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = (int) getActivity().getResources().getDimension(R.dimen.qb_px_600);
-//        params.height = (int) getActivity().getResources().getDimension(R.dimen.qb_px_474);
         params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
         getDialog().getWindow().setAttributes(params);
     }

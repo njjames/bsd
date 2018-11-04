@@ -4,48 +4,71 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:padding="@dimen/qb_px_10">
+    android:padding="@dimen/qb_px_8">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="@dimen/qb_px_4"
+            android:text="请选择车牌"
+            android:textColor="@color/text_black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/qb_px_2"
+            android:layout_marginRight="@dimen/qb_px_6"
+            android:background="@drawable/jinchang"
+            android:paddingBottom="@dimen/qb_px_6"
+            android:paddingLeft="@dimen/qb_px_12"
+            android:paddingRight="@dimen/qb_px_12"
+            android:paddingTop="@dimen/qb_px_6"
+            android:text="关   闭"
+            android:textColor="#F7714C"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/below_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="#F7714C" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/qb_px_4">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/relativeLayout7"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="@dimen/qb_px_40"
-            android:layout_marginLeft="@dimen/qb_px_10"
-            android:background="@drawable/bsd_chepaiyuan">
+            style="@style/myeditlinearlayoutstyle">
 
             <TextView
                 android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/qb_px_4"
-                android:text="品牌:"
-                android:textSize="14sp"
-                android:layout_centerVertical="true"/>
+                style="@style/myeditinfonamestyle"
+                android:text="品牌:"/>
 
             <EditText
                 android:id="@+id/et_pp_query"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/textView7"
-                android:background="@null"
-                android:hint="请输入品牌名称"
-                android:textColorHint="#B1B0B0"
-                android:textSize="14sp"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
+                style="@style/myeditinfovaluestyle"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_search"
             android:layout_width="@dimen/qb_px_80"
-            android:layout_height="@dimen/qb_px_38"
+            android:layout_height="@dimen/qb_px_30"
             android:layout_marginLeft="@dimen/qb_px_10"
-            android:layout_marginRight="@dimen/qb_px_10"
             android:background="@drawable/cundang"
             android:gravity="center"
             android:text="查询"
@@ -53,11 +76,16 @@
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="#F7714C"
+        android:layout_marginTop="@dimen/qb_px_4"/>
+
     <GridView
         android:id="@+id/grid_pinpai"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/qb_px_4"
         android:columnWidth="@dimen/qb_px_20"
         android:drawSelectorOnTop="false"
         android:horizontalSpacing="@dimen/qb_px_10"
