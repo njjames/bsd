@@ -41,33 +41,29 @@ import java.util.Map;
  */
 
 public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
-    ListView bsd_lv1;
-    BSD_hygl_adp adapter;
-    List<BSD_HYGL_ety> data = new ArrayList<BSD_HYGL_ety>();
-    LinearLayout bsd_hybl;
-    //项目维修
-    BSD_HYGL_TianJia_delo bsd_wxxm;
-    //转圈
+    private ListView bsd_lv1;
+    private BSD_hygl_adp adapter;
+    private List<BSD_HYGL_ety> data = new ArrayList<BSD_HYGL_ety>();
+    private LinearLayout bsd_hybl;
+    private BSD_HYGL_TianJia_delo bsd_wxxm;
     private Dialog mWeiboDialog;
     private URLS url;
     private EditText et_cardno;
     private TextView tv_cardkind;
     private LinearLayout ll_cardkind;
     private TextView tv_search;
-    List<Map<String, String>> listCradKind = new ArrayList<Map<String, String>>();
+    private List<Map<String, String>> listCradKind = new ArrayList<Map<String, String>>();
     private List<CustemObject> nameList1 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter1;
-    int type = 0;
     private SpinerPopWindow mSpinerPopWindow1;
-
-    AbPullToRefreshView abPullToRefreshView = null;
-
-    int page=1;
-    String klx;
+    private AbPullToRefreshView abPullToRefreshView;
+    private int page=1;
     private TextView title;
     private TextView footerText;
     private TextView titleAdd;
     private SwitchCompat sw_shoukuan;
+    private String cardNo = "";
+    private String klx = "";
 
     @Override
     protected int getLayoutId() {
@@ -105,6 +101,12 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
             public void onClick(View view) {
                 page = 1;
                 data.clear();
+                cardNo = et_cardno.getText().toString();
+                if (tv_cardkind.getText().toString().equals("全部")){
+                    klx = "";
+                }else {
+                    klx = tv_cardkind.getText().toString();
+                }
                 if (sw_shoukuan.isChecked()) {
                     hygl_yf();
                 } else  {
@@ -131,7 +133,6 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
                 bsd_wxxm.show();
             }
         });
-        //
         bsd_lv1 = (ListView) view.findViewById(R.id.bsd_lv1);
         adapter = new BSD_hygl_adp(getActivity(), data);
         bsd_lv1.setAdapter(adapter);
@@ -158,12 +159,7 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
     private void hygl_yf() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("card_no", et_cardno.getText().toString());
-        if (tv_cardkind.getText().toString().equals("全部")){
-            klx = "";
-        }else {
-            klx = tv_cardkind.getText().toString();
-        }
+        params.put("card_no", cardNo);
         params.put("cardkind", klx);
         params.put("pageNumber", page);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_YFK, params, new AbStringHttpResponseListener() {
@@ -224,12 +220,7 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
     private void hygl_df() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("card_no", et_cardno.getText().toString());
-        if (tv_cardkind.getText().toString().equals("全部")){
-            klx = "";
-        }else {
-            klx = tv_cardkind.getText().toString();
-        }
+        params.put("card_no", cardNo);
         params.put("cardkind", klx);
         params.put("pageNumber", page);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_DFK, params, new AbStringHttpResponseListener() {

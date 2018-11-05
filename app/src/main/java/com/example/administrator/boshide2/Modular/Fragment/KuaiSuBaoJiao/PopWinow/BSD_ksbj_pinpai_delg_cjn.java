@@ -67,7 +67,7 @@ public class BSD_ksbj_pinpai_delg_cjn extends Dialog implements View.OnClickList
         super(context, R.style.mydialog);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         // TODO Auto-generated constructor stub
-        view = getLayoutInflater().inflate(R.layout.bad_ksbj_pinpai_pop, null, false);
+        view = getLayoutInflater().inflate(R.layout.dialog_pinpaiinfo_layout, null, false);
         url=new URLS();
         timePickerShow = new TimePickerShow(getContext());
         initview();

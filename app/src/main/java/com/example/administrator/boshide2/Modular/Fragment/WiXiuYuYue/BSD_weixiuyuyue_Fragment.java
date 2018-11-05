@@ -37,12 +37,10 @@ import com.example.administrator.boshide2.Modular.Entity.CustemObject;
 import com.example.administrator.boshide2.Modular.Fragment.BaoYangChaXun.BSD_BaoYangChaXun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWinow.BSD_KSBJ_CL_POP;
-import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWinow.BSD_KSBJ_PinPai_delo;
+import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_XM_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Adapter.BSD_WXYY_CL_adp;
@@ -155,7 +153,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         }
     };
     //品牌 车系车组 车行
-    BSD_KSBJ_PinPai_delo bsd_ksbj_pinPai_delo;
+    PinpaiInfoDialog pinpaiInfoDialog;
     LinearLayout ll_pinpai;
     LinearLayout ll_chexi;
     LinearLayout ll_chezu;
@@ -1763,8 +1761,8 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
     }
 
     private void showPinPaiDialog() {
-        bsd_ksbj_pinPai_delo = new BSD_KSBJ_PinPai_delo(getActivity());
-        bsd_ksbj_pinPai_delo.setToopromtOnClickListener(new BSD_KSBJ_PinPai_delo.ToopromtOnClickListener() {
+        pinpaiInfoDialog = new PinpaiInfoDialog(getActivity());
+        pinpaiInfoDialog.setToopromtOnClickListener(new PinpaiInfoDialog.ToopromtOnClickListener() {
             @Override
             public void onYesClick(String aa, String bianhao) {
                 cxbianhao = bianhao;//车牌编号
@@ -1773,10 +1771,10 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                 tv_chexi.setText("");
                 tv_chezu.setText("");
                 tv_chexing.setText("");
-                bsd_ksbj_pinPai_delo.dismiss();
+                pinpaiInfoDialog.dismiss();
             }
         });
-        bsd_ksbj_pinPai_delo.show();
+        pinpaiInfoDialog.show();
     }
 
     private void readVin() {

@@ -54,12 +54,8 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
     private String wx_chepai;
     //转圈
     private Dialog mWeiboDialog;
-    //PopupWindow对象声明
-    PopupWindow pw;
     private BSD_lswx_guwen_adp lswx_guwen_adp;//服务顾问适配器
     private List<Map<String, String>> list_gu = new ArrayList<Map<String, String>>();
-    private TextView tv_lswx_gw;
-    private String guwen;
     private URLS url;
     private TextView title;
     private TextView footerText;
@@ -71,8 +67,9 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
 
     @Override
     public void initView() {
-        tv_lswx_gw = (TextView) view.findViewById(R.id.tv_lswx_gw);
         wx_rfview = (AbPullToRefreshView) view.findViewById(R.id.wx_rfview);
+        wx_rfview.setOnHeaderRefreshListener(this);
+        wx_rfview.setOnFooterLoadListener(this);
         et_wx_chepai = (EditText) view.findViewById(R.id.et_wx_chepai);
         tv_wx_chaxun = (TextView) view.findViewById(R.id.tv_wx_chaxun);
         tv_wx_chaxun.setOnClickListener(new View.OnClickListener() {
@@ -93,29 +90,6 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
                 ((MainActivity) getActivity()).showWXXQFragment(JSON.toJSON(data.get(i)).toString());
             }
         });
-        /**
-         * 上拉刷新
-         */
-        wx_rfview.setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
-            @Override
-            public void onHeaderRefresh(AbPullToRefreshView view) {
-                data.clear();
-                page = 1;
-                wx_chepai = et_wx_chepai.getText().toString();
-                LSWX();
-            }
-        });
-        /**
-         * 下拉加载更多
-         */
-        wx_rfview.setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
-            @Override
-            public void onFooterLoad(AbPullToRefreshView view) {
-                page++;
-                wx_chepai = et_wx_chepai.getText().toString();
-                LSWX();
-            }
-        });
         title = (TextView) view.findViewById(R.id.tv_title);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
     }
@@ -128,8 +102,6 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
         data.clear();
         LSWX();
-//        list_gu.clear();
-//        guwen();
     }
 
     public void LSWX() {
@@ -139,7 +111,7 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
         params.put("che_no", wx_chepai);
         params.put("type", 0);
         params.put("caozuoyuanid", Integer.parseInt(MyApplication.shared.getString("id", "")));
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CL_WX, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CL_WX, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int sss, String s) {
                 try {
@@ -166,8 +138,11 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
                             lswx_ety.setZhifu_card_xj(json.getString("zhifu_card_xj"));//补现金
                             data.add(lswx_ety);
                         }
+                    } else {
+                        subPage();
                     }
                 } catch (JSONException e) {
+                    subPage();
                     e.printStackTrace();
                 }
                 adapter.notifyDataSetChanged();
@@ -188,35 +163,11 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
+                subPage();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
                 wx_rfview.onFooterLoadFinish();
                 wx_rfview.onHeaderRefreshFinish();
                 Show.showTime(getActivity(), "网络连接超时");
-            }
-        });
-    }
-
-    private void popwin() {
-        //通过布局注入器，注入布局给View对象
-        View myView = getActivity().getLayoutInflater().inflate(R.layout.bsd_hygl_bumen, null);
-        //通过view 和宽·高，构造PopopWindow
-        pw = new PopupWindow(myView, 160, 300, true);
-        pw.setBackgroundDrawable(getContext().getResources().getDrawable(
-                //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
-                R.drawable.banbai));
-        //设置焦点为可点击
-        pw.setFocusable(true);//可以试试设为false的结果
-        //将window视图显示在myButton下面
-//        pw.showAsDropDown(relat_guwen);
-        ListView lv = (ListView) myView.findViewById(R.id.lv_hygl_bumen);
-        lswx_guwen_adp = new BSD_lswx_guwen_adp(getContext(), list_gu);
-        lv.setAdapter(lswx_guwen_adp);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                guwen = list_gu.get(i).get("name").toString();
-                tv_lswx_gw.setText(guwen);
-                pw.dismiss();
             }
         });
     }
@@ -274,11 +225,22 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
 
     @Override
     public void onFooterLoad(AbPullToRefreshView abPullToRefreshView) {
-
+        page++;
+        wx_chepai = et_wx_chepai.getText().toString();
+        LSWX();
     }
 
     @Override
     public void onHeaderRefresh(AbPullToRefreshView abPullToRefreshView) {
+        data.clear();
+        page = 1;
+        wx_chepai = et_wx_chepai.getText().toString();
+        LSWX();
+    }
 
+    public void subPage() {
+        if (page > 1) {
+            page--;
+        }
     }
 }

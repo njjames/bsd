@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -26,7 +25,6 @@ import com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.Adapter
 import com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.Adapter.BSD_hygl_jingban_adp;
 import com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.Adapter.BSD_hygl_katype_adp;
 import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
-import com.example.administrator.boshide2.Modular.View.diaog.Promptdiaog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.Modular.View.timepicker.TimePickerShow;
@@ -84,6 +82,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     TimeDialog timeShow;
     //转圈
     private Dialog mWeiboDialog;
+    private TextView tv_cancel;
 
     public BSD_HYGL_TianJia_delo(Context context) {
         super(context, R.style.mydialog);
@@ -96,12 +95,10 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         getDeptData();//部门
         getJSFSData();//结算下拉
         getJBRData();//经办人
-        //chepai();
         getCardKindData();
         setContentView(view);
         setCanceledOnTouchOutside(true);
-        WindowManager.LayoutParams params =
-                this.getWindow().getAttributes();
+        WindowManager.LayoutParams params = this.getWindow().getAttributes();
         params.width = (int) getContext().getResources().getDimension(R.dimen.qb_px_680);
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         this.getWindow().setAttributes(params);
@@ -139,6 +136,8 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         et_hy_payselect = (TextView) view.findViewById(R.id.et_hy_payselect);
         et_hy_beizhu = (EditText) view.findViewById(R.id.et_hy_beizhu);
         tv_hy_banli = (TextView) view.findViewById(R.id.tv_hy_banli);
+        tv_cancel = (TextView) view.findViewById(R.id.tv_cancel);
+        tv_cancel.setOnClickListener(this);
         relativeday.setOnClickListener(this);
         rela_youxiao.setOnClickListener(this);
         tv_hy_banli.setOnClickListener(this);
@@ -223,82 +222,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
-
-
     }
-
-
-
-//
-//    public void chepaidata(String cp) {
-//        list_cp.clear();
-//        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getContext(), "加载中...");
-//        Log.i("cjn", "查看啥车牌" + cp);
-//        AbRequestParams params = new AbRequestParams();
-//        params.put("che_no", cp);
-//        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ChePaiXinXi, params, new AbStringHttpResponseListener() {
-//            @Override
-//            public void onSuccess(int a, String s) {
-//                Log.i("cjn", "查看数据" + s);
-//                try {
-//                    JSONObject jsonObject = new JSONObject(s);
-//                    if (jsonObject.get("message").toString().equals("查询成功")) {
-//                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-//                        for (int i = 0; i < jsonarray.length(); i++) {
-//                            JSONObject json = jsonarray.getJSONObject(i);
-//
-//                            Map<String, String> map = new HashMap<String, String>();
-//                            map.put("kehu_xm", json.getString("kehu_xm"));
-//                            map.put("kehu_dz", json.getString("kehu_dz"));
-//                            map.put("kehu_dh", json.getString("kehu_dh"));
-//                            map.put("kehu_sj", json.getString("kehu_sj"));
-//                            map.put("kehu_mc", json.getString("kehu_mc"));
-//                            map.put("kehu_birthday", json.getString("kehu_birthday"));
-//                            list_cp.add(map);
-//                            et_hy_lianxi.setText(list_cp.get(0).get("kehu_mc"));
-//                            et_hy_address.setText(list_cp.get(0).get("kehu_dz"));
-//                            et_hy_phone.setText(list_cp.get(0).get("kehu_dh"));
-//                            et_hy_birthday.setText(list_cp.get(0).get("kehu_birthday"));
-//                            et_hy_shouphone.setText(list_cp.get(0).get("kehu_sj"));
-//                            WeiboDialogUtils.closeDialog(mWeiboDialog);
-//
-//                        }
-//                    }else {
-//                        Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT).show();
-//                        WeiboDialogUtils.closeDialog(mWeiboDialog);
-//                        et_hy_lianxi.setText("");
-//                        et_hy_address.setText("");
-//                        et_hy_phone.setText("");
-//                        et_hy_birthday.setText("");
-//                        et_hy_shouphone.setText("");
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                WeiboDialogUtils.closeDialog(mWeiboDialog);
-//            }
-//
-//            @Override
-//            public void onStart() {
-//
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s, Throwable throwable) {
-//                WeiboDialogUtils.closeDialog(mWeiboDialog);
-//            }
-//        });
-//
-//
-//    }
-
 
     @Override
     public void onClick(View view) {
@@ -306,7 +230,6 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
             //生日
             case R.id.relativeday:
                 timeShow.timePickerAlertDialog(et_hy_birthday);
-//                timePickerShow.timePickerAlertDialog(et_hy_birthday);
                 break;
             //有效日期
 //            case R.id.rela_youxiao:
@@ -353,11 +276,10 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                 } else {
                     checkCarNo(et_hy_chepai.getText().toString());
                 }
-                // addCustom();
                 break;
             //部门下拉
             case R.id.rela_bumen:
-                popwin();
+                popwin_dept();
                 break;
             //结算下拉
             case R.id.relat_jiesuan:
@@ -371,13 +293,16 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
             case R.id.rela_ka:
                 popwin_katype();
                 break;
+            case R.id.tv_cancel:
+                this.dismiss();
+                break;
         }
     }
 
     /**
      * 部门弹出框显示
      */
-    private void popwin() {
+    private void popwin_dept() {
         //通过布局注入器，注入布局给View对象
         View myView = getLayoutInflater().inflate(R.layout.bsd_hygl_bumen, null);
         ListView lv = (ListView) myView.findViewById(R.id.lv_hygl_bumen);
@@ -445,7 +370,6 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
      * @return
      */
     public static String StringData(int time) {
-
         final Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
         mYear = String.valueOf(c.get(Calendar.YEAR));// 获取当前年份
@@ -721,7 +645,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         params.put("card_jb", jingban);//经办人
         params.put("card_jsfs", jiesuan);//结算方式
         params.put("isNewCar", isNewCar);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_HYGL_ADD, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int sss, String s) {
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
@@ -762,7 +686,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getContext(), "加载中...");
         AbRequestParams params = new AbRequestParams();
         params.put("che_no", carNo);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_check_che, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_HYGL_check_che, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String s) {
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
@@ -779,12 +703,6 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                 } else {
                     addCustom(0);
                 }
-//                    JSONObject object = new JSONObject(s);
-//                    if (object.get("status").toString().equals("1")) {
-//                        JSONObject json = object.getJSONObject("data");
-//                        chepai = json.get("kehu_no").toString();
-//                    }
-//                    addCustom();
             }
 
             @Override

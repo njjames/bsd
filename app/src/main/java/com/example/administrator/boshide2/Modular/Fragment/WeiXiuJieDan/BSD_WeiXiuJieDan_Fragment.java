@@ -32,7 +32,7 @@ import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
 import com.example.administrator.boshide2.Modular.Fragment.BaoYangChaXun.BSD_BaoYangChaXun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
-import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWinow.BSD_KSBJ_PinPai_delo;
+import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
@@ -102,7 +102,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private LinearLayout ll_chezu;
     private LinearLayout ll_chexing;
     //品牌 车系车组 车行
-    private BSD_KSBJ_PinPai_delo bsd_ksbj_pinPai_delo;
+    private PinpaiInfoDialog pinpaiInfoDialog;
     private String cxbianhao;
     private String pinpaiming;
     //这是车系
@@ -908,37 +908,8 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     //项目金额
     double j = 0;
 
-    public void wxjd_xm_money() {
-        double jj = 0;
-        for (int i = 0; i < list_XM.size(); i++) {
-            jj = jj + (list_XM.get(i).getWxxm_je());
-        }
-        tv_wxjd_xmhj.setText(jj + "");
-        Log.i("cjn", "wxjdXM的总价：" + jj);
-        j = jj;
-        wxjd_heji();
-    }
-
-
     //材料金额
     double g = 0;
-
-    public void wxjd_cl_money() {
-        double gg = 0;
-        for (int i = 0; i < list_CL.size(); i++) {
-            gg = gg + (list_CL.get(i).getPeij_dj() * list_CL.get(i).getPeij_sl());
-        }
-        tv_wxjd_clhj.setText(gg + "");
-        Log.i("cjn", "wxjdcl的总价：" + gg);
-        g = gg;
-        wxjd_heji();
-    }
-
-    //总金额
-    public void wxjd_heji() {
-        tv_wxjd_hj.setText(j + g + "");
-        Log.i("cjn", "tv_wxjd_hj" + tv_wxjd_hj.getText().toString());
-    }
 
     /**
      * 维修材料列表
@@ -1396,8 +1367,8 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     }
 
     private void showPinPaiDialog() {
-        bsd_ksbj_pinPai_delo = new BSD_KSBJ_PinPai_delo(getActivity());
-        bsd_ksbj_pinPai_delo.setToopromtOnClickListener(new BSD_KSBJ_PinPai_delo.ToopromtOnClickListener() {
+        pinpaiInfoDialog = new PinpaiInfoDialog(getActivity());
+        pinpaiInfoDialog.setToopromtOnClickListener(new PinpaiInfoDialog.ToopromtOnClickListener() {
             @Override
             public void onYesClick(String aa, String bianhao) {
                 cxbianhao = bianhao;//车牌编号
@@ -1406,10 +1377,10 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                 tv_chexi.setText("");
                 tv_chezu.setText("");
                 tv_chexing.setText("");
-                bsd_ksbj_pinPai_delo.dismiss();
+                pinpaiInfoDialog.dismiss();
             }
         });
-        bsd_ksbj_pinPai_delo.show();
+        pinpaiInfoDialog.show();
     }
 
     /**

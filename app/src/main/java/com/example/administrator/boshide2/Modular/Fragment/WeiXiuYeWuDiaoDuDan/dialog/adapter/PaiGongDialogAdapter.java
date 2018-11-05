@@ -81,10 +81,6 @@ public class PaiGongDialogAdapter extends BaseAdapter {
         ImageView iv_paigong;
     }
 
-    public interface  PaiGong{
-        void onYesClick(String renyDm);
-    }
-
     public List<String> getChooseLists() {
         return chooseLists;
     }

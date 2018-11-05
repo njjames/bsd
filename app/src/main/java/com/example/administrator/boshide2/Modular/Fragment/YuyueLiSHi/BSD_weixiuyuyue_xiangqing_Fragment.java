@@ -138,7 +138,7 @@ public class BSD_weixiuyuyue_xiangqing_Fragment extends Fragment  {
         }
     };
     //品牌 车系车组 车行
-//    BSD_KSBJ_PinPai_delo bsd_ksbj_pinPai_delo;
+//    PinpaiInfoDialog bsd_ksbj_pinPai_delo;
 //    RelativeLayout bsd_wxyy_pp, bsd_wxyy_rl_chexi, bsd_wxyy_rl_chezu, bsd_wxyy_cl_chexing;
     String cxbianhao;
     String pinpaiming;

@@ -40,7 +40,7 @@ import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_XM_entity;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_ety;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWinow.BSD_KSBJ_CL_POP;
-import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWinow.BSD_KSBJ_PinPai_delo;
+import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
@@ -134,7 +134,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
     //四个弹框那块
     //品牌返回的车名和编号
     //品牌diagle
-    BSD_KSBJ_PinPai_delo bsd_ksbj_pinPai_delo;
+    PinpaiInfoDialog pinpaiInfoDialog;
     String cxbianhao;
     String pinpaiming;
     //这是车系
@@ -391,8 +391,8 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         rea_pinpai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bsd_ksbj_pinPai_delo = new BSD_KSBJ_PinPai_delo(getActivity());
-                bsd_ksbj_pinPai_delo.setToopromtOnClickListener(new BSD_KSBJ_PinPai_delo.ToopromtOnClickListener() {
+                pinpaiInfoDialog = new PinpaiInfoDialog(getActivity());
+                pinpaiInfoDialog.setToopromtOnClickListener(new PinpaiInfoDialog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick(String aa, String bianhao) {
                         cxbianhao = bianhao;//车牌编号
@@ -401,11 +401,11 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                         bsd_ksbj_cx.setText("");
                         bsd_ksbj_cz.setText("");
                         bsd_ksbj_cxing.setText("");
-                        bsd_ksbj_pinPai_delo.dismiss();
+                        pinpaiInfoDialog.dismiss();
                         bsdcx(cxbianhao);
                     }
                 });
-                bsd_ksbj_pinPai_delo.show();
+                pinpaiInfoDialog.show();
             }
         });
         //车系

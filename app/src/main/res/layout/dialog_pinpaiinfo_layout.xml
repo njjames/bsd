@@ -60,7 +60,7 @@
                 android:text="品牌:"/>
 
             <EditText
-                android:id="@+id/et_pp_query"
+                android:id="@+id/et_pinpai"
                 style="@style/myeditinfovaluestyle"/>
         </LinearLayout>
 

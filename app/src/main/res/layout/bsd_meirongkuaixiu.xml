@@ -414,11 +414,11 @@
             android:layout_marginRight="@dimen/qb_px_4"
             android:background="#F7714C" />
 
-        <!-- 中间滑动 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginTop="@dimen/qb_px_2"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -433,7 +433,6 @@
                     android:id="@+id/bsd_clxxqiehua"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_34"
-                    android:layout_marginTop="@dimen/qb_px_4"
                     android:background="@drawable/bsd_chepaiyuan">
 
                     <RelativeLayout
@@ -506,7 +505,6 @@
                     android:id="@+id/bsd_clxq_lswx"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/qb_px_2"
                     android:background="#FFFFFF"
                     android:orientation="vertical" />
             </LinearLayout>
@@ -522,8 +520,7 @@
                 android:layout_marginLeft="@dimen/qb_px_2"
                 android:layout_marginRight="@dimen/qb_px_4"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/qb_px_4">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -554,7 +551,6 @@
                         android:layout_weight="0.8"
                         android:text="操作" />
                 </LinearLayout>
-
 
                 <ListView
                     android:id="@+id/bsd_wxywdd_you_lv"

@@ -33,7 +33,7 @@ import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
-import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWinow.BSD_KSBJ_PinPai_delo;
+import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.BSD_mrkx_wxcl;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.BSD_mrkx_wxxm;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.deleg.BSD_mrkx_jiesuan;
@@ -139,7 +139,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     private EditText bsd_mrkx_lianxifangshi;//联系                                                                           方式
 
-    private BSD_KSBJ_PinPai_delo bsd_ksbj_pinPai_delo;//品牌弹框
+    private PinpaiInfoDialog pinpaiInfoDialog;//品牌弹框
     private String cxbianhao;
     private String pinpaiming;
     //车系
@@ -284,7 +284,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         tv_repairHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Conts.danju_type = "mrkx";
                 BSD_LishiWeiXiu_DialogFragment.newInstance(billEntiy.getChe_no())
                         .show(getFragmentManager(), "mrkx_lswx");
             }
@@ -396,14 +395,14 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         //品牌
         bsd_mrkx_rl_pp = (LinearLayout) view.findViewById(R.id.bsd_mrkx_rl_pp);
         bsd_mrkx_tv_pp = (TextView) view.findViewById(R.id.bsd_mrkx_tv_pp);
-        bsd_ksbj_pinPai_delo = new BSD_KSBJ_PinPai_delo(getActivity());
+        pinpaiInfoDialog = new PinpaiInfoDialog(getActivity());
         bsd_mrkx_rl_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bsd_ksbj_pinPai_delo.show();
+                pinpaiInfoDialog.show();
             }
         });
-        bsd_ksbj_pinPai_delo.setToopromtOnClickListener(new BSD_KSBJ_PinPai_delo.ToopromtOnClickListener() {
+        pinpaiInfoDialog.setToopromtOnClickListener(new PinpaiInfoDialog.ToopromtOnClickListener() {
             @Override
             public void onYesClick(String aa, String bianhao) {
                 cxbianhao = bianhao;//车牌编号
@@ -412,7 +411,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 bsd_mrkx_tv_chexi.setText("");
                 bsd_mrkx_tv_chezu.setText("");
                 bsd_mrkx_tv_chexing.setText("");
-                bsd_ksbj_pinPai_delo.dismiss();
+                pinpaiInfoDialog.dismiss();
                 bsdcx(cxbianhao);
             }
         });
@@ -613,6 +612,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 修改派工金额
+     *
      * @param position
      */
     private void updatePaigongJE(final int position) {
@@ -652,6 +652,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 更新派工工时
+     *
      * @param position
      */
     private void updatePaigongGS(final int position) {
@@ -1074,8 +1075,8 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
 
     /*
-  *根据vin码获取车辆名称、代码、内部名称；
-  */
+     *根据vin码获取车辆名称、代码、内部名称；
+     */
     public void duVin() {
         listvincx.clear();
         AbRequestParams params = new AbRequestParams();
@@ -1141,8 +1142,8 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
 
     /*
-*根据vin码、车辆代码获取车牌车系车组车型信息
-*/
+     *根据vin码、车辆代码获取车牌车系车组车型信息
+     */
     public void getcx_by_cxdm() {
         AbRequestParams params = new AbRequestParams();
         Log.e("sss", "cxnm是：" + cxnm);
@@ -1356,6 +1357,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 根据会员卡号，获取会员卡信息
+     *
      * @param cardNo
      */
     public void getCardInfo(String cardNo) {
@@ -1366,42 +1368,50 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             public void onSuccess(int aa, String data) {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
-                    if (jsonObject.getString("message").toString().equals("查询成功")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("data");
-                        if (jsonArray.length() > 0) {
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject item = jsonArray.getJSONObject(i);
-                                Conts.MRKX_XM_ZK = Double.parseDouble(item.getString("itemrate"));
-                                Conts.MRKX_CL_ZK = Double.parseDouble(item.getString("peijrate"));
-                                Conts.MRKX_shengYu_jinQian = Double.parseDouble(item.getString("card_leftje"));
-                                Conts.MRKX_kahao = bsd_mrkx_et_huiyuankahao.getText().toString();
-                                queRen = new QueRen(getActivity(), "读取成功，卡内余额" + item.getString("card_leftje"));
-                                queRen.show();
-                                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                                    @Override
-                                    public void onYesClick() {
-                                        queRen.dismiss();
-                                        if (Conts.BSD_clshuliang == 0 && Conts.BSD_xmshuliang == 0) {
-                                            Toast.makeText(getActivity(), "会员卡读取成功", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            queRen1 = new QueRen(getActivity(), "请重新选择维修项目和材料");
-                                            queRen1.show();
-                                            queRen1.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                                                @Override
-                                                public void onYesClick() {
-                                                    queRen1.dismiss();
-                                                    BSD_wxxm.deltAll();
-                                                    BSD_wxcl.deltAll();
-                                                    delAll();
-                                                }
-                                            });
+                    if (jsonObject.getString("message").equals("查询成功")) {
+                        JSONObject object = jsonObject.getJSONObject("data");
+                        Conts.MRKX_XM_ZK = Double.parseDouble(object.getString("itemrate"));
+                        Conts.MRKX_CL_ZK = Double.parseDouble(object.getString("peijrate"));
+                        Conts.MRKX_shengYu_jinQian = Double.parseDouble(object.getString("card_leftje"));
+                        Conts.MRKX_kahao = bsd_mrkx_et_huiyuankahao.getText().toString();
+                        queRen = new QueRen(getActivity(), "读取成功\n卡内余额" + object.getString("card_leftje"));
+                        queRen.show();
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                                if (BSD_wxxm.getList_XM().size() == 0 && BSD_wxcl.getList_CL().size() == 0) {
+                                    Toast.makeText(getActivity(), "会员卡读取成功", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    queRen1 = new QueRen(getActivity(), "请重新选择维修项目和材料");
+                                    queRen1.show();
+                                    queRen1.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                                        @Override
+                                        public void onYesClick() {
+                                            queRen1.dismiss();
+                                            BSD_wxxm.deltAll();
+                                            BSD_wxcl.deltAll();
+                                            delAll();
                                         }
-                                    }
-                                });
+                                    });
+                                }
+                                if (Conts.BSD_clshuliang == 0 && Conts.BSD_xmshuliang == 0) {
+
+                                } else {
+                                    queRen1 = new QueRen(getActivity(), "请重新选择维修项目和材料");
+                                    queRen1.show();
+                                    queRen1.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                                        @Override
+                                        public void onYesClick() {
+                                            queRen1.dismiss();
+                                            BSD_wxxm.deltAll();
+                                            BSD_wxcl.deltAll();
+                                            delAll();
+                                        }
+                                    });
+                                }
                             }
-                        } else {
-                            showTipsDialog("没有查到这个会员卡");
-                        }
+                        });
                     } else {
                         Toast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                     }
@@ -1897,6 +1907,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
         });
     }
+
     public void saveBillInfo() {
         if (isSaveBill) {
             mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");
@@ -1947,7 +1958,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                     //点击存档操作的时候走的步骤
                     if (isSaveBill) {
                         showTipsDialog("存档成功");
-                    } else  { //点击结算的时候
+                    } else { //点击结算的时候
                         if (Conts.BSD_zhongxiaoweixiu == 1) {
                             bsd_mrkx_jiesuan = new BSD_mrkx_jiesuan(getActivity(), Conts.MRKX_kahao, Conts.MRKX_shengYu_jinQian, zong_zj);
                             bsd_mrkx_jiesuan.show();
@@ -2019,6 +2030,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 显示提示信息的对话框，只有一个提示信息和一个确定按钮
+     *
      * @param tips
      */
     private void showTipsDialog(String tips) {
@@ -2145,6 +2157,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 根据车系，获取车组信息
+     *
      * @param chexiid 车系ID
      */
     public void getCheZuInfo(String chexiid) {
@@ -2220,6 +2233,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 根据车组，获取车型数据
+     *
      * @param chezuid
      */
     public void getCheXingInfo(String chezuid) {
@@ -2318,7 +2332,8 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 修改工时
-     *  @param reco_no
+     *
+     * @param reco_no
      * @param je
      * @param gs
      * @param position
@@ -2478,6 +2493,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 获取派工人员的信息
+     *
      * @param workNo
      * @param wxxmNo
      */
@@ -2814,6 +2830,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 保存新的维修项目到数据库中
+     *
      * @param needAddList 需要保存的维修项目
      */
     private void saveNewWxxmToDB(final List<BSD_WeiXiuJieDan_XM_Entity> needAddList) {
@@ -2943,6 +2960,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 删除派工人员
+     *
      * @param reco_no
      * @param position
      */

@@ -42,10 +42,9 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
     private ListView bsd_lsbj_lv;
     private List<BSD_KuaiSuBaoJia_ety> data = new ArrayList<>();
     private BSD_lsbj_adp adapter;
-    private EditText bsd_lsbj_cp, bsd_lsbj_cz;
+    private EditText bsd_lsbj_cp;
+    private EditText bsd_lsbj_cz;
     private TextView tv_search;
-    private int num;
-    private URLS url;
     private TextView title;
     private TextView footerText;
     private String cardNo = "";
@@ -108,7 +107,6 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
 
     @Override
     public void initData() {
-        url = new URLS();
         title.setText("历史报价");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
@@ -122,7 +120,7 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
         AbRequestParams params = new AbRequestParams();
         params.put("che_no", cardNo);
         params.put("kehu_mc", kehuMc);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CL_WX2, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CL_WX2, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String s) {
                 data.clear();

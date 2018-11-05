@@ -74,12 +74,12 @@ public class URLS {
     /***
      * 车辆品牌
      */
-    public String BSD_PINPAI = "public/pinpai";
+    public static final String BSD_PINPAI = "public/pinpai";
 
     /***
      * 根据名称模糊查询车辆品牌
      */
-    public String BSD_PINPAI_1 = "public/pinpai1";
+    public static final String BSD_PINPAI_1 = "public/pinpai1";
 
     /**
      * 车系
@@ -128,11 +128,11 @@ public class URLS {
     /**
      * 车辆信息---->维修历史
      */
-    public String BSD_CL_WX = "lswx";
+    public static final String BSD_CL_WX = "lswx";
     /**
      * 车辆信息---->维修历史
      */
-    public String BSD_CL_WX2 = "lsbj";
+    public static final String BSD_CL_WX2 = "lsbj";
 
     /**
      * 历史维修
@@ -157,7 +157,7 @@ public class URLS {
     /**
      * 添加会员
      */
-    public String BSD_HYGL_ADD = "card/add";
+    public static final String BSD_HYGL_ADD = "card/add";
     /**
      * 添加会员---pop--部门下拉
      */
@@ -176,7 +176,7 @@ public class URLS {
      */
     public String BSD_HYGL_ADD_che = "public/cheliang";
 
-    public String BSD_HYGL_check_che = "public/checkcar";
+    public static final String BSD_HYGL_check_che = "public/checkcar";
 
     /**
      * 修改车辆、客户信息
