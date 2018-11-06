@@ -403,7 +403,11 @@ public class URLS {
     /**
      * 维修接单项目列表
      */
-    public String BSD_wxjd_xmlb = "order/wxxm";
+    public static final String BSD_wxjd_xmlb = "order/wxxm";
+
+    public static final String BSD_UPDATA_XMZK = "order/updatewxxmzk";
+
+    public static final String BSD_UPDATA_CLZK = "order/updatewxclzk";
 
     public String BSD_wxjd_lsxm="order/lswxxm";
     /**

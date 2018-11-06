@@ -1,16 +1,12 @@
 package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,12 +16,10 @@ import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
+import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.fagmt_adp.BSD_mrbx_wxxm_adp;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.deleg.BSD_WeiXiuYeWuDiaoDuDian_delg;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.dialog.PaiGongDialog;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_XM_POP;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
@@ -38,7 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -46,53 +39,46 @@ import java.util.List;
  * Created by Administrator on 2017-4-24.
  */
 
-public class BSD_mrkx_wxxm extends Fragment {
+public class BSD_mrkx_wxxm extends BaseFragment {
+    private static final String PARAM_KEY = "param_key";
     XM_ZJ xm_zj;
     private TextView tv_recordNum;
     private int currentPosition = 0;
     private OnRefreashPaiGongListener onRefreashPaiGongListener;
-
-    private int last_item = -1;
-    private RelativeLayout beijing;
     private ListView bsd_lsbj_lv;
     private TooPromptdiaog promptdiaog;
-    private List<HashMap<String, String>> data = new ArrayList<>();
     private BSD_mrbx_wxxm_adp adapter;
     private List<BSD_WeiXiuJieDan_XM_Entity> list_XM = new ArrayList<>();
-    RelativeLayout bsd_zcdd_rl_ztpg;
-    BSD_ZCDUXQ_XM_POP bsd_zcduxq_xm_pop;
-    BSD_WeiXiuYeWuDiaoDuDian_delg delg;
     ChaKanPaiGongREN chaKanPaiGongREN;
-    RelativeLayout bsd_wxxm;
     URLS url;
     private Dialog mWeiboDialog;
-    LinearLayout oldView;
-    int choufutianjia = 0;
-    BSD_XiuGaiGongShi bsd_xiuGaiGongShi;
     private UpdateItemInfoDialog updateItemInfoDialog;
     TextView tv_wxxm_money;
+    private String param;
+    double wxxmZK = 1;
+
+    public static BSD_mrkx_wxxm newInstance(String params) {
+        BSD_mrkx_wxxm fragment = new BSD_mrkx_wxxm();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY, params);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bsd_mrkx_wxxm, null);
-        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        url = new URLS();
-        Conts.MRKX = 1;
-        init(view);
-        dataxm();
-        for (int a = 0; a < list_XM.size(); a++) {
-            list_XM.get(a).getReco_no();
-            Log.i("cjn", "循环查看这个id" + list_XM.get(a).getReco_no());
-        }
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        param = getArguments().getString(PARAM_KEY);
+    }
 
-        return view;
+    @Override
+    protected int getLayoutId() {
+        return R.layout.bsd_mrkx_wxxm;
     }
 
     public void setChaKanPaiGongREN(ChaKanPaiGongREN chaKanPaiGongREN) {
         this.chaKanPaiGongREN = chaKanPaiGongREN;
     }
-
-    String wxxm_nos;
 
     /**
      * 计算维修项目的总价格
@@ -116,7 +102,8 @@ public class BSD_mrkx_wxxm extends Fragment {
         }
     }
 
-    public void init(View view) {
+    @Override
+    public void initView() {
         tv_wxxm_money = (TextView) view.findViewById(R.id.tv_wxxm_money);
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
         adapter = new BSD_mrbx_wxxm_adp(getActivity(), list_XM);
@@ -176,8 +163,6 @@ public class BSD_mrkx_wxxm extends Fragment {
                 });
             }
         });
-
-
         bsd_lsbj_lv.setAdapter(adapter);
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -195,6 +180,13 @@ public class BSD_mrkx_wxxm extends Fragment {
             }
         });
         tv_recordNum = (TextView) view.findViewById(R.id.tv_record_num);
+    }
+
+    @Override
+    public void initData() {
+        url = new URLS();
+        Conts.MRKX = 1;
+        dataxm();
     }
 
     private void updateWxxmMC(String workNo, String wxxmNo, final String wxxmMc, final int position) {
@@ -236,7 +228,7 @@ public class BSD_mrkx_wxxm extends Fragment {
     public void updateWxxmGsf(String wxxm_no, double gs, final double dj, String wxxmMc, final int position) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
+        params.put("work_no", param);
         params.put("wxxm_no", wxxm_no);
         params.put("jg", dj + "");
         params.put("gs", gs + "");
@@ -297,7 +289,6 @@ public class BSD_mrkx_wxxm extends Fragment {
      * @param i
      */
     public void deletxmall(final int i) {
-
         AbRequestParams params = new AbRequestParams();
         params.put("id", i);
         Log.i("cjn", "集合个主" + list_XM.size() + "查看这个id" + i);
@@ -336,7 +327,7 @@ public class BSD_mrkx_wxxm extends Fragment {
      */
     public void deleteWxxm(String wxxmNo, final int position) {
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
+        params.put("work_no", param);
         params.put("wxxm_no", wxxmNo);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_deletXM, params, new AbStringHttpResponseListener() {
             @Override
@@ -369,17 +360,14 @@ public class BSD_mrkx_wxxm extends Fragment {
      * 维修项目数据查询
      */
     public void dataxm() {
-        Log.i("gscxaaa", "onClick:555555到了mrkx_wxxm里的查询所有项目方法了 ");
         list_XM.clear();
         AbRequestParams params = new AbRequestParams();
-        Log.i("cjn", "看看单号" + Conts.work_no);
-        params.put("work_no", Conts.work_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_xmlb, params, new AbStringHttpResponseListener() {
+        params.put("work_no", param);
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_xmlb, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    Log.i("cjn", "这个是请求成功xM" + s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
                         JSONArray jsonarray = jsonObject.getJSONArray("data");
                         for (int i = 0; i < jsonarray.length(); i++) {
@@ -402,21 +390,18 @@ public class BSD_mrkx_wxxm extends Fragment {
                             entity.setWxxm_yje(item.getDouble("wxxm_yje"));
                             list_XM.add(entity);
                         }
-                    } else {
-                        Log.i("cjn", "这个是请求失败" + s);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 adapter.notifyDataSetChanged();
                 wxxmPrice();
-                WeiboDialogUtils.closeDialog(mWeiboDialog);
-                Conts.BSD_xmshuliang = list_XM.size();
                 if (list_XM.size() > 0) {
                     if (onRefreashPaiGongListener != null) {
                         onRefreashPaiGongListener.onWxxmRequestSuccess(list_XM.get(0).getWork_no(), list_XM.get(0).getWxxm_no());
                     }
                 }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -436,60 +421,39 @@ public class BSD_mrkx_wxxm extends Fragment {
             }
         });
 
-
     }
 
-    public interface ChaKanPaiGongREN {
-        public void onYesClick(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je);
+    public void updateWxxmZK(double wxxmZK) {
+        this.wxxmZK = wxxmZK;
+        updateWxxmZKToDB(param, wxxmZK);
     }
-
 
     /**
-     * 添加项目
+     * 更新折扣到数据库中
+     * @param workNo
+     * @param wxxmZK
      */
-    String json;
-
-    public void XMinData(final String DH) {
-        Log.i("gscxaaa", "onClick:4444444到了mrkx_wxxm里的添加方法了 ");
-
-        json = "{" + '"' + "data" + '"' + ":" + "[";
-        for (int i = 0; i < list_XM.size() - 1; i++) {
-            json = json + "{" + '"' + "work_no" + '"' + ":" + '"' + DH + '"' + "," + '"' + "wxxm_mc" + '"' + ":" + '"' + list_XM.get(i).getWxxm_mc() + '"' + "," + '"' +
-                    "wxxm_gs" + '"' + ":" + '"' + list_XM.get(i).getWxxm_gs() + '"' + "," + '"' +
-                    "wxxm_dj" + '"' + ":" + '"' + list_XM.get(i).getWxxm_dj() + '"' + "," + '"' +
-                    "wxxm_no" + '"' + ":" + '"' + list_XM.get(i).getWxxm_no() + '"' + "," + '"' +
-                    "wxxm_je" + '"' + ":" + '"' + list_XM.get(i).getWxxm_je() + '"' + "," + '"' +
-                    "wxxm_cb" + '"' + ":" + '"' + list_XM.get(i).getWxxm_cb() + '"' + "," + '"' +
-                    "wxxm_zk" + '"' + ":" + '"' + list_XM.get(i).getWxxm_zk() + '"' + "," + '"' +
-                    "wxxm_yje" + '"' + ":" + '"' + list_XM.get(i).getWxxm_yje() + '"' + "," + '"' +
-                    "wxxm_zt" + '"' + ":" + '"' + "正常" + '"' + "," + '"' +
-                    "wxxm_tpye" + '"' + ":" + '"' + "正常" + '"' + "}" + ",";
-        }
-
-
-        json = json + "{" + '"' + "work_no" + '"' + ":" + '"' + DH + '"' + "," + '"' + "wxxm_mc" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_mc() + '"' + "," + '"' +
-                "wxxm_gs" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_gs() + '"' + "," + '"' +
-                "wxxm_dj" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_dj() + '"' + "," + '"' +
-                "wxxm_no" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_no() + '"' + "," + '"' +
-                "wxxm_je" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_je() + '"' + "," + '"' +
-                "wxxm_cb" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_cb() + '"' + "," + '"' +
-                "wxxm_zk" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_zk() + '"' + "," + '"' +
-                "wxxm_yje" + '"' + ":" + '"' + list_XM.get(list_XM.size() - 1).getWxxm_yje() + '"' + "," + '"' +
-                "wxxm_zt" + '"' + ":" + '"' + "正常" + '"' + "," + '"' +
-                "wxxm_tpye" + '"' + ":" + '"' + "正常"
-                + '"' + "}" + "]" + "}";
-//        + "]" + "}"
-
-        Log.i("gscxaaa", "最后一次查看json,工时=" + json);
+    private void updateWxxmZKToDB(String workNo, final double wxxmZK) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("json", json);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_addxm, params, new AbStringHttpResponseListener() {
+        params.put("work_no", workNo);
+        params.put("wxxm_zk", String.valueOf(wxxmZK));
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_UPDATA_XMZK, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "XM是否成功===" + s.toString());
-                dataxm();
+            public void onSuccess(int a, String data) {
+                if (data.equals("success")) { // 库里面更新成功后，才更新UI
+                    for (BSD_WeiXiuJieDan_XM_Entity entity : list_XM) {
+                        entity.setWxxm_zk(wxxmZK);
+                        entity.setWxxm_je(entity.getWxxm_yje() * wxxmZK);
+                        if (entity.getWxxm_gs() == 0) {
+                            entity.setWxxm_dj(entity.getWxxm_je());
+                        } else {
+                            entity.setWxxm_dj(entity.getWxxm_je() / entity.getWxxm_gs());
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-
             }
 
             @Override
@@ -505,9 +469,13 @@ public class BSD_mrkx_wxxm extends Fragment {
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-                Log.i("cjn", "请求失败" + s.toString());
+                Show.showTime(getActivity(), "网络连接超时");
             }
         });
+    }
+
+    public interface ChaKanPaiGongREN {
+        void onYesClick(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je);
     }
 
     public interface XM_ZJ {
@@ -524,10 +492,6 @@ public class BSD_mrkx_wxxm extends Fragment {
 
     public List<BSD_WeiXiuJieDan_XM_Entity> getList_XM() {
         return list_XM;
-    }
-
-    public void setList_XM(List<BSD_WeiXiuJieDan_XM_Entity> list_XM) {
-        this.list_XM = list_XM;
     }
 
     public void refreashData() {

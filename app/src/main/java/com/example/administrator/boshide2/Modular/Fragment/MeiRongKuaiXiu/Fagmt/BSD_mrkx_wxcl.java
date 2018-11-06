@@ -1,6 +1,7 @@
 package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -44,6 +45,7 @@ import java.util.List;
  */
 
 public class BSD_mrkx_wxcl extends BaseFragment {
+    private static final String PARAM_KEY = "param_key";
     CL_ZJ cl_zj;
     BSD_MeiRongKuaiXiu_Fragment    BSD_mrkx;
     private TextView tv_recordNum;
@@ -59,6 +61,22 @@ public class BSD_mrkx_wxcl extends BaseFragment {
     TooPromptdiaog promptdiaog;
     BSD_XiuGaiGongShi bsd_xiuGaiGongShi;
     TextView tv_wxxm_money;
+    private String param;
+    double wxclZK;
+
+    public static BSD_mrkx_wxcl newInstance(String params) {
+        BSD_mrkx_wxcl fragment = new BSD_mrkx_wxcl();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY, params);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        param = getArguments().getString(PARAM_KEY);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -394,46 +412,27 @@ public class BSD_mrkx_wxcl extends BaseFragment {
 
     }
 
-    /**
-     * 添加材料
-     */
-    String clcdjson;
+    public void updateWxclZK(double wxclZK) {
+        this.wxclZK = wxclZK;
+        updateWxclZKToDB(param, wxclZK);
+    }
 
-
-    public void CLinData(final String DH) {
-        clcdjson = "{" + '"' + "data" + '"' + ":" + "[";
-        for (int i = 0; i < list_CL.size() - 1; i++) {
-            clcdjson = clcdjson + "{" + '"' + "work_no" + '"' + ":" + '"' + DH + '"' + "," + '"' +
-                    "peij_no" + '"' + ":" + '"' + list_CL.get(i).getPeij_no() + '"' + "," + '"' +
-                    "peij_mc" + '"' + ":" + '"' + list_CL.get(i).getPeij_mc() + '"' + "," + '"' +
-                    "peij_sl" + '"' + ":" + '"' + list_CL.get(i).getPeij_sl() + '"' + "," + '"' +
-                    "peij_dj" + '"' + ":" + '"' + list_CL.get(i).getPeij_dj() + '"' + "," + '"' +
-                    "peij_je" + '"' + ":" + '"' + list_CL.get(i).getPeij_je() + '"' + "," + '"' +
-                    "peij_th" + '"' + ":" + '"' + list_CL.get(i).getPeij_th() + '"' + "," + '"' +
-                    "peij_dw" + '"' + ":" + '"' + list_CL.get(i).getPeij_dw() + '"' + "," + '"' +
-                    "peij_zk" + '"' + ":" + '"' + list_CL.get(i).getPeij_zk() + '"' + "," + '"' +
-                    "peij_ydj" + '"' + ":" + '"' + list_CL.get(i).getPeij_ydj() + '"' + "," + '"' +
-                    "peij_zt" + '"' + ":" + '"' + "正常" + '"' + "}" + ",";
-        }
-        clcdjson = clcdjson + "{" + '"' + "work_no" + '"' + ":" + '"' + DH + '"' + "," + '"' +
-                "peij_no" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_no() + '"' + "," + '"' +
-                "peij_mc" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_mc() + '"' + "," + '"' +
-                "peij_sl" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_sl() + '"' + "," + '"' +
-                "peij_dj" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_dj() + '"' + "," + '"' +
-                "peij_je" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_je() + '"' + "," + '"' +
-                "peij_th" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_th() + '"' + "," + '"' +
-                "peij_dw" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_dw() + '"' + "," + '"' +
-                "peij_zk" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_zk() + '"' + "," + '"' +
-                "peij_ydj" + '"' + ":" + '"' + list_CL.get(list_CL.size() - 1).getPeij_ydj() + '"' + "," + '"' +
-                "peij_zt" + '"' + ":" + '"' + "正常" + '"' + "}" + "]" + "}";
-        Log.i("cjn", "clcdjson========================" + clcdjson);
+    private void updateWxclZKToDB(String workNo, final double wxclZK) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("json", clcdjson);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_addcl, params, new AbStringHttpResponseListener() {
+        params.put("work_no", workNo);
+        params.put("wxcl_zk", String.valueOf(wxclZK));
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_UPDATA_CLZK, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "CL是否成功" + s.toString());
-                cldata();
+            public void onSuccess(int a, String data) {
+                if (data.equals("success")) { // 库里面更新成功后，才更新UI
+                    for (BSD_WeiXiuJieDan_CL_Entity entity : list_CL) {
+                        entity.setPeij_zk(wxclZK);
+                        entity.setPeij_je(entity.getPeij_yje() * wxclZK);
+                        entity.setPeij_dj(entity.getPeij_je() / entity.getPeij_sl());
+                    }
+                    adapter.notifyDataSetChanged();
+                }
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
@@ -449,8 +448,8 @@ public class BSD_mrkx_wxcl extends BaseFragment {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getHostActicity(), "网络请求失败", Toast.LENGTH_SHORT).show();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-                Log.i("cjn", "请求失败" + s.toString());
             }
         });
     }

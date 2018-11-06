@@ -243,6 +243,9 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private List<BSD_WeiXiuJieDan_CL_Entity> list_CL;
     private TextView tv_paigongAll;
     private UpdateItemInfoDialog updateItemInfoDialog;
+    private Queding_Quxiao quedingQuxiao;
+    private double currentWxxmZk;
+    private double currentWxclZk;
 
     public static BSD_MeiRongKuaiXiu_Fragment newInstance(String params) {
         BSD_MeiRongKuaiXiu_Fragment fragment = new BSD_MeiRongKuaiXiu_Fragment();
@@ -1369,7 +1372,33 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     if (jsonObject.getString("message").equals("查询成功")) {
-                        JSONObject object = jsonObject.getJSONObject("data");
+                        final JSONObject object = jsonObject.getJSONObject("data");
+                        final double wxxmZK = Double.parseDouble(object.getString("itemrate"));
+                        final double wxclZK = Double.parseDouble(object.getString("peijrate"));
+                        double leftje = Double.parseDouble(object.getString("card_leftje"));
+                        quedingQuxiao = new Queding_Quxiao(getHostActicity(), "读取成功" +
+                                "\n卡内余额为：" + object.getString("card_leftje") +
+                                "\n是否对单据中的维修项目和配件应用此卡的折扣？");
+                        quedingQuxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
+                            @Override
+                            public void onConfirm() {
+                                // 如果获取到的折扣和当前折扣不等，则更新折扣，否则不变
+                                if (wxxmZK != currentWxxmZk) {
+                                    currentWxxmZk = wxxmZK;
+                                    BSD_wxxm.updateWxxmZK(wxxmZK);
+                                }
+                                if (wxclZK != currentWxclZk) {
+                                    currentWxclZk = wxclZK;
+                                    BSD_wxcl.updateWxclZK(wxclZK);
+                                }
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                quedingQuxiao.dismiss();
+                            }
+                        });
+                        quedingQuxiao.show();
                         Conts.MRKX_XM_ZK = Double.parseDouble(object.getString("itemrate"));
                         Conts.MRKX_CL_ZK = Double.parseDouble(object.getString("peijrate"));
                         Conts.MRKX_shengYu_jinQian = Double.parseDouble(object.getString("card_leftje"));
