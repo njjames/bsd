@@ -56,6 +56,7 @@ public class BSD_mrkx_wxxm extends BaseFragment {
     TextView tv_wxxm_money;
     private String param;
     double wxxmZK = 1;
+    private OnUpdateZKListener onUpdateZKListener;
 
     public static BSD_mrkx_wxxm newInstance(String params) {
         BSD_mrkx_wxxm fragment = new BSD_mrkx_wxxm();
@@ -111,15 +112,26 @@ public class BSD_mrkx_wxxm extends BaseFragment {
         //单项派工
         adapter.setOnOperateItemListener(new BSD_mrbx_wxxm_adp.OnOperateItemListener() {
             @Override
-            public void onPaiGong(final String wxxmNo) {
+            public void onPaiGong(final int position) {
+                // 如果当前显示的位置不是派工的位置，则切换到派工的位置
+                if (currentPosition != position) {
+                    adapter.setCurrentPosition(position);
+                    currentPosition = position;
+                    int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
+                    adapter.notifyDataSetChanged();
+                    bsd_lsbj_lv.setSelection(firstVisiblePosition);
+                    if (onRefreashPaiGongListener != null) {
+                        onRefreashPaiGongListener.onRefreash(list_XM.get(position).getWork_no(), list_XM.get(position).getWxxm_no());
+                    }
+                }
                 PaiGongDialog paiGongDialog = new PaiGongDialog(getContext(), PaiGongDialog.PAIGONG_SINGLE);
-                paiGongDialog.setWorkNo(Conts.work_no);
-                paiGongDialog.setWxxmNo(wxxmNo);
+                paiGongDialog.setWorkNo(param);
+                paiGongDialog.setWxxmNo(list_XM.get(position).getWxxm_no());
                 paiGongDialog.setOnPaiGongListener(new PaiGongDialog.OnPaiGongListener() {
                     @Override
                     public void onSuccess() {
                         if (onRefreashPaiGongListener != null) {
-                            onRefreashPaiGongListener.onRefreash(Conts.work_no, wxxmNo);
+                            onRefreashPaiGongListener.onRefreash(param, list_XM.get(position).getWxxm_no());
                         }
                     }
                 });
@@ -127,38 +139,37 @@ public class BSD_mrkx_wxxm extends BaseFragment {
             }
 
             @Override
-            public void onDelete(final String wxxmNo, final int position) {
-                promptdiaog = new TooPromptdiaog(getContext(), "是否删除");
+            public void onDelete(final int position) {
+                promptdiaog = new TooPromptdiaog(getContext(), "确定删除此维修项目吗？");
                 promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick() {
-                        deleteWxxm(wxxmNo, position);
+                        deleteWxxm(position);
                     }
                 });
                 promptdiaog.show();
             }
 
             @Override
-            public void onUpdateYgsf(final String wxxmNo, final double wxxmGs, final double wxxmYje, final String wxxmMc, final int position) {
-                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_WXXMGS, wxxmYje, wxxmMc);
+            public void onUpdateYgsf(final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_WXXMGS, list_XM.get(position).getWxxm_yje(), list_XM.get(position).getWxxm_mc());
                 updateItemInfoDialog.show();
                 updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick(double gongshif) {
-                        Conts.wxxm_je = gongshif;
-                        updateWxxmGsf(wxxmNo, wxxmGs, gongshif, wxxmMc, position);
+                        updateWxxmGsf(gongshif, position);
                     }
                 });
             }
 
             @Override
-            public void onUpdateWxxmMc(final String wxxmNo, final String wxxmMc, final int position) {
-                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_WXXMNAME, 0, wxxmMc);
+            public void onUpdateWxxmMc(final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_WXXMNAME, 0, list_XM.get(position).getWxxm_mc());
                 updateItemInfoDialog.show();
                 updateItemInfoDialog.setToopromtXmmc(new UpdateItemInfoDialog.ToopromtXmmc() {
                     @Override
                     public void onYesClick(String newWxxmMc) {
-                        updateWxxmMC(list_XM.get(position).getWork_no(), wxxmNo, newWxxmMc, position);
+                        updateWxxmMC(newWxxmMc, position);
                     }
                 });
             }
@@ -185,23 +196,24 @@ public class BSD_mrkx_wxxm extends BaseFragment {
     @Override
     public void initData() {
         url = new URLS();
-        Conts.MRKX = 1;
         dataxm();
     }
 
-    private void updateWxxmMC(String workNo, String wxxmNo, final String wxxmMc, final int position) {
+    private void updateWxxmMC(final String wxxmMc, final int position) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", workNo);
-        params.put("wxxm_no", wxxmNo);
+        params.put("work_no", param);
+        params.put("wxxm_no", list_XM.get(position).getWxxm_no());
         params.put("wxxm_mc", wxxmMc);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_Update_WxxmMc, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_Update_WxxmMc, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
-                list_XM.get(position).setWxxm_mc(wxxmMc);
-                int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
-                adapter.notifyDataSetChanged();
-                bsd_lsbj_lv.setSelection(firstVisiblePosition);
+                if (data.equals("success")) {
+                    list_XM.get(position).setWxxm_mc(wxxmMc);
+                    int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
+                    adapter.notifyDataSetChanged();
+                    bsd_lsbj_lv.setSelection(firstVisiblePosition);
+                }
                 updateItemInfoDialog.dismiss();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
@@ -225,24 +237,28 @@ public class BSD_mrkx_wxxm extends BaseFragment {
     }
 
     //修改工时费
-    public void updateWxxmGsf(String wxxm_no, double gs, final double dj, String wxxmMc, final int position) {
+    public void updateWxxmGsf(final double ygsf, final int position) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", param);
-        params.put("wxxm_no", wxxm_no);
-        params.put("jg", dj + "");
-        params.put("gs", gs + "");
-        params.put("hyzk", Conts.MRKX_XM_ZK + "");
-        params.put("wxxm_mc", wxxmMc);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_mrkx_upxm, params, new AbStringHttpResponseListener() {
+        params.put("wxxm_no", list_XM.get(position).getWxxm_no());
+        params.put("ygsf", ygsf + "");
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_mrkx_upxm, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
-                list_XM.get(position).setWxxm_yje(dj);
-                list_XM.get(position).setWxxm_je(dj * Conts.MRKX_XM_ZK);
-                int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
-                adapter.notifyDataSetChanged();
-                bsd_lsbj_lv.setSelection(firstVisiblePosition);
-                wxxmPrice();
+                if (data.equals("success")) {
+                    list_XM.get(position).setWxxm_yje(ygsf);
+                    list_XM.get(position).setWxxm_je(ygsf * list_XM.get(position).getWxxm_zk());
+                    if (list_XM.get(position).getWxxm_gs() == 0) {
+                        list_XM.get(position).setWxxm_dj(list_XM.get(position).getWxxm_je());
+                    } else {
+                        list_XM.get(position).setWxxm_dj(list_XM.get(position).getWxxm_je() / list_XM.get(position).getWxxm_gs());
+                    }
+                    int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
+                    adapter.notifyDataSetChanged();
+                    bsd_lsbj_lv.setSelection(firstVisiblePosition);
+                    wxxmPrice();
+                }
                 updateItemInfoDialog.dismiss();
                 DownJianPan.DJP(getContext());
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
@@ -321,15 +337,14 @@ public class BSD_mrkx_wxxm extends BaseFragment {
     }
 
     /**
-     * 按照reco_no删除维修项目
-     * @param wxxmNo
+     * 删除维修项目
      * @param position
      */
-    public void deleteWxxm(String wxxmNo, final int position) {
+    public void deleteWxxm(final int position) {
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", param);
-        params.put("wxxm_no", wxxmNo);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_deletXM, params, new AbStringHttpResponseListener() {
+        params.put("wxxm_no", list_XM.get(position).getWxxm_no());
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_deletXM, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 list_XM.remove(position);
@@ -452,6 +467,10 @@ public class BSD_mrkx_wxxm extends BaseFragment {
                         }
                     }
                     adapter.notifyDataSetChanged();
+                    if (onUpdateZKListener != null) {
+                        onUpdateZKListener.onSuccess(wxxmZK);
+                    }
+                    wxxmPrice();
                 }
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
@@ -511,5 +530,14 @@ public class BSD_mrkx_wxxm extends BaseFragment {
 
     public int getCurrentPosition() {
         return currentPosition;
+    }
+
+    public interface OnUpdateZKListener {
+        void onSuccess(double wxxmZK);
+        void onFail();
+    }
+
+    public void setOnUpdateZKListener(OnUpdateZKListener onUpdateZKListener) {
+        this.onUpdateZKListener = onUpdateZKListener;
     }
 }

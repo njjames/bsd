@@ -129,7 +129,7 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (onOperateItemListener != null) {
-                    onOperateItemListener.onUpdateWxxmMc(list.get(i).getWxxm_no(), list.get(i).getWxxm_mc(), i);
+                    onOperateItemListener.onUpdateWxxmMc(i);
                 }
             }
         });
@@ -170,7 +170,7 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (onOperateItemListener != null) {
-                    onOperateItemListener.onUpdateYgsf(list.get(i).getWxxm_no(), list.get(i).getWxxm_gs(), list.get(i).getWxxm_yje(),list.get(i).getWxxm_mc(), i);
+                    onOperateItemListener.onUpdateYgsf(i);
                 }
             }
         });
@@ -179,7 +179,7 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (onOperateItemListener != null) {
-                    onOperateItemListener.onPaiGong(list.get(i).getWxxm_no());
+                    onOperateItemListener.onPaiGong(i);
                 }
             }
         });
@@ -189,7 +189,7 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (onOperateItemListener != null) {
-                    onOperateItemListener.onDelete(list.get(i).getWxxm_no(), i);
+                    onOperateItemListener.onDelete(i);
                 }
             }
         });
@@ -228,18 +228,17 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
     }
 
     public interface OnOperateItemListener {
-        void onPaiGong(String wxxmNo);
+        void onPaiGong(int position);
 
         /**
          * 删除维修项目
-         * @param wxxmNo  维修项目编码
          * @param position  这个维修项目在集合中的位置
          */
-        void onDelete(String wxxmNo, int position);
+        void onDelete(int position);
 
-        void onUpdateYgsf(String wxxmNo, double wxxmGs, double wxxmYje, String wxxmMc, int position);
+        void onUpdateYgsf(int position);
 
-        void onUpdateWxxmMc(String wxxmNo, String wxxmMc, int position);
+        void onUpdateWxxmMc(int position);
     }
 
     public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {

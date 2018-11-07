@@ -17,44 +17,12 @@ import java.util.List;
 /**
  * Created by Administrator on 2017-4-20.
  */
-
 public class BSD_mrkx_wxcl_adp extends BaseAdapter {
-    private  LayoutInflater layoutInflater;
-    private  Context context;
-    private  List<BSD_WeiXiuJieDan_CL_Entity> list;
-    private  DeletCL deletCL;
-    private  UPsl uPsl;
-    private  UPdj uPdj;
-    private  KuCun   kuCun;
+    private LayoutInflater layoutInflater;
+    private List<BSD_WeiXiuJieDan_CL_Entity> list;
     private OnOperateItemListener onOperateItemListener;
 
-    public void setuPsl(UPsl uPsl) {
-        this.uPsl = uPsl;
-    }
-
-    public void setuPdj(UPdj uPdj) {
-        this.uPdj = uPdj;
-    }
-
-    public void setDeletCL(DeletCL deletCL) {
-        this.deletCL = deletCL;
-    }
-
-    public  void  setKuCun(KuCun   kuCun){
-        this.kuCun=kuCun;
-    }
-
-    public void setList(List<BSD_WeiXiuJieDan_CL_Entity> list) {
-        this.list = list;
-    }
-
-    public BSD_mrkx_wxcl_adp(Context context) {
-        this.context = context;
-        this.layoutInflater = LayoutInflater.from(context);
-    }
-
     public BSD_mrkx_wxcl_adp(Context context, List<BSD_WeiXiuJieDan_CL_Entity> list) {
-        this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.list = list;
     }
@@ -66,15 +34,22 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return list.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
-    class Holder {
-        TextView bsd_kxbj_dj,bsd_mrkx_hyzk,bsd_xsbj_name,bsd_kxbj_bzsj,bsd_kxbj_gsdj,bsd_kxbj_dw,bsd_kxbj_qian,bsd_kxbj_cz;
+
+    public final class Holder {
+        TextView bsd_kxbj_dj;
+        TextView bsd_mrkx_hyzk;
+        TextView bsd_xsbj_name;
+        TextView bsd_kxbj_bzsj;
+        TextView bsd_kxbj_gsdj;
+        TextView bsd_kxbj_dw;
+        TextView bsd_kxbj_cz;
         ImageView iv_stock;
         ImageView iv_delete;
     }
@@ -99,13 +74,13 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
             holder = (Holder) contetview.getTag();
         }
         holder.bsd_xsbj_name.setText(list.get(i).getPeij_mc());
-        holder.bsd_kxbj_bzsj.setText(""+list.get(i).getPeij_sl());
+        holder.bsd_kxbj_bzsj.setText("" + list.get(i).getPeij_sl());
         // 修改数量
         holder.bsd_kxbj_bzsj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onOperateItemListener != null) {
-                    onOperateItemListener.onUpdateSl(list.get(i).getPeij_no(), list.get(i).getPeij_mc(), list.get(i).getPeij_sl(), i);
+                    onOperateItemListener.onUpdateSl(i);
                 }
             }
         });
@@ -116,12 +91,12 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (onOperateItemListener != null) {
-                    onOperateItemListener.onUpdateYDj(list.get(i).getPeij_no(), list.get(i).getPeij_mc(), list.get(i).getPeij_ydj(), i);
+                    onOperateItemListener.onUpdateYDj(i);
                 }
             }
         });
         holder.bsd_kxbj_dw.setText(list.get(i).getPeij_dw());
-        holder.bsd_kxbj_cz.setText(""+list.get(i).getPeij_sl()*v);
+        holder.bsd_kxbj_cz.setText("" + list.get(i).getPeij_sl() * v);
         // 删除
         holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +107,8 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
             }
         });
 
-        holder.bsd_kxbj_dj.setText(""+v);
-        holder.bsd_mrkx_hyzk.setText(""+list.get(i).getPeij_zk());
+        holder.bsd_kxbj_dj.setText("" + v);
+        holder.bsd_mrkx_hyzk.setText("" + list.get(i).getPeij_zk());
         // 查看库存
         holder.iv_stock.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,28 +121,14 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
         return contetview;
     }
 
-   public  interface   KuCun{
-       public  void  query_kc(String  peij_no );
-   }
-
-    public interface  DeletCL{
-        public void onYesClick(int i);
-    }
-    public interface UPsl {
-        public void onYesClick(int i, double sl, double dj);
-    }
-    public interface UPdj {
-        public void onYesClick(int i, double sl, double dj);
-    }
-
     public interface OnOperateItemListener {
         void onDelete(String peij_no, int position);
 
         void onSearchStock(String peij_no);
 
-        void onUpdateSl(String peij_no, String peij_mc, double peij_sl, int position);
+        void onUpdateSl(int position);
 
-        void onUpdateYDj(String peij_no, String peij_mc, double peij_ydj, int position);
+        void onUpdateYDj(int position);
     }
 
     public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {

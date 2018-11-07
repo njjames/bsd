@@ -3,30 +3,22 @@ package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
-import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.BSD_MeiRongKuaiXiu_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.fagmt_adp.BSD_mrkx_wxcl_adp;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
@@ -43,26 +35,21 @@ import java.util.List;
  * 博士德车辆信息维修历史
  * Created by Administrator on 2017-4-24.
  */
-
 public class BSD_mrkx_wxcl extends BaseFragment {
     private static final String PARAM_KEY = "param_key";
-    CL_ZJ cl_zj;
-    BSD_MeiRongKuaiXiu_Fragment    BSD_mrkx;
+    private CL_ZJ cl_zj;
     private TextView tv_recordNum;
     private UpdateItemInfoDialog updateItemInfoDialog;
     private ListView bsd_lsbj_lv;
     private BSD_mrkx_wxcl_adp adapter;
     private List<BSD_WeiXiuJieDan_CL_Entity> list_CL = new ArrayList<>();
     private URLS url;
-    private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
-    private int choufutianjia = 0;
     private Dialog mWeiboDialog;
-    RelativeLayout beijing;
-    TooPromptdiaog promptdiaog;
-    BSD_XiuGaiGongShi bsd_xiuGaiGongShi;
-    TextView tv_wxxm_money;
+    private TooPromptdiaog promptdiaog;
+    private TextView tv_wxcl_money;
     private String param;
-    double wxclZK;
+    private double wxclZK;
+    private OnUpdateZKListener onUpdateZKListener;
 
     public static BSD_mrkx_wxcl newInstance(String params) {
         BSD_mrkx_wxcl fragment = new BSD_mrkx_wxcl();
@@ -85,15 +72,14 @@ public class BSD_mrkx_wxcl extends BaseFragment {
 
     @Override
     public void initView() {
-        tv_wxxm_money = (TextView) view.findViewById(R.id.tv_wxxm_money);
-        beijing = (RelativeLayout) getActivity().findViewById(R.id.beijing);
+        tv_wxcl_money = (TextView) view.findViewById(R.id.tv_wxcl_money);
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
         adapter = new BSD_mrkx_wxcl_adp(getActivity(), list_CL);
         bsd_lsbj_lv.setAdapter(adapter);
         adapter.setOnOperateItemListener(new BSD_mrkx_wxcl_adp.OnOperateItemListener() {
             @Override
             public void onDelete(final String peij_no, final int position) {
-                promptdiaog = new TooPromptdiaog(getContext(), "确定删除吗？");
+                promptdiaog = new TooPromptdiaog(getContext(), "确定删除此配件吗？");
                 promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick() {
@@ -110,58 +96,25 @@ public class BSD_mrkx_wxcl extends BaseFragment {
             }
 
             @Override
-            public void onUpdateSl(final String peij_no, String peij_mc, final double peij_sl, final int position) {
-                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PEIJSL, peij_sl, peij_mc);
+            public void onUpdateSl(final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PEIJSL, list_CL.get(position).getPeij_sl(), list_CL.get(position).getPeij_mc());
                 updateItemInfoDialog.show();
                 updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick(double newPeijSl) {
-                        updatePeijSl(peij_no, newPeijSl, position);
+                        updatePeijSl(newPeijSl, position);
                     }
                 });
             }
 
             @Override
-            public void onUpdateYDj(final String peij_no, String peij_mc, double peij_ydj, final int position) {
-                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PEIJDJ, peij_ydj, peij_mc);
+            public void onUpdateYDj(final int position) {
+                updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PEIJDJ, list_CL.get(position).getPeij_ydj(), list_CL.get(position).getPeij_mc());
                 updateItemInfoDialog.show();
                 updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick(double newPeijYdj) {
-                        updatePeijYdj(peij_no, newPeijYdj, position);
-                    }
-                });
-            }
-        });
-
-        //修改数量
-        adapter.setuPsl(new BSD_mrkx_wxcl_adp.UPsl() {
-            @Override
-            public void onYesClick(final int i, double sl, final double dj) {
-                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), "修改数量",0, sl,"", "修改数量");
-                bsd_xiuGaiGongShi.show();
-                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick(double gongshi) {
-//                        updatePeijSl(i, gongshi, dj);
-
-                        bsd_xiuGaiGongShi.dismiss();
-                    }
-                });
-
-            }
-        });
-        //修改单价
-        adapter.setuPdj(new BSD_mrkx_wxcl_adp.UPdj() {
-            @Override
-            public void onYesClick(final int i, final double sl, final double dj) {
-                bsd_xiuGaiGongShi = new BSD_XiuGaiGongShi(getActivity(), "修改单价", 0,dj, "","修改单价");
-                bsd_xiuGaiGongShi.show();
-                bsd_xiuGaiGongShi.setToopromtOnClickListener(new BSD_XiuGaiGongShi.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick(double gongshi) {
-//                        updatePeijSl(i, sl, gongshi);
-                        bsd_xiuGaiGongShi.dismiss();
+                        updatePeijYdj(newPeijYdj, position);
                     }
                 });
             }
@@ -169,7 +122,6 @@ public class BSD_mrkx_wxcl extends BaseFragment {
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
 
             }
         });
@@ -182,24 +134,25 @@ public class BSD_mrkx_wxcl extends BaseFragment {
         cldata();
     }
 
-    private void updatePeijYdj(String peij_no, final double newPeijYdj, final int position) {
+    private void updatePeijYdj(final double newPeijYdj, final int position) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
-        params.put("peij_no", peij_no);
+        params.put("work_no", param);
+        params.put("peij_no", list_CL.get(position).getPeij_no());
         params.put("ydj", newPeijYdj + "");
-        params.put("zk", Conts.MRKX_CL_ZK + "");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_update_peijydj, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_update_peijydj, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int i, String s) {
-                list_CL.get(position).setPeij_ydj(newPeijYdj);
-                list_CL.get(position).setPeij_yje(newPeijYdj * list_CL.get(position).getPeij_sl());
-                list_CL.get(position).setPeij_dj(newPeijYdj * Conts.MRKX_CL_ZK);
-                list_CL.get(position).setPeij_je(newPeijYdj * Conts.MRKX_CL_ZK * list_CL.get(position).getPeij_sl());
-                int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
-                adapter.notifyDataSetChanged();
-                bsd_lsbj_lv.setSelection(firstVisiblePosition);
-                wxclPrice();
+            public void onSuccess(int i, String data) {
+                if (data.equals("success")) {
+                    list_CL.get(position).setPeij_ydj(newPeijYdj);
+                    list_CL.get(position).setPeij_yje(newPeijYdj * list_CL.get(position).getPeij_sl());
+                    list_CL.get(position).setPeij_dj(newPeijYdj * list_CL.get(position).getPeij_zk());
+                    list_CL.get(position).setPeij_je(newPeijYdj * list_CL.get(position).getPeij_zk() * list_CL.get(position).getPeij_sl());
+                    int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
+                    adapter.notifyDataSetChanged();
+                    bsd_lsbj_lv.setSelection(firstVisiblePosition);
+                    wxclPrice();
+                }
                 updateItemInfoDialog.dismiss();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
@@ -222,24 +175,24 @@ public class BSD_mrkx_wxcl extends BaseFragment {
         });
     }
 
-    public void updatePeijSl(String peijNo, final double peijSl, final int position) {
+    public void updatePeijSl(final double peijSl, final int position) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "更新中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
-        params.put("peij_no", peijNo);
+        params.put("work_no", param);
+        params.put("peij_no", list_CL.get(position).getPeij_no());
         params.put("sl", peijSl + "");
-        params.put("zk", Conts.MRKX_CL_ZK + "");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_meirongxiugai, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_meirongxiugai, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int i, String s) {
-                list_CL.get(position).setPeij_sl(peijSl);
-                list_CL.get(position).setPeij_yje(peijSl * list_CL.get(position).getPeij_ydj());
-                list_CL.get(position).setPeij_dj(Conts.MRKX_CL_ZK * list_CL.get(position).getPeij_ydj());
-                list_CL.get(position).setPeij_je(peijSl * Conts.MRKX_CL_ZK * list_CL.get(position).getPeij_ydj());
-                int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
-                adapter.notifyDataSetChanged();
-                bsd_lsbj_lv.setSelection(firstVisiblePosition);
-                wxclPrice();
+            public void onSuccess(int i, String data) {
+                if (data.equals("success")) {
+                    list_CL.get(position).setPeij_sl(peijSl);
+                    list_CL.get(position).setPeij_yje(peijSl * list_CL.get(position).getPeij_ydj());
+                    list_CL.get(position).setPeij_je(peijSl * list_CL.get(position).getPeij_dj());
+                    int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
+                    adapter.notifyDataSetChanged();
+                    bsd_lsbj_lv.setSelection(firstVisiblePosition);
+                    wxclPrice();
+                }
                 updateItemInfoDialog.dismiss();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
@@ -261,57 +214,6 @@ public class BSD_mrkx_wxcl extends BaseFragment {
             }
         });
     }
-
-    /**
-     * 全部删除操作
-     */
-    public void deltAll(){
-        if (list_CL.size()>0){
-            for (int i=0;i<list_CL.size();i++){
-                deletclAll(list_CL.get(i).getReco_no());
-            }
-        }else {
-        }
-    }
-
-
-    /**
-     * 删除莋
-     *
-     * @param i
-     */
-    public void deletclAll(int i) {
-
-        AbRequestParams params = new AbRequestParams();
-        params.put("id", i);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_deletCL, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int a, String s) {
-                Log.i("cjn", "成功" + s);
-                Log.i("cjn", "成功操作==" + s);
-                cldata();
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "失败" + s);
-            }
-        });
-
-    }
-
 
     /**
      * 删除维修用料
@@ -320,7 +222,7 @@ public class BSD_mrkx_wxcl extends BaseFragment {
      */
     public void deletWxcl(String peij_no, final int position) {
         AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
+        params.put("work_no", param);
         params.put("peij_no", peij_no);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_deletCL, params, new AbStringHttpResponseListener() {
             @Override
@@ -355,9 +257,7 @@ public class BSD_mrkx_wxcl extends BaseFragment {
     public void cldata() {
         list_CL.clear();
         AbRequestParams params = new AbRequestParams();
-        Log.i("wxcl", "看看单号" + Conts.work_no);
-        params.put("work_no", Conts.work_no);
-        Log.i("who", "谁是空？url==="+url);
+        params.put("work_no", param);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_cllb, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
@@ -366,7 +266,6 @@ public class BSD_mrkx_wxcl extends BaseFragment {
                     if (jsonObject.get("message").toString().equals("查询成功")) {
                         JSONArray jsonarray = jsonObject.getJSONArray("data");
                         for (int i = 0; i < jsonarray.length(); i++) {
-//                            Log.i("wxcl", "查询材料111");
                             JSONObject item = jsonarray.getJSONObject(i);
                             BSD_WeiXiuJieDan_CL_Entity entity = new BSD_WeiXiuJieDan_CL_Entity();
                             entity.setReco_no(item.getInt("reco_no"));
@@ -381,6 +280,7 @@ public class BSD_mrkx_wxcl extends BaseFragment {
                             entity.setPeij_zt(item.getString("peij_zt"));
                             entity.setPeij_zk(item.getDouble("peij_zk"));
                             entity.setPeij_ydj(item.getDouble("peij_ydj"));
+                            entity.setPeij_yje(item.getDouble("peij_yje"));
                             list_CL.add(entity);
                         }
                     }
@@ -390,7 +290,6 @@ public class BSD_mrkx_wxcl extends BaseFragment {
                 adapter.notifyDataSetChanged();
                 wxclPrice();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-                Conts.BSD_clshuliang=list_CL.size();
             }
 
             @Override
@@ -431,7 +330,13 @@ public class BSD_mrkx_wxcl extends BaseFragment {
                         entity.setPeij_je(entity.getPeij_yje() * wxclZK);
                         entity.setPeij_dj(entity.getPeij_je() / entity.getPeij_sl());
                     }
-                    adapter.notifyDataSetChanged();
+                    if (adapter != null) { // 增加null判断，防止维修项目没有显示过，造成adapter不没有被初始化
+                        adapter.notifyDataSetChanged();
+                        wxclPrice();
+                    }
+                    if (onUpdateZKListener != null) {
+                        onUpdateZKListener.onSuccess(wxclZK);
+                    }
                 }
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
@@ -480,8 +385,8 @@ public class BSD_mrkx_wxcl extends BaseFragment {
         for (int i = 0; i < list_CL.size(); i++) {
             wxclZje = wxclZje + (list_CL.get(i).getPeij_je());
         }
-        double v = (Math.round(wxclZje* 100) / 100.0);
-        tv_wxxm_money.setText( v  + "元");
+        double v = (Math.round(wxclZje * 100) / 100.0);
+        tv_wxcl_money.setText( v  + "元");
         if (list_CL.size() > 0) {
             tv_recordNum.setText("(共" + list_CL.size() + "条记录)");
         } else {
@@ -492,6 +397,15 @@ public class BSD_mrkx_wxcl extends BaseFragment {
         } else {
             cl_zj.onYesClick(0);
         }
+    }
+
+    public interface OnUpdateZKListener {
+        void onSuccess(double wxclZK);
+        void onFail();
+    }
+
+    public void setOnUpdateZKListener(OnUpdateZKListener onUpdateZKListener) {
+        this.onUpdateZKListener = onUpdateZKListener;
     }
 
 }

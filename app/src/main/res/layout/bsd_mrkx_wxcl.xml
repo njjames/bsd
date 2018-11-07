@@ -7,8 +7,7 @@
     <LinearLayout
         android:id="@+id/bsd_lsbj_toubuju"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_30"
-        android:layout_marginTop="@dimen/qb_px_2">
+        android:layout_height="@dimen/qb_px_30">
 
         <TextView
             style="@style/mysearchtitlestyle"
@@ -88,7 +87,7 @@
             android:layout_toRightOf="@id/tv_total"/>
 
         <TextView
-            android:id="@+id/tv_wxxm_money"
+            android:id="@+id/tv_wxcl_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

@@ -152,7 +152,6 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
         ll_byWxxm.setOnClickListener(this);
         ll_wxWxxm.setOnClickListener(this);
         ll_wjgWxxm.setOnClickListener(this);
-
         iv_allCategory = (ImageView) view.findViewById(R.id.iv_category_all);
         rl_allCategory = (RelativeLayout) view.findViewById(R.id.rl_category_all);
         rl_allCategory.setOnClickListener(new View.OnClickListener() {
@@ -222,7 +221,7 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
         params.put("fenlei", 3);  //分类
         params.put("feil_mc", cheFl);   //费率名称
         params.put("no", workNo);
-        Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_xm_dj, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "")+URLS.BSD_xm_dj, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 double wxxmdj = Double.parseDouble(data);
@@ -248,7 +247,6 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
                 detailsAdapter.notifyDataSetChanged();
                 bsd_lv.setSelection(firstVisiblePosition);
                 Show.showTime(context, "添加成功");
-//                clist.onAdd(entiy, wxxmdj);
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 

@@ -260,7 +260,7 @@ public class URLS {
     /**
      * 获取维修项目的单价
      */
-    public String BSD_xm_dj = "public/wxxmjg";
+    public static final String BSD_xm_dj = "public/wxxmjg";
 
     /**
      * 快速报价基本信息查询
@@ -561,7 +561,7 @@ public class URLS {
     /**
      * 派工项目删除
      */
-    public String BSD_deletXM = "paigong/diaoduDelwxxm";
+    public static final String BSD_deletXM = "paigong/diaoduDelwxxm";
 
     /**
      * 派工项目删除
@@ -581,7 +581,7 @@ public class URLS {
     /**
      * 派工项目修改工时单价
      */
-    public String BSD_mrkx_upxm = "paigong/editWxxmByhyzk";
+    public static final String BSD_mrkx_upxm = "paigong/editWxxmByhyzk";
 
     public String BSD_ksbj_upxmgs = "offer/updatewxxmgs";
 
@@ -593,7 +593,7 @@ public class URLS {
     /**
      * 派工项目修改工时单价
      */
-    public String BSD_Update_WxxmMc = "paigong/updatewxxmmc";
+    public static final String BSD_Update_WxxmMc = "paigong/updatewxxmmc";
     /**
      * 派工材料修改数量单价
      */
@@ -620,7 +620,7 @@ public class URLS {
     /**
      * 快修输入baocun
      */
-    public String BSD_MRKX_UP="kuaixiu/addMrkxJbxx";
+    public static final String BSD_MRKX_UP="kuaixiu/addMrkxJbxx";
     /**
      * 快修结算1111
      */
@@ -655,12 +655,12 @@ public class URLS {
     /**
      * 获取
      */
-    public String BSD_meirongxiugai="paigong/editYl_mrkx";
+    public static final String BSD_meirongxiugai="paigong/editYl_mrkx";
 
     /**
      * 修改维修单配件原单价
      */
-    public String BSD_update_peijydj="paigong/updatepeijydj";
+    public static final String BSD_update_peijydj="paigong/updatepeijydj";
 
     /**
      * 根据车型型号获取4级结构

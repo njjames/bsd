@@ -17,9 +17,11 @@
             android:id="@+id/bsd_on_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/qb_px_4"
+            android:layout_marginLeft="@dimen/qb_px_4"
+            android:layout_marginRight="@dimen/qb_px_4"
+            android:layout_marginTop="@dimen/qb_px_4"
+            android:layout_marginBottom="@dimen/qb_px_2"
             android:orientation="vertical">
-
 
             <LinearLayout
                 android:id="@+id/bsd_on_top_line1"
@@ -40,23 +42,24 @@
 
                     <EditText
                         android:id="@+id/bsd_mrkx_et_huiyuankahao"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@null"
                         android:text=""
                         android:textColorHint="#B1B0B0"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textColor="@color/text_clxx"/>
 
                     <TextView
-                        android:id="@+id/bsd_mrkx_chaxin"
+                        android:id="@+id/tv_readcard"
                         android:text="读取"
                         style="@style/myeditreadbtnstyle" />
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:id="@+id/bsd_mrkx_rl_pp"
+                    android:id="@+id/ll_pinpai"
                     android:layout_weight="1.5"
                     style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_8">
@@ -76,7 +79,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/bsd_mrkx_rl_chexi"
+                    android:id="@+id/ll_chexi"
                     android:layout_weight="2"
                     style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_8">
@@ -96,7 +99,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/bsd_mrkx_rl_chezu"
+                    android:id="@+id/ll_chezu"
                     android:layout_weight="2.5"
                     style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_8">
@@ -116,7 +119,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/bsd_mrkx_rl_chexing"
+                    android:id="@+id/ll_chexing"
                     android:layout_weight="2.5"
                     style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_8">
@@ -266,7 +269,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/bsd_mrkx_rl_gsfl"
+                    android:id="@+id/ll_gsfl"
                     android:layout_weight="1.5"
                     style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_8">
@@ -293,7 +296,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/bsd_mrkx_rl_kucun"
+                    android:id="@+id/ll_stock"
                     android:layout_weight="1.5"
                     style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_8">
@@ -325,7 +328,7 @@
                     style="@style/myeditnormalbtnstyle" />
 
                 <TextView
-                    android:id="@+id/bsd_mrkx_quxiao"
+                    android:id="@+id/tv_removecard"
                     android:text="取消会员卡"
                     android:layout_weight="0.6"
                     style="@style/myeditnormalbtnstyle" />
@@ -409,7 +412,7 @@
         <View
             android:id="@+id/bsd_on_xian"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/qb_px_1"
             android:layout_marginLeft="@dimen/qb_px_4"
             android:layout_marginRight="@dimen/qb_px_4"
             android:background="#F7714C" />
