@@ -174,10 +174,9 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private List<CustemObject> nameList4 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter4;
     private SpinerPopWindow mSpinerPopWindow4;
-    String ckname;
-    String ckid;
-    QueRen queRen;
-    QueRen queRen1;
+    private String ckname;
+    private String ckid;
+    private QueRen queRen;
     private boolean isSaveBill = false;
     private TextView tv_removecard;
     private double bsd_xche_hjje;
@@ -192,14 +191,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private double bsd_zhifu_card_je;
     private double bsd_zhifu_card_xj;
     private Dialog mWeiboDialog;
-
     //根据VIN返回车型信息
     private List<Map<String, String>> listvincx = new ArrayList<>();
     private String cxnm;      //车型内码
     private TextView iv_readVin;
-
-    //用于防止重复替换同一个片段；
-    int index = 1;
     private String params;
     private TextView title;
     private TextView footerText;
@@ -209,7 +204,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private int currentType = 0; // 标示当前是显示的维修项目还是维修用料，0是维修项目，1是维修用来
     private BSD_ZCDUXQ_XM_POP bsd_zcduxq_xm_pop;
     private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
-
     private RelativeLayout beijing;
     private List<BSD_WeiXiuJieDan_XM_Entity> list_XM;
     private List<BSD_WeiXiuJieDan_CL_Entity> list_CL;
@@ -255,13 +249,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
         });
         tv_repairHistory = (TextView) view.findViewById(R.id.tv_repairhistory);
-        tv_repairHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BSD_LishiWeiXiu_DialogFragment.newInstance(billEntiy.getChe_no())
-                        .show(getFragmentManager(), "mrkx_lswx");
-            }
-        });
+        tv_repairHistory.setOnClickListener(this);
         bsd_mrkx_lswxjy = (TextView) view.findViewById(R.id.bsd_mrkx_lswxjy);
         bsd_mrkx_lswxjy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -270,7 +258,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                         show(getFragmentManager(), "mrkx_lswxjy");
             }
         });
-
         tv_removecard = (TextView) view.findViewById(R.id.tv_removecard);
         tv_removecard.setOnClickListener(this);
         ll_stock = (LinearLayout) view.findViewById(R.id.ll_stock);
@@ -284,7 +271,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         tv_readCard = (TextView) view.findViewById(R.id.tv_readcard);
         tv_readCard.setOnClickListener(this);
         bsd_mrkx_ed_lc = (EditText) view.findViewById(R.id.bsd_mrkx_ed_lc);
-
         //保养查询
         bsd_mrxk_bycx = (TextView) view.findViewById(R.id.bsd_mrxk_bycx);
         bsd_mrxk_bycx.setOnClickListener(new View.OnClickListener() {
@@ -301,7 +287,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         });
 
         et_huiyuankahao = (EditText) view.findViewById(R.id.bsd_mrkx_et_huiyuankahao);
-
         bsd_mrkx_et_vin = (EditText) view.findViewById(R.id.bsd_mrkx_et_vin);
         bsd_mrkx_ed_lianxiren = (EditText) view.findViewById(R.id.bsd_mrkx_ed_lianxiren);
         bsd_mrxk_rl_djtime = (LinearLayout) view.findViewById(R.id.bsd_mrxk_rl_djtime);
@@ -352,7 +337,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         bsd_ywwwdd_chezu = (TextView) view.findViewById(R.id.bsd_ywwwdd_chezu);
         bsd_ywwwdd_chexing = (TextView) view.findViewById(R.id.bsd_ywwwdd_chexing);
         bsd_ywwwdd_vin = (TextView) view.findViewById(R.id.bsd_ywwwdd_vin);
-
         //读取vin码
         iv_readVin = (TextView) view.findViewById(R.id.tv_readvin);
         iv_readVin.setOnClickListener(new View.OnClickListener() {
@@ -368,8 +352,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         });
 
         bsd_mrkx_et_miaoshu = (EditText) view.findViewById(R.id.bsd_mrkx_et_miaoshu);
-
-
         bsd_ywwwdd_user = (TextView) view.findViewById(R.id.bsd_ywwwdd_user);
         bsd_ywwwdd_dengjishijian = (TextView) view.findViewById(R.id.bsd_ywwwdd_dengjishijian);
         bsd_ywwwdd_dianhua = (TextView) view.findViewById(R.id.bsd_ywwwdd_dianhua);
@@ -393,12 +375,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
         });
         bsd_wxywdd_you_lv.setAdapter(paiGongInfoAdapter);
-
         tv_wxxmAdd = (TextView) view.findViewById(R.id.tv_wxxm_add);
         tv_wxllAdd = (TextView) view.findViewById(R.id.tv_wxll_add);
         tv_wxxmAdd.setOnClickListener(this);
         tv_wxllAdd.setOnClickListener(this);
-
         //存档操作
         tv_save = (TextView) view.findViewById(R.id.bsd_mrkx_cundang);
         tv_save.setOnClickListener(new View.OnClickListener() {
@@ -745,7 +725,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
         });
 
-
     }
 
     /**
@@ -912,21 +891,17 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
      * 判断是否是特殊材料，并获取特殊折扣
      */
     public void teShuCL() {
-//        Log.i("wxcl", "走到teShuZK方法里了 ");
         AbRequestParams params = new AbRequestParams();
         params.put("card_no", et_huiyuankahao.getText().toString());
-        params.put("work_no", Conts.work_no);
-//        Log.i("wxcl", "看看单号:" + Conts.work_no+",==卡号:"+Conts.card_no);
+        params.put("work_no", billEntiy.getWork_no());
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcardpj_price, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-//                Log.i("wxcl", "特殊材料查询成功==" + s);
                 //刷新维修材料列表内容；
                 if (BSD_wxcl == null) {
                     BSD_wxcl = new BSD_mrkx_wxcl();
                 }
                 BSD_wxcl.cldata();
-
             }
 
             @Override
@@ -1858,7 +1833,14 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 if (status) {
                     //点击存档操作的时候走的步骤
                     if (isSaveBill) {
-                        showTipsDialog("存档成功");
+                        queRen = new QueRen(getContext(), "存档成功");
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                            }
+                        });
+                        queRen.show();
                     } else { //点击结算的时候
                         if (Conts.BSD_zhongxiaoweixiu == 1) {
                             bsd_mrkx_jiesuan = new BSD_mrkx_jiesuan(getActivity(), Conts.MRKX_kahao, Conts.MRKX_shengYu_jinQian, zong_zj);
@@ -1902,11 +1884,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
                                 }
                             });
-
-
                         }
-
-
                     }
                 } else {
                     System.out.println("不包含");
@@ -1927,30 +1905,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
         });
 
-    }
-
-    /**
-     * 显示提示信息的对话框，只有一个提示信息和一个确定按钮
-     *
-     * @param tips
-     */
-    private void showTipsDialog(String tips) {
-        CustomDialog.Builder builder = new CustomDialog.Builder(getHostActicity());
-        CustomDialog dialog = builder.style(R.style.mydialog)
-                .view(R.layout.queren)
-                .cancelTouchout(true)
-                .widthDimenRes(R.dimen.qb_px_300)
-                .heightpx(WindowManager.LayoutParams.WRAP_CONTENT)
-                .addViewOnclick(R.id.bsd_queren_queren, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        CustomDialog.dismissDialog();
-                    }
-                })
-                .build();
-        TextView tip = (TextView) dialog.getView().findViewById(R.id.bsd_queren_neirong);
-        tip.setText(tips);
-        dialog.show();
     }
 
     /**
@@ -2452,6 +2406,9 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 break;
             case R.id.tv_removecard:
                 removeCardInfo();
+                break;
+            case R.id.tv_repairhistory:
+                BSD_LishiWeiXiu_DialogFragment.newInstance(billEntiy.getChe_no()).show(getFragmentManager(), "mrkx_lswx");
                 break;
         }
     }

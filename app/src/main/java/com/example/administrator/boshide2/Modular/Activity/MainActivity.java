@@ -20,6 +20,7 @@ import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Fragment.CheLiangXinXi.BSD_cheliangxinxi_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.CheLiangXinXi.Entity.BSD_CLXX_ety;
+import com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng.BSD_CheXiangQing_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.ChooseCarFragment;
 import com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.BSD_huiyuanguanli_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.BSD_kuaisubaojia_Fragment;
@@ -751,5 +752,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mPageWXJDFragment = ChooseCarFragment.newInstance(Conts.BILLTYPE_WXJD);
         }
         change(mPageWXJDFragment);
+    }
+
+    public void showCLXXXQFragment(String che_no) {
+        DownJianPan.DJP(this);
+        change(BSD_CheXiangQing_Fragment.newInstance(che_no));
     }
 }

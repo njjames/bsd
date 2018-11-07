@@ -88,6 +88,7 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
                 cx_ety = datas.get(i);
                 ((MainActivity) getHostActicity()).setClxx_ety(cx_ety);
                 ((MainActivity) getHostActicity()).upclxq(view);
+                ((MainActivity) getHostActicity()).showCLXXXQFragment(datas.get(i).getChe_no());
             }
         });
         refreshView = (AbPullToRefreshView) view.findViewById(R.id.refreshview);

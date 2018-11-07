@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.ab.util.dct.IFDCT;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Https.Request;
@@ -53,7 +54,6 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
     //PopupWindow对象声明
     PopupWindow pw;
     //当前选中的列表项位置
-    int clickPsition = -1;
     private BSD_lswx_guwen_adp lswx_guwen_adp;//服务顾问适配器
     private List<Map<String, String>> list_gu = new ArrayList<Map<String, String>>();
     private TextView tv_lswx_gw;
@@ -97,11 +97,11 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
             public void onClick(View view) {
                 pageIndex = 1;
                 cheNo = et_wx_chepai.getText().toString();
+                data.clear();
                 searchWXLS();
             }
         });
         et_wx_chepai = (EditText) view.findViewById(R.id.et_wx_chepai);
-
         bsd_lsbj_lv = (ListView) view.findViewById(R.id.bsd_lsbj_lv);
         adapter = new BSD_lswx_adp(getActivity(), data);
         bsd_lsbj_lv.setAdapter(adapter);
@@ -111,22 +111,8 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
                 ((MainActivity) getActivity()).showMrkxXqFragment(JSON.toJSON(data.get(i)).toString());
             }
         });
-
-        wx_rfview.setOnHeaderRefreshListener(new AbPullToRefreshView.OnHeaderRefreshListener() {
-            @Override
-            public void onHeaderRefresh(AbPullToRefreshView view) {
-                pageIndex = 1;
-                searchWXLS();
-            }
-        });
-
-        wx_rfview.setOnFooterLoadListener(new AbPullToRefreshView.OnFooterLoadListener() {
-            @Override
-            public void onFooterLoad(AbPullToRefreshView view) {
-                pageIndex++;
-                searchWXLS();
-            }
-        });
+        wx_rfview.setOnHeaderRefreshListener(this);
+        wx_rfview.setOnFooterLoadListener(this);
         title = (TextView) view.findViewById(R.id.tv_title);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
     }
@@ -137,9 +123,8 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
         title.setText("历史快修");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
+        data.clear();
         searchWXLS();
-//        list_gu.clear();
-//        guwen();
     }
 
     public void searchWXLS() {
@@ -152,7 +137,6 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_LSWX, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int sss, String s) {
-                data.clear();
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
@@ -177,8 +161,11 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
                             lswx_ety.setZhifu_card_xj(json.getString("zhifu_card_xj"));//补现金
                             data.add(lswx_ety);
                         }
+                    } else {
+                        subPage();
                     }
                 } catch (JSONException e) {
+                    subPage();
                     e.printStackTrace();
                 }
                 adapter.notifyDataSetChanged();
@@ -197,10 +184,11 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
+                subPage();
+                Show.showTime(getActivity(), "网络连接超时");
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
                 wx_rfview.onFooterLoadFinish();
                 wx_rfview.onHeaderRefreshFinish();
-                Show.showTime(getActivity(), "网络连接超时");
             }
         });
     }
@@ -248,12 +236,9 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
                         Log.i("传走没有", "..." + s);
                         JSONArray jsonarray = object.getJSONArray("data");
                         for (int i = 0; i < jsonarray.length(); i++) {
-
                             JSONObject json = jsonarray.getJSONObject(i);
                             HashMap<String, String> map = new HashMap<>();
-
-                            map.put("name",
-                                    json.get("reny_xm").toString());
+                            map.put("name", json.get("reny_xm").toString());
                             map.put("bianhao", json.get("reny_dm").toString());
                             list_gu.add(map);
                         }
@@ -283,12 +268,20 @@ public class BSD_LiShiKuaiXiu_Fragment extends BaseFragment implements AbPullToR
 
     @Override
     public void onFooterLoad(AbPullToRefreshView abPullToRefreshView) {
-
+        pageIndex++;
+        searchWXLS();
     }
 
     @Override
     public void onHeaderRefresh(AbPullToRefreshView abPullToRefreshView) {
-
+        pageIndex = 1;
+        data.clear();
+        searchWXLS();
     }
 
+    private void subPage() {
+        if (pageIndex > 1) {
+            pageIndex--;
+        }
+    }
 }

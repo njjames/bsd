@@ -1,5 +1,6 @@
 package com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng.Fagmt.BSD_CheLiangTuPian;
 import com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng.Fagmt.BSD_CheLiangWeiXiuLiShi;
+import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.BSD_MeiRongKuaiXiu_Fragment;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.DownJianPan;
 
@@ -24,6 +26,7 @@ import com.example.administrator.boshide2.Tools.DownJianPan;
  * @车辆详情碎片页 Created by Administrator on 2017-4-13.
  */
 public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnClickListener {
+    private static final String PARAM_KEY = "param_key";
     LinearLayout bsd_lsbj_fanhui;
     TextView bus_clxq_tv_cltp, bus_clxq_tv_wxls;
     private TextView[] arr_tv;// 图标的数组0
@@ -32,6 +35,21 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
             tv_xq_bylc,tv_xq_nextrq,tv_xq_next_lc;
     private TextView title;
     private TextView footerText;
+    private String param;
+
+    public static BSD_CheXiangQing_Fragment newInstance(String params) {
+        BSD_CheXiangQing_Fragment fragment = new BSD_CheXiangQing_Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_KEY, params);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        param = getArguments().getString(PARAM_KEY);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -98,6 +116,11 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
         title.setText("车辆信息详情");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
+        getCarInfo();
+    }
+
+    private void getCarInfo() {
+
     }
 
     /**

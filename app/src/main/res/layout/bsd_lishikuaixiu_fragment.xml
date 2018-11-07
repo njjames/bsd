@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/tv_wx_chaxun"
-                android:layout_width="@dimen/qb_px_60"
+                android:layout_width="@dimen/qb_px_70"
                 android:layout_height="@dimen/qb_px_30"
                 android:gravity="center"
                 android:text="查询"
@@ -92,8 +92,7 @@
             android:id="@+id/bsd_lsbj_toubuju"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_32"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/qb_px_2">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_weight="1.2"
@@ -130,6 +129,7 @@
                 style="@style/mysearchtitlestyle"
                 android:text="合计金额" />
         </LinearLayout>
+
         <com.ab.view.pullview.AbPullToRefreshView
             android:id="@+id/wx_rfview"
             android:layout_width="match_parent"
