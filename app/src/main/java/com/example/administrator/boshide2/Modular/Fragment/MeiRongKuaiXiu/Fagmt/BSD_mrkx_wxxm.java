@@ -283,60 +283,6 @@ public class BSD_mrkx_wxxm extends BaseFragment {
     }
 
     /**
-     * 全部删除操作
-     */
-    public void deltAll() {
-        if (list_XM.size() > 0) {
-            for (int i = 0; i < list_XM.size(); i++) {
-                deletxmall(list_XM.get(i).getReco_no());
-
-
-
-            }
-        } else {
-        }
-
-
-    }
-
-    /**
-     * 删除操作
-     *
-     * @param i
-     */
-    public void deletxmall(final int i) {
-        AbRequestParams params = new AbRequestParams();
-        params.put("id", i);
-        Log.i("cjn", "集合个主" + list_XM.size() + "查看这个id" + i);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_deletXM, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-                Log.i("cjn", "成功操作==" + s);
-                dataxm();
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "失败==" + s);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-
-    }
-
-    /**
      * 删除维修项目
      * @param position
      */
@@ -491,6 +437,10 @@ public class BSD_mrkx_wxxm extends BaseFragment {
                 Show.showTime(getActivity(), "网络连接超时");
             }
         });
+    }
+
+    public void reLoadData() {
+        dataxm();
     }
 
     public interface ChaKanPaiGongREN {

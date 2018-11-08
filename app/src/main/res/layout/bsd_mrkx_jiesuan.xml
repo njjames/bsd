@@ -4,142 +4,10 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bsd_log_wangzhezhilu"
     android:orientation="horizontal"
-    android:padding="@dimen/qb_px_18">
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/qb_px_10"
-        android:paddingRight="@dimen/qb_px_10"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/bsd_wzll_1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_46"
-            android:background="@drawable/bsd_chepaiyuan"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/bsd_wzzl_ip"
-                style="@style/myeditinfonamestyle"
-                android:text="会员卡号："
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/bsd_mrkx_huiyuankahao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null" />
-
-            <TextView
-                android:id="@+id/bsd_wzzl_js_duqu"
-                android:layout_width="@dimen/qb_px_80"
-                style="@style/myeditreadbtnstyle"
-                android:text="读取"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bsd_wzll_11"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_46"
-            android:layout_marginTop="@dimen/qb_px_20"
-            android:background="@drawable/bsd_chepaiyuan"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/bsd_wzzl_ip1"
-                style="@style/myeditinfonamestyle"
-                android:text="密        码："
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/bsd_mrkx_mima"
-                style="@style/myeditinfovaluestyle"
-                android:inputType="textPassword" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bsd_wzll_33"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_46"
-            android:layout_marginTop="@dimen/qb_px_20"
-            android:background="@drawable/bsd_chepaiyuan"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/bsd_wzll_zh11"
-                style="@style/myeditinfonamestyle"
-                android:text="剩余金额："
-                android:textColor="#444444"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/bsd_mrkx_yuer"
-                style="@style/myeditinfovaluestyle"
-                android:textColor="#444444"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bsd_wzll_2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_46"
-            android:layout_marginTop="@dimen/qb_px_20"
-            android:gravity="center_vertical">
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/qb_px_10" />
-
-            <TextView
-                android:id="@+id/textView26"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/qb_px_10"
-                android:text="是否使用储值卡结算"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bsd_mrkx_qrjs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/qb_px_10">
-
-            <TextView
-                android:id="@+id/bsd_wzzl_tv_queren"
-                android:layout_width="@dimen/qb_px_100"
-                android:layout_height="@dimen/qb_px_44"
-                android:background="@drawable/bsd_log_wzzzl_queren_quxiao"
-                android:gravity="center"
-                android:text="确认结算"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/bsd_wzzl_tijiao"
-                android:layout_width="@dimen/qb_px_100"
-                android:layout_height="@dimen/qb_px_44"
-                android:layout_marginLeft="@dimen/qb_px_50"
-                android:background="@drawable/bsd_log_wzzzl_queren_quxiao"
-                android:gravity="center"
-                android:text="取消"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </LinearLayout>
+    android:paddingLeft="@dimen/qb_px_10"
+    android:paddingRight="@dimen/qb_px_10"
+    android:paddingTop="@dimen/qb_px_20"
+    android:paddingBottom="@dimen/qb_px_20">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -290,6 +158,141 @@
                 android:id="@+id/bsd_mrkx_buxianjin"
                 style="@style/myeditinfovaluestyle"
                 android:textColor="#444444"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/qb_px_10"
+        android:paddingRight="@dimen/qb_px_10"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/bsd_wzll_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_46"
+            android:background="@drawable/bsd_chepaiyuan"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/bsd_wzzl_ip"
+                style="@style/myeditinfonamestyle"
+                android:text="会员卡号："
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/bsd_mrkx_huiyuankahao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null" />
+
+            <TextView
+                android:id="@+id/bsd_wzzl_js_duqu"
+                android:layout_width="@dimen/qb_px_80"
+                style="@style/myeditreadbtnstyle"
+                android:text="读取"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bsd_wzll_11"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_46"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:background="@drawable/bsd_chepaiyuan"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/bsd_wzzl_ip1"
+                style="@style/myeditinfonamestyle"
+                android:text="密        码："
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/bsd_mrkx_mima"
+                style="@style/myeditinfovaluestyle"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bsd_wzll_33"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_46"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:background="@drawable/bsd_chepaiyuan"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/bsd_wzll_zh11"
+                style="@style/myeditinfonamestyle"
+                android:text="剩余金额："
+                android:textColor="#444444"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/bsd_mrkx_yuer"
+                style="@style/myeditinfovaluestyle"
+                android:textColor="#444444"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bsd_wzll_2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_46"
+            android:layout_marginTop="@dimen/qb_px_10"
+            android:gravity="center_vertical">
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_10" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:text="使用储值卡结算"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bsd_mrkx_qrjs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/qb_px_10">
+
+            <TextView
+                android:id="@+id/bsd_wzzl_tv_queren"
+                android:layout_width="@dimen/qb_px_100"
+                android:layout_height="@dimen/qb_px_44"
+                android:background="@drawable/bsd_log_wzzzl_queren_quxiao"
+                android:gravity="center"
+                android:text="确认结算"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/bsd_wzzl_tijiao"
+                android:layout_width="@dimen/qb_px_100"
+                android:layout_height="@dimen/qb_px_44"
+                android:layout_marginLeft="@dimen/qb_px_50"
+                android:background="@drawable/bsd_log_wzzzl_queren_quxiao"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#FFFFFF"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>

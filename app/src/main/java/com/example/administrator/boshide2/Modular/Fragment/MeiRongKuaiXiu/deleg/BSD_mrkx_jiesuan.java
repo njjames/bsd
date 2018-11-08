@@ -23,6 +23,7 @@ import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.DownJianPan;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -101,6 +102,7 @@ public class BSD_mrkx_jiesuan extends Dialog {
         bsd_wzzl_js_duqu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DownJianPan.hide(getContext(), bsd_mrkx_huiyuankahao);
                 huiyuankachauxn();
             }
         });
@@ -365,54 +367,35 @@ public class BSD_mrkx_jiesuan extends Dialog {
     public void huiyuankachauxn() {
         AbRequestParams params = new AbRequestParams();
         params.put("card_no", bsd_mrkx_huiyuankahao.getText().toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_HYK, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_MRKX_HYK, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
-                Log.i("cjn", "会员卡号查询成功" + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.getString("message").toString().equals("查询成功")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("data");
-                        if (jsonArray.length() > 0) {
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject item = jsonArray.getJSONObject(i);
-                                Conts.MRKX_XM_ZK = Double.parseDouble(item.getString("itemrate"));
-                                Conts.MRKX_CL_ZK = Double.parseDouble(item.getString("peijrate"));
-                                Conts.MRKX_shengYu_jinQian = Double.parseDouble(item.getString("card_leftje"));
-                                Log.i("cjn", "查看每个的折扣率" + item.getString("card_leftje"));
-                                Conts.MRKX_kahao = bsd_mrkx_huiyuankahao.getText().toString();
-                                bsd_mrkx_yuer.setText(Double.parseDouble(item.getString("card_leftje")) + "");
-                                queRen = new QueRen(getContext(), "读取成功，卡内余额" + item.getString("card_leftje"));
-                                queRen.show();
-                                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                                    @Override
-                                    public void onYesClick() {
-                                        queRen.dismiss();
-                                    }
-                                });
-
+                    if (jsonObject.getString("message").equals("查询成功")) {
+                        JSONObject object = jsonObject.getJSONObject("data");
+                        Conts.MRKX_shengYu_jinQian = Double.parseDouble(object.getString("card_leftje"));
+                        bsd_mrkx_yuer.setText(Double.parseDouble(object.getString("card_leftje")) + "");
+                        queRen = new QueRen(getContext(), "读取成功，卡内余额" + object.getString("card_leftje"));
+                        queRen.show();
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
                             }
-                        } else {
-                            queRen = new QueRen(getContext(), "没有查到这个会员卡");
-                            queRen.show();
-                            Conts.MRKX_XM_ZK = 1;
-                            Conts.MRKX_CL_ZK = 1;
-                            Conts.MRKX_shengYu_jinQian = 0;
-                            Conts.MRKX_kahao = "";
-                            bsd_mrkx_huiyuankahao.setText("");
-                            bsd_mrkx_yuer.setText("");
-                            queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                                @Override
-                                public void onYesClick() {
-                                    queRen.dismiss();
-                                }
-                            });
-                        }
+                        });
+
                     } else {
-                        Toast.makeText(getContext(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                        queRen = new QueRen(getContext(), jsonObject.getString("message"));
+                        queRen.show();
+                        bsd_mrkx_yuer.setText("");
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                            }
+                        });
                     }
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

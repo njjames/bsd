@@ -73,7 +73,7 @@ public class BSD_WeiXiuJieDan_XM_Entity {
 
     private String stop_mc;
 
-    private String wxxm_Tpye;
+    private String wxxm_tpye;
 
     private boolean wxxm_Print;
 
@@ -367,12 +367,12 @@ public class BSD_WeiXiuJieDan_XM_Entity {
         this.stop_mc = stop_mc;
     }
 
-    public String getWxxm_Tpye() {
-        return wxxm_Tpye;
+    public String getWxxm_tpye() {
+        return wxxm_tpye;
     }
 
-    public void setWxxm_Tpye(String wxxm_Tpye) {
-        this.wxxm_Tpye = wxxm_Tpye;
+    public void setWxxm_tpye(String wxxm_tpye) {
+        this.wxxm_tpye = wxxm_tpye;
     }
 
     public boolean isWxxm_Print() {

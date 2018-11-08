@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
 import com.example.administrator.boshide2.R;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 
@@ -49,7 +51,7 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
         TextView bsd_kxbj_bzsj;
         TextView bsd_kxbj_gsdj;
         TextView bsd_kxbj_dw;
-        TextView bsd_kxbj_cz;
+        TextView bsd_kxbj_je;
         ImageView iv_stock;
         ImageView iv_delete;
     }
@@ -64,7 +66,7 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
             holder.bsd_kxbj_bzsj= (TextView) contetview.findViewById(R.id.bsd_kxbj_bzsj);
             holder.bsd_kxbj_gsdj= (TextView) contetview.findViewById(R.id.bsd_kxbj_gsdj);
             holder.bsd_kxbj_dw= (TextView) contetview.findViewById(R.id.bsd_kxbj_dw);
-            holder.bsd_kxbj_cz= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
+            holder.bsd_kxbj_je= (TextView) contetview.findViewById(R.id.bsd_kxbj_je);
             holder.iv_delete= (ImageView) contetview.findViewById(R.id.iv_delete);
             holder.bsd_mrkx_hyzk= (TextView) contetview.findViewById(R.id.bsd_mrkx_hyzk);
             holder.bsd_kxbj_dj= (TextView) contetview.findViewById(R.id.bsd_kxbj_dj);
@@ -85,7 +87,7 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
             }
         });
         double v = (Math.round(list.get(i).getPeij_zk()* list.get(i).getPeij_ydj() * 100) / 100.0);
-        holder.bsd_kxbj_gsdj.setText(""+list.get(i).getPeij_ydj());
+        holder.bsd_kxbj_gsdj.setText("" + list.get(i).getPeij_ydj());
         // 修改原单价
         holder.bsd_kxbj_gsdj.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +98,7 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
             }
         });
         holder.bsd_kxbj_dw.setText(list.get(i).getPeij_dw());
-        holder.bsd_kxbj_cz.setText("" + list.get(i).getPeij_sl() * v);
+        holder.bsd_kxbj_je.setText("" + list.get(i).getPeij_je());
         // 删除
         holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,8 +109,9 @@ public class BSD_mrkx_wxcl_adp extends BaseAdapter {
             }
         });
 
-        holder.bsd_kxbj_dj.setText("" + v);
-        holder.bsd_mrkx_hyzk.setText("" + list.get(i).getPeij_zk());
+        holder.bsd_kxbj_dj.setText("" + list.get(i).getPeij_dj());
+        BigDecimal zk = new BigDecimal(list.get(i).getPeij_zk()).setScale(2, RoundingMode.HALF_UP);
+        holder.bsd_mrkx_hyzk.setText(zk.toString());
         // 查看库存
         holder.iv_stock.setOnClickListener(new View.OnClickListener() {
             @Override

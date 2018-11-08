@@ -2,6 +2,7 @@ package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.UriMatcher;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -258,7 +259,7 @@ public class BSD_mrkx_wxcl extends BaseFragment {
         list_CL.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", param);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_cllb, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_cllb, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
                 try {
@@ -287,9 +288,25 @@ public class BSD_mrkx_wxcl extends BaseFragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter.notifyDataSetChanged();
-                wxclPrice();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                    wxclPrice();
+                } else {
+                    wxclPriceGone();
+                }
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            private void wxclPriceGone() {
+                double wxclZje = 0;
+                for (int i = 0; i < list_CL.size(); i++) {
+                    wxclZje = wxclZje + (list_CL.get(i).getPeij_je());
+                }
+                if (list_CL.size() > 0) {
+                    cl_zj.onYesClick(wxclZje);
+                } else {
+                    cl_zj.onYesClick(0);
+                }
             }
 
             @Override
@@ -362,6 +379,10 @@ public class BSD_mrkx_wxcl extends BaseFragment {
     public void refreashData() {
         adapter.notifyDataSetChanged();
         wxclPrice();
+    }
+
+    public void reLoadData() {
+        cldata();
     }
 
     public interface CL_ZJ {

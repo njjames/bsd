@@ -829,7 +829,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                         wxxmItem.setWxxm_zk(Conts.MRKX_XM_ZK);
                         wxxmItem.setWxxm_je(Conts.MRKX_XM_ZK * item.getWxxm_zddj());
                         wxxmItem.setWxxm_zt("正常");
-                        wxxmItem.setWxxm_Tpye("正常");
+                        wxxmItem.setWxxm_tpye("正常");
                         needAddList.add(wxxmItem);
                     }
                 }

@@ -14,6 +14,8 @@ import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.B
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -196,7 +198,8 @@ public class BSD_mrbx_wxxm_adp extends BaseAdapter {
 
         double v = (Math.round(list.get(i).getWxxm_zk() * list.get(i).getWxxm_yje() * 100) / 100.0);
         //折扣
-        holder.bsd_kxbj_hyzk.setText("" + list.get(i).getWxxm_zk());
+        BigDecimal zk = new BigDecimal(list.get(i).getWxxm_zk()).setScale(2, RoundingMode.HALF_UP);
+        holder.bsd_kxbj_hyzk.setText(zk.toString());
         holder.bsd_kxbj_hygsf.setText("" + v);
 
         if (currentPosition == i) {

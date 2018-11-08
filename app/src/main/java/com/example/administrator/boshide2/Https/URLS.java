@@ -413,7 +413,7 @@ public class URLS {
     /**
      * 维修接单材料列表
      */
-    public String BSD_wxjd_cllb = "order/cail";
+    public static final String BSD_wxjd_cllb = "order/cail";
 
     public String BSD_wxjd_lscl="order/lscail";
     /**
@@ -430,13 +430,13 @@ public class URLS {
      * 维修接单添加新的项目
      */
 
-    public String BSD_wxjd_addnewxm = "order/addnewwxxm";
+    public static final String BSD_wxjd_addnewxm = "order/addnewwxxm";
 
     /**
      * 维修接单添加新的配件
      */
 
-    public String BSD_wxjd_addnewcl = "order/addnewwxcl";
+    public static final String BSD_wxjd_addnewcl = "order/addnewwxcl";
     /**
      * 维修接单添加材料
      */
@@ -638,7 +638,9 @@ public class URLS {
     /**
      * 会员卡查询接口
      */
-    public String BSD_MRKX_HYK="card/getVipCardByCardNo";
+    public static final String BSD_MRKX_HYK="card/getVipCardByCardNo";
+
+    public static final String BSD_UPDATEBILLBYCARD="public/updatebillbycard";
 
     /**
      * 根据操作员获取仓库

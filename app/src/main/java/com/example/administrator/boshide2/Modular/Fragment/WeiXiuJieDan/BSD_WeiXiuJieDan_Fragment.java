@@ -1278,7 +1278,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                         wxxmItem.setWxxm_cb(item.getWxxm_cb());
                         wxxmItem.setWxxm_je(item.getWxxm_zddj());
                         wxxmItem.setWxxm_zt("正常");
-                        wxxmItem.setWxxm_Tpye("正常");
+                        wxxmItem.setWxxm_tpye("正常");
                         needAddList.add(wxxmItem);
                     }
                 }
