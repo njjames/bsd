@@ -35,7 +35,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/bsd_mrkx_hejijiner"
+                    android:id="@+id/tv_xche_hjje"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
@@ -62,7 +62,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/bsd_mrkx_xmyh"
+                    android:id="@+id/et_xmyhje"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
@@ -89,7 +89,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/bsd_mrkx_clyh"
+                    android:id="@+id/et_clyhje"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
@@ -117,7 +117,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/bsd_mrkx_yingshou"
+                    android:id="@+id/tv_xche_ysje"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
@@ -144,7 +144,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/bsd_mrkx_shishou"
+                    android:id="@+id/et_xche_ssje"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
@@ -160,7 +160,7 @@
                 android:layout_below="@+id/bsd_wzll_7">
 
                 <TextView
-                    android:id="@+id/bsd_wzzl_tv_queren"
+                    android:id="@+id/tv_confirm"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:layout_alignParentStart="true"
@@ -173,12 +173,12 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/bsd_wzzl_tijiao"
+                    android:id="@+id/tv_cancel"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="75dp"
-                    android:layout_toEndOf="@+id/bsd_wzzl_tv_queren"
+                    android:layout_toEndOf="@+id/tv_confirm"
                     android:background="@drawable/bsd_log_wzzzl_queren_quxiao"
                     android:gravity="center"
                     android:text="取消"

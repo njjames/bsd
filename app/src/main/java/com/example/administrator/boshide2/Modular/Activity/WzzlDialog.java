@@ -54,7 +54,7 @@ public class WzzlDialog extends Dialog {
                 dissm();
             }
         });
-        bsd_wzzl_tijiao = (TextView) view.findViewById(R.id.bsd_wzzl_tijiao);
+        bsd_wzzl_tijiao = (TextView) view.findViewById(R.id.tv_cancel);
         bsd_wzzl_tijiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

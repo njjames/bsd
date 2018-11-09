@@ -118,4 +118,6 @@ public class Conts {
 
     public static final int REQUESTCODE_OCR = 1;
     public static final int REQUESTCODE_XCB = 0;
+
+    public static final int NORMAL_DIGIT = 2;
 }

@@ -26,14 +26,13 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/bsd_wzll_zh1"
                 style="@style/myeditinfonamestyle"
                 android:text="合计金额："
                 android:textColor="#444444"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/bsd_mrkx_hejijiner"
+                android:id="@+id/tv_xche_hjje"
                 style="@style/myeditinfovaluestyle"
                 android:textColor="#444444"
                 android:textSize="16sp" />
@@ -56,7 +55,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/bsd_mrkx_xmyh"
+                android:id="@+id/et_xmyhje"
                 style="@style/myeditinfovaluestyle"
                 android:background="@null"
                 android:textColor="#000000"
@@ -81,7 +80,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/bsd_mrkx_clyh"
+                android:id="@+id/et_clyhje"
                 style="@style/myeditinfovaluestyle"
                 android:background="@null"
                 android:textColor="#000000"
@@ -99,14 +98,13 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/bsd_wzll_zh4"
                 style="@style/myeditinfonamestyle"
                 android:text="应收金额："
                 android:textColor="#444444"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/bsd_mrkx_yingshou"
+                android:id="@+id/tv_xche_ysje"
                 style="@style/myeditinfovaluestyle"
                 android:background="@null"
                 android:textColor="#444444"
@@ -129,7 +127,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/bsd_mrkx_shishou"
+                android:id="@+id/et_xche_ssje"
                 style="@style/myeditinfovaluestyle"
                 android:background="@null"
                 android:textColor="#000000"
@@ -148,14 +146,13 @@
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/bsd_wzll_zh55"
                 style="@style/myeditinfonamestyle"
                 android:text="补现金："
                 android:textColor="#444444"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/bsd_mrkx_buxianjin"
+                android:id="@+id/tv_buxianjin"
                 style="@style/myeditinfovaluestyle"
                 android:textColor="#444444"
                 android:textSize="16sp" />
@@ -186,11 +183,13 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/bsd_mrkx_huiyuankahao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/et_cardno"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@null" />
+                android:background="@null"
+                android:textSize="16sp"
+                android:gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/bsd_wzzl_js_duqu"
@@ -209,14 +208,13 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/bsd_wzzl_ip1"
                 style="@style/myeditinfonamestyle"
                 android:text="密        码："
                 android:textColor="#000000"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/bsd_mrkx_mima"
+                android:id="@+id/et_cardpass"
                 style="@style/myeditinfovaluestyle"
                 android:inputType="textPassword" />
         </LinearLayout>
@@ -230,14 +228,13 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/bsd_wzll_zh11"
                 style="@style/myeditinfonamestyle"
                 android:text="剩余金额："
                 android:textColor="#444444"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/bsd_mrkx_yuer"
+                android:id="@+id/tv_cardleftje"
                 style="@style/myeditinfovaluestyle"
                 android:textColor="#444444"
                 android:textSize="16sp" />
@@ -275,7 +272,7 @@
             android:padding="@dimen/qb_px_10">
 
             <TextView
-                android:id="@+id/bsd_wzzl_tv_queren"
+                android:id="@+id/tv_confirm"
                 android:layout_width="@dimen/qb_px_100"
                 android:layout_height="@dimen/qb_px_44"
                 android:background="@drawable/bsd_log_wzzzl_queren_quxiao"
@@ -285,7 +282,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/bsd_wzzl_tijiao"
+                android:id="@+id/tv_cancel"
                 android:layout_width="@dimen/qb_px_100"
                 android:layout_height="@dimen/qb_px_44"
                 android:layout_marginLeft="@dimen/qb_px_50"

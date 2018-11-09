@@ -640,7 +640,11 @@ public class URLS {
      */
     public static final String BSD_MRKX_HYK="card/getVipCardByCardNo";
 
+    public static final String BSD_GETBILLJIESUANINFO="kuaixiu/getbilljiesuaninfo";
+
     public static final String BSD_UPDATEBILLBYCARD="public/updatebillbycard";
+
+    public static final String BSD_REMOVEBILLBYCARD="public/removebillbycard";
 
     /**
      * 根据操作员获取仓库

@@ -49,14 +49,14 @@ public class BSD_mrkx_jiesuan11 extends Dialog {
         // TODO Auto-generated constructor stub
         url = new URLS();
         view = getLayoutInflater().inflate(R.layout.bsd_mrkx_jiesuan111, null, false);
-        bsd_mrkx_xmyh = (EditText) view.findViewById(R.id.bsd_mrkx_xmyh);
-        bsd_mrkx_clyh = (EditText) view.findViewById(R.id.bsd_mrkx_clyh);
-        bsd_mrkx_shishou = (EditText) view.findViewById(R.id.bsd_mrkx_shishou);
-        bsd_mrkx_yuer = (TextView) view.findViewById(R.id.bsd_mrkx_yuer);
-        bsd_mrkx_hejijiner = (TextView) view.findViewById(R.id.bsd_mrkx_hejijiner);
-        bsd_mrkx_yingshou = (TextView) view.findViewById(R.id.bsd_mrkx_yingshou);
-        bsd_wzzl_tv_queren = (TextView) view.findViewById(R.id.bsd_wzzl_tv_queren);
-        bsd_wzzl_tijiao = (TextView) view.findViewById(R.id.bsd_wzzl_tijiao);
+        bsd_mrkx_xmyh = (EditText) view.findViewById(R.id.et_xmyhje);
+        bsd_mrkx_clyh = (EditText) view.findViewById(R.id.et_clyhje);
+        bsd_mrkx_shishou = (EditText) view.findViewById(R.id.et_xche_ssje);
+        bsd_mrkx_yuer = (TextView) view.findViewById(R.id.tv_cardleftje);
+        bsd_mrkx_hejijiner = (TextView) view.findViewById(R.id.tv_xche_hjje);
+        bsd_mrkx_yingshou = (TextView) view.findViewById(R.id.tv_xche_ysje);
+        bsd_wzzl_tv_queren = (TextView) view.findViewById(R.id.tv_confirm);
+        bsd_wzzl_tijiao = (TextView) view.findViewById(R.id.tv_cancel);
 
 
         bsd_wzzl_tijiao.setOnClickListener(new View.OnClickListener() {
