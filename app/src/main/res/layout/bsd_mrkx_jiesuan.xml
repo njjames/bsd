@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_46"
             android:layout_marginTop="@dimen/qb_px_10"
-            android:background="@drawable/bsd_chepaiyuan"
+            android:background="@drawable/bsd_chepaiyuan_w"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_46"
             android:layout_marginTop="@dimen/qb_px_10"
-            android:background="@drawable/bsd_chepaiyuan"
+            android:background="@drawable/bsd_chepaiyuan_w"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -116,11 +116,11 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_46"
             android:layout_marginTop="@dimen/qb_px_10"
-            android:background="@drawable/bsd_chepaiyuan"
+            android:background="@drawable/bsd_chepaiyuan_w"
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/bsd_wzll_zh5"
+                android:id="@+id/tv_xche_ssje"
                 style="@style/myeditinfonamestyle"
                 android:text="实收金额："
                 android:textColor="#000000"
@@ -171,7 +171,7 @@
             android:id="@+id/bsd_wzll_1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_46"
-            android:background="@drawable/bsd_chepaiyuan"
+            android:background="@drawable/bsd_chepaiyuan_w"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -204,7 +204,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_46"
             android:layout_marginTop="@dimen/qb_px_20"
-            android:background="@drawable/bsd_chepaiyuan"
+            android:background="@drawable/bsd_chepaiyuan_w"
             android:gravity="center_vertical">
 
             <TextView
@@ -250,14 +250,16 @@
             <CheckBox
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/qb_px_10" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:paddingRight="@dimen/qb_px_10"
+                android:gravity="center"
+                android:button="@drawable/check_box"/>
 
             <TextView
                 android:id="@+id/textView26"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/qb_px_10"
                 android:text="使用储值卡结算"
                 android:textColor="#000000"
                 android:textSize="18sp" />

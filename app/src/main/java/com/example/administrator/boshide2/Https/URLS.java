@@ -640,7 +640,11 @@ public class URLS {
      */
     public static final String BSD_MRKX_HYK="card/getVipCardByCardNo";
 
+    public static final String BSD_CKECKCARDPASS="card/checkcardpass";
+
     public static final String BSD_GETBILLJIESUANINFO="kuaixiu/getbilljiesuaninfo";
+
+    public static final String BSD_CHECKBEFOREJIESUAN="kuaixiu/checkbeforejiesuan";
 
     public static final String BSD_UPDATEBILLBYCARD="public/updatebillbycard";
 

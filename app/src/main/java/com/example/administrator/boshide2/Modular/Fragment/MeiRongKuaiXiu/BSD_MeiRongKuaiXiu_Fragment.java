@@ -68,7 +68,6 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -322,7 +321,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         bsd_zadd_wg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bsd_zadd_wg.setEnabled(false);
                 //结算
                 //判断车牌号和客户编码是否对应
                 checkCarIsForThisKehu();
@@ -1633,6 +1631,9 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
      * @param isBack 是否是返回操作时的保存
      */
     public void saveBillInfo(final boolean onlySave, final boolean isBack) {
+        if (!checkCardBeforeSave()) {
+            return;
+        }
         if (onlySave) {
             mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");
         } else {
@@ -1694,50 +1695,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                             ((MainActivity) getActivity()).upBSD_MRKX_log();
                         }
                     } else { //点击结算的时候
-                        if (Conts.BSD_zhongxiaoweixiu == 1) {
-                            bsd_mrkx_jiesuan = new BSD_mrkx_jiesuan(getActivity(), billEntiy.getCard_no(), billEntiy.getWork_no());
-                            bsd_mrkx_jiesuan.show();
-                            bsd_mrkx_jiesuan.setJieSuan(new BSD_mrkx_jiesuan.JieSuan() {
-                                @Override
-                                public void onyes(double xche_hjje, double xche_ssje, double xche_wxxm_yhje, double xche_peij_yhje,
-                                                  double xche_ysje, String card_no, String mima, int iscard,
-                                                  double bxj, double zhifu_card_je, double zhifu_card_xj) {
-                                    bsd_xche_hjje = xche_hjje;
-                                    bsd_xche_ssje = xche_ssje;
-                                    bsd_xche_wxxm_yhje = xche_wxxm_yhje;
-                                    bsd_xche_peij_yhje = xche_peij_yhje;
-                                    bsd_xche_ysje = xche_ysje;
-                                    bsd_card_no = card_no;
-                                    bsd_mima = mima;
-                                    bsd_iscard = iscard;
-                                    bsd_bxj = bxj;
-                                    bsd_zhifu_card_je = zhifu_card_je;
-                                    bsd_zhifu_card_xj = zhifu_card_xj;
-                                    jieSuan1();
-                                }
-                            });
-                            bsd_mrkx_jiesuan.setGb(new BSD_mrkx_jiesuan.Guanbi() {
-                                @Override
-                                public void guanbi() {
-                                    bsd_zadd_wg.setEnabled(true);
-                                }
-                            });
-                        } else if (Conts.BSD_zhongxiaoweixiu == 0) {
-                            bsd_mrkx_jiesuan11 = new BSD_mrkx_jiesuan11(getActivity(), Conts.MRKX_kahao, Conts.MRKX_shengYu_jinQian, zong_zj);
-                            bsd_mrkx_jiesuan11.show();
-                            bsd_mrkx_jiesuan11.setJieSuan(new BSD_mrkx_jiesuan11.JieSuan() {
-                                @Override
-                                public void onyes(double xche_hjje, double xche_ssje, double xche_wxxm_yhje, double xche_peij_yhje, double xche_ysje) {
-                                    bsd_xche_hjje = xche_hjje;
-                                    bsd_xche_ssje = xche_ssje;
-                                    bsd_xche_wxxm_yhje = xche_wxxm_yhje;
-                                    bsd_xche_peij_yhje = xche_peij_yhje;
-                                    bsd_xche_ysje = xche_ysje;
-                                    jieSuan11();
-
-                                }
-                            });
-                        }
+                        checkBeforeJiesuan();
                     }
                 } else {
                     System.out.println("不包含");
@@ -1761,6 +1719,171 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     }
 
     /**
+     * 保存之前的检测
+     * 主要是解决会员卡不一致的问题
+     */
+    private boolean checkCardBeforeSave() {
+        if (TextUtils.isEmpty(billEntiy.getCard_no())) {
+            if (!TextUtils.isEmpty(et_huiyuankahao.getText().toString())) {
+                queRen = new QueRen(getContext(), "输入框中的会员卡还未读取\n请进行读取或者清除会员卡！");
+                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        queRen.dismiss();
+                    }
+                });
+                queRen.show();
+                return false;
+            }
+        } else {
+            if (TextUtils.isEmpty(et_huiyuankahao.getText().toString())) {
+                queRen = new QueRen(getContext(), "当前已读取会员卡【" + billEntiy.getCard_no() + "】\n如果不想用会员卡，请清除会员卡！");
+                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        queRen.dismiss();
+                    }
+                });
+                queRen.show();
+                return false;
+            } else {
+                if (!et_huiyuankahao.getText().toString().equals(billEntiy.getCard_no())) {
+                    queRen = new QueRen(getContext(), "当前已读取的会员卡【" + billEntiy.getCard_no() + "】\n与输入框内的会员卡不一致\n请重新读取会员卡！");
+                    queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                        @Override
+                        public void onYesClick() {
+                            queRen.dismiss();
+                        }
+                    });
+                    queRen.show();
+                    return false;
+                }
+            }
+        }
+        // 走到这，说明会员卡是没有问题的
+        return true;
+    }
+
+    /**
+     * 结算之前检测数据是否合法，并给出提示
+     */
+    private void checkBeforeJiesuan() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", billEntiy.getWork_no());
+        params.put("caozuoyuanID", MyApplication.shared.getString("userid", ""));
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CHECKBEFOREJIESUAN, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    if (jsonObject.getString("message").equals("查询成功")) {
+                        if (jsonObject.getInt("total") == 1) { // 表示有提示
+                            JSONArray array = jsonObject.getJSONArray("data");
+                            StringBuffer sb = new StringBuffer();
+                            for (int i = 0; i < array.length(); i++) {
+                                String tip = (String) array.get(i);
+                                sb.append(tip).append("\n");
+                            }
+                            sb.append("是否继续结算？");
+                            quedingQuxiao = new Queding_Quxiao(getContext(), sb.toString());
+                            quedingQuxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
+                                @Override
+                                public void onConfirm() {
+                                    // 继续结算
+                                    showJiesuanDialog();
+                                }
+
+                                @Override
+                                public void onCancel() {
+                                    quedingQuxiao.dismiss();
+                                }
+                            });
+                            quedingQuxiao.show();
+                        } else { // 表示没有问题
+
+                        }
+                    } else {
+                        queRen = new QueRen(getContext(), jsonObject.getString("data"));
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                            }
+                        });
+                        queRen.show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+
+            }
+        });
+    }
+
+    private void showJiesuanDialog() {
+        bsd_mrkx_jiesuan = new BSD_mrkx_jiesuan(getActivity(), billEntiy.getCard_no(), billEntiy.getWork_no());
+        bsd_mrkx_jiesuan.show();
+//                            bsd_mrkx_jiesuan.setJieSuan(new BSD_mrkx_jiesuan.JieSuan() {
+//                                @Override
+//                                public void onyes(double xche_hjje, double xche_ssje, double xche_wxxm_yhje, double xche_peij_yhje,
+//                                                  double xche_ysje, String card_no, String mima, int iscard,
+//                                                  double bxj, double zhifu_card_je, double zhifu_card_xj) {
+//                                    bsd_xche_hjje = xche_hjje;
+//                                    bsd_xche_ssje = xche_ssje;
+//                                    bsd_xche_wxxm_yhje = xche_wxxm_yhje;
+//                                    bsd_xche_peij_yhje = xche_peij_yhje;
+//                                    bsd_xche_ysje = xche_ysje;
+//                                    bsd_card_no = card_no;
+//                                    bsd_mima = mima;
+//                                    bsd_iscard = iscard;
+//                                    bsd_bxj = bxj;
+//                                    bsd_zhifu_card_je = zhifu_card_je;
+//                                    bsd_zhifu_card_xj = zhifu_card_xj;
+//                                    Log.i("结算后的数据", "合计金额：" + xche_hjje + "实收金额:" + xche_ssje +
+//                                            "维修项目优惠：" + xche_wxxm_yhje + "配件优惠：" + xche_peij_yhje + "应收金额：" + xche_ysje + "" +
+//                                            "会员卡：" + card_no + "密码：" + mima + "是否储值卡支付" + iscard + "补现金：" + bxj + "刷卡金额：" + zhifu_card_je);
+////                                    jieSuan1();
+//                                }
+//                            });
+//            bsd_mrkx_jiesuan.setGb(new BSD_mrkx_jiesuan.Guanbi() {
+//                @Override
+//                public void guanbi() {
+//                    bsd_zadd_wg.setEnabled(true);
+//                }
+//            });
+//        } else if (Conts.BSD_zhongxiaoweixiu == 0) {
+//            bsd_mrkx_jiesuan11 = new BSD_mrkx_jiesuan11(getActivity(), Conts.MRKX_kahao, Conts.MRKX_shengYu_jinQian, zong_zj);
+//            bsd_mrkx_jiesuan11.show();
+//            bsd_mrkx_jiesuan11.setJieSuan(new BSD_mrkx_jiesuan11.JieSuan() {
+//                @Override
+//                public void onyes(double xche_hjje, double xche_ssje, double xche_wxxm_yhje, double xche_peij_yhje, double xche_ysje) {
+//                    bsd_xche_hjje = xche_hjje;
+//                    bsd_xche_ssje = xche_ssje;
+//                    bsd_xche_wxxm_yhje = xche_wxxm_yhje;
+//                    bsd_xche_peij_yhje = xche_peij_yhje;
+//                    bsd_xche_ysje = xche_ysje;
+//                    jieSuan11();
+//
+//                }
+//            });
+//        }
+    }
+
+    /**
      * 基本信息车系接口
      */
     public void getCheXiData(String cxbianhao) {
@@ -1770,7 +1893,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CX, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
-
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(s);

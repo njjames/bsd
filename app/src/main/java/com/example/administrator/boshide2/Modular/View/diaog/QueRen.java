@@ -12,19 +12,10 @@ import com.example.administrator.boshide2.R;
 
 public class QueRen extends Dialog implements View.OnClickListener {
 	private View view;
-	TextView qeuren;
-	TextView neirong;
-
-	public Guanbi getGb() {
-		return gb;
-	}
-
-	public void setGb(Guanbi gb) {
-		this.gb = gb;
-	}
-
-	Guanbi gb;
+	private TextView qeuren;
+	private TextView neirong;
 	private ToopromtOnClickListener toopromtOnClickListener;
+
 	public QueRen(Context context,String nr) {
 		super(context, R.style.mydialog);
 		getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -55,9 +46,6 @@ public class QueRen extends Dialog implements View.OnClickListener {
 	}
 	public interface ToopromtOnClickListener {
 		public void onYesClick();
-	}
-	public interface Guanbi {
-		public void guanbi();
 	}
 
 }
