@@ -382,7 +382,7 @@
                     style="@style/myeditnormalbtnstyle"/>
 
                 <TextView
-                    android:id="@+id/bsd_zadd_wg"
+                    android:id="@+id/bsd_mrkx_jiesuan"
                     android:text="结算"
                     android:layout_weight="0.8"
                     style="@style/myeditnormalbtnstyle"/>

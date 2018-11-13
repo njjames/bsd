@@ -36,7 +36,10 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -499,7 +502,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "会员卡号" + s);
+                Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -507,11 +510,6 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
 
     public void dissm() {
         this.dismiss();
-    }
-
-
-    public void diss() {
-        this.dissm();
     }
 
     @Override
@@ -780,6 +778,51 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
                     }
                 }
             }
+        }
+        // 检测下次保养时间和里程
+        if (cb_nexttx.isChecked()) {
+            if (TextUtils.isEmpty(et_next_bylc.getText().toString())) {
+                queRen = new QueRen(getContext(), "下次保养里程不能为空！");
+                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        queRen.dismiss();
+                    }
+                });
+                queRen.show();
+                return;
+            }
+            if (TextUtils.isEmpty(tv_next_byrq.getText().toString())) {
+                queRen = new QueRen(getContext(), "下次保养保养时间不能为空！");
+                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        queRen.dismiss();
+                    }
+                });
+                queRen.show();
+                return;
+            }
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date nextRq = sdf.parse(tv_next_byrq.getText().toString());
+                Date nowRq = new Date();
+                if (nextRq.before(nowRq)) {
+                    queRen = new QueRen(getContext(), "下次保养保养时间不能小于今天！");
+                    queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                        @Override
+                        public void onYesClick() {
+                            queRen.dismiss();
+                        }
+                    });
+                    queRen.show();
+                    return;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return;
+            }
+
         }
         // 检测需要访问接口的逻辑
         checkBillYhlv();

@@ -98,7 +98,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private List<Map<String, String>> listPGrenyuan = new ArrayList<Map<String, String>>();
     private URLS url;
     private TextView billNo;
-    private TextView bsd_zadd_wg;
+    private TextView tv_jiesuan;
     //车辆信息、历史维修、历史维修建议
     private TextView tv_carInfo, bsd_mrkx_lswxjy, tv_repairHistory;
     private EditText bsd_mrkx_et_miaoshu;  //故障描述
@@ -317,16 +317,8 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
         billNo = (TextView) view.findViewById(R.id.tv_billNo);
         //结算
-        bsd_zadd_wg = (TextView) view.findViewById(R.id.bsd_zadd_wg);
-        bsd_zadd_wg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //结算
-                //判断车牌号和客户编码是否对应
-                checkCarIsForThisKehu();
-            }
-        });
-
+        tv_jiesuan = (TextView) view.findViewById(R.id.bsd_mrkx_jiesuan);
+        tv_jiesuan.setOnClickListener(this);
         bsd_ywwwdd_cp = (TextView) view.findViewById(R.id.bsd_ywwwdd_cp);
         bsd_ywwwdd_pinpai = (TextView) view.findViewById(R.id.bsd_ywwwdd_pinpai);
         bsdywwwdd_chexi = (TextView) view.findViewById(R.id.bsdywwwdd_chexi);
@@ -821,15 +813,14 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
      */
     public void checkCarIsForThisKehu() {
         AbRequestParams params = new AbRequestParams();
-        params.put("che_no", Conts.cp);
-        params.put("kehu_no", Conts.kehu_no);
+        params.put("che_no", billEntiy.getChe_no());
+        params.put("kehu_no", billEntiy.getKehu_no());
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_kuaixiu_check, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String data) {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     if (jsonObject.getString("message").equals("查询成功")) {
-                        //判断是大维系还是小维修
                         saveBillInfo(false, false);
                     } else {
                         Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
@@ -840,18 +831,16 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
 
             @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("check", "check查询shibai=" + s);
-            }
-
-            @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
+            }
 
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getHostActicity(), "网络连接失败", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -1839,50 +1828,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private void showJiesuanDialog() {
         bsd_mrkx_jiesuan = new BSD_mrkx_jiesuan(getActivity(), billEntiy.getCard_no(), billEntiy.getWork_no(), billEntiy.getChe_no());
         bsd_mrkx_jiesuan.show();
-//                            bsd_mrkx_jiesuan.setJieSuan(new BSD_mrkx_jiesuan.JieSuan() {
-//                                @Override
-//                                public void onyes(double xche_hjje, double xche_ssje, double xche_wxxm_yhje, double xche_peij_yhje,
-//                                                  double xche_ysje, String card_no, String mima, int iscard,
-//                                                  double bxj, double zhifu_card_je, double zhifu_card_xj) {
-//                                    bsd_xche_hjje = xche_hjje;
-//                                    bsd_xche_ssje = xche_ssje;
-//                                    bsd_xche_wxxm_yhje = xche_wxxm_yhje;
-//                                    bsd_xche_peij_yhje = xche_peij_yhje;
-//                                    bsd_xche_ysje = xche_ysje;
-//                                    bsd_card_no = card_no;
-//                                    bsd_mima = mima;
-//                                    bsd_iscard = iscard;
-//                                    bsd_bxj = bxj;
-//                                    bsd_zhifu_card_je = zhifu_card_je;
-//                                    bsd_zhifu_card_xj = zhifu_card_xj;
-//                                    Log.i("结算后的数据", "合计金额：" + xche_hjje + "实收金额:" + xche_ssje +
-//                                            "维修项目优惠：" + xche_wxxm_yhje + "配件优惠：" + xche_peij_yhje + "应收金额：" + xche_ysje + "" +
-//                                            "会员卡：" + card_no + "密码：" + mima + "是否储值卡支付" + iscard + "补现金：" + bxj + "刷卡金额：" + zhifu_card_je);
-////                                    jieSuan1();
-//                                }
-//                            });
-//            bsd_mrkx_jiesuan.setGb(new BSD_mrkx_jiesuan.Guanbi() {
-//                @Override
-//                public void guanbi() {
-//                    bsd_zadd_wg.setEnabled(true);
-//                }
-//            });
-//        } else if (Conts.BSD_zhongxiaoweixiu == 0) {
-//            bsd_mrkx_jiesuan11 = new BSD_mrkx_jiesuan11(getActivity(), Conts.MRKX_kahao, Conts.MRKX_shengYu_jinQian, zong_zj);
-//            bsd_mrkx_jiesuan11.show();
-//            bsd_mrkx_jiesuan11.setJieSuan(new BSD_mrkx_jiesuan11.JieSuan() {
-//                @Override
-//                public void onyes(double xche_hjje, double xche_ssje, double xche_wxxm_yhje, double xche_peij_yhje, double xche_ysje) {
-//                    bsd_xche_hjje = xche_hjje;
-//                    bsd_xche_ssje = xche_ssje;
-//                    bsd_xche_wxxm_yhje = xche_wxxm_yhje;
-//                    bsd_xche_peij_yhje = xche_peij_yhje;
-//                    bsd_xche_ysje = xche_ysje;
-//                    jieSuan11();
-//
-//                }
-//            });
-//        }
     }
 
     /**
@@ -2392,6 +2337,9 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 break;
             case R.id.bsd_lsbj_fanhui:
                 saveBillInfo(true, true);
+                break;
+            case R.id.bsd_mrkx_jiesuan:
+                checkCarIsForThisKehu();
                 break;
         }
     }
