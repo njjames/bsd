@@ -21,15 +21,25 @@ import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
+import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
+import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
+import com.example.administrator.boshide2.Modular.Entity.CustemObject;
+import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
+import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.DownJianPan;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /***
  * 快速报价----选择品牌 ----diaglog
@@ -51,6 +61,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
     double shishou;
     private double cardLeftje;
     private String cardNo;
+    private String cheNo;
     private BigDecimal xche_wxxm_yhje;
     private BigDecimal xche_peij_yhje;
     private BigDecimal card_leftje;
@@ -61,6 +72,28 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
     private TextView tv_xche_ssje;
     boolean isChangeSsje; // 是否触发实收金额改变的监听回调
     private QueRen queRen;
+    private LinearLayout ll_jsfs;
+    private TextView tv_jsfs;
+    private LinearLayout ll_zhanghao;
+    private TextView tv_zhanghao;
+    private List<Map<String, String>> listJsfs = new ArrayList<>();
+    private List<Map<String, String>> listZH = new ArrayList<>();
+    private List<CustemObject> nameList1 = new ArrayList<>();
+    private List<CustemObject> nameList2 = new ArrayList<>();
+    private AbstractSpinerAdapter mAdapter1;
+    private AbstractSpinerAdapter mAdapter2;
+    private SpinerPopWindow mSpinerPopWindow1;
+    private SpinerPopWindow mSpinerPopWindow2;
+    private String currentJSFSId;
+    private String currentJSFSName;
+    private LinearLayout ll_nexttx;
+    private CheckBox cb_nexttx;
+    private EditText et_next_bylc;
+    private LinearLayout ll_next_byrq;
+    private TextView tv_next_byrq;
+    private LinearLayout ll_next_info;
+    private int sys_baoyang_che_fs;
+    private TimeDialog timeShow;
 
     public void setZongjia(String zongjia) {
         this.zongjia = zongjia;
@@ -92,7 +125,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
         this.gb = gb;
     }
 
-    public BSD_mrkx_jiesuan(final Context context, final String cardNo, String workNo) {
+    public BSD_mrkx_jiesuan(final Context context, final String cardNo, String workNo, String cheNo) {
         super(context, R.style.mydialog);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         view = getLayoutInflater().inflate(R.layout.bsd_mrkx_jiesuan, null, false);
@@ -104,6 +137,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
         this.getWindow().setAttributes(params);
         this.cardNo = cardNo;
         this.workNo = workNo;
+        this.cheNo = cheNo;
         isChangeSsje = true;
         initView();
         initData();
@@ -128,14 +162,36 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
         tv_cancel.setOnClickListener(this);
         tv_confirm.setOnClickListener(this);
         tv_xche_ssje = (TextView) view.findViewById(R.id.tv_xche_ssje);
-        //是否使用储值卡监听改变
+        ll_jsfs = (LinearLayout) view.findViewById(R.id.ll_jsfs);
+        tv_jsfs = (TextView) view.findViewById(R.id.tv_jsfs);
+        ll_jsfs.setOnClickListener(this);
+        ll_zhanghao = (LinearLayout) view.findViewById(R.id.ll_zhanghao);
+        tv_zhanghao = (TextView) view.findViewById(R.id.tv_zhanghao);
+        ll_zhanghao.setOnClickListener(this);
+        ll_nexttx = (LinearLayout) view.findViewById(R.id.ll_nexttx);
+        cb_nexttx = (CheckBox) view.findViewById(R.id.cb_nexttx);
+        et_next_bylc = (EditText) view.findViewById(R.id.et_next_bylc);
+        ll_next_byrq = (LinearLayout) view.findViewById(R.id.ll_next_byrq);
+        tv_next_byrq = (TextView) view.findViewById(R.id.tv_next_byrq);
+        ll_next_info = (LinearLayout) view.findViewById(R.id.ll_next_info);
+        ll_next_byrq.setOnClickListener(this);
+        cb_nexttx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    ll_next_info.setVisibility(View.VISIBLE);
+                } else {
+                    ll_next_info.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        // 是否使用储值卡监听改变
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean ischecked) {
                 isChangeSsje = false;
                 if (ischecked) {
                     isUseCard = 1;
-                    ll_buxianjin.setVisibility(View.VISIBLE);
                     tv_xche_ssje.setText("刷卡金额：");
                     // 如果应收金额大于等于会员卡剩余金额
                     if (xche_ysje.subtract(card_leftje).compareTo(BigDecimal.ZERO) >= 0) {
@@ -149,7 +205,6 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
                     tv_buxianjin.setText(buXianJin.setScale(Conts.NORMAL_DIGIT, RoundingMode.HALF_UP).toString());
                 } else {
                     isUseCard = 0;
-                    ll_buxianjin.setVisibility(View.GONE);
                     tv_xche_ssje.setText("实收金额：");
                     xche_ssje = xche_ysje;
                     et_xche_ssje.setText(xche_ysje.setScale(Conts.NORMAL_DIGIT, RoundingMode.HALF_UP).toString());
@@ -314,6 +369,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
 
     private void initData() {
         getJieSuanInfo();
+        timeShow = new TimeDialog(getContext());
     }
 
     /**
@@ -332,6 +388,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
                     if (jsonObject.getString("message").equals("查询成功")) {
                         isChangeSsje = false;
                         JSONObject object = jsonObject.getJSONObject("data");
+                        sys_baoyang_che_fs = object.getInt("sys_baoyang_che_fs");
                         xche_wxxm_yhje = new BigDecimal(object.getString("xche_wxxm_yhje"));
                         xche_peij_yhje = new BigDecimal(object.getString("xche_peij_yhje"));
                         card_leftje = new BigDecimal(object.getString("card_leftje"));
@@ -348,6 +405,11 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
                         et_xche_ssje.setSelection(xche_ssje.setScale(Conts.NORMAL_DIGIT, RoundingMode.HALF_UP).toString().length());
                         buXianJin = new BigDecimal(0);
                         isChangeSsje = true;
+                        if (sys_baoyang_che_fs == 0) {
+                            ll_nexttx.setVisibility(View.GONE);
+                        } else {
+                            ll_nexttx.setVisibility(View.VISIBLE);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -376,6 +438,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
     public void getCardInfo() {
         AbRequestParams params = new AbRequestParams();
         params.put("card_no", et_cardno.getText().toString());
+        params.put("che_no", cheNo);
         Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_MRKX_HYK, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
@@ -463,10 +526,200 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
             case R.id.tv_confirm:
                 jiesuan();
                 break;
+            case R.id.ll_jsfs:
+                getJSFSData();
+                break;
+            case R.id.ll_zhanghao:
+                getZHData();
+                break;
+            case R.id.ll_next_byrq:
+                timeShow.timePickerAlertDialog(tv_next_byrq);
+                break;
         }
     }
 
+    private void getZHData() {
+        listZH.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("type", "ITBank");
+        params.put("GongSiNo", MyApplication.shared.getString("GongSiNo", ""));
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    if (jsonObject.get("status").toString().equals("1")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("yh_name", String.valueOf(jsonarray.get(i)));
+                            listZH.add(map);
+                        }
+                    }
+                    updateZHData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "获取账号失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateZHData() {
+        nameList2.clear();
+        for (int i = 0; i < listZH.size(); i++) {
+            CustemObject object = new CustemObject();
+            object.data = listZH.get(i).get("yh_name");
+            nameList2.add(object);
+        }
+        mAdapter2 = new CustemSpinerAdapter(getContext());
+        mAdapter2.refreshData(nameList2, 0);
+        mSpinerPopWindow2 = new SpinerPopWindow(getContext());
+//        mSpinerPopWindow2.setAdatper(mAdapter2, 800);
+        mSpinerPopWindow2.setAdatper(mAdapter2);
+        mSpinerPopWindow2.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
+            @Override
+            public void onItemClick(int pos) {
+                String clickValue = nameList2.get(pos).toString();
+                if (!tv_zhanghao.getText().toString().equals(clickValue)) {
+                    tv_zhanghao.setText(clickValue);
+                    currentJSFSName = listZH.get(pos).get("yh_name");
+                }
+            }
+        });
+        mSpinerPopWindow2.setWidth(ll_zhanghao.getWidth());
+        mSpinerPopWindow2.showAsDropDown(ll_zhanghao);
+    }
+
+    private void getJSFSData() {
+        listJsfs.clear();
+        AbRequestParams params = new AbRequestParams();
+        params.put("type", "ITJiesuan");
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    if (jsonObject.get("status").toString().equals("1")) {
+                        JSONArray jsonarray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject item = jsonarray.getJSONObject(i);
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("id", item.getString("reco_no"));
+                            map.put("jiesuan_mc", item.getString("jiesuan_mc"));
+                            listJsfs.add(map);
+                        }
+                    }
+                    updateJSFSData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "获取结算方式失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateJSFSData() {
+        nameList1.clear();
+        for (int i = 0; i < listJsfs.size(); i++) {
+            CustemObject object = new CustemObject();
+            object.data = listJsfs.get(i).get("jiesuan_mc");
+            nameList1.add(object);
+        }
+        mAdapter1 = new CustemSpinerAdapter(getContext());
+        mAdapter1.refreshData(nameList1, 0);
+        mSpinerPopWindow1 = new SpinerPopWindow(getContext());
+        mSpinerPopWindow1.setAdatper(mAdapter1);
+        mSpinerPopWindow1.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
+            @Override
+            public void onItemClick(int pos) {
+                String clickValue = nameList1.get(pos).toString();
+                if (!tv_jsfs.getText().toString().equals(clickValue)) {
+                    tv_jsfs.setText(clickValue);
+                    currentJSFSId = listJsfs.get(pos).get("id");
+                    currentJSFSName = listJsfs.get(pos).get("jiesuan_mc");
+                }
+            }
+        });
+        mSpinerPopWindow1.setWidth(ll_jsfs.getWidth());
+        mSpinerPopWindow1.showAsDropDown(ll_jsfs);
+    }
+
+    /**
+     * 检测操作员的优惠率
+     */
+    private void checkBillYhlv() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", workNo);
+        params.put("xm_yhje", xche_wxxm_yhje.toString());
+        params.put("cl_yhje", xche_peij_yhje.toString());
+        params.put("caozuoyuanID", MyApplication.shared.getString("userid", ""));
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CKECKYHLV, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String data) {
+                if (data.equals("success")) {
+                    // 优惠率正确
+                    // 如果勾选了储值卡结算，则检测会员卡密码是否正确
+                    if (checkBox.isChecked()) {
+                        checkCardPass();
+                    } else { // 如果没有勾选储值卡结算，则真正结算
+                        realJieSuan();
+                    }
+                } else {
+                    queRen = new QueRen(getContext(), "手工优惠金额超出了本操作员的“整单折扣率”范围！");
+                    queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                        @Override
+                        public void onYesClick() {
+                            et_xmyhje.requestFocus();
+                            et_xmyhje.setSelection(et_xmyhje.getText().length());
+                            queRen.dismiss();
+                        }
+                    });
+                    queRen.show();
+                }
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void jiesuan() {
+        // 先检测一些不用访问接口的逻辑
         if (xche_ysje.compareTo(BigDecimal.ZERO) < 0) {
             Toast.makeText(getContext(), "优惠金额不能大于合计金额", Toast.LENGTH_SHORT).show();
             et_xmyhje.requestFocus();
@@ -490,6 +743,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
                         }
                     });
                     queRen.show();
+                    return;
                 } else {
                     queRen = new QueRen(getContext(), "输入框中的会员卡还未读取\n请读取之后再进行结算！");
                     queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
@@ -499,6 +753,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
                         }
                     });
                     queRen.show();
+                    return;
                 }
             } else {
                 if (TextUtils.isEmpty(et_cardno.getText().toString())) {
@@ -510,6 +765,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
                         }
                     });
                     queRen.show();
+                    return;
                 } else {
                     if (!et_cardno.getText().toString().equals(cardNo)) {
                         queRen = new QueRen(getContext(), "当前已读取的会员卡【" + cardNo + "】\n与输入框内的会员卡不一致\n请重新读取会员卡！");
@@ -520,25 +776,13 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
                             }
                         });
                         queRen.show();
-                    } else {
-                        // 此时就是一致了
-                        // 检测会员卡密码
-                        checkCardPass();
+                        return;
                     }
                 }
             }
-        } else {
-          // 无会员卡结算
         }
-//        jieSuan.onyes(xche_hjje,
-//                xche_ssje,
-//                xche_wxxm_yhje,
-//                xche_peij_yhje,
-//                xche_ysje,
-//                cardNo,
-//                et_cardpass.getText().toString(),
-//                checkBox.isChecked(),
-//                buXianJin);
+        // 检测需要访问接口的逻辑
+        checkBillYhlv();
     }
 
     /**
@@ -553,6 +797,84 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
             public void onSuccess(int aa, String data) {
                 if (data.equals("success")) {
                     // 正确之后，开始结算
+                    realJieSuan();
+                } else {
+                    queRen = new QueRen(getContext(), "会员卡密码不正确！");
+                    queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                        @Override
+                        public void onYesClick() {
+                            et_cardpass.requestFocus();
+                            et_cardpass.setSelection(et_cardpass.getText().length());
+                            queRen.dismiss();
+                        }
+                    });
+                    queRen.show();
+                }
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 真正的结算
+     */
+    private void realJieSuan() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("caozuoyuanid", MyApplication.shared.getString("name", ""));
+        params.put("work_no", workNo);
+        params.put("che_no", cheNo);
+        params.put("xche_hjje", xche_hjje.toString());
+        params.put("xche_ysje", xche_ysje.toString());
+        params.put("card_no", cardNo);
+        if (checkBox.isChecked()) {
+            params.put("iscard", 1);
+            params.put("xche_ssje", xche_ysje.toString()); // 用会员卡结算，款肯定是全收了
+            params.put("zhifu_card_je", xche_ssje.toString());//实收
+            params.put("zhifu_card_xj", buXianJin.toString());//补现金
+        } else {
+            params.put("iscard", 0);
+            params.put("xche_ssje", xche_ssje.toString());
+            params.put("zhifu_card_je", "0");
+            params.put("zhifu_card_xj", "0");
+        }
+        params.put("xche_jsfs", tv_jsfs.getText().toString());
+        params.put("yh_zhanghao", tv_zhanghao.getText().toString());
+        params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
+        if (sys_baoyang_che_fs == 0) {
+            params.put("sys_baoyang_che_fs", 0);
+            if (cb_nexttx.isChecked()) {
+                params.put("isNextTx", 1);
+                params.put("next_bylc", et_next_bylc.getText().toString());
+                params.put("next_byrq", tv_next_byrq.getText().toString());
+            } else {
+                params.put("isNextTx", 0);
+                params.put("next_bylc", "");
+                params.put("next_byrq", "");
+            }
+        } else {
+            params.put("sys_baoyang_che_fs", 1);
+            params.put("isNextTx", 0);
+            params.put("next_bylc", "");
+            params.put("next_byrq", "");
+        }
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_REALJIESUAN, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String data) {
+                if (data.equals("success")) {
+                    // 正确之后，开始结算
+                    realJieSuan();
                 } else {
                     queRen = new QueRen(getContext(), "会员卡密码不正确！");
                     queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {

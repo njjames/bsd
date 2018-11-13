@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/qb_px_10"
     android:paddingRight="@dimen/qb_px_10"
     android:paddingTop="@dimen/qb_px_20"
-    android:paddingBottom="@dimen/qb_px_20">
+    android:paddingBottom="@dimen/qb_px_10">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -143,7 +143,7 @@
             android:background="@drawable/bsd_chepaiyuan"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 style="@style/myeditinfonamestyle"
@@ -203,7 +203,7 @@
             android:id="@+id/bsd_wzll_11"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_46"
-            android:layout_marginTop="@dimen/qb_px_20"
+            android:layout_marginTop="@dimen/qb_px_10"
             android:background="@drawable/bsd_chepaiyuan_w"
             android:gravity="center_vertical">
 
@@ -223,7 +223,7 @@
             android:id="@+id/bsd_wzll_33"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_46"
-            android:layout_marginTop="@dimen/qb_px_20"
+            android:layout_marginTop="@dimen/qb_px_10"
             android:background="@drawable/bsd_chepaiyuan"
             android:gravity="center_vertical">
 
@@ -241,10 +241,73 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/qb_px_10">
+
+            <LinearLayout
+                android:id="@+id/ll_jsfs"
+                android:layout_weight="1"
+                style="@style/myeditlinearlayoutstyle"
+                android:background="@drawable/bsd_chepaiyuan_w">
+
+                <TextView
+                    style="@style/myeditinfonamestyle"
+                    android:text="结算方式:"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:id="@+id/tv_jsfs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="请选择"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:maxLines="1"/>
+
+                <ImageView
+                    style="@style/myeditdowimgstyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_zhanghao"
+                android:layout_weight="1"
+                style="@style/myeditlinearlayoutstyle"
+                android:background="@drawable/bsd_chepaiyuan_w"
+                android:layout_marginLeft="@dimen/qb_px_8">
+
+                <TextView
+                    style="@style/myeditinfonamestyle"
+                    android:text="账  号:"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:id="@+id/tv_zhanghao"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="选择账号"
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:maxLines="1"/>
+
+                <ImageView
+                    style="@style/myeditdowimgstyle" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/bsd_wzll_2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_46"
-            android:layout_marginTop="@dimen/qb_px_10"
+            android:layout_height="@dimen/qb_px_42"
+            android:layout_marginTop="@dimen/qb_px_4"
             android:gravity="center_vertical">
 
             <CheckBox
@@ -266,12 +329,88 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_nexttx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/qb_px_4"
+            android:paddingBottom="@dimen/qb_px_4"
+            android:visibility="gone">
+
+            <CheckBox
+                android:id="@+id/cb_nexttx"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:paddingRight="@dimen/qb_px_10"
+                android:gravity="center"
+                android:button="@drawable/check_box"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下次保养提醒"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_next_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/qb_px_8"
+                android:visibility="invisible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/qb_px_32"
+                    android:background="@drawable/bsd_chepaiyuan_w"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/myeditinfonamestyle"
+                        android:text="下次保养里程："
+                        android:textColor="#000000"/>
+
+                    <EditText
+                        android:id="@+id/et_next_bylc"
+                        style="@style/myeditinfovaluestyle"
+                        android:inputType="numberDecimal"
+                        android:textColor="#000000"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_next_byrq"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/qb_px_32"
+                    android:background="@drawable/bsd_chepaiyuan_w"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/qb_px_4">
+
+                    <TextView
+                        style="@style/myeditinfonamestyle"
+                        android:text="下次保养提醒日期："
+                        android:textColor="#000000"/>
+
+                    <com.example.administrator.boshide2.Modular.View.MarqueeView
+                        android:id="@+id/tv_next_byrq"
+                        style="@style/myeditinfomarqeestyle"
+                        android:textColor="#000000"/>
+
+                    <ImageView
+                        android:id="@+id/iv_mrkx_time"
+                        style="@style/myeditdowimgstyle" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/bsd_mrkx_qrjs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
-            android:padding="@dimen/qb_px_10">
+            android:layout_marginTop="@dimen/qb_px_4">
 
             <TextView
                 android:id="@+id/tv_confirm"

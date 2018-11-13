@@ -292,7 +292,6 @@
                     <ImageView
                         android:id="@+id/iv_mrkx_fl"
                         style="@style/myeditdowimgstyle" />
-
                 </LinearLayout>
 
                 <LinearLayout

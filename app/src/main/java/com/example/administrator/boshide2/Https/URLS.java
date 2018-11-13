@@ -161,7 +161,8 @@ public class URLS {
     /**
      * 添加会员---pop--部门下拉
      */
-    public String BSD_HYGL_ADD_TYPE = "public/dept";
+    public static final String BSD_HYGL_ADD_TYPE = "public/dept";
+
     /**
      * 添加会员---pop--部门下拉
      */
@@ -641,6 +642,10 @@ public class URLS {
     public static final String BSD_MRKX_HYK="card/getVipCardByCardNo";
 
     public static final String BSD_CKECKCARDPASS="card/checkcardpass";
+
+    public static final String BSD_REALJIESUAN="kuaixiu/realjiesuan";
+
+    public static final String BSD_CKECKYHLV="kuaixiu/checkyhlv";
 
     public static final String BSD_GETBILLJIESUANINFO="kuaixiu/getbilljiesuaninfo";
 

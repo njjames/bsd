@@ -1217,6 +1217,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     public void getCardInfo(final String cardNo) {
         AbRequestParams params = new AbRequestParams();
         params.put("card_no", cardNo);
+        params.put("che_no", billEntiy.getChe_no());
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_HYK, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String data) {
@@ -1789,6 +1790,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                             quedingQuxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
                                 @Override
                                 public void onConfirm() {
+                                    quedingQuxiao.dismiss();
                                     // 继续结算
                                     showJiesuanDialog();
                                 }
@@ -1835,7 +1837,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     }
 
     private void showJiesuanDialog() {
-        bsd_mrkx_jiesuan = new BSD_mrkx_jiesuan(getActivity(), billEntiy.getCard_no(), billEntiy.getWork_no());
+        bsd_mrkx_jiesuan = new BSD_mrkx_jiesuan(getActivity(), billEntiy.getCard_no(), billEntiy.getWork_no(), billEntiy.getChe_no());
         bsd_mrkx_jiesuan.show();
 //                            bsd_mrkx_jiesuan.setJieSuan(new BSD_mrkx_jiesuan.JieSuan() {
 //                                @Override
