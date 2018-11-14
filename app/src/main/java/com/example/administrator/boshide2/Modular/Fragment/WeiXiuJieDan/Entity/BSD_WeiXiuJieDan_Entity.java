@@ -6,7 +6,7 @@ package com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity;
  */
 
 public class BSD_WeiXiuJieDan_Entity {
-    private  String   che_gzms;  //故障描述
+    private String che_gzms;  //故障描述
 
     public String getChe_gzms() {
         return che_gzms;
@@ -1705,7 +1705,6 @@ public class BSD_WeiXiuJieDan_Entity {
     public void setFlag_pad(boolean flag_pad) {
         this.flag_pad = flag_pad;
     }
-
 
 
 }

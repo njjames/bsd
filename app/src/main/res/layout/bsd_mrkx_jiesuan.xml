@@ -369,7 +369,7 @@
 
                     <TextView
                         style="@style/myeditinfonamestyle"
-                        android:text="下次保养里程："
+                        android:text="里程："
                         android:textColor="#000000"/>
 
                     <EditText
@@ -389,7 +389,7 @@
 
                     <TextView
                         style="@style/myeditinfonamestyle"
-                        android:text="下次保养提醒日期："
+                        android:text="日期："
                         android:textColor="#000000"/>
 
                     <com.example.administrator.boshide2.Modular.View.MarqueeView

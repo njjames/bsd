@@ -3,31 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:paddingTop="@dimen/x20"
-    android:paddingBottom="@dimen/x20"
-    android:layout_marginLeft="@dimen/x10"
-    android:layout_height="@dimen/x80"
-    android:gravity="center_vertical">
-
-
+    android:paddingTop="@dimen/qb_px_10"
+    android:paddingBottom="@dimen/qb_px_10"
+    android:layout_height="wrap_content"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/tv_cxmc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/v"
         android:text="车辆名字"
-        android:textSize="@dimen/x23"
+        android:textSize="40sp"
         android:textColor="@color/hong" />
     <View
         android:id="@+id/v"
-        android:layout_width="@dimen/x2"
-        android:layout_height="@dimen/x50"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
-        android:layout_centerInParent="true"
-        android:background="@color/hong"
-        />
+        android:layout_width="@dimen/qb_px_2"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/qb_px_10"
+        android:layout_marginRight="@dimen/qb_px_10"
+        android:background="@color/hong" />
 
     <TextView
         android:id="@+id/tv_cx_nbmc"
@@ -35,9 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="车辆内部名字"
-        android:textSize="@dimen/x23"
-        android:textColor="@color/hong"
-        />
-
-
+        android:textSize="40sp"
+        android:textColor="@color/hong" />
 </LinearLayout>

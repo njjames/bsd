@@ -500,6 +500,7 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                 data_wxyy(paramCheNo, paramBillNo);
                 break;
         }
+        dismiss();
 //        if ("mrkx".equals(paramBillType)) {
 //            // 去获取草稿单据
 //            data_mrkx(Conts.cp, billNo);
@@ -523,7 +524,6 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
 //            //打开维修业务调度单据
 //            ((MainActivity) getActivity()).upwxywdd(view);
 //        }
-        dismiss();
     }
 
     /*
@@ -592,37 +592,6 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                     } else {
                         Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }
-//                    if (jsonObject.get("total").toString().equals("1")) {
-//
-////                        BSD_KuaiSuBaoJia_ety entiy = new BSD_KuaiSuBaoJia_ety();
-////                        entiy = list_ksbj.get(0);
-//                        BSD_KuaiSuBaoJia_ety  entiy = list_ksbj.get(0);
-//                        mainActivity.setKsbjenity(entiy);
-//
-////                        ((MainActivity) getActivity()).setKsbjenity(entiy);//传了个实体
-////
-//                        if (null == entiy.getList_no() || entiy.getList_no().equals("") || entiy.getList_no().equals("null")) {
-//                            Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                           mainActivity.upksbj(view);
-//                        }
-//                        Conts.zt = 1;
-//                        Conts.cp = cardNo;
-//
-//                    } else if (jsonObject.get("total").toString().equals("0")) {
-//                        ((MainActivity) getActivity()).upksbj(view);
-//                        Conts.cp = cardNo;
-//                        Conts.zt = 0;
-//
-//                    } else {
-//                        BSD_KuaiSuBaoJia_ety entiy = new BSD_KuaiSuBaoJia_ety();
-//                        entiy = list_ksbj.get(0);
-//                        mainActivity.setKsbjenity(entiy);//传了个实体
-////
-//                        mainActivity.upksbj(view);
-//                        Conts.zt = 1;
-//                        Conts.cp = cardNo;
-//                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -736,8 +705,6 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
-
-
     }
 
     /*
@@ -752,30 +719,25 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             public void onSuccess(int aa, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    Log.e("vin", "onSuccess读取的：" + s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
                         JSONArray jsonarray = jsonObject.getJSONArray("data");
                         Map<String, String> map;
                         for (int i = 0; i < jsonarray.length(); i++) {
-                            Log.e("vin", "2222");
                             JSONObject item = jsonarray.getJSONObject(i);
                             map = new HashMap<>();
                             map.put("cxMcStd", item.getString("chex_mc_std"));   //车系
                             map.put("cxDm", item.getString("chex_dm"));     //车系代码
                             map.put("cxMc", item.getString("chex_mc"));   //车系名称
-                            Log.e("vins", "dm:"+ item.getString("chex_dm"));
                             listvincx.add(map);
                         }
                         if (listvincx.size() == 1) {
-                            Log.e("vin", "1条记录" );
                             //如果只查到一条记录，通过chex_dm查询相应的品牌、车系、车组、车型信息；
-                            cxnm=listvincx.get(0).get("cxDm");      //车型内码
+                            cxnm = listvincx.get(0).get("cxDm");      //车型内码
 //                            cxmc=listvincx.get(0).get("cxMc");      //车型名称
 //                            cxmcstd=listvincx.get(0).get("cxMcStd");   //车型内部名称；
                             getcx_by_cxdm();
                         } else if (listvincx.size() > 1) {
                             //如果查到多条记录，弹出对话框，显示chex_mc和chex_mc_std；
-                            Log.e("vin", "listvincx的长度："+listvincx.size() );
                             showDialogSelectCx();
                         }
                     }
@@ -820,24 +782,15 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             public void onSuccess(int aa, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    Log.e("vin", "onSuccess获取车牌车系等信息：" + s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
                         String data = jsonObject.getString("data");
-                        Log.e("vin", "车牌车系json串：" + data);
-                        //给车牌、车系、车组、车型赋值；
-                        ArrayList arr = new ArrayList();
-                        String[] s1 = data.split("\\|");
-                        Log.e("vin", "品牌："+s1[0]+",车系"+s1[1]+",车组"+s1[2]+",车系"+s1[3]);
-                        for (int j = 0; j < s1.length; j++) {
-                            arr.add(j, s1[j]);
+                        String[] cheXs = data.split("\\|");
+                        if (cheXs.length >= 4) {
+                            tv_pinpai.setText(cheXs[0]);
+                            tv_chexi.setText(cheXs[1]);
+                            tv_chezu.setText(cheXs[2]);
+                            tv_chexing.setText(cheXs[3]);
                         }
-
-                        tv_pinpai.setText(s1[0]);
-                        tv_chexi.setText(s1[1]);
-                        tv_chezu.setText(s1[2]);
-                        tv_chexing.setText(s1[3]);
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -863,18 +816,15 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
      *vin对应多条车辆信息时，弹出选择对话框；
      */
     public void  showDialogSelectCx(){
-        final View  view=LayoutInflater.from(getActivity()).inflate(R.layout.bsd_clxx_dialog_for_select_cx,null);
+        final View view=LayoutInflater.from(getActivity()).inflate(R.layout.bsd_clxx_dialog_for_select_cx,null);
         final Dialog dialog = new Dialog(getActivity());
         dialog.setTitle("请选择");
         dialog.setContentView(view);
         Window window = dialog.getWindow();
-        WindowManager.LayoutParams params =
-                dialog.getWindow().getAttributes();
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         params.width = 900;
         params.height = 500 ;
         dialog.getWindow().setAttributes(params);
-
-
         ListView  lv= (ListView) window.findViewById(R.id.bsd_clxx_lv_for_select_cx);
         lv.setAdapter(new BaseAdapter() {
             @Override
@@ -899,14 +849,11 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
              TextView  tv_nbmc= (TextView) layout.findViewById(R.id.tv_cx_nbmc);
              tv_mc.setText(listvincx.get(position).get("cxMc"));     //车辆名称
              tv_nbmc.setText(listvincx.get(position).get("cxMcStd"));  //车辆内部名称
-                Log.e("vin", "名称： "+listvincx.get(position).get("cxMc") );
-                Log.e("vin", "内部名称： "+listvincx.get(position).get("cxMcStd") );
              layout.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
-                     dialog.dismiss();
                      cxnm=listvincx.get(position).get("cxDm");    //车辆代码
-                     Log.e("vins", "车辆代码。。。"+cxnm );
+                     dialog.dismiss();
                      getcx_by_cxdm();
                  }
              });

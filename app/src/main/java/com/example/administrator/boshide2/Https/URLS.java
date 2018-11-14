@@ -332,7 +332,7 @@ public class URLS {
     /**
      * 美容快修发送微信
      */
-    public String BSD_mrkx_weixin = "kuaixiu/kxweixin";
+    public static final String BSD_mrkx_weixin = "kuaixiu/kxweixin";
 
 
     /**

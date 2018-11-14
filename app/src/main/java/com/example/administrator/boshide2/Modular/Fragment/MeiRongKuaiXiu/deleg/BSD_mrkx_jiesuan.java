@@ -5,7 +5,6 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -29,6 +28,7 @@ import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.DownJianPan;
+import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +39,7 @@ import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +52,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
     private String workNo;
     private View view;
     TextView bsd_wzzl_tv_qx;
-    JieSuan jieSuan;
+    OnJieSuanListener jieSuan;
 
     EditText et_cardno, et_cardpass, et_xmyhje, et_clyhje, et_xche_ssje;
     TextView tv_cardleftje, tv_xche_hjje, tv_xche_ysje;
@@ -97,6 +98,11 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
     private LinearLayout ll_next_info;
     private int sys_baoyang_che_fs;
     private TimeDialog timeShow;
+    private BigDecimal che_baoyanglicheng;
+    private BigDecimal che_rjlc;
+    private BigDecimal che_next_licheng;
+    private OnJieSuanListener onJieSuanListener;
+    private Dialog mWeiboDialog;
 
     public void setZongjia(String zongjia) {
         this.zongjia = zongjia;
@@ -114,7 +120,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
 
     TextView bsd_wzzl_js_duqu;
 
-    public void setJieSuan(JieSuan jieSuan) {
+    public void setJieSuan(OnJieSuanListener jieSuan) {
         this.jieSuan = jieSuan;
     }
 
@@ -182,8 +188,20 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    Calendar calendar = Calendar.getInstance();
+                    if (che_baoyanglicheng.compareTo(BigDecimal.ZERO) != 0 && che_rjlc.compareTo(BigDecimal.ZERO) != 0) {
+                        calendar.add(Calendar.DATE, che_baoyanglicheng.divide(che_rjlc, 2, BigDecimal.ROUND_HALF_UP).intValue());
+                        tv_next_byrq.setText(format.format(calendar.getTime()));
+                        et_next_bylc.setText(che_next_licheng.add(che_baoyanglicheng).toString());
+                    } else {
+                        calendar.add(Calendar.DATE, 90);
+                        tv_next_byrq.setText(format.format(calendar.getTime()));
+                    }
                     ll_next_info.setVisibility(View.VISIBLE);
                 } else {
+                    et_next_bylc.getText().clear();
+                    tv_next_byrq.setText("");
                     ll_next_info.setVisibility(View.INVISIBLE);
                 }
             }
@@ -383,6 +401,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
         AbRequestParams params = new AbRequestParams();
         params.put("card_no", this.cardNo);
         params.put("work_no", this.workNo);
+        params.put("che_no", this.cheNo);
         Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_GETBILLJIESUANINFO, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
@@ -396,6 +415,9 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
                         xche_peij_yhje = new BigDecimal(object.getString("xche_peij_yhje"));
                         card_leftje = new BigDecimal(object.getString("card_leftje"));
                         xche_hjje = new BigDecimal(object.getString("xche_hjje"));
+                        che_next_licheng = new BigDecimal(object.getString("che_next_licheng"));
+                        che_rjlc = new BigDecimal(object.getString("che_rjlc"));
+                        che_baoyanglicheng = new BigDecimal(object.getString("che_baoyanglicheng"));
                         et_cardno.setText(cardNo);
                         tv_cardleftje.setText(card_leftje.setScale(Conts.NORMAL_DIGIT, RoundingMode.HALF_UP).toString());
                         et_xmyhje.setText(xche_wxxm_yhje.setScale(Conts.NORMAL_DIGIT, RoundingMode.HALF_UP).toString());
@@ -711,7 +733,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -874,6 +896,7 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
      * 真正的结算
      */
     private void realJieSuan() {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getContext(), "结算中...");
         AbRequestParams params = new AbRequestParams();
         params.put("caozuoyuanid", MyApplication.shared.getString("name", ""));
         params.put("work_no", workNo);
@@ -916,20 +939,21 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
             @Override
             public void onSuccess(int aa, String data) {
                 if (data.equals("success")) {
-                    // 正确之后，开始结算
-                    realJieSuan();
-                } else {
-                    queRen = new QueRen(getContext(), "会员卡密码不正确！");
+                    weiXin();
+                    queRen = new QueRen(getContext(), "结算成功！");
                     queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
                         @Override
                         public void onYesClick() {
-                            et_cardpass.requestFocus();
-                            et_cardpass.setSelection(et_cardpass.getText().length());
                             queRen.dismiss();
+                            dissm();
+                            if (onJieSuanListener != null) {
+                                onJieSuanListener.onSuccess();
+                            }
                         }
                     });
                     queRen.show();
                 }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -942,7 +966,41 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
+                queRen = new QueRen(getContext(), s);
+                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                    @Override
+                    public void onYesClick() {
+                        queRen.dismiss();
+                    }
+                });
+                queRen.show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    /**
+     * 发送微信
+     * 不管是否发送成功了
+     */
+    private void weiXin() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", workNo);
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_mrkx_weixin, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int i, String s) {
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
             }
         });
     }
@@ -956,9 +1014,12 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
         }
     }
 
-    public interface JieSuan {
-        void onyes(BigDecimal xche_hjje, BigDecimal xche_ssje, BigDecimal xche_wxxm_yhje,
-                   BigDecimal xche_peij_yhje, BigDecimal xche_ysje, String card_no, String mima, boolean iscard, BigDecimal bxj);
+    public interface OnJieSuanListener {
+        void onSuccess();
+    }
+
+    public void setOnJieSuanListener(OnJieSuanListener onJieSuanListener) {
+        this.onJieSuanListener = onJieSuanListener;
     }
 
     public interface Guanbi {

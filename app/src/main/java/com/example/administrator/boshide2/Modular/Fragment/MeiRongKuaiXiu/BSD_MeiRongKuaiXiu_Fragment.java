@@ -165,7 +165,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private double zong_zj;
     private TextView bsd_mrkx_zongjia;
     private LinearLayout bsd_mrkx_rl_hukx;
-    private String Car;
     private TextView bsd_mrkx_tv_ck;
     private LinearLayout ll_stock;
     private List<Map<String, String>> listStock = new ArrayList<Map<String, String>>();
@@ -176,17 +175,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private String ckid;
     private QueRen queRen;
     private TextView tv_removecard;
-    private double bsd_xche_hjje;
-    private double bsd_xche_ssje;
-    private double bsd_xche_wxxm_yhje;
-    private double bsd_xche_peij_yhje;
-    private double bsd_xche_ysje;
-    private String bsd_card_no;
-    private String bsd_mima;
-    private int bsd_iscard;
-    private double bsd_bxj;
-    private double bsd_zhifu_card_je;
-    private double bsd_zhifu_card_xj;
     private Dialog mWeiboDialog;
     //根据VIN返回车型信息
     private List<Map<String, String>> listvincx = new ArrayList<>();
@@ -919,7 +907,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
 
     /*
-     *根据vin码获取车辆名称、代码、内部名称；
+     * 根据vin码获取车辆名称、代码、内部名称；
      */
     public void duVin() {
         listvincx.clear();
@@ -928,25 +916,20 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcxnm_byvin, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
-
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    Log.e("vin", "onSuccess读取的：" + s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
                         JSONArray jsonarray = jsonObject.getJSONArray("data");
                         Map<String, String> map;
                         for (int i = 0; i < jsonarray.length(); i++) {
-                            Log.e("vin", "2222");
                             JSONObject item = jsonarray.getJSONObject(i);
                             map = new HashMap<>();
                             map.put("cxMcStd", item.getString("chex_mc_std"));   //车系
                             map.put("cxDm", item.getString("chex_dm"));     //车系代码
                             map.put("cxMc", item.getString("chex_mc"));   //车系名称
-                            Log.e("vins", "dm:" + item.getString("chex_dm"));
                             listvincx.add(map);
                         }
                         if (listvincx.size() == 1) {
-                            Log.e("vin", "1条记录");
                             //如果只查到一条记录，通过chex_dm查询相应的品牌、车系、车组、车型信息；
                             cxnm = listvincx.get(0).get("cxDm");      //车型内码
 //                            cxmc=listvincx.get(0).get("cxMc");      //车型名称
@@ -954,7 +937,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                             getcx_by_cxdm();
                         } else if (listvincx.size() > 1) {
                             //如果查到多条记录，弹出对话框，显示chex_mc和chex_mc_std；
-                            Log.e("vin", "listvincx的长度：" + listvincx.size());
                             showDialogSelectCx();
                         }
                     }
@@ -990,33 +972,21 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
      */
     public void getcx_by_cxdm() {
         AbRequestParams params = new AbRequestParams();
-        Log.e("sss", "cxnm是：" + cxnm);
         params.put("chex_dm", cxnm);
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcx_byvindm, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
-
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    Log.e("vin", "onSuccess获取车牌车系等信息：" + s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
                         String data = jsonObject.getString("data");
-                        Log.e("vin", "车牌车系json串：" + data);
-                        //给车牌、车系、车组、车型赋值；
-                        ArrayList arr = new ArrayList();
-                        String[] s1 = data.split("\\|");
-                        Log.e("vin", "品牌：" + s1[0] + ",车系" + s1[1] + ",车组" + s1[2] + ",车系" + s1[3]);
-                        for (int j = 0; j < s1.length; j++) {
-                            arr.add(j, s1[j]);
+                        String[] cheXs = data.split("\\|");
+                        if (cheXs.length >= 4) {
+                            bsd_mrkx_tv_pp.setText(cheXs[0]);
+                            bsd_mrkx_tv_chexi.setText(cheXs[1]);
+                            bsd_mrkx_tv_chezu.setText(cheXs[2]);
+                            bsd_mrkx_tv_chexing.setText(cheXs[3]);
                         }
-
-
-                        bsd_mrkx_tv_pp.setText(s1[0]);
-                        bsd_mrkx_tv_chexi.setText(s1[1]);
-                        bsd_mrkx_tv_chezu.setText(s1[2]);
-                        bsd_mrkx_tv_chexing.setText(s1[3]);
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1047,13 +1017,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         dialog.setTitle("请选择");
         dialog.setContentView(view);
         Window window = dialog.getWindow();
-        WindowManager.LayoutParams params =
-                dialog.getWindow().getAttributes();
-        params.width = 900;
-        params.height = 500;
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (int) getContext().getResources().getDimension(R.dimen.qb_px_400);
+        params.height = (int) getContext().getResources().getDimension(R.dimen.qb_px_300);
         dialog.getWindow().setAttributes(params);
-
-
         ListView lv = (ListView) window.findViewById(R.id.bsd_clxx_lv_for_select_cx);
         lv.setAdapter(new BaseAdapter() {
             @Override
@@ -1073,130 +1040,24 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
             @Override
             public View getView(final int position, View convertView, ViewGroup parent) {
-                View layout = LayoutInflater.from(getActivity()).inflate(R.layout.select_cx_dialog_item, null);
-                TextView tv_mc = (TextView) layout.findViewById(R.id.tv_cxmc);
-                TextView tv_nbmc = (TextView) layout.findViewById(R.id.tv_cx_nbmc);
+                View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.select_cx_dialog_item, null);
+                TextView tv_mc = (TextView) view1.findViewById(R.id.tv_cxmc);
+                TextView tv_nbmc = (TextView) view1.findViewById(R.id.tv_cx_nbmc);
                 tv_mc.setText(listvincx.get(position).get("cxMc"));     //车辆名称
                 tv_nbmc.setText(listvincx.get(position).get("cxMcStd"));  //车辆内部名称
-                Log.e("vin", "名称： " + listvincx.get(position).get("cxMc"));
-                Log.e("vin", "内部名称： " + listvincx.get(position).get("cxMcStd"));
-                layout.setOnClickListener(new View.OnClickListener() {
+                view1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
                         cxnm = listvincx.get(position).get("cxDm");    //车辆代码
-                        Log.e("vins", "车辆代码。。。" + cxnm);
                         getcx_by_cxdm();
                     }
                 });
 
-                return layout;
+                return view1;
             }
         });
-
-
         dialog.show();
-
-
-    }
-
-
-    /**
-     * 删除全部派工人员
-     */
-    public void delAll() {
-        listPGrenyuan.clear();
-        paiGongInfoAdapter.setList(listPGrenyuan);
-        paiGongInfoAdapter.notifyDataSetChanged();
-        AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_paigong_delPGAllRx, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "查看json" + s);
-                paiGongInfoAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-
-            }
-        });
-
-    }
-
-
-    /**
-     * 会员卡查询接口，刚进界面时，如果改单有会员卡，根据会员卡查询材料折扣--李赛
-     */
-    public void huiyuankachauxn1() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("card_no", et_huiyuankahao.getText().toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_HYK, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-
-                Log.i("cjn", "会员卡号查询成功" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.getString("message").toString().equals("查询成功")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("data");
-                        if (jsonArray.length() > 0) {
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject item = jsonArray.getJSONObject(i);
-                                Conts.MRKX_XM_ZK = Double.parseDouble(item.getString("itemrate"));
-                                Conts.MRKX_CL_ZK = Double.parseDouble(item.getString("peijrate"));
-                                Conts.MRKX_shengYu_jinQian = Double.parseDouble(item.getString("card_leftje"));
-                                Log.i("cjn", "查看每个的折扣率" + item.getString("card_leftje"));
-                                Conts.MRKX_kahao = et_huiyuankahao.getText().toString();
-                                queRen = new QueRen(getActivity(), "读取成功，卡内余额" + item.getString("card_leftje"));
-                                queRen.show();
-                                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                                    @Override
-                                    public void onYesClick() {
-                                        queRen.dismiss();
-                                    }
-                                });
-
-                            }
-                        }
-                    } else {
-                        Toast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
-
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "会员卡号" + s);
-            }
-        });
-
     }
 
     /**
@@ -1297,307 +1158,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
         });
     }
-
-    public void jieSuan1() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("caozuoyuanid", MyApplication.shared.getString("name", ""));
-        params.put("work_no", Conts.work_no);
-        params.put("che_no", billEntiy.getChe_no());
-        params.put("xche_hjje", bsd_xche_hjje + "");
-        params.put("xche_wxxm_yhje", bsd_xche_wxxm_yhje + "");
-        params.put("xche_peij_yhje", bsd_xche_peij_yhje + "");
-        params.put("xche_ysje", bsd_xche_ysje + "");
-        params.put("card_no", bsd_card_no);
-        params.put("pass", bsd_mima);
-        params.put("iscard", bsd_iscard);
-        params.put("Zhifu_card_xj", bsd_bxj + "");
-        if (bsd_iscard == 1) {
-            //卡结算
-            params.put("xche_ssje", bsd_xche_ysje + "");//应收
-            params.put("zhifu_card_je", bsd_xche_ssje + "");//实收
-            params.put("zhifu_card_xj", bsd_zhifu_card_xj + "");//补现金
-        } else if (bsd_iscard == 0) {
-            //不是储值卡结算
-            params.put("xche_ssje", bsd_xche_ssje + "");
-            params.put("zhifu_card_je", "0");
-            params.put("zhifu_card_xj", "0");
-        }
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_JieSuan1, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String data) {
-                try {
-                    JSONObject jsonObject = new JSONObject(data);
-                    if (jsonObject.get("status").toString().equals("2")) {
-                        String tipStr = jsonObject.get("data").toString();
-                        wanGongQueDing_quXiao = new WanGongQueDing_QuXiao(getActivity(), tipStr + "请问是否继续结算？");
-                        wanGongQueDing_quXiao.show();
-                        wanGongQueDing_quXiao.setQuxiao(new WanGongQueDing_QuXiao.Quxiao() {
-                            @Override
-                            public void onYesClick() {
-                                wanGongQueDing_quXiao.dismiss();
-                            }
-                        });
-                        wanGongQueDing_quXiao.setToopromtOnClickListener(new WanGongQueDing_QuXiao.ToopromtOnClickListener() {
-                            @Override
-                            public void onYesClick() {
-                                jieSuan3();
-                                wanGongQueDing_quXiao.dismiss();
-                            }
-                        });
-
-                    }
-                    if (jsonObject.get("status").toString().equals("3")) {
-
-                        jieSuan2();
-
-                    }
-                    if (jsonObject.get("status").toString().equals("1")) {
-                        Toast.makeText(getActivity(), jsonObject.getString("data").toString()
-                                , Toast.LENGTH_SHORT).show();
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "结算1失败" + s);
-            }
-        });
-
-
-    }
-
-    public void jieSuan11() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("caozuoyuanid", MyApplication.shared.getString("name", ""));
-        params.put("work_no", Conts.work_no);
-        params.put("che_no", entity.getChe_no());
-
-        params.put("xche_hjje", bsd_xche_hjje + "");
-        params.put("xche_ssje", bsd_xche_ssje + "");
-        params.put("xche_wxxm_yhje", bsd_xche_wxxm_yhje + "");
-        params.put("xche_peij_yhje", bsd_xche_peij_yhje + "");
-        params.put("xche_ysje", bsd_xche_ysje + "");
-        params.put("card_no", "");
-        params.put("pass", "");
-        params.put("iscard", 0);
-        params.put("Zhifu_card_xj", 0 + "");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_JieSuan1, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "结算1成功" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("2")) {
-                        queding_quxiao = new Queding_Quxiao(getActivity(), jsonObject.getString("data"));
-                        queding_quxiao.show();
-                        queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
-                            @Override
-                            public void onConfirm() {
-                                jieSuan2();
-                                queding_quxiao.dismiss();
-                            }
-
-                            @Override
-                            public void onCancel() {
-                                queding_quxiao.dismiss();
-                            }
-                        });
-                    }
-                    if (jsonObject.get("status").toString().equals("3")) {
-
-                        jieSuan2();
-
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "结算1失败" + s);
-            }
-        });
-
-
-    }
-
-    public void jieSuan2() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("caozuoyuanid", MyApplication.shared.getString("name", ""));
-        params.put("work_no", Conts.work_no);
-        params.put("che_no", billEntiy.getChe_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_JieSuan2, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("cjn", "结算2成功" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("3")) {
-                        //直接调用三
-                        jieSuan3();
-                    }
-                    if (jsonObject.get("status").toString().equals("4")) {
-                        //是否继续
-                        queding_quxiao = new Queding_Quxiao(getActivity(), jsonObject.getString("data"));
-                        queding_quxiao.show();
-                        queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
-                            @Override
-                            public void onConfirm() {
-                                jieSuan3();
-                                queding_quxiao.dismiss();
-                            }
-
-                            @Override
-                            public void onCancel() {
-                                queding_quxiao.dismiss();
-                            }
-                        });
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                queRen = new QueRen(getActivity(), "结算失败");
-                queRen.show();
-                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        queRen.dismiss();
-                    }
-                });
-                Log.i("cjn", "结算2失败" + s);
-            }
-        });
-
-
-    }
-
-    public void jieSuan3() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("caozuoyuanid", MyApplication.shared.getString("name", ""));
-        params.put("work_no", billEntiy.getWork_no());
-        params.put("che_no", billEntiy.getChe_no());
-        params.put("isPrint", MyApplication.shared.getString("shifoudayin", "0"));
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_JieSuan3, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                if (bsd_mrkx_jiesuan.isShowing()) {
-                    bsd_mrkx_jiesuan.dissm();
-                }
-                queRen = new QueRen(getActivity(), "结算成功");
-                queRen.show();
-                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        ((MainActivity) getActivity()).upBSD_MRKX_log();
-                        queRen.dismiss();
-                        //调用微信接口
-                        weixin();
-                    }
-                });
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                queRen = new QueRen(getActivity(), "结算失败");
-                queRen.show();
-                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        ((MainActivity) getActivity()).upBSD_MRKX_log();
-                        queRen.dismiss();
-                    }
-                });
-            }
-        });
-
-
-    }
-
-    /**
-     * 结算成功后发微信
-     */
-    private void weixin() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_mrkx_weixin, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-            }
-        });
-    }
-
 
     /**
      * 存档操作
@@ -1791,7 +1351,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                             });
                             quedingQuxiao.show();
                         } else { // 表示没有问题
-
+                            showJiesuanDialog();
                         }
                     } else {
                         queRen = new QueRen(getContext(), jsonObject.getString("data"));
@@ -1828,6 +1388,14 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private void showJiesuanDialog() {
         bsd_mrkx_jiesuan = new BSD_mrkx_jiesuan(getActivity(), billEntiy.getCard_no(), billEntiy.getWork_no(), billEntiy.getChe_no());
         bsd_mrkx_jiesuan.show();
+        bsd_mrkx_jiesuan.setOnJieSuanListener(new BSD_mrkx_jiesuan.OnJieSuanListener() {
+            @Override
+            public void onSuccess() {
+                BSD_wxcl = null;
+                BSD_wxxm = null;
+                ((MainActivity)getHostActicity()).upBSD_MRKX_log();
+            }
+        });
     }
 
     /**
