@@ -88,38 +88,34 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     private LinearLayout ll_chexing;
     private String cxbianhao;
     private String pinpaiming;
-
     //这是车系
-    List<Map<String, String>> listjbcx = new ArrayList<Map<String, String>>();
+    private List<Map<String, String>> listjbcx = new ArrayList<Map<String, String>>();
     private List<CustemObject> nameList = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter;
     private SpinerPopWindow mSpinerPopWindow;
-
-    String chexiid;
+    private String chexiid;
     //车组
-    List<Map<String, String>> listjbcz = new ArrayList<Map<String, String>>();
-    String chezuid;
+    private List<Map<String, String>> listjbcz = new ArrayList<Map<String, String>>();
+    private String chezuid;
     private List<CustemObject> nameList1 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter1;
     private SpinerPopWindow mSpinerPopWindow1;
     //车型
-    List<Map<String, String>> listjbchexing = new ArrayList<Map<String, String>>();
-    String chexingid;
+    private List<Map<String, String>> listjbchexing = new ArrayList<Map<String, String>>();
+    private String chexingid;
     private List<CustemObject> nameList2 = new ArrayList<CustemObject>();
     private AbstractSpinerAdapter mAdapter2;
     private SpinerPopWindow mSpinerPopWindow2;
-
     //时间日期
-    TimeDialog timeShow;
-    LinearLayout bsd_mrkx_rl_gcrq, bsd_mrkx_rl_cxbyrq, bsd_mrkx_rl_cxjcrq, bsd_mrkx_rl_jqxdq, bsd_mrkx_rl_syxdq;
+    private TimeDialog timeShow;
+    private LinearLayout bsd_mrkx_rl_gcrq, bsd_mrkx_rl_cxbyrq, bsd_mrkx_rl_cxjcrq, bsd_mrkx_rl_jqxdq, bsd_mrkx_rl_syxdq;
     private TextView readData;
     TextView mv_bsd_cl_gcrq, mv_bsd_cl_xcbyrq, mv_bsd_cl_xcjcrq, mv_bsd_cl_jqxdq, mv_bsd_cl_syxdq;
-
     //根据VIN返回车型信息
-    List<Map<String, String>> listvincx = new ArrayList<>();
-    String cxnm;      //车型内码
-    URLS url;
-    View view;
+    private List<Map<String, String>> listvincx = new ArrayList<>();
+    private String cxnm;      //车型内码
+    private URLS url;
+    private View view;
     private ImageView isNewCar;
     private boolean isnew;
     private String paramBillType;
@@ -192,7 +188,6 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                 dismiss();
             }
         });
-
         et_cl_cp= (EditText) view.findViewById(R.id.et_cl_cp);
         cl_wxys = (EditText) view.findViewById(R.id.et_cl_wxys);
         cl_nf = (EditText) view.findViewById(R.id.et_cl_nf);
@@ -337,7 +332,7 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             tv_chezu.setText(carInfos[2]);
             tv_chexing.setText(carInfos[3]);
         }
-        et_cl_cp.setText(Conts.cp);
+        et_cl_cp.setText(carEntity.getChe_no());
         cl_wxys.setText(carEntity.getChe_color());
         cl_nf.setText(carEntity.getChe_nf());
         cl_vin.setText(carEntity.getChe_vin());
@@ -412,8 +407,6 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                 Log.e("mr", "onFailure方法");
             }
         });
-
-
     }
 
     /*
@@ -475,8 +468,6 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
 
             }
         });
-
-
     }
 
     /**
@@ -567,8 +558,6 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
-
-
     }
 
     /*
@@ -582,7 +571,7 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
         params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
         params.put("list_no", billNo);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_jbxx, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_ksbj_jbxx, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 try {

@@ -622,8 +622,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             billEntiy.setKehu_no(item.getString("kehu_no"));
             billEntiy.setKehu_mc(item.getString("kehu_mc"));
             billEntiy.setKehu_xm(item.getString("kehu_xm"));
-            billEntiy.setKehu_dz(item.getString("kehu_dz"));
-            billEntiy.setKehu_yb(item.getString("kehu_yb"));
             billEntiy.setKehu_dh(item.getString("kehu_dh"));
             billEntiy.setChe_no(item.getString("che_no"));
             billEntiy.setChe_cx(item.getString("che_cx"));
@@ -635,7 +633,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             billEntiy.setXche_sffl(item.getDouble("xche_sffl"));
             billEntiy.setCangk_dm(item.getString("cangk_dm"));
             billEntiy.setCangk_mc(item.getString("cangk_mc"));
-            billEntiy.setGcsj(item.getString("gcsj"));
+            billEntiy.setGcsj(item.getString("che_gcrq"));
             billEntiy.setCard_no(item.getString("card_no"));
             billEntiy.setXche_hjje(item.getDouble("xche_hjje"));
 //            xm_zj = item.getDouble("xche_rgf");

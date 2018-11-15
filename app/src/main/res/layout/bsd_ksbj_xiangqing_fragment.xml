@@ -34,8 +34,7 @@
 
                 <TextView
                     android:id="@+id/bsd_ksbj_cp"
-                    style="@style/myeditinfovaluestyle"
-                    android:hint="请输入车牌号" />
+                    style="@style/myeditinfovaluestyle" />
 
             </LinearLayout>
 
@@ -51,8 +50,7 @@
 
                 <com.example.administrator.boshide2.Modular.View.MarqueeView
                     android:id="@+id/bsd_ksbj_pp"
-                    style="@style/myeditinfomarqeestyle"
-                    android:hint="请选择品牌" />
+                    style="@style/myeditinfomarqeestyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -67,8 +65,7 @@
 
                 <com.example.administrator.boshide2.Modular.View.MarqueeView
                     android:id="@+id/bsd_ksbj_cx"
-                    style="@style/myeditinfomarqeestyle"
-                    android:hint="请选择车系" />
+                    style="@style/myeditinfomarqeestyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -84,8 +81,7 @@
 
                 <com.example.administrator.boshide2.Modular.View.MarqueeView
                     android:id="@+id/bsd_ksbj_cz"
-                    style="@style/myeditinfomarqeestyle"
-                    android:hint="请选择车组" />
+                    style="@style/myeditinfomarqeestyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -101,8 +97,7 @@
 
                 <com.example.administrator.boshide2.Modular.View.MarqueeView
                     android:id="@+id/bsd_ksbj_cxing"
-                    style="@style/myeditinfomarqeestyle"
-                    android:hint="请选择车型" />
+                    style="@style/myeditinfomarqeestyle" />
             </LinearLayout>
         </LinearLayout>
 
@@ -125,8 +120,7 @@
 
                 <TextView
                     android:id="@+id/bsd_ksbj_vin"
-                    style="@style/myeditinfovaluestyle"
-                    android:hint="请输入VIN号" />
+                    style="@style/myeditinfovaluestyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -142,8 +136,7 @@
 
                 <TextView
                     android:id="@+id/bsd_ksbj_lc"
-                    style="@style/myeditinfovaluestyle"
-                    android:hint="进厂里程" />
+                    style="@style/myeditinfovaluestyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -158,8 +151,7 @@
 
                 <com.example.administrator.boshide2.Modular.View.MarqueeView
                     android:id="@+id/bsd_ksbj_cezhu"
-                    style="@style/myeditinfomarqeestyle"
-                    android:hint="请输入姓名" />
+                    style="@style/myeditinfomarqeestyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -175,8 +167,7 @@
 
                 <TextView
                     android:id="@+id/bsd_ksbj_dh"
-                    style="@style/myeditinfovaluestyle"
-                    android:hint="请输入您的手机号" />
+                    style="@style/myeditinfovaluestyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -192,8 +183,7 @@
 
                 <TextView
                     android:id="@+id/bsd_ksbj_tv_gsfl"
-                    style="@style/myeditinfovaluestyle"
-                    android:hint="收费标准" />
+                    style="@style/myeditinfovaluestyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -208,7 +198,7 @@
                 <TextView
                     android:id="@+id/tv_total_je"
                     style="@style/myeditinfovaluestyle"
-                    android:hint="元" />
+                    android:textSize="18sp"/>
             </LinearLayout>
         </LinearLayout>
 

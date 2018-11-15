@@ -84,20 +84,20 @@ public class URLS {
     /**
      * 车系
      */
-    public String BSD_CX = "public/chexi";
+    public static final String BSD_CX = "public/chexi";
     /**
      * 车组
      */
-    public String BSD_CZ = "public/chezu";
+    public static final String BSD_CZ = "public/chezu";
     /**
      * 车型
      */
-    public String BSD_Chexing = "public/chexing";
+    public static final String BSD_Chexing = "public/chexing";
 
     /**
      * 根据vin返回车型内码以及名称
      */
-    public String BSD_getcxnm_byvin = "public/getvin";
+    public static final String BSD_getcxnm_byvin = "public/getvin";
 
 
     /**
@@ -107,13 +107,13 @@ public class URLS {
     /**
      * 判断车牌号和客户编码是否对应
      */
-    public String BSD_kuaixiu_check = "kuaixiu/check";
+    public static final String BSD_kuaixiu_check = "kuaixiu/check";
 
 
     /**
      * 根据车型内码返回车牌、车系、车组、车型
      */
-    public String BSD_getcx_byvindm = "public/getche";
+    public static final String BSD_getcx_byvindm = "public/getche";
 
     /**
      *查看配件的库存
@@ -266,15 +266,15 @@ public class URLS {
     /**
      * 快速报价基本信息查询
      */
-    public String BSD_ksbj_jbxx = "offer/xinxi";
+    public static final String BSD_ksbj_jbxx = "offer/xinxi";
     /**
      * 快速报价快速报价维修项目列表
      */
-    public String BSD_ksbj_wxxm = "offer/xiangm";
+    public static final String BSD_ksbj_wxxm = "offer/xiangm";
     /**
      * 快速报价快速报价维材料列表
      */
-    public String BSD_ksbj_wxcl = "offer/cail";
+    public static final String BSD_ksbj_wxcl = "offer/cail";
     /**
      * 快速报价基本信息添加
      */
@@ -377,7 +377,7 @@ public class URLS {
     /**
      * 快速报价添加材料
      */
-    public String BSD_ksbj_newcl = "offer/addnewcail";
+    public static final String BSD_ksbj_newcl = "offer/addnewcail";
 
     /**
      * 快速报价添加项目
@@ -387,12 +387,12 @@ public class URLS {
     /**
      * 快速报价添加项目
      */
-    public String BSD_ksbj_newxm = "offer/addnewwxxm";
+    public static final String BSD_ksbj_newxm = "offer/addnewwxxm";
 
     /**
      * 快速报价添加项目
      */
-    public String BSD_ksbj_bcjbxx = "offer/addjb";
+    public static final String BSD_ksbj_bcjbxx = "offer/addjb";
 
 
     /**
@@ -447,7 +447,7 @@ public class URLS {
      * 快速报价进厂
      */
 
-    public String BSD_ksbj_jc = "offer/jinchang";
+    public static final String BSD_ksbj_jc = "offer/jinchang";
     /**
      * 维修接单进厂
      */
@@ -518,7 +518,7 @@ public class URLS {
     /**
      * 派工人员详细
      */
-    public String BSD_PaiGong_XiangXi = "paigong/getPgxxByWxxm";
+    public static final String BSD_PaiGong_XiangXi = "paigong/getPgxxByWxxm";
     /**
      * 删除所有派工
      */
@@ -527,7 +527,7 @@ public class URLS {
     /**
      * 派工删除
      */
-    public String BSD_paigongdelPgxx = "paigong/delPgxx";
+    public static final String BSD_paigongdelPgxx = "paigong/delPgxx";
 
     /**
      * 车辆图片
@@ -541,7 +541,7 @@ public class URLS {
     /**
      * 修改工时单价价钱
      */
-    public String BSD_GsDj_xiugai = "paigong/savePgJgAndJe";
+    public static final String BSD_GsDj_xiugai = "paigong/savePgJgAndJe";
 
     /**
      * 完工
@@ -567,9 +567,9 @@ public class URLS {
     /**
      * 派工项目删除
      */
-    public String BSD_ksbj_deletXM = "offer/deletewxxm";
+    public static final String BSD_ksbj_deletXM = "offer/deletewxxm";
 
-    public String BSD_ksbj_deletCL = "offer/deletewxcl";
+    public static final String BSD_ksbj_deletCL = "offer/deletewxcl";
 
     /**
      * 派工材料删除
@@ -584,13 +584,13 @@ public class URLS {
      */
     public static final String BSD_mrkx_upxm = "paigong/editWxxmByhyzk";
 
-    public String BSD_ksbj_upxmgs = "offer/updatewxxmgs";
+    public static final String BSD_ksbj_upxmgs = "offer/updatewxxmgs";
 
-    public String BSD_ksbj_upxmje = "offer/updatewxxmje";
+    public static final String BSD_ksbj_upxmje = "offer/updatewxxmje";
 
-    public String BSD_ksbj_upclsl = "offer/updatewxclsl";
+    public static final String BSD_ksbj_upclsl = "offer/updatewxclsl";
 
-    public String BSD_ksbj_upcldj = "offer/updatewxcldj";
+    public static final String BSD_ksbj_upcldj = "offer/updatewxcldj";
     /**
      * 派工项目修改工时单价
      */
@@ -658,14 +658,14 @@ public class URLS {
     /**
      * 根据操作员获取仓库
      */
-    public String BSD_MRKX_CK="public/getCangKuByCaoZuoYuan";
+    public static final String BSD_MRKX_CK="public/getCangKuByCaoZuoYuan";
 
 //    public/getNeiMa
 
     /**
      * 获取
      */
-    public String BSD_chexing_fansuan="public/getNeiMa";
+    public static final String BSD_chexing_fansuan="public/getNeiMa";
 
     /**
      * 获取

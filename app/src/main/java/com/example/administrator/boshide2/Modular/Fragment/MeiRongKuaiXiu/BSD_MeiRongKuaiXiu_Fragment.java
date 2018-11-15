@@ -33,12 +33,12 @@ import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
+import com.example.administrator.boshide2.Modular.Fragment.BaoYangChaXun.BSD_BaoYangChaXun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.BSD_mrkx_wxcl;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.BSD_mrkx_wxxm;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.deleg.BSD_mrkx_jiesuan;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.deleg.BSD_mrkx_jiesuan11;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
@@ -56,7 +56,6 @@ import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
 import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
-import com.example.administrator.boshide2.Modular.View.diaog.WanGongQueDing_QuXiao;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
@@ -81,26 +80,15 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private ListView bsd_wxywdd_you_lv;
     private BSD_wxywdd_dap paiGongInfoAdapter;
     private TextView bsd_ywwwdd_cp;
-    private TextView bsd_ywwwdd_pinpai;
-    private TextView bsdywwwdd_chexi;
-    private TextView bsd_ywwwdd_chezu;
-    private TextView bsd_ywwwdd_chexing;
-    private TextView bsd_ywwwdd_vin;
-    private TextView bsd_ywwwdd_user;
-    private TextView bsd_ywwwdd_fuwuguwen;
-    private TextView bsd_ywwwdd_dengjishijian;
-    private TextView bsd_ywwwdd_dianhua;
     private BSD_mrkx_wxcl BSD_wxcl;
     private BSD_mrkx_wxxm BSD_wxxm;
-    private Queding_Quxiao queding_quxiao;
-    private WanGongQueDing_QuXiao wanGongQueDing_quXiao;
-    //修改工时弹框
     private List<Map<String, String>> listPGrenyuan = new ArrayList<Map<String, String>>();
-    private URLS url;
     private TextView billNo;
     private TextView tv_jiesuan;
     //车辆信息、历史维修、历史维修建议
-    private TextView tv_carInfo, bsd_mrkx_lswxjy, tv_repairHistory;
+    private TextView tv_carInfo;
+    private TextView bsd_mrkx_lswxjy;
+    private TextView tv_repairHistory;
     private EditText bsd_mrkx_et_miaoshu;  //故障描述
     private EditText et_huiyuankahao;//会员卡号
     private TextView tv_readCard;//查询
@@ -113,7 +101,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private LinearLayout ll_chexing;//车型
     private TextView bsd_mrkx_tv_chexing;//车型
     private EditText bsd_mrkx_et_vin;//VIN码
-    private EditText bsd_mrkx_ed_lianxiren;//联系人w
+    private EditText bsd_mrkx_ed_lianxiren;//联系人
     private LinearLayout bsd_mrxk_rl_djtime;//登记时间
     private TextView bsd_mrxk_tv_djtime;//登记时间
     private EditText bsd_mrkx_lianxifangshi;//联系                                                                           方式
@@ -146,16 +134,13 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     //里程
     private EditText bsd_mrkx_ed_lc;
     private TextView tv_save;//存档
-    //维修接单基本信息实体类
-    private BSD_WeiXiuJieDan_Entity entity;
     //美容快修结算
     private BSD_mrkx_jiesuan bsd_mrkx_jiesuan;
-    private BSD_mrkx_jiesuan11 bsd_mrkx_jiesuan11;
     //工时费率
     private LinearLayout ll_gsfl;
     private TextView bsd_mrkx_tv_gsfl;
-    private List<Map<String, String>> listgslv = new ArrayList<Map<String, String>>();
-    private List<CustemObject> nameList3 = new ArrayList<CustemObject>();
+    private List<Map<String, String>> listgslv = new ArrayList<>();
+    private List<CustemObject> nameList3 = new ArrayList<>();
     private AbstractSpinerAdapter mAdapter3;
     private SpinerPopWindow mSpinerPopWindow3;
     private String gongshifeili_name;
@@ -164,7 +149,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private double cl_zj;
     private double zong_zj;
     private TextView bsd_mrkx_zongjia;
-    private LinearLayout bsd_mrkx_rl_hukx;
     private TextView bsd_mrkx_tv_ck;
     private LinearLayout ll_stock;
     private List<Map<String, String>> listStock = new ArrayList<Map<String, String>>();
@@ -239,8 +223,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         bsd_mrkx_lswxjy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new BSD_LiShiWeiXiuJianYi_DialogFragment().
-                        show(getFragmentManager(), "mrkx_lswxjy");
+                new BSD_LiShiWeiXiuJianYi_DialogFragment().show(getFragmentManager(), "mrkx_lswxjy");
             }
         });
         tv_removecard = (TextView) view.findViewById(R.id.tv_removecard);
@@ -266,11 +249,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                         bsd_mrxk_tv_djtime.getText().toString().equals("")) {
                     Show.showTime(getActivity(), "请输入完整信息");
                 } else {
-                    bsd_cexifansuan();
+                    getBYCXData();
                 }
             }
         });
-
         et_huiyuankahao = (EditText) view.findViewById(R.id.bsd_mrkx_et_huiyuankahao);
         bsd_mrkx_et_vin = (EditText) view.findViewById(R.id.bsd_mrkx_et_vin);
         bsd_mrkx_ed_lianxiren = (EditText) view.findViewById(R.id.bsd_mrkx_ed_lianxiren);
@@ -295,7 +277,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         ll_chexing.setOnClickListener(this);
         //购车时间
         bsd_mrxk_rl_djtime = (LinearLayout) view.findViewById(R.id.bsd_mrxk_rl_djtime);
-        bsd_mrxk_tv_djtime = (TextView) view.findViewById(R.id.bsd_mrxk_tv_djtime);
         bsd_mrxk_rl_djtime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -308,11 +289,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         tv_jiesuan = (TextView) view.findViewById(R.id.bsd_mrkx_jiesuan);
         tv_jiesuan.setOnClickListener(this);
         bsd_ywwwdd_cp = (TextView) view.findViewById(R.id.bsd_ywwwdd_cp);
-        bsd_ywwwdd_pinpai = (TextView) view.findViewById(R.id.bsd_ywwwdd_pinpai);
-        bsdywwwdd_chexi = (TextView) view.findViewById(R.id.bsdywwwdd_chexi);
-        bsd_ywwwdd_chezu = (TextView) view.findViewById(R.id.bsd_ywwwdd_chezu);
-        bsd_ywwwdd_chexing = (TextView) view.findViewById(R.id.bsd_ywwwdd_chexing);
-        bsd_ywwwdd_vin = (TextView) view.findViewById(R.id.bsd_ywwwdd_vin);
         //读取vin码
         iv_readVin = (TextView) view.findViewById(R.id.tv_readvin);
         iv_readVin.setOnClickListener(new View.OnClickListener() {
@@ -328,9 +304,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         });
 
         bsd_mrkx_et_miaoshu = (EditText) view.findViewById(R.id.bsd_mrkx_et_miaoshu);
-        bsd_ywwwdd_user = (TextView) view.findViewById(R.id.bsd_ywwwdd_user);
-        bsd_ywwwdd_dengjishijian = (TextView) view.findViewById(R.id.bsd_ywwwdd_dengjishijian);
-        bsd_ywwwdd_dianhua = (TextView) view.findViewById(R.id.bsd_ywwwdd_dianhua);
         //获取listView
         bsd_wxywdd_you_lv = (ListView) view.findViewById(R.id.bsd_wxywdd_you_lv);
         paiGongInfoAdapter = new BSD_wxywdd_dap(getActivity(), listPGrenyuan);
@@ -358,14 +331,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         //存档操作
         tv_save = (TextView) view.findViewById(R.id.bsd_mrkx_cundang);
         tv_save.setOnClickListener(this);
-        bsd_mrkx_rl_hukx = (LinearLayout) view.findViewById(R.id.bsd_mrkx_rl_hukx);
-        if (Conts.BSD_zhongxiaoweixiu == 1) {
-            bsd_mrkx_rl_hukx.setVisibility(View.VISIBLE);
-            tv_readCard.setVisibility(View.VISIBLE);
-        } else {
-            bsd_mrkx_rl_hukx.setVisibility(View.INVISIBLE);
-            tv_readCard.setVisibility(View.INVISIBLE);
-        }
         // 返回
         bsd_lsbj_fanhui = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
         bsd_lsbj_fanhui.setOnClickListener(this);
@@ -404,7 +369,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 修改派工金额
-     *
      * @param position
      */
     private void updatePaigongJE(final int position) {
@@ -428,7 +392,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 double jeAll = 0.0;
                 list_XM = BSD_wxxm.getList_XM();
                 for (BSD_WeiXiuJieDan_XM_Entity entity : list_XM) {
-                    jeAll = jeAll + entity.getWxxm_je();
+                    jeAll += entity.getWxxm_je();
                 }
                 BigDecimal gsAll = BigDecimal.valueOf(jeAll);
                 BigDecimal gsNow = BigDecimal.valueOf(jeNow);
@@ -444,7 +408,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     /**
      * 更新派工工时
-     *
      * @param position
      */
     private void updatePaigongGS(final int position) {
@@ -484,7 +447,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     @Override
     public void initData() {
-        url = new URLS();
         title.setText("美容快修");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
@@ -642,7 +604,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         listStock.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("caozuoyuanxm", MyApplication.shared.getString("name", ""));
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_CK, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_MRKX_CK, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 try {
@@ -748,7 +710,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         listgslv.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("type", "ITGongShi");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 try {
@@ -790,12 +752,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
     }
 
-    private void showGongSi3() {
-        mSpinerPopWindow3.setWidth(ll_gsfl.getWidth());
-        mSpinerPopWindow3.showAsDropDown(ll_gsfl);
-    }
-
-
     /**
      * 判断车辆的客户编码和车辆编码
      */
@@ -803,7 +759,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         AbRequestParams params = new AbRequestParams();
         params.put("che_no", billEntiy.getChe_no());
         params.put("kehu_no", billEntiy.getKehu_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_kuaixiu_check, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_kuaixiu_check, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String data) {
                 try {
@@ -828,83 +784,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Toast.makeText(getHostActicity(), "网络连接失败", Toast.LENGTH_SHORT).show();
-            }
-
-
-        });
-
-    }
-
-
-    /**
-     * 判断是否是特殊材料，并获取特殊折扣
-     */
-    public void teShuCL() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("card_no", et_huiyuankahao.getText().toString());
-        params.put("work_no", billEntiy.getWork_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcardpj_price, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                //刷新维修材料列表内容；
-                if (BSD_wxcl == null) {
-                    BSD_wxcl = new BSD_mrkx_wxcl();
-                }
-                BSD_wxcl.cldata();
-            }
-
-            @Override
-            public void onStart() {
-            }
-
-            @Override
-            public void onFinish() {
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("wxcl", "特殊材料查询失败" + s);
-            }
-        });
-
-
-    }
-
-    /**
-     * 判断是否是特殊项目，并获取特殊折扣
-     */
-    public void teShuXM() {
-        AbRequestParams params = new AbRequestParams();
-        params.put("card_no", et_huiyuankahao.getText().toString());
-        params.put("work_no", billEntiy.getWork_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_card_wxjd_xm, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int i, String s) {
-                Log.i("wxxm", "特殊材料查询成功==" + s);
-                //刷新维修项目列表内容；
-                if (BSD_wxxm == null) {
-                    BSD_wxxm = new BSD_mrkx_wxxm();
-                }
-                BSD_wxxm.dataxm();
-
-            }
-
-            @Override
-            public void onStart() {
-            }
-
-            @Override
-            public void onFinish() {
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("wxxm", "特殊项目查询失败" + s);
+                Toast.makeText(getHostActicity(), s, Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 
     /*
      * 根据vin码获取车辆名称、代码、内部名称；
@@ -913,7 +796,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         listvincx.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("vinCode", bsd_mrkx_et_vin.getText().toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcxnm_byvin, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_getcxnm_byvin, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 try {
@@ -973,7 +856,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     public void getcx_by_cxdm() {
         AbRequestParams params = new AbRequestParams();
         params.put("chex_dm", cxnm);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcx_byvindm, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_getcx_byvindm, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 try {
@@ -1068,7 +951,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         AbRequestParams params = new AbRequestParams();
         params.put("card_no", cardNo);
         params.put("che_no", billEntiy.getChe_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_HYK, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_MRKX_HYK, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String data) {
                 try {
@@ -1160,22 +1043,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     }
 
     /**
-     * 存档操作
-     */
-    String chepai;
-    String pinpai;
-    String chexi;
-    String chezu;
-    String chexing;
-    String che_cx;
-    String VIN;
-    String jinchanglicheng;
-    String chezhu;
-    String dinahua;
-    //单号
-    String danhao;
-
-    /**
      * 保存单据信息
      * @param onlySave 是不是只保存，还是结算
      * @param isBack 是否是返回操作时的保存
@@ -1189,35 +1056,27 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         } else {
             mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "结算中...");
         }
-        danhao = billEntiy.getWork_no();
-        chepai = bsd_ywwwdd_cp.getText().toString();
-        pinpai = bsd_mrkx_tv_pp.getText().toString();
-        chexi = bsd_mrkx_tv_chexi.getText().toString();
-        chezu = bsd_mrkx_tv_chezu.getText().toString();
-        chexing = bsd_mrkx_tv_chexing.getText().toString();
-        if (bsd_mrkx_tv_pp.getText().toString().equals("") ||
-                bsd_mrkx_tv_chexi.getText().toString().equals("") ||
-                bsd_mrkx_tv_chezu.getText().toString().equals("") ||
-                bsd_mrkx_tv_chexing.getText().toString().equals("")) {
-            che_cx = "";
-        } else {
-            che_cx = pinpai + "|" + chexi + "|" + chezu + "|" + chexing;
+        String che_cx = "";
+        if (!TextUtils.isEmpty(bsd_mrkx_tv_pp.getText().toString()) &&
+                !TextUtils.isEmpty(bsd_mrkx_tv_chexi.getText().toString()) &&
+                !TextUtils.isEmpty(bsd_mrkx_tv_chezu.getText().toString()) &&
+                !TextUtils.isEmpty(bsd_mrkx_tv_chexing.getText().toString())) {
+            che_cx = bsd_mrkx_tv_pp.getText().toString() + "|" +
+                    bsd_mrkx_tv_chexi.getText().toString() + "|" +
+                    bsd_mrkx_tv_chezu.getText().toString() + "|" +
+                    bsd_mrkx_tv_chexing.getText().toString();
         }
-        VIN = bsd_mrkx_et_vin.getText().toString().trim();
-        jinchanglicheng = bsd_mrkx_ed_lc.getText().toString().trim();
-        chezhu = bsd_mrkx_ed_lianxiren.getText().toString().trim();
-        dinahua = bsd_mrkx_lianxifangshi.getText().toString().trim();
         AbRequestParams params = new AbRequestParams();
         params.put("GongSiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("xche_jsr", MyApplication.shared.getString("name", ""));
         params.put("work_no", billEntiy.getWork_no());
-        params.put("che_no", chepai);
+        params.put("che_no", billEntiy.getChe_no());
         params.put("che_cx", che_cx);
-        params.put("che_vin", VIN);
-        params.put("xche_lc", jinchanglicheng);
+        params.put("che_vin", bsd_mrkx_et_vin.getText().toString().trim());
+        params.put("xche_lc", bsd_mrkx_ed_lc.getText().toString().trim());
         params.put("kehu_no", billEntiy.getKehu_no());
-        params.put("kehu_mc", chezhu);
-        params.put("kehu_dh", dinahua);
+        params.put("kehu_mc", bsd_mrkx_ed_lianxiren.getText().toString());
+        params.put("kehu_dh", bsd_mrkx_lianxifangshi.getText().toString());
         params.put("card_no", billEntiy.getCard_no());
         params.put("cangk_dm", ckid);
         params.put("xche_sfbz", gongshifeili_id);
@@ -1405,7 +1264,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         listjbcx.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("dm", cxbianhao);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CX, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CX, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 JSONObject jsonObject = null;
@@ -1485,7 +1344,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     public void getCheZuData(String chexiid) {
         AbRequestParams params = new AbRequestParams();
         params.put("dm", chexiid);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CZ, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CZ, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 listjbcz.clear();
@@ -1561,7 +1420,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     public void getCheXingData(String chezuid) {
         AbRequestParams params = new AbRequestParams();
         params.put("dm", chezuid);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_Chexing, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_Chexing, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 listjbchexing.clear();
@@ -1631,19 +1490,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 String clickValue = nameList2.get(pos).toString();
                 if (!bsd_mrkx_tv_chexing.getText().toString().equals(clickValue)) {
                     bsd_mrkx_tv_chexing.setText(clickValue);
-                    pinpai = bsd_mrkx_tv_pp.getText().toString();
-                    chexi = bsd_mrkx_tv_chexi.getText().toString();
-                    chezx = bsd_mrkx_tv_chezu.getText().toString();
-                    chexing = bsd_mrkx_tv_chexing.getText().toString();
-                    if (bsd_mrkx_tv_pp.getText().toString().equals("") ||
-                            bsd_mrkx_tv_chexi.getText().toString().equals("") ||
-                            bsd_mrkx_tv_chezu.getText().toString().equals("") ||
-                            bsd_mrkx_tv_chexing.getText().toString().equals("")) {
-                        che_cx = "";
-                    } else {
-                        che_cx = pinpai + "|" + chexi + "|" + chezx + "|" + chexing;
-                        Conts.chexing = che_cx;
-                    }
                     chexingid = listjbchexing.get(pos).get("chex_bz");
                 }
 
@@ -1666,7 +1512,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         params.put("id", reco_no);
         params.put("je", je + "");
         params.put("gs", gs + "");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_GsDj_xiugai, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_GsDj_xiugai, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
                 listPGrenyuan.get(position).put("paig_khgs", gs + "");
@@ -1707,7 +1553,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         params.put("work_no", Conts.work_no);
         params.put("wxxm_no", wxxm_no);
         Log.i("cjn", "查看两个数据" + work_no + "======" + wxxm_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_PaiGong_XiangXi, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_PaiGong_XiangXi, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
                 Log.i("cjn", "派工明细" + s);
@@ -1787,7 +1633,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", workNo);
         params.put("wxxm_no", wxxmNo);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_PaiGong_XiangXi, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_PaiGong_XiangXi, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
                 try {
@@ -2279,7 +2125,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     public void deletePaigongInfo(int reco_no, final int position) {
         AbRequestParams params = new AbRequestParams();
         params.put("xxNo", reco_no);//id
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_paigongdelPgxx, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_paigongdelPgxx, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 listPGrenyuan.remove(position);
@@ -2301,61 +2147,24 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 Toast.makeText(getContext(), "派工人员删除失败", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
-    String getCar;
-
-    public void bsd_cexifansuan() {
+    public void getBYCXData() {
         AbRequestParams params = new AbRequestParams();
         params.put("quanMing", bsd_mrkx_tv_chexing.getText().toString());
-        Log.i("cjn", "bsd_ksbj_cxing.getText().toString()" + bsd_mrkx_tv_chexing.getText().toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_chexing_fansuan, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_chexing_fansuan, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                Log.i("cjn", "查看" + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-//                if (jsonObject.getString("message").toString().equals("查询成功")){
-                    getCar = jsonObject.getString("data");
-                    if (null != getCar) {
-                        if (getCar.length() > 0) {
-                            chexingid = getCar;
-                        }
-                        Conts.bycx_chexing = chexingid;
-                        Conts.bycx_type = 3;//快速报价
-                        Log.i("lym", "-------" + Conts.bycx_chexing);
-                        int a;
-                        double b;
-                        b = Double.parseDouble(bsd_mrkx_ed_lc.getText().toString().trim());
-                        a = (int) b;
-                        Conts.bycx_licheng = "" + a;//里程
-//                    Conts.bycx_licheng = bsd_mrkx_ed_lc.getText().toString().trim();//里程
-                        Conts.bycx_time = bsd_mrxk_tv_djtime.getText().toString().trim();//时间
-                        Conts.bycx_pinpai = bsd_mrkx_tv_pp.getText().toString().trim();
-                        Conts.bycx_chexi = bsd_mrkx_tv_chexi.getText().toString().trim();
-                        Conts.bycx_chezu = bsd_mrkx_tv_chezu.getText().toString().trim();
-                        Conts.bycx_cxing = bsd_mrkx_tv_chexing.getText().toString().trim();
-                        Conts.bycx_VIN = bsd_mrkx_et_vin.getText().toString().trim();
-                        Conts.bycx_CarName = bsd_mrkx_ed_lianxiren.getText().toString().trim();
-                        Conts.bycx_Shouji = bsd_mrkx_lianxifangshi.getText().toString().trim();
-                        Conts.bycx_huiyuan = et_huiyuankahao.getText().toString();
-                        Conts.bycx_gongshifeili = bsd_mrkx_tv_gsfl.getText().toString();
-//                    Conts.bycx_cangku = bsd_mrkx_tv_ck.getText().toString();
-
-                        ((MainActivity) getActivity()).upBSD_bycx();
-
-
-                    }
-//                }
-
-
+                    String getCar = jsonObject.getString("data");
+                    int licheng = (int) Double.parseDouble(bsd_mrkx_ed_lc.getText().toString().trim());
+                    String time = bsd_mrxk_tv_djtime.getText().toString().trim();
+                    BSD_BaoYangChaXun_Fragment.newInstance(getCar, "" + licheng, time)
+                            .show(getFragmentManager(), "bycxdialog");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -2373,10 +2182,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
             }
         });
-
-
     }
-
 
     @Override
     public void onDestroy() {

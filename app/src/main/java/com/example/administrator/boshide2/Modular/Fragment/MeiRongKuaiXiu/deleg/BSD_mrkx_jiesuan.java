@@ -938,20 +938,35 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
         Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_REALJIESUAN, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String data) {
-                if (data.equals("success")) {
-                    weiXin();
-                    queRen = new QueRen(getContext(), "结算成功！");
-                    queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                        @Override
-                        public void onYesClick() {
-                            queRen.dismiss();
-                            dissm();
-                            if (onJieSuanListener != null) {
-                                onJieSuanListener.onSuccess();
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(data);
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        weiXin();
+                        queRen = new QueRen(getContext(), "结算成功！");
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                                dissm();
+                                if (onJieSuanListener != null) {
+                                    onJieSuanListener.onSuccess();
+                                }
                             }
-                        }
-                    });
-                    queRen.show();
+                        });
+                        queRen.show();
+                    } else {
+                        queRen = new QueRen(getContext(), jsonObject.getString("data"));
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                            }
+                        });
+                        queRen.show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
@@ -966,7 +981,10 @@ public class BSD_mrkx_jiesuan extends Dialog implements View.OnClickListener {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                queRen = new QueRen(getContext(), s);
+                queRen = new QueRen(getContext(), "抱歉，单据结算失败！\n " +
+                        "请检查是否有过长的字段或者过大的值\n" +
+                        "或者在PC端试试能否结算\n" +
+                        "如果还是不能解决问题，请联系我们！");
                 queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick() {

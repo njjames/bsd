@@ -1,5 +1,6 @@
 package com.example.administrator.boshide2.Modular.Fragment.LiShiBaoJia;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.telephony.TelephonyManager;
@@ -23,6 +24,7 @@ import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_ety;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiBaoJia.Adapter.BSD_lsbj_adp;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +38,6 @@ import static android.content.Context.TELEPHONY_SERVICE;
 /**
  * @历史报价碎片页 Created by Administrator on 2017-4-13.
  */
-
 public class BSD_lishibaojia_Fragment extends BaseFragment {
     private LinearLayout bsd_lsbj_fanhui;
     private ListView bsd_lsbj_lv;
@@ -49,6 +50,7 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
     private TextView footerText;
     private String cardNo = "";
     private String kehuMc = "";
+    private Dialog mWeiboDialog;
 
     @Override
     protected int getLayoutId() {
@@ -117,13 +119,14 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
      * 历史报价
      */
     public void searchLSBJ() {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "查询中...");
+        data.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("che_no", cardNo);
         params.put("kehu_mc", kehuMc);
         Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CL_WX2, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String s) {
-                data.clear();
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
@@ -151,11 +154,12 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
                             entity.setList_hjje(item.getDouble("List_hjje"));
                             data.add(entity);
                         }
+                        adapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter.notifyDataSetChanged();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -168,7 +172,8 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Toast.makeText(getContext(), "网络连接超时", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -456,6 +456,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public void showWxddFragment(String params) {
         DownJianPan.DJP(this);
+        if (currentPageIndex != 4) {
+            checkHighLight(4);
+            currentPageIndex = 4;
+        }
         change(BSD_WeiXiuYeWuDiaoDu_Fragment.newInstance(params));
     }
 

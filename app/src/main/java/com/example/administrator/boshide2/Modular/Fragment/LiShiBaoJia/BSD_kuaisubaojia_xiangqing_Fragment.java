@@ -38,17 +38,23 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
     private static final String PARAM_KEY = "param_key";
     private TextView tv_wxxm_money, tv_wxcl_money;
     private TextView bsd_ksbj_cp;
-    private TextView bsd_ksbj_lc, bsd_ksbj_cezhu, bsd_ksbj_dh, bsd_ksbj_vin, bsd_ksbj_pp, bsd_ksbj_cx,
-            bsd_ksbj_cz, bsd_ksbj_cxing, tv_zong_money, tv_zong_money3;
+    private TextView bsd_ksbj_lc;
+    private TextView bsd_ksbj_cezhu;
+    private TextView bsd_ksbj_dh;
+    private TextView bsd_ksbj_vin;
+    private TextView bsd_ksbj_pp;
+    private TextView bsd_ksbj_cx;
+    private TextView bsd_ksbj_cz;
+    private TextView bsd_ksbj_cxing;
+    private TextView tv_zong_money;
     private ListView listViewXM;//维修项目
     private List<BSD_KuaiSuBaoJia_XM_entity> listXM = new ArrayList<BSD_KuaiSuBaoJia_XM_entity>();
     private BSD_wxxm_xiangqiang_adp adpxm;
     private List<BSD_KuaiSuBaoJia_CL_entity> listCL = new ArrayList<BSD_KuaiSuBaoJia_CL_entity>();
     private BSD_xzcl_xiangqing_adp adpcl;//车系适配器
-    ListView listViewCL;//维修材料
+    private ListView listViewCL;//维修材料
     private TextView bsd_ksbj_tv_gsfl;
-    private URLS url;
-    private LinearLayout bsd_lishibaojiaxiangqing_fh;
+    private LinearLayout ll_back;
     private TextView billNo;
     private TextView title;
     private TextView footerText;
@@ -78,8 +84,8 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
 
     @Override
     public void initView() {
-        bsd_lishibaojiaxiangqing_fh = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
-        bsd_lishibaojiaxiangqing_fh.setOnClickListener(new View.OnClickListener() {
+        ll_back = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
+        ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((MainActivity) getActivity()).upLSBJ();
@@ -88,7 +94,6 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
 
         bsd_ksbj_tv_gsfl = (TextView) view.findViewById(R.id.bsd_ksbj_tv_gsfl);
         tv_zong_money = (TextView) view.findViewById(R.id.tv_total_je);
-
         //维修项目
         listViewXM = (ListView) view.findViewById(R.id.bsd_lv);
         adpxm = new BSD_wxxm_xiangqiang_adp(getActivity(), listXM);
@@ -97,7 +102,6 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
         listViewCL = (ListView) view.findViewById(R.id.bsd_lv1);
         adpcl = new BSD_xzcl_xiangqing_adp(getActivity(), listCL);
         listViewCL.setAdapter(adpcl);
-
         bsd_ksbj_cp = (TextView) view.findViewById(R.id.bsd_ksbj_cp);
         bsd_ksbj_lc = (TextView) view.findViewById(R.id.bsd_ksbj_lc);
         bsd_ksbj_cezhu = (TextView) view.findViewById(R.id.bsd_ksbj_cezhu);
@@ -118,7 +122,6 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
 
     @Override
     public void initData() {
-        url = new URLS();
         title.setText("历史报价详情");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
@@ -126,7 +129,7 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
         updateBillInfoUI();
         //维修项目查询
         xmdata();
-        //维修单号查询a
+        //维修单号查询
         cldata();
     }
 
@@ -199,18 +202,13 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
         tv_wxclVount.setText("(共" + listCL.size() + "条记录)");
     }
 
-    public void zoongjia() {
-        c = a + b;
-        tv_zong_money.setText(a + b + "");
-    }
-
     /**
      * 材料拉数据
      */
     public void cldata() {
         AbRequestParams params = new AbRequestParams();
         params.put("list_no", billEntiy.getList_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_wxcl, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_ksbj_wxcl, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 try {
@@ -264,7 +262,7 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
     public void xmdata() {
         AbRequestParams params = new AbRequestParams();
         params.put("list_no", billEntiy.getList_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ksbj_wxxm, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_ksbj_wxxm, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 try {
@@ -311,7 +309,7 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Show.showTime(getActivity(), "网络连接超时");
+                Show.showTime(getActivity(), s);
             }
         });
     }
