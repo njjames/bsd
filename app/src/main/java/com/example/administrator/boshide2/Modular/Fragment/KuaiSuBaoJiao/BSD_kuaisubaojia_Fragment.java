@@ -79,7 +79,7 @@ import java.util.Map;
 /**
  * @快速报价碎片页 Created by Administrator on 2017-4-13.
  */
-public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnClickListener {
+public class BSD_kuaisubaojia_Fragment extends BaseFragment {
     private static final String PARAM_KEY = "param_key";
     private RelativeLayout beijing;
     private TextView tv_wxxm_money, tv_wxcl_money;//维修项目金额，维修材料金额
@@ -161,7 +161,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
     private UpdateItemInfoDialog updateItemInfoDialog;
     private TextView tv_wxcl_count;
     private TextView tv_wxxm_count;
-    private boolean isJustSaveBill;
 
     public static BSD_kuaisubaojia_Fragment newInstance(String params) {
         BSD_kuaisubaojia_Fragment fragment = new BSD_kuaisubaojia_Fragment();
@@ -209,7 +208,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         bsd_ksbj_cd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isJustSaveBill = true;
                 saveBillInfo(true, false);
             }
         });
@@ -218,7 +216,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         bsd_ksbj_jc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isJustSaveBill = false;
                 saveBillInfo(false, false);
             }
         });
@@ -1200,7 +1197,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         });
     }
 
-
     /*
      *根据vin码、车辆代码获取车牌车系车组车型信息
      */
@@ -1239,7 +1235,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
             public void onFailure(int i, String s, Throwable throwable) {
             }
         });
-
     }
 
     /*
@@ -1506,18 +1501,14 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -1525,22 +1516,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
 
             }
         });
-
-    }
-    /**
-     * 计算维修项目的总价格
-     */
-    double b = 0;
-
-    public void jisuanzongjia() {
-        double bb = 0;
-        for (int i = 0; i < listXM.size(); i++) {
-            bb = bb + (listXM.get(i).getWxxm_je());
-        }
-        tv_wxxm_money.setText(bb + "");
-        Log.i("cjn", "XM的总价：" + bb);
-        b = bb;
-        zoongjia();
     }
 
     /**
@@ -1566,7 +1541,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
      * 保存单据信息
      */
     private void saveBillInfo(final boolean onlySave, final boolean isBack) {
-        if (isJustSaveBill) {
+        if (onlySave) {
             mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "正在保存...");
         } else {
             mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "正在进厂...");
@@ -1699,11 +1674,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
         });
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
-
     public void getBYCXData() {
         AbRequestParams params = new AbRequestParams();
         params.put("quanMing", tv_chexing.getText().toString());
@@ -1737,27 +1707,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment implements View.OnCl
 
             }
         });
-
-
-    }
-
-    private void showTipsDialog(String tips) {
-        CustomDialog.Builder builder = new CustomDialog.Builder(getHostActicity());
-        CustomDialog dialog = builder.style(R.style.mydialog)
-                .view(R.layout.queren)
-                .cancelTouchout(true)
-                .widthDimenRes(R.dimen.qb_px_300)
-                .heightpx(WindowManager.LayoutParams.WRAP_CONTENT)
-                .addViewOnclick(R.id.bsd_queren_queren, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        CustomDialog.dismissDialog();
-                    }
-                })
-                .build();
-        TextView tip = (TextView) dialog.getView().findViewById(R.id.bsd_queren_neirong);
-        tip.setText(tips);
-        dialog.show();
     }
 
 }
