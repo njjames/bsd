@@ -72,10 +72,4 @@ public class SpinerPopWindow extends PopupWindow implements OnItemClickListener 
         }
     }
 
-    @Override
-    public void dismiss() {
-        // TODO Auto-generated method stub
-        super.dismiss();
-    }
-
 }

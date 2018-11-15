@@ -141,11 +141,11 @@ public class URLS {
     /**
      * 会员管理--已付款
      */
-    public String BSD_HYGL_YFK = "card/CardXxy";
+    public static final String BSD_HYGL_YFK = "card/CardXxy";
     /**
      * 会员管理---代付款
      */
-    public String BSD_HYGL_DFK = "card/CardXxn";
+    public static final String BSD_HYGL_DFK = "card/CardXxn";
     /**
      * 历史维修--维修项目明细
      */

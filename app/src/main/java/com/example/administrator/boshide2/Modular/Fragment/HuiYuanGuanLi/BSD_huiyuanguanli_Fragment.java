@@ -47,7 +47,6 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
     private LinearLayout bsd_hybl;
     private BSD_HYGL_TianJia_delo bsd_wxxm;
     private Dialog mWeiboDialog;
-    private URLS url;
     private EditText et_cardno;
     private TextView tv_cardkind;
     private LinearLayout ll_cardkind;
@@ -114,7 +113,6 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
                 }
             }
         });
-
         tv_cardkind = (TextView) view.findViewById(R.id.tv_cardkind);
         ll_cardkind = (LinearLayout) view.findViewById(R.id.ll_cardkind);
         et_cardno = (EditText) view.findViewById(R.id.et_cardno);
@@ -147,7 +145,6 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
         titleAdd.setText("办理");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
-        url = new URLS();
         getCardKind();
         data.clear();
         hygl_yf();
@@ -162,7 +159,7 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
         params.put("card_no", cardNo);
         params.put("cardkind", klx);
         params.put("pageNumber", page);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_YFK, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_HYGL_YFK, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int stud, String s) {
                 try {
@@ -223,7 +220,7 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
         params.put("card_no", cardNo);
         params.put("cardkind", klx);
         params.put("pageNumber", page);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_DFK, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_HYGL_DFK, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int stud, String s) {
                 try {
@@ -281,7 +278,7 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
         listCradKind.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("type", "ITCardKind");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 try {
@@ -338,7 +335,7 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
         mAdapter1 = new CustemSpinerAdapter(getActivity());
         mAdapter1.refreshData(nameList1, 0);
         mSpinerPopWindow1 = new SpinerPopWindow(getActivity());
-        mSpinerPopWindow1.setAdatper(mAdapter1, 310);
+        mSpinerPopWindow1.setAdatper(mAdapter1);
         mSpinerPopWindow1.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
             @Override
             public void onItemClick(int pos) {

@@ -20,10 +20,14 @@ import com.ab.http.AbStringHttpResponseListener;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
+import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
+import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
+import com.example.administrator.boshide2.Modular.Entity.CustemObject;
 import com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.Adapter.BSD_hygl_bumen_adp;
 import com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.Adapter.BSD_hygl_jiesuan_adp;
 import com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.Adapter.BSD_hygl_jingban_adp;
 import com.example.administrator.boshide2.Modular.Fragment.HuiYuanGuanLi.Adapter.BSD_hygl_katype_adp;
+import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
 import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
@@ -47,19 +51,17 @@ import java.util.TimeZone;
  */
 public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListener {
     private View view;
-
     EditText et_hy_chepai, et_hy_lianxi, et_hy_address, et_hy_phone, et_hy_shouphone, et_hy_kahao, et_hy_kaimoney, et_hy_shishou, et_hy_youhui, et_hy_keyong, et_hy_shouxi, et_hy_jingxi,
             et_hy_jifen, et_hy_zhanghao, et_hy_beizhu;//申明一些空间
     TextView tv_hy_banli;//确认办理
-    TextView et_hy_birthday, et_hy_youdate, et_hy_bumen, et_hy_payselect, et_hy_jingban, et_hy_kaname;
+    TextView et_hy_birthday, et_hy_youdate, tv_dept, tv_jsfs, tv_jbr, tv_cardkind;
     TextView bsd_chepaichaun, et_hy_keyongjie;
     TimePickerShow timePickerShow;
-    LinearLayout relativeday, rela_youxiao, rela_bumen, relat_jiesuan, relat_jingban, rela_ka;
+    LinearLayout ll_birthday, rela_youxiao, ll_dept, ll_jsfs, ll_jbr, ll_cardkind;
     TooPromptdiaog promptdiaog;
     //PopupWindow对象声明
     PopupWindow pw;
     //当前选中的列表项位置
-    int clickPsition = -1;
     private BSD_hygl_bumen_adp hygl_bumen_adp;//会员管理--部门适配器
     List<Map<String, String>> list_bumen = new ArrayList<Map<String, String>>();//会员管理--list集合
     private BSD_hygl_jiesuan_adp hygl_jiesuan_adp;//结算适配器
@@ -84,6 +86,19 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     private Dialog mWeiboDialog;
     private TextView tv_cancel;
 
+    private List<CustemObject> nameList = new ArrayList<>();
+    private List<CustemObject> nameList1 = new ArrayList<>();
+    private List<CustemObject> nameList2 = new ArrayList<>();
+    private List<CustemObject> nameList3 = new ArrayList<>();
+    private AbstractSpinerAdapter mAdapter;
+    private AbstractSpinerAdapter mAdapter1;
+    private AbstractSpinerAdapter mAdapter2;
+    private AbstractSpinerAdapter mAdapter3;
+    private SpinerPopWindow mSpinerPopWindow;
+    private SpinerPopWindow mSpinerPopWindow1;
+    private SpinerPopWindow mSpinerPopWindow2;
+    private SpinerPopWindow mSpinerPopWindow3;
+
     public BSD_HYGL_TianJia_delo(Context context) {
         super(context, R.style.mydialog);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -106,14 +121,13 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
 
     private void initview() {
         bsd_chepaichaun = (TextView) view.findViewById(R.id.bsd_chepaichaun);
-        rela_ka = (LinearLayout) view.findViewById(R.id.rela_ka);
-        relat_jingban = (LinearLayout) view.findViewById(R.id.relat_jingban);
-        relat_jiesuan = (LinearLayout) view.findViewById(R.id.relat_jiesuan);
-        rela_bumen = (LinearLayout) view.findViewById(R.id.rela_bumen);
-        relativeday = (LinearLayout) view.findViewById(R.id.relativeday);
-        rela_youxiao = (LinearLayout) view.findViewById(R.id.rela_youxiao);
+        ll_cardkind = (LinearLayout) view.findViewById(R.id.ll_cardkind);
+        ll_jbr = (LinearLayout) view.findViewById(R.id.ll_jbr);
+        ll_jsfs = (LinearLayout) view.findViewById(R.id.ll_jsfs);
+        ll_dept = (LinearLayout) view.findViewById(R.id.ll_dept);
+        ll_birthday = (LinearLayout) view.findViewById(R.id.ll_birthday);
+        rela_youxiao = (LinearLayout) view.findViewById(R.id.ll_youxiaoq);
         et_hy_chepai = (EditText) view.findViewById(R.id.et_hy_chepai);
-
         et_hy_lianxi = (EditText) view.findViewById(R.id.et_hy_lianxi);
         et_hy_address = (EditText) view.findViewById(R.id.et_hy_address);
         et_hy_phone = (EditText) view.findViewById(R.id.et_hy_phone);
@@ -121,7 +135,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         et_hy_birthday = (TextView) view.findViewById(R.id.et_hy_birthday);
         // et_hy_kahao = (EditText) view.findViewById(R.id.et_hy_kahao);
         et_hy_youdate = (TextView) view.findViewById(R.id.et_hy_youdate);
-        et_hy_kaname = (TextView) view.findViewById(R.id.et_hy_kaname);
+        tv_cardkind = (TextView) view.findViewById(R.id.tv_cardkind);
         et_hy_keyongjie = (TextView) view.findViewById(R.id.et_hy_keyongjie);
         et_hy_kaimoney = (EditText) view.findViewById(R.id.et_hy_kaimoney);
         et_hy_youhui = (EditText) view.findViewById(R.id.et_hy_youhui);
@@ -131,20 +145,20 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         et_hy_jingxi = (EditText) view.findViewById(R.id.et_hy_jingxi);
         et_hy_jifen = (EditText) view.findViewById(R.id.et_hy_jifen);
         et_hy_zhanghao = (EditText) view.findViewById(R.id.et_hy_zhanghao);
-        et_hy_bumen = (TextView) view.findViewById(R.id.et_hy_bumen);
-        et_hy_jingban = (TextView) view.findViewById(R.id.et_hy_jingban);
-        et_hy_payselect = (TextView) view.findViewById(R.id.et_hy_payselect);
+        tv_dept = (TextView) view.findViewById(R.id.tv_dept);
+        tv_jbr = (TextView) view.findViewById(R.id.tv_jbr);
+        tv_jsfs = (TextView) view.findViewById(R.id.tv_jsfs);
         et_hy_beizhu = (EditText) view.findViewById(R.id.et_hy_beizhu);
         tv_hy_banli = (TextView) view.findViewById(R.id.tv_hy_banli);
         tv_cancel = (TextView) view.findViewById(R.id.tv_cancel);
         tv_cancel.setOnClickListener(this);
-        relativeday.setOnClickListener(this);
+        ll_birthday.setOnClickListener(this);
         rela_youxiao.setOnClickListener(this);
         tv_hy_banli.setOnClickListener(this);
-        rela_bumen.setOnClickListener(this);
-        relat_jiesuan.setOnClickListener(this);
-        relat_jingban.setOnClickListener(this);
-        rela_ka.setOnClickListener(this);
+        ll_dept.setOnClickListener(this);
+        ll_jsfs.setOnClickListener(this);
+        ll_jbr.setOnClickListener(this);
+        ll_cardkind.setOnClickListener(this);
         et_hy_chepai.setText("");
         et_hy_lianxi.setText("");
         et_hy_address.setText("");
@@ -152,7 +166,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         et_hy_shouphone.setText("");
         et_hy_birthday.setText("");
 //        et_hy_kahao.setText("");
-        et_hy_kaname.setText("");
+        tv_cardkind.setText("");
         et_hy_youdate.setText("");
         et_hy_kaimoney.setText("");
         et_hy_keyongjie.setText("");
@@ -163,9 +177,9 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         et_hy_jingxi.setText("");
         et_hy_jifen.setText("");
         et_hy_zhanghao.setText("");
-        et_hy_bumen.setText("");
-        et_hy_jingban.setText("");
-        et_hy_payselect.setText("");
+        tv_dept.setText("");
+        tv_jbr.setText("");
+        tv_jsfs.setText("");
 
         bsd_chepaichaun.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,7 +242,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             //生日
-            case R.id.relativeday:
+            case R.id.ll_birthday:
                 timeShow.timePickerAlertDialog(et_hy_birthday);
                 break;
             //有效日期
@@ -264,7 +278,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                         }
                     });
                     queRen.show();
-                } else if (TextUtils.isEmpty(et_hy_kaname.getText().toString())) {
+                } else if (TextUtils.isEmpty(tv_cardkind.getText().toString())) {
                     queRen = new QueRen(getContext(), "卡名称不能为空");
                     queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
                         @Override
@@ -278,20 +292,20 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                 }
                 break;
             //部门下拉
-            case R.id.rela_bumen:
-                popwin_dept();
+            case R.id.ll_dept:
+                showDeptData();
                 break;
             //结算下拉
-            case R.id.relat_jiesuan:
-                popwin_jiesuan();
+            case R.id.ll_jsfs:
+                showJSFSData();
                 break;
             //经办人下
-            case R.id.relat_jingban:
-                popwin_jingban();
+            case R.id.ll_jbr:
+                showJBRData();
                 break;
             //卡类型
-            case R.id.rela_ka:
-                popwin_katype();
+            case R.id.ll_cardkind:
+                showCradKindData();
                 break;
             case R.id.tv_cancel:
                 this.dismiss();
@@ -312,27 +326,27 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 bumen = list_bumen.get(i).get("name");
-                et_hy_bumen.setText(bumen);
+                tv_dept.setText(bumen);
                 pw.dismiss();
             }
         });
         //通过view 和宽·高，构造PopopWindow
-        pw = new PopupWindow(myView, rela_bumen.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        pw = new PopupWindow(myView, ll_dept.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, true);
         //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
         pw.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.yuan));
         //设置焦点为可点击
         pw.setFocusable(true);//可以试试设为false的结果
         //将window视图显示在myButton下面
-        pw.showAsDropDown(rela_bumen);
+        pw.showAsDropDown(ll_dept);
 //        int[] location = new int[2];
-////        rela_bumen.getLocationOnScreen(location);
-//        rela_bumen.getLocationInWindow(location);
+////        ll_dept.getLocationOnScreen(location);
+//        ll_dept.getLocationInWindow(location);
 ////        listView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 //        pw.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 //        int popHeight = pw.getContentView().getMeasuredHeight();
-//        rela_bumen.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-//        int popHeight1 = rela_bumen.getMeasuredHeight();
-//        pw.showAtLocation(rela_bumen, Gravity.NO_GRAVITY, location[0], location[1] + popHeight1);
+//        ll_dept.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//        int popHeight1 = ll_dept.getMeasuredHeight();
+//        pw.showAtLocation(ll_dept, Gravity.NO_GRAVITY, location[0], location[1] + popHeight1);
     }
 
     /**
@@ -348,19 +362,19 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 jiesuan = list_jiesuan.get(i).get("name").toString();
-                et_hy_payselect.setText(jiesuan);
+                tv_jsfs.setText(jiesuan);
                 pw.dismiss();
             }
         });
         //通过view 和宽·高，构造PopopWindow
-        pw = new PopupWindow(myView, relat_jiesuan.getWidth(), (int) getContext().getResources().getDimension(R.dimen.y200), true);
+        pw = new PopupWindow(myView, ll_jsfs.getWidth(), (int) getContext().getResources().getDimension(R.dimen.y200), true);
         pw.setBackgroundDrawable(getContext().getResources().getDrawable(
                 //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
                 R.drawable.yuan));
         //设置焦点为可点击
         pw.setFocusable(true);//可以试试设为false的结果
         //将window视图显示在myButton下面
-        pw.showAsDropDown(relat_jiesuan);
+        pw.showAsDropDown(ll_jsfs);
 
     }
 
@@ -387,14 +401,14 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         //通过布局注入器，注入布局给View对象
         View myView = getLayoutInflater().inflate(R.layout.bsd_hygl_bumen, null);
         //通过view 和宽·高，构造PopopWindow
-        pw = new PopupWindow(myView, rela_ka.getWidth(), (int) getContext().getResources().getDimension(R.dimen.y300), true);
+        pw = new PopupWindow(myView, ll_cardkind.getWidth(), (int) getContext().getResources().getDimension(R.dimen.y300), true);
         pw.setBackgroundDrawable(getContext().getResources().getDrawable(
                 //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
                 R.drawable.yuan));
         //设置焦点为可点击
         pw.setFocusable(true);//可以试试设为false的结果
         //将window视图显示在myButton下面
-        pw.showAsDropDown(rela_ka);
+        pw.showAsDropDown(ll_cardkind);
         ListView lv = (ListView) myView.findViewById(R.id.lv_hygl_bumen);
         katype_adp = new BSD_hygl_katype_adp(getContext(), list_katype);
         lv.setAdapter(katype_adp);
@@ -402,7 +416,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 katype = list_katype.get(i).get("name").toString();
-                et_hy_kaname.setText(katype);
+                tv_cardkind.setText(katype);
                 yxq = list_katype.get(i).get("khje").toString();
                 et_hy_kaimoney.setText(yxq);
                 px = list_katype.get(i).get("px").toString();
@@ -425,14 +439,14 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
         //通过布局注入器，注入布局给View对象
         View myView = getLayoutInflater().inflate(R.layout.bsd_hygl_bumen, null);
         //通过view 和宽·高，构造PopopWindow
-        pw = new PopupWindow(myView, relat_jingban.getWidth(), (int) getContext().getResources().getDimension(R.dimen.y300), true);
+        pw = new PopupWindow(myView, ll_jbr.getWidth(), (int) getContext().getResources().getDimension(R.dimen.y300), true);
         pw.setBackgroundDrawable(getContext().getResources().getDrawable(
                 //此处为popwindow 设置背景，同事做到点击外部区域，popwindow消失
                 R.drawable.yuan));
         //设置焦点为可点击
         pw.setFocusable(true);//可以试试设为false的结果
         //将window视图显示在myButton下面
-        pw.showAsDropDown(relat_jingban);
+        pw.showAsDropDown(ll_jbr);
         ListView lv = (ListView) myView.findViewById(R.id.lv_hygl_bumen);
         jingban_adp = new BSD_hygl_jingban_adp(getContext(), list_jingban);
         lv.setAdapter(jingban_adp);
@@ -440,7 +454,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 jingban = list_jingban.get(i).get("name").toString();
-                et_hy_jingban.setText(jingban);
+                tv_jbr.setText(jingban);
                 pw.dismiss();
             }
         });
@@ -467,6 +481,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                             list_bumen.add(map);
                         }
                     }
+                    updateDeptData();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -487,6 +502,33 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
 
             }
         });
+    }
+
+    private void updateDeptData() {
+        nameList2.clear();
+        for (int i = 0; i < list_bumen.size(); i++) {
+            CustemObject object = new CustemObject();
+            object.data = list_bumen.get(i).get("name");
+            nameList2.add(object);
+        }
+        mAdapter2 = new CustemSpinerAdapter(getContext());
+        mAdapter2.refreshData(nameList2, 0);
+        mSpinerPopWindow2 = new SpinerPopWindow(getContext());
+        mSpinerPopWindow2.setAdatper(mAdapter2);
+        mSpinerPopWindow2.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
+            @Override
+            public void onItemClick(int pos) {
+                String value = nameList2.get(pos).toString();
+                if (!tv_dept.getText().toString().equals(value)) {
+                    tv_dept.setText(value);
+                }
+            }
+        });
+    }
+
+    private void showDeptData() {
+        mSpinerPopWindow2.setWidth(ll_dept.getWidth());
+        mSpinerPopWindow2.showAsDropDown(ll_dept);
     }
 
     /**
@@ -510,6 +552,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                             list_jiesuan.add(map);
                         }
                     }
+                    updateJSFSData();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -530,6 +573,33 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
 
             }
         });
+    }
+
+    private void updateJSFSData() {
+        nameList1.clear();
+        for (int i = 0; i < list_jiesuan.size(); i++) {
+            CustemObject object = new CustemObject();
+            object.data = list_jiesuan.get(i).get("name");
+            nameList1.add(object);
+        }
+        mAdapter1 = new CustemSpinerAdapter(getContext());
+        mAdapter1.refreshData(nameList1, 0);
+        mSpinerPopWindow1 = new SpinerPopWindow(getContext());
+        mSpinerPopWindow1.setAdatper(mAdapter1);
+        mSpinerPopWindow1.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
+            @Override
+            public void onItemClick(int pos) {
+                String value = nameList1.get(pos).toString();
+                if (!tv_jsfs.getText().toString().equals(value)) {
+                    tv_jsfs.setText(value);
+                }
+            }
+        });
+    }
+
+    private void showJSFSData() {
+        mSpinerPopWindow1.setWidth(ll_jsfs.getWidth());
+        mSpinerPopWindow1.showAsDropDown(ll_jsfs);
     }
 
     /**
@@ -554,6 +624,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                             list_jingban.add(map);
                         }
                     }
+                    updateJBRData();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -572,6 +643,33 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
 
             }
         });
+    }
+
+    private void updateJBRData() {
+        nameList3.clear();
+        for (int i = 0; i < list_jingban.size(); i++) {
+            CustemObject object = new CustemObject();
+            object.data = list_jingban.get(i).get("name");
+            nameList3.add(object);
+        }
+        mAdapter3 = new CustemSpinerAdapter(getContext());
+        mAdapter3.refreshData(nameList3, 0);
+        mSpinerPopWindow3 = new SpinerPopWindow(getContext());
+        mSpinerPopWindow3.setAdatper(mAdapter3);
+        mSpinerPopWindow3.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
+            @Override
+            public void onItemClick(int pos) {
+                String value = nameList3.get(pos).toString();
+                if (!tv_jbr.getText().toString().equals(value)) {
+                    tv_jbr.setText(value);
+                }
+            }
+        });
+    }
+
+    private void showJBRData() {
+        mSpinerPopWindow3.setWidth(ll_jbr.getWidth());
+        mSpinerPopWindow3.showAsDropDown(ll_jbr);
     }
 
     /**
@@ -601,6 +699,7 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
                         }
 
                     }
+                    updateCardKindData();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -620,6 +719,33 @@ public class BSD_HYGL_TianJia_delo extends Dialog implements View.OnClickListene
 
             }
         });
+    }
+
+    private void updateCardKindData() {
+        nameList.clear();
+        for (int i = 0; i < list_katype.size(); i++) {
+            CustemObject object = new CustemObject();
+            object.data = list_katype.get(i).get("name");
+            nameList.add(object);
+        }
+        mAdapter = new CustemSpinerAdapter(getContext());
+        mAdapter.refreshData(nameList, 0);
+        mSpinerPopWindow = new SpinerPopWindow(getContext());
+        mSpinerPopWindow.setAdatper(mAdapter);
+        mSpinerPopWindow.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
+            @Override
+            public void onItemClick(int pos) {
+                String value = nameList.get(pos).toString();
+                if (!tv_cardkind.getText().toString().equals(value)) {
+                    tv_cardkind.setText(value);
+                }
+            }
+        });
+    }
+
+    private void showCradKindData() {
+        mSpinerPopWindow.setWidth(ll_cardkind.getWidth());
+        mSpinerPopWindow.showAsDropDown(ll_cardkind);
     }
 
     private void addCustom(int isNewCar) {

@@ -155,7 +155,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeday"
+            android:id="@+id/ll_birthday"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10">
@@ -171,7 +171,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/rela_ka"
+            android:id="@+id/ll_cardkind"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10">
@@ -183,7 +183,7 @@
                 android:textColor="#ED1C24" />
 
             <TextView
-                android:id="@+id/et_hy_kaname"
+                android:id="@+id/tv_cardkind"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -198,7 +198,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/rela_youxiao"
+            android:id="@+id/ll_youxiaoq"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10">
@@ -408,7 +408,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/rela_bumen"
+            android:id="@+id/ll_dept"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle">
 
@@ -418,7 +418,7 @@
                 android:text="部门:" />
 
             <TextView
-                android:id="@+id/et_hy_bumen"
+                android:id="@+id/tv_dept"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -432,7 +432,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relat_jingban"
+            android:id="@+id/ll_jbr"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10">
@@ -443,7 +443,7 @@
                 android:text="经办人:" />
 
             <TextView
-                android:id="@+id/et_hy_jingban"
+                android:id="@+id/tv_jbr"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -457,7 +457,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relat_jiesuan"
+            android:id="@+id/ll_jsfs"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10">
@@ -468,7 +468,7 @@
                 android:text="结算方式:"/>
 
             <TextView
-                android:id="@+id/et_hy_payselect"
+                android:id="@+id/tv_jsfs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
