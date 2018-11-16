@@ -287,18 +287,18 @@ public class URLS {
     /**
      * 维修历史主表信息
      */
-    public String BSD_wxls_zbxx = "lswx/lswxxx";
+    public static final String BSD_wxls_zbxx = "lswx/lswxxx";
 
     /**
      * 维修历史项目明细
      */
-    public String BSD_wxls_xmmx = "lswx/lswxxmxx";
+    public static final String BSD_wxls_xmmx = "lswx/lswxxmxx";
 
 
     /**
      * 维修历史用料明细
      */
-    public String BSD_wxls_ylmx = "lswx/lswxylxx";
+    public static final String BSD_wxls_ylmx = "lswx/lswxylxx";
 
 
 

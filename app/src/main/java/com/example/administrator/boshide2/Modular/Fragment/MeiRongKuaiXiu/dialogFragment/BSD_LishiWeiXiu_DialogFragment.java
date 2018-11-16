@@ -5,14 +5,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,8 +43,7 @@ import java.util.List;
 public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements View.OnClickListener {
     private static final String PARAMS_KEY = "params_key";
     private Context context;
-    private URLS url;
-    private Dialog mWeiboDialog,xmWeiboDialog,ylWeiboDialog;
+    private Dialog mWeiboDialog;
     private WXLS_Adapter wxls_adapter;//维修历史
     private List<WXLS_Bean> wxlsBeanList;
     private TextView tv_close;
@@ -56,6 +53,8 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
     private WXLS_WXYL_Adapter wxyl_adapter;//维修用料
     private List<WXLS_YL_Bean> wxlsYlBeanList;
     private String param;
+    private boolean xmLoaded = false;
+    private boolean clLoaded = false;
 
     public static BSD_LishiWeiXiu_DialogFragment newInstance(String params) {
         BSD_LishiWeiXiu_DialogFragment dialogFragment = new BSD_LishiWeiXiu_DialogFragment();
@@ -76,7 +75,6 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        url = new URLS();
         View view = inflater.from(context).inflate(R.layout.dialogfragment_lishi_weixiu, null);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         initView(view);
@@ -117,20 +115,22 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
         lv_lishi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                xmLoaded = false;
+                clLoaded = false;
+                mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
                 wxlsXmBeanList.clear();
                 wxlsYlBeanList.clear();
                 int firstVisiblePosition = lv_lishi.getFirstVisiblePosition();
                 wxls_adapter.setCurrentPositon(position);
                 wxls_adapter.notifyDataSetChanged();
                 lv_lishi.setSelection(firstVisiblePosition);
-                setWXYLData(wxlsBeanList.get(position).getDanhao());//用料
-                setWXLSXMData(wxlsBeanList.get(position).getDanhao());//项目
+                getWXLSYLData(wxlsBeanList.get(position).getDanhao());//用料
+                getWXLSXMData(wxlsBeanList.get(position).getDanhao());//项目
             }
         });
         //维修历史主表
         getWXLSData(param);
     }
-
 
     /**
      * 维修历史主表数据接口
@@ -140,10 +140,9 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
         AbRequestParams params = new AbRequestParams();
         params.put("che_no", cheNo);
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxls_zbxx, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxls_zbxx, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                Log.i("wxls", "onSuccess: 查询主表成功==" + s);
                 try {
                     JSONObject object = new JSONObject(s);
                     if (object.getString("message").equals("查询失败")) {
@@ -163,12 +162,11 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
                             bean.setLicheng(obj.getString("xche_cclc"));
                             wxlsBeanList.add(bean);
                         }
-                    }
-                    wxls_adapter.notifyDataSetChanged();
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-                    if (wxlsBeanList.size() > 0) {
-                        setWXLSXMData(wxlsBeanList.get(0).getDanhao());//项目
-                        setWXYLData(wxlsBeanList.get(0).getDanhao());//用料
+                        wxls_adapter.notifyDataSetChanged();
+                        if (wxlsBeanList.size() > 0) {
+                            getWXLSXMData(wxlsBeanList.get(0).getDanhao());//项目
+                            getWXLSYLData(wxlsBeanList.get(0).getDanhao());//用料
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -187,7 +185,6 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Toast.makeText(getActivity(), "查询历史维修信息失败", Toast.LENGTH_SHORT).show();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
@@ -198,15 +195,13 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
     /**
      * 维修历史项目数据接口
      */
-    private void setWXLSXMData(final String work_no) {
-        xmWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载项目中...");
+    private void getWXLSXMData(final String work_no) {
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", work_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxls_xmmx ,params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxls_xmmx ,params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
                 try {
-                    Log.i("wxls", "查项目成功" + s);
                     JSONObject object = new JSONObject(s);
                     if (object.getString("message").equals("查询成功")) {
                         JSONArray array = new JSONArray(object.getString("data"));
@@ -220,9 +215,12 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
                         }
                     }
                     wxxm_adapter.notifyDataSetChanged();
-                    WeiboDialogUtils.closeDialog(xmWeiboDialog);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                xmLoaded = true;
+                if (clLoaded) {
+                    WeiboDialogUtils.closeDialog(mWeiboDialog);
                 }
             }
 
@@ -238,7 +236,10 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                WeiboDialogUtils.closeDialog(xmWeiboDialog);
+                xmLoaded = true;
+                if (clLoaded) {
+                    WeiboDialogUtils.closeDialog(mWeiboDialog);
+                }
             }
         });
     }
@@ -246,11 +247,10 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
     /**
      * 维修用料数据接口
      */
-    private void setWXYLData(String work_no) {
-        ylWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载材料中...");
+    private void getWXLSYLData(String work_no) {
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", work_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxls_ylmx,params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxls_ylmx,params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
                 try {
@@ -270,9 +270,12 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
                         }
                     }
                     wxyl_adapter.notifyDataSetChanged();
-                    WeiboDialogUtils.closeDialog(ylWeiboDialog);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                clLoaded = true;
+                if (xmLoaded) {
+                    WeiboDialogUtils.closeDialog(mWeiboDialog);
                 }
             }
 
@@ -286,7 +289,10 @@ public class BSD_LishiWeiXiu_DialogFragment  extends DialogFragment implements V
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                WeiboDialogUtils.closeDialog(ylWeiboDialog);
+                clLoaded = true;
+                if (xmLoaded) {
+                    WeiboDialogUtils.closeDialog(mWeiboDialog);
+                }
             }
         });
     }

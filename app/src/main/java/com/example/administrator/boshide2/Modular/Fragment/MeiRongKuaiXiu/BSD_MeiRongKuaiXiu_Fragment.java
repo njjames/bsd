@@ -694,7 +694,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                     bsd_mrkx_tv_gsfl.setText(clickValue);
                     gongshifeili_name = listgslv.get(pos).get("feil_mc");
                     gongshifeili_id = listgslv.get(pos).get("feil_fl");
-                    Conts.feilv_name = gongshifeili_name;
                 }
             }
         });
@@ -1079,36 +1078,47 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         params.put("kehu_dh", bsd_mrkx_lianxifangshi.getText().toString());
         params.put("card_no", billEntiy.getCard_no());
         params.put("cangk_dm", ckid);
-        params.put("xche_sfbz", gongshifeili_id);
+        params.put("xche_sfbz", gongshifeili_name);
+        params.put("xche_sffl", gongshifeili_id);
         params.put("gcsj", bsd_mrxk_tv_djtime.getText().toString());
         params.put("xche_bz", bsd_mrkx_et_miaoshu.getText().toString().trim());
+        if (isBack) {
+            params.put("isback", 1);
+        } else {
+            params.put("isback", 0);
+        }
         Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_MRKX_UP, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
-                WeiboDialogUtils.closeDialog(mWeiboDialog);
-                if (data.equals("success")) {
-                    //点击存档操作的时候走的步骤
-                    if (onlySave) {
-                        if (!isBack) {  // 如果不是返回，则显示提示信息
-                            queRen = new QueRen(getContext(), "存档成功");
-                            queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                                @Override
-                                public void onYesClick() {
-                                    queRen.dismiss();
-                                }
-                            });
-                            queRen.show();
-                        } else {  // 否则执行返回操作
-                            BSD_wxcl = null;
-                            BSD_wxxm = null;
-                            ((MainActivity) getActivity()).upBSD_MRKX_log();
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        //点击存档操作的时候走的步骤
+                        if (onlySave) {
+                            if (!isBack) {  // 如果不是返回，则显示提示信息
+                                queRen = new QueRen(getContext(), "存档成功");
+                                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                                    @Override
+                                    public void onYesClick() {
+                                        queRen.dismiss();
+                                    }
+                                });
+                                queRen.show();
+                            } else {  // 否则执行返回操作
+                                BSD_wxcl = null;
+                                BSD_wxxm = null;
+                                ((MainActivity) getActivity()).upBSD_MRKX_log();
+                            }
+                        } else { //点击结算的时候
+                            checkBeforeJiesuan();
                         }
-                    } else { //点击结算的时候
-                        checkBeforeJiesuan();
+                    } else {
+                        Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }
-                } else {
-                    System.out.println("不包含");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -1121,6 +1131,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getHostActicity(), s, Toast.LENGTH_SHORT).show();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
@@ -1284,8 +1295,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -1303,7 +1312,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
             }
         });
-
     }
 
     /**
@@ -1379,8 +1387,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 Show.showTime(getHostActicity(), "网络请求超时");
             }
         });
-
-
     }
 
     /**
@@ -1450,7 +1456,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -1466,8 +1471,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 Show.showTime(getActivity(), "网络请求超时");
             }
         });
-
-
     }
 
     /**
@@ -1523,12 +1526,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -1536,8 +1537,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 Toast.makeText(getActivity(), "修改失败", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     /**

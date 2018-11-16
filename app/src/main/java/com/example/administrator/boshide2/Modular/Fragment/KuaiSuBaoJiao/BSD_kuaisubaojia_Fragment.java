@@ -134,7 +134,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment {
     private SpinerPopWindow mSpinerPopWindow3;
     private String gongshifeili_name;
     private String gongshifeili_id;
-    //保养数据
     private LinearLayout bsd_ksbj_rl_gcsj;//日期选择
     private TextView bsd_ksbj_tv_gcsj;
     private TextView bsd_ksbj_rl_bycx;//保养查询
@@ -243,7 +242,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment {
                 updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
                     @Override
                     public void onYesClick(double gongshif) {
-                        Conts.wxxm_je = gongshif;
                         updateWxxmGs(wxxmNo, gongshif, position);
                     }
                 });
@@ -333,7 +331,6 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment {
         tv_chexing = (TextView) view.findViewById(R.id.bsd_ksbj_cxing);
         tv_wxxm_money = (TextView) view.findViewById(R.id.tv_wxxm_money);
         tv_wxcl_money = (TextView) view.findViewById(R.id.tv_wxcl_money);
-        //品牌
         rea_pinpai = (LinearLayout) view.findViewById(R.id.rea_pinpai);
         bsd_ksbj_rl_cx = (LinearLayout) view.findViewById(R.id.bsd_ksbj_rl_cx);
         bsd_ksbj_rl_cz = (LinearLayout) view.findViewById(R.id.bsd_ksbj_rl_cz);
@@ -1577,24 +1574,34 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment {
         Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_ksbj_bcjbxx, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
-                if (onlySave) {
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-                    if (!isBack) {  // 如果不是返回，则显示提示信息
-                        queRen = new QueRen(getHostActicity(), "存档成功");
-                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                            @Override
-                            public void onYesClick() {
-                                queRen.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        //点击存档操作的时候走的步骤
+                        if (onlySave) {
+                            if (!isBack) {  // 如果不是返回，则显示提示信息
+                                queRen = new QueRen(getHostActicity(), "存档成功");
+                                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                                    @Override
+                                    public void onYesClick() {
+                                        queRen.dismiss();
+                                    }
+                                });
+                                queRen.show();
+                            } else {
+                                ((MainActivity) getActivity()).upBSD_KSBJ_Log();
                             }
-                        });
-                        queRen.show();
-                    } else {
-                        ((MainActivity) getActivity()).upBSD_KSBJ_Log();
-                    }
 
-                } else {
-                    jinChang();
+                        } else {
+                            jinChang();
+                        }
+                    } else {
+                        Show.showTime(getActivity(), jsonObject.get("message").toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
