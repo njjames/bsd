@@ -460,7 +460,7 @@ public class URLS {
     /**
      * 在场调度ListView
      */
-    public String BSD_zcdu_list = "paigong/paiGongList";
+    public static final String BSD_zcdu_list = "paigong/paiGongList";
 
     public String BSD_zcdu_listinfo = "paigong/getlistinfobyno";
     /**

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
@@ -115,12 +116,12 @@ public class BSD_zaichangdiaodu_Fragment extends BaseFragment implements AbPullT
         params.put("work_no", workNo);
         params.put("pageNumber", page);
         params.put("gongsino", MyApplication.shared.getString("GongSiNo", ""));
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_zcdu_list, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_zcdu_list, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("1")) {
+                    if (jsonObject.getString("message").equals("查询成功")) {
                         JSONArray jsonarray = jsonObject.getJSONArray("data");
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject item = jsonarray.getJSONObject(i);
@@ -140,6 +141,11 @@ public class BSD_zaichangdiaodu_Fragment extends BaseFragment implements AbPullT
                             list.add(entity);
                         }
                     } else {
+                        if (page > 1) {
+                            Toast.makeText(getHostActicity(), "没有更多单据了", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getHostActicity(), "当前没有单据", Toast.LENGTH_SHORT).show();
+                        }
                         subPage();
                     }
                 } catch (JSONException e) {
