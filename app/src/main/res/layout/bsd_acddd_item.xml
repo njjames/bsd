@@ -46,10 +46,10 @@
         android:text="登记日期" />
 
     <TextView
-        android:id="@+id/bsd_xzcl_wxjd"
+        android:id="@+id/bsd_xzcl_ywlx"
         android:layout_weight="1.2"
         style="@style/mysearchinfostyle"
-        android:text="维修进度" />
+        android:text="维修类型" />
 
     <TextView
         android:id="@+id/bsd_xzcl_caozuo"

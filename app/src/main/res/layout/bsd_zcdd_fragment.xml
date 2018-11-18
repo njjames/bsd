@@ -131,11 +131,10 @@
                 style="@style/mysearchtitlestyle"
                 android:text="登记日期" />
 
-
             <TextView
                 android:layout_weight="1.2"
                 style="@style/mysearchtitlestyle"
-                android:text="维修进度" />
+                android:text="维修类型" />
 
             <TextView
                 android:layout_weight="1"

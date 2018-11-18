@@ -626,7 +626,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             billEntiy.setChe_no(item.getString("che_no"));
             billEntiy.setChe_cx(item.getString("che_cx"));
             billEntiy.setChe_vin(item.getString("che_vin"));
-            billEntiy.setChe_gzms(item.getString("xche_bz"));   //故障描述
+            billEntiy.setXche_bz(item.getString("xche_bz"));   //故障描述
             billEntiy.setXche_lc(item.getInt("xche_lc"));
             billEntiy.setXche_jdrq(item.getString("xche_jdrq"));
             billEntiy.setXche_sfbz(item.getString("xche_sfbz"));   //费率名称

@@ -409,8 +409,18 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         title.setText("维修调度");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
-        getBillInfo();
+        getBillInfoFromParam();
+        updateBillInfoUI();
+        change_XM();
     }
+
+    private void getBillInfoFromParam() {
+        billEntiy = JSON.parseObject(param, BSD_WeiXiuJieDan_Entity.class);
+        xm_zj = billEntiy.getXche_rgf();
+        cl_zj = billEntiy.getXche_clf();
+        zong_zj = billEntiy.getXche_hjje();
+    }
+
 
     private void updateBillInfoUI() {
         billNo.setText(billEntiy.getWork_no());
@@ -972,83 +982,5 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
             }
         });
     }
-
-    /**
-     * 维修接单详情
-     */
-    public void getBillInfo() {
-        list.clear();
-        AbRequestParams params = new AbRequestParams();
-        params.put("work_no",  param);
-        params.put("gongsino", MyApplication.shared.getString("bsd_gs_id", ""));
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_zcdu_listinfo, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int aa, String s) {
-                WeiboDialogUtils.closeDialog(mWeiboDialog);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("total").toString().equals("1")) {
-                        if (jsonObject.get("status").toString().equals("1")) {
-                            JSONObject json = jsonObject.getJSONObject("data");
-                            billEntiy = new BSD_WeiXiuJieDan_Entity();
-                            billEntiy.setWork_no(json.getString("work_no"));
-                            billEntiy.setKehu_no(json.getString("kehu_no"));
-                            billEntiy.setKehu_mc(json.getString("kehu_mc"));
-                            billEntiy.setKehu_xm(json.getString("kehu_xm"));
-                            billEntiy.setKehu_dz(json.getString("kehu_dz"));
-                            billEntiy.setKehu_yb(json.getString("kehu_yb"));
-                            billEntiy.setKehu_dh(json.getString("kehu_dh"));
-                            billEntiy.setChe_no(json.getString("che_no"));
-                            billEntiy.setChe_cx(json.getString("che_cx"));
-                            billEntiy.setChe_vin(json.getString("che_vin"));
-                            billEntiy.setXche_lc(json.getInt("xche_lc"));
-                            billEntiy.setXche_cz(json.getString("xche_cz"));
-                            billEntiy.setXche_yjwgrq(json.getString("xche_yjwgrq"));
-                            billEntiy.setXche_ywlx(json.getString("substate"));
-                            billEntiy.setXche_rgf(json.getDouble("xche_rgf"));
-                            billEntiy.setXche_clf(json.getDouble("xche_clf"));
-                            billEntiy.setXche_hjje(json.getDouble("xche_hjje"));
-                            billEntiy.setXche_sfbz(json.getString("xche_sfbz"));
-                            xm_zj = json.getDouble("xche_rgf");
-                            cl_zj = json.getDouble("xche_clf");
-                            zong_zj = json.getDouble("xche_hjje");
-                            updateBillInfoUI();
-                            change_XM();
-                        } else {
-                            String mainstate = jsonObject.getString("data");
-                            if (mainstate.equals("-1")) {
-                                Show.showTime(getActivity(), "此维修单已经返回到接待登记处");
-                            } else if(mainstate.equals("4")) {
-                                Show.showTime(getActivity(), "此维修单已完成调度，在结算处");
-                            }
-                        }
-                    } else {
-                        Show.showTime(getActivity(), "此维修单已不存在");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                Show.showTime(getActivity(), "网络连接超时");
-                Log.i("cjn", "基本信息请求失败");
-                WeiboDialogUtils.closeDialog(mWeiboDialog);
-            }
-        });
-
-    }
-
 
 }

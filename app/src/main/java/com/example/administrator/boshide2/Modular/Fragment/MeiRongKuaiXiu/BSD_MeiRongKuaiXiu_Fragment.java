@@ -550,7 +550,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             billEntiy.setChe_no(item.getString("che_no"));
             billEntiy.setChe_cx(item.getString("che_cx"));
             billEntiy.setChe_vin(item.getString("che_vin"));
-            billEntiy.setChe_gzms(item.getString("xche_bz"));   //故障描述
+            billEntiy.setXche_bz(item.getString("xche_bz"));   //故障描述
             billEntiy.setXche_lc(item.getInt("xche_lc"));
             billEntiy.setXche_jdrq(item.getString("xche_jdrq"));
             billEntiy.setXche_sfbz(item.getString("xche_sfbz"));   //费率名称
@@ -586,7 +586,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         et_huiyuankahao.setText(billEntiy.getCard_no());
         bsd_mrkx_ed_lc.setText("" + billEntiy.getXche_lc());
         bsd_mrkx_ed_lianxiren.setText(billEntiy.getKehu_mc());
-        bsd_mrkx_et_miaoshu.setText(billEntiy.getChe_gzms());
+        bsd_mrkx_et_miaoshu.setText(billEntiy.getXche_bz());
         bsd_mrkx_lianxifangshi.setText(billEntiy.getKehu_dh());
         bsd_mrkx_tv_gsfl.setText(billEntiy.getXche_sfbz());    //费率名称
         Conts.feilv_name = billEntiy.getXche_sfbz();

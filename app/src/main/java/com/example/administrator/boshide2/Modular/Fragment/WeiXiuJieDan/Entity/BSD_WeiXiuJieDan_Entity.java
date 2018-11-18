@@ -4,39 +4,14 @@ package com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity;
  * Created by Administrator on 2017-5-12.
  * 维修接单实体
  */
-
 public class BSD_WeiXiuJieDan_Entity {
     private String che_gzms;  //故障描述
 
-    public String getChe_gzms() {
-        return che_gzms;
-    }
-
-    public void setChe_gzms(String che_gzms) {
-        this.che_gzms = che_gzms;
-    }
-
     private String gcsj;
-
-    public String getGcsj() {
-        return gcsj;
-    }
-
-    public void setGcsj(String gcsj) {
-        this.gcsj = gcsj;
-    }
-
-    private String work_no;
 
     private String cangk_mc;
 
-    public String getCangk_mc() {
-        return cangk_mc;
-    }
-
-    public void setCangk_mc(String cangk_mc) {
-        this.cangk_mc = cangk_mc;
-    }
+    private String work_no;
 
     private String kehu_no;
 
@@ -1706,5 +1681,27 @@ public class BSD_WeiXiuJieDan_Entity {
         this.flag_pad = flag_pad;
     }
 
+    public String getChe_gzms() {
+        return che_gzms;
+    }
 
+    public void setChe_gzms(String che_gzms) {
+        this.che_gzms = che_gzms;
+    }
+
+    public String getGcsj() {
+        return gcsj;
+    }
+
+    public void setGcsj(String gcsj) {
+        this.gcsj = gcsj;
+    }
+
+    public String getCangk_mc() {
+        return cangk_mc;
+    }
+
+    public void setCangk_mc(String cangk_mc) {
+        this.cangk_mc = cangk_mc;
+    }
 }

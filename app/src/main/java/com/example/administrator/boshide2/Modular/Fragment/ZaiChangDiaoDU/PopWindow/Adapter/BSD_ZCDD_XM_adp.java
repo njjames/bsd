@@ -47,7 +47,7 @@ public class BSD_ZCDD_XM_adp extends BaseAdapter {
 
     public final class Holder {
         TextView bsd_xzcl_djrq;
-        TextView bsd_xzcl_wxjd;
+        TextView bsd_xzcl_ywlx;
         TextView bsd_xzcl_name;
         TextView bsd_xzcl_shuliang;
         TextView bsd_xzcl_danjia;
@@ -68,7 +68,7 @@ public class BSD_ZCDD_XM_adp extends BaseAdapter {
             holder.bsd_xzcl_tuhao = (TextView) contetview.findViewById(R.id.bsd_xzcl_dw);
             holder.bsd_xzcl_pinpai = (TextView) contetview.findViewById(R.id.bsd_xzcl_je);
             holder.bsd_xzcl_caozuo = (TextView) contetview.findViewById(R.id.bsd_xzcl_caozuo);
-            holder.bsd_xzcl_wxjd= (TextView) contetview.findViewById(R.id.bsd_xzcl_wxjd);
+            holder.bsd_xzcl_ywlx= (TextView) contetview.findViewById(R.id.bsd_xzcl_ywlx);
             holder.bsd_xzcl_djrq= (TextView) contetview.findViewById(R.id.bsd_xzcl_djrq);
             contetview.setTag(holder);
         } else {
@@ -81,7 +81,7 @@ public class BSD_ZCDD_XM_adp extends BaseAdapter {
         holder.bsd_xzcl_tuhao.setText(list.get(i).getXche_cz());
         holder.bsd_xzcl_pinpai.setText("" + list.get(i).getXche_hjje());
         holder.bsd_xzcl_caozuo.setText(list.get(i).getKehu_dh());
-        holder.bsd_xzcl_wxjd.setText(list.get(i).getXche_ywlx());
+        holder.bsd_xzcl_ywlx.setText(list.get(i).getXche_ywlx());
         holder.bsd_xzcl_djrq.setText(list.get(i).getXche_jdrq());
         return contetview;
 
