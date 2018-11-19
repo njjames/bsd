@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
@@ -30,6 +31,8 @@ import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
+import com.example.administrator.boshide2.Modular.Entity.Kehu_Entity;
+import com.example.administrator.boshide2.Modular.Entity.WorkCheliangSm_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_ety;
 import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_Car_Entity;
@@ -39,6 +42,7 @@ import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD
 import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
 import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
 
@@ -70,8 +74,8 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     private List<BSD_KuaiSuBaoJia_ety> list_ksbj = new ArrayList<BSD_KuaiSuBaoJia_ety>();
     private List<BSD_WeiXiuYueYue_entiy> list_wxyy = new ArrayList<BSD_WeiXiuYueYue_entiy>();
     private List<BSD_WeiXiuJieDan_Entity> list_wxjd = new ArrayList<BSD_WeiXiuJieDan_Entity>();
-    private BSD_Car_Entity carEntity;
-    private BSD_KeHu_Entity keHuEntity;
+    private WorkCheliangSm_Entity carEntity;
+    private Kehu_Entity keHuEntity;
     private TextView tv_pinpai;
     private TextView tv_chexi;
     private TextView tv_chezu;
@@ -324,8 +328,8 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             isNewCar.setVisibility(View.INVISIBLE);
         }
         // 初始化车辆信息
-        String che = carEntity.getChe_pinpai();
-        String[] carInfos = che.split("\\|");
+        String cheCxs = carEntity.getChe_cx();
+        String[] carInfos = cheCxs.split("\\|");
         if (carInfos.length >= 4) {
             tv_pinpai.setText(carInfos[0]);
             tv_chexi.setText(carInfos[1]);
@@ -333,19 +337,19 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             tv_chexing.setText(carInfos[3]);
         }
         et_cl_cp.setText(carEntity.getChe_no());
-        cl_wxys.setText(carEntity.getChe_color());
+        cl_wxys.setText(carEntity.getChe_wxys());
         cl_nf.setText(carEntity.getChe_nf());
         cl_vin.setText(carEntity.getChe_vin());
-        mv_bsd_cl_gcrq.setText(carEntity.getChe_gcrq());
-        mv_bsd_cl_xcbyrq.setText(carEntity.getChe_xcbyrq());
-        mv_bsd_cl_xcjcrq.setText(carEntity.getChe_xcjcrq());
-        mv_bsd_cl_jqxdq.setText(carEntity.getChe_jqxrq());
-        mv_bsd_cl_syxdq.setText(carEntity.getChe_syxdq());
+        mv_bsd_cl_gcrq.setText(BsdUtil.dateToStr(carEntity.getChe_gcrq()));
+        mv_bsd_cl_xcbyrq.setText(BsdUtil.dateToStr(carEntity.getChe_next_byrq()));
+        mv_bsd_cl_xcjcrq.setText(BsdUtil.dateToStr(carEntity.getChe_jianche_dqrq()));
+        mv_bsd_cl_jqxdq.setText(BsdUtil.dateToStr(carEntity.getChe_jiaoqx_dqrq()));
+        mv_bsd_cl_syxdq.setText(BsdUtil.dateToStr(carEntity.getChe_shangyex_dqrq()));
         //初始化客户信息
         kh_mc.setText(keHuEntity.getKehu_mc());
-        kh_lxr.setText(keHuEntity.getKehu_lxr());
-        kh_sj.setText(keHuEntity.getKehu_shouji());
-        kh_dh.setText(keHuEntity.getKehu_dianhua());
+        kh_lxr.setText(keHuEntity.getKehu_xm());
+        kh_sj.setText(keHuEntity.getKehu_sj());
+        kh_dh.setText(keHuEntity.getKehu_dh());
     }
 
     /**
@@ -360,31 +364,14 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     if (jsonObject.get("status").toString().equals("1")) {
-                        JSONObject jsonarray = jsonObject.getJSONObject("data");
+                        JSONObject object = jsonObject.getJSONObject("data");
                         //客户实体
-                        JSONObject kehuObject = jsonarray.getJSONObject("kehu");
-                        keHuEntity = new BSD_KeHu_Entity();
-                        Conts.kehu_no = kehuObject.getString("kehu_no");
-                        keHuEntity.setKehu_no(kehuObject.getString("kehu_no"));
-                        keHuEntity.setKehu_mc(kehuObject.getString("kehu_mc"));
-                        keHuEntity.setKehu_lxr(kehuObject.getString("kehu_xm"));
-                        keHuEntity.setKehu_shouji(kehuObject.getString("kehu_sj"));
-                        keHuEntity.setKehu_dianhua(kehuObject.getString("kehu_dh"));
+                        JSONObject kehuObject = object.getJSONObject("kehu");
+                        keHuEntity = JSON.parseObject(kehuObject.toString(), Kehu_Entity.class);
                         //车辆实体
-                        JSONObject carObject = jsonarray.getJSONObject("cheliang");
-                        carEntity = new BSD_Car_Entity();
-                        Conts.cp = carObject.getString("che_no");
-                        carEntity.setChe_no(carObject.getString("che_no"));
-                        carEntity.setChe_vin(carObject.getString("che_vin"));
-                        carEntity.setChe_color(carObject.getString("che_wxys"));
-                        carEntity.setChe_gcrq(carObject.getString("che_gcrq"));
-                        carEntity.setChe_nf(carObject.getString("che_nf"));
-                        carEntity.setChe_jqxrq(carObject.getString("che_jiaoqx_dqrq"));
-                        carEntity.setChe_syxdq(carObject.getString("che_shangyex_dqrq"));
-                        carEntity.setChe_xcbyrq(carObject.getString("che_next_byrq"));
-                        carEntity.setChe_xcjcrq(carObject.getString("che_jianche_dqrq"));
-                        carEntity.setChe_pinpai(carObject.getString("che_cx"));  //车系、车型、品牌、车组是一个字段；
-                        isnew = jsonarray.getBoolean("isnew");
+                        JSONObject carObject = object.getJSONObject("cheliang");
+                        carEntity = JSON.parseObject(carObject.toString(), WorkCheliangSm_Entity.class);
+                        isnew = object.getBoolean("isnew");
                         updateUI();
                     }
                 } catch (JSONException e) {
@@ -520,22 +507,22 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     /*
      *根据车牌获取数据，打开美容快修单据
      */
-    public void data_mrkx(final String cp, String billNo) {
+    public void data_mrkx(final String cheNo, String billNo) {
         list.clear();
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("che_no", cp);
+        params.put("che_no", cheNo);
         params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
         params.put("work_no", billNo);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_MRKX_IN, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_MRKX_IN, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     // 如果查询成功就启动美容快修的fragment
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        mainActivity.showMrkxFragment(data);
+                        mainActivity.showMrkxFragment(jsonObject.getJSONObject("data").toString());
                     } else {
                         Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }
@@ -654,21 +641,21 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     /*
     *根据车牌获取数据，打开维修接待
     */
-    public void data_wxjd(final String cardNo, String billNo) {
+    public void data_wxjd(final String cheNo, String billNo) {
         list_wxjd.clear();
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("che_no", cardNo);
+        params.put("che_no", cheNo);
         params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
         params.put("work_no", billNo);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_jbxx, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_jbxx, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        mainActivity.showWxjdFragment(jsonObject.getString("data"));
+                        mainActivity.showWxjdFragment(jsonObject.getJSONObject("data").toString());
                     } else {
                         Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }

@@ -282,7 +282,7 @@ public class URLS {
     /**
      * 维修接单基本信息
      */
-    public String BSD_wxjd_jbxx = "order/jbxx";
+    public static final String BSD_wxjd_jbxx = "order/jbxx";
 
     /**
      * 维修历史主表信息
@@ -344,7 +344,7 @@ public class URLS {
     /**
      * 完工发送微信
      */
-    public String BSD_wg_weixin = "kuaixiu/wgweixin";
+    public static final String BSD_wg_weixin = "kuaixiu/wgweixin";
 
     /**
      * 上传图片
@@ -546,15 +546,16 @@ public class URLS {
     /**
      * 完工
      */
-    public String BSD_WG = "paigong/wangGong";
+    public static final String BSD_WG = "paigong/wangGong";
     /**
      * 打印
      */
     public String BSD_DY = "paigong/print";
+
     /**
-     * 打印
+     * 终止维修
      */
-    public String BSD_ZZ = "paigong/stop";
+    public static final String BSD_ZZ = "paigong/stop";
     /**
      * 修改预约时间
      */
@@ -617,7 +618,7 @@ public class URLS {
     /**
      * 快修输入车牌进入接口
      */
-    public String BSD_MRKX_IN="kuaixiu/mrkxJbxx";
+    public static final String BSD_MRKX_IN="kuaixiu/mrkxJbxx";
     /**
      * 快修输入baocun
      */

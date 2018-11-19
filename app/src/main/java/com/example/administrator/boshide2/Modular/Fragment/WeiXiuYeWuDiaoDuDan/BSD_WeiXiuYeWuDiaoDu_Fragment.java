@@ -23,12 +23,13 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
+import com.example.administrator.boshide2.Modular.Entity.WorkPgGz_Entity;
+import com.example.administrator.boshide2.Modular.Entity.WorkPzGz_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.Adapter.BSD_wxywdd_dap;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.dialog.PaiGongDialog;
@@ -42,6 +43,7 @@ import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
 
@@ -51,7 +53,6 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -66,23 +67,20 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private TextView tv_wxllAdd;
     private ListView bsd_wxywdd_you_lv;
     private BSD_wxywdd_dap adapter;
-    private List<HashMap<String, String>> data = new ArrayList<>();
-    private TextView bsd_ywwwdd_cp;
-    private TextView bsd_ywwwdd_pinpai;
-    private TextView bsdywwwdd_chexi;
-    private TextView bsd_ywwwdd_chezu;
-    private TextView bsd_ywwwdd_chexing;
-    private TextView bsd_ywwwdd_vin;
-    private TextView bsd_ywwwdd_user;
-    private TextView bsd_ywwwdd_fuwuguwen;
-    private TextView bsd_ywwwdd_dengjishijian;
-    private TextView bsd_ywwwdd_dianhua;
-    private List<BSD_WeiXiuJieDan_Entity> list = new ArrayList<BSD_WeiXiuJieDan_Entity>();
+    private TextView tv_cheno;
+    private TextView tv_pinpai;
+    private TextView tv_chexi;
+    private TextView tv_chezu;
+    private TextView tv_chexing;
+    private TextView tv_vin;
+    private TextView tv_kehumc;
+    private TextView tv_fwgw;
+    private TextView tv_xche_djrq;
+    private TextView tv_kehudh;
     private Dialog mWeiboDialog;
     private BSD_wxywdd_wxcl BSD_wxcl;
     private BSD_wxywdd_wxxm BSD_wxxm;
     private Queding_Quxiao queding_quxiao;
-    private List<Map<String, String>> listPGrenyuan = new ArrayList<Map<String, String>>();
     private URLS url;
     private TextView bsd_zadd_wg;
     private QueRen queRen;
@@ -93,7 +91,6 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private TextView title;
     private TextView footerText;
     private String param;
-    private BSD_WeiXiuJieDan_Entity billEntiy;
     private TextView tv_paigongAll;
     private int currentType = 0;
     private ImageView iv_wxllAdd;
@@ -110,6 +107,8 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private TextView billNo;
     private TextView tv_gsfl;
     private TextView tv_totalJe;
+    private WorkPzGz_Entity billEntiy;
+    private List<WorkPgGz_Entity> pgList = new ArrayList<>();
 
     public static BSD_WeiXiuYeWuDiaoDu_Fragment newInstance(String params) {
         BSD_WeiXiuYeWuDiaoDu_Fragment fragment = new BSD_WeiXiuYeWuDiaoDu_Fragment();
@@ -206,19 +205,19 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
                 new BSD_LiShiWeiXiuJianYi_DialogFragment().show(getFragmentManager(),"mrkx_lswxjy");
             }
         });
-        bsd_ywwwdd_cp = (TextView) view.findViewById(R.id.bsd_ywwwdd_cp);
-        bsd_ywwwdd_pinpai = (TextView) view.findViewById(R.id.bsd_ywwwdd_pinpai);
-        bsdywwwdd_chexi = (TextView) view.findViewById(R.id.bsdywwwdd_chexi);
-        bsd_ywwwdd_chezu = (TextView) view.findViewById(R.id.bsd_ywwwdd_chezu);
-        bsd_ywwwdd_chexing = (TextView) view.findViewById(R.id.bsd_ywwwdd_chexing);
-        bsd_ywwwdd_vin = (TextView) view.findViewById(R.id.bsd_ywwwdd_vin);
-        bsd_ywwwdd_user = (TextView) view.findViewById(R.id.bsd_ywwwdd_user);
-        bsd_ywwwdd_fuwuguwen = (TextView) view.findViewById(R.id.bsd_ywwwdd_fuwuguwen);
-        bsd_ywwwdd_dengjishijian = (TextView) view.findViewById(R.id.bsd_ywwwdd_dengjishijian);
-        bsd_ywwwdd_dianhua = (TextView) view.findViewById(R.id.bsd_ywwwdd_dianhua);
+        tv_cheno = (TextView) view.findViewById(R.id.bsd_ywwwdd_cp);
+        tv_pinpai = (TextView) view.findViewById(R.id.bsd_ywwwdd_pinpai);
+        tv_chexi = (TextView) view.findViewById(R.id.bsdywwwdd_chexi);
+        tv_chezu = (TextView) view.findViewById(R.id.bsd_ywwwdd_chezu);
+        tv_chexing = (TextView) view.findViewById(R.id.bsd_ywwwdd_chexing);
+        tv_vin = (TextView) view.findViewById(R.id.bsd_ywwwdd_vin);
+        tv_kehumc = (TextView) view.findViewById(R.id.tv_kehumc);
+        tv_fwgw = (TextView) view.findViewById(R.id.tv_fwgw);
+        tv_xche_djrq = (TextView) view.findViewById(R.id.tv_xche_djrq);
+        tv_kehudh = (TextView) view.findViewById(R.id.tv_kehudh);
         //获取listView
         bsd_wxywdd_you_lv = (ListView) view.findViewById(R.id.bsd_wxywdd_you_lv);
-        adapter = new BSD_wxywdd_dap(getActivity(), listPGrenyuan);
+        adapter = new BSD_wxywdd_dap(getActivity(), pgList);
         adapter.setOnOperateItemListener(new BSD_wxywdd_dap.OnOperateItemListener() {
             @Override
             public void onDelete(int reco_no, int position) {
@@ -270,25 +269,25 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         });
         tv_gsfl = (TextView) view.findViewById(R.id.bsd_ksbj_tv_gsfl);
         tv_totalJe = (TextView) view.findViewById(R.id.tv_zong_money);
-        bsd_ywwwdd_cp.setFocusable(true);
-        bsd_ywwwdd_cp.setFocusableInTouchMode(true);
-        bsd_ywwwdd_cp.requestFocus();
+        tv_cheno.setFocusable(true);
+        tv_cheno.setFocusableInTouchMode(true);
+        tv_cheno.requestFocus();
     }
 
     private void updatePaigongJE(final int position) {
-        final int reco_no = Integer.parseInt(listPGrenyuan.get(position).get("reco_no"));
-        final double paig_khgs = Double.parseDouble(listPGrenyuan.get(position).get("paig_khgs"));
-        final double paig_khje = Double.parseDouble(listPGrenyuan.get(position).get("paig_khje"));
-        String reny_mc = listPGrenyuan.get(position).get("reny_mc");
+        final int reco_no = pgList.get(position).getReco_no();
+        final double paig_khgs = pgList.get(position).getPaig_khgs();
+        final double paig_khje = pgList.get(position).getPaig_khje();
+        String reny_mc = pgList.get(position).getReny_mc();
         updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PGJE, paig_khje, reny_mc);
         updateItemInfoDialog.show();
         updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
             @Override
             public void onYesClick(double gongshif) {
                 double jeNow = 0.0;
-                for (int i = 0; i < listPGrenyuan.size(); i++) {
+                for (int i = 0; i < pgList.size(); i++) {
                     if (i != position) {
-                        jeNow = jeNow + Double.parseDouble(listPGrenyuan.get(i).get("paig_khje"));
+                        jeNow = jeNow + pgList.get(position).getPaig_khje();
                     } else {
                         jeNow = jeNow + gongshif;
                     }
@@ -311,19 +310,19 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     }
 
     private void updatePaigongGS(final int position) {
-        final int reco_no = Integer.parseInt(listPGrenyuan.get(position).get("reco_no"));
-        final double paig_khgs = Double.parseDouble(listPGrenyuan.get(position).get("paig_khgs"));
-        final double paig_khje = Double.parseDouble(listPGrenyuan.get(position).get("paig_khje"));
-        String reny_mc = listPGrenyuan.get(position).get("reny_mc");
+        final int reco_no = Integer.parseInt(pgList.get(position).getReny_no());
+        final double paig_khgs = pgList.get(position).getPaig_khgs();
+        final double paig_khje = pgList.get(position).getPaig_khje();
+        String reny_mc = pgList.get(position).getReny_mc();
         updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PGGS, paig_khgs, reny_mc);
         updateItemInfoDialog.show();
         updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
             @Override
             public void onYesClick(double gongshif) {
                 double gongshiNow = 0.0;
-                for (int i = 0; i < listPGrenyuan.size(); i++) {
+                for (int i = 0; i < pgList.size(); i++) {
                     if (i != position) {
-                        gongshiNow = gongshiNow + Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
+                        gongshiNow = gongshiNow + pgList.get(i).getPaig_khgs();
                     } else {
                         gongshiNow = gongshiNow + gongshif;
                     }
@@ -350,11 +349,11 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         params.put("id", reco_no);
         params.put("je", je + "");
         params.put("gs", gs + "");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_GsDj_xiugai, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_GsDj_xiugai, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                listPGrenyuan.get(position).put("paig_khgs", gs + "");
-                listPGrenyuan.get(position).put("paig_khje", je + "");
+                pgList.get(position).setPaig_khgs(gs);
+                pgList.get(position).setPaig_khje(je);
                 adapter.notifyDataSetChanged();
                 updateItemInfoDialog.dismiss();
             }
@@ -379,21 +378,19 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private void deletePaigongInfo(int reco_no, final int position) {
         AbRequestParams params = new AbRequestParams();
         params.put("xxNo", reco_no);//id
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_paigongdelPgxx, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_paigongdelPgxx, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
-                listPGrenyuan.remove(position);
+                pgList.remove(position);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -415,7 +412,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     }
 
     private void getBillInfoFromParam() {
-        billEntiy = JSON.parseObject(param, BSD_WeiXiuJieDan_Entity.class);
+        billEntiy = JSON.parseObject(param, WorkPzGz_Entity.class);
         xm_zj = billEntiy.getXche_rgf();
         cl_zj = billEntiy.getXche_clf();
         zong_zj = billEntiy.getXche_hjje();
@@ -424,21 +421,20 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
 
     private void updateBillInfoUI() {
         billNo.setText(billEntiy.getWork_no());
-        Conts.wxxm_no = billEntiy.getWork_no();
-        bsd_ywwwdd_cp.setText(billEntiy.getChe_no());
+        tv_cheno.setText(billEntiy.getChe_no());
         String cheCx = billEntiy.getChe_cx();
         String[] cheCxs = cheCx.split("\\|");
         if (cheCxs.length >= 4) {
-            bsd_ywwwdd_pinpai.setText(cheCxs[0]);
-            bsdywwwdd_chexi.setText(cheCxs[1]);
-            bsd_ywwwdd_chezu.setText(cheCxs[2]);
-            bsd_ywwwdd_chexing.setText(cheCxs[3]);
+            tv_pinpai.setText(cheCxs[0]);
+            tv_chexi.setText(cheCxs[1]);
+            tv_chezu.setText(cheCxs[2]);
+            tv_chexing.setText(cheCxs[3]);
         }
-        bsd_ywwwdd_vin.setText(billEntiy.getChe_vin());
-        bsd_ywwwdd_user.setText(billEntiy.getKehu_mc());
-        bsd_ywwwdd_fuwuguwen.setText(billEntiy.getXche_cz());
-        bsd_ywwwdd_dengjishijian.setText(billEntiy.getXche_yjwgrq());
-        bsd_ywwwdd_dianhua.setText(billEntiy.getKehu_dh());
+        tv_vin.setText(billEntiy.getChe_vin());
+        tv_kehumc.setText(billEntiy.getKehu_mc());
+        tv_kehudh.setText(billEntiy.getKehu_dh());
+        tv_fwgw.setText(billEntiy.getXche_cz());
+        tv_xche_djrq.setText(BsdUtil.dateToStr(billEntiy.getXche_jdrq()));
         tv_gsfl.setText(billEntiy.getXche_sfbz());
         tv_totalJe.setText(billEntiy.getXche_hjje() + "");
     }
@@ -494,7 +490,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     public void completeWX() {
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", billEntiy.getWork_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_WG, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_WG, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
                 try {
@@ -542,30 +538,48 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "完工失败==" + s);
+                Toast.makeText(getHostActicity(), "完工失败", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
     /**
-     * 终止派工
+     * 终止维修
      */
     public void stopWX() {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "终止维修中...");
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", billEntiy.getWork_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_ZZ, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_ZZ, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                queRen = new QueRen(getActivity(), "终止成功");
-                queRen.show();
-                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        queRen.dismiss();
-                        ((MainActivity) getActivity()).upBSD_ZCDD_page();
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.getString("message").equals("查询成功")) {
+                        queRen = new QueRen(getActivity(), "终止维修成功");
+                        queRen.show();
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                                ((MainActivity) getActivity()).upBSD_ZCDD_page();
+                            }
+                        });
+                    } else {
+                        queRen = new QueRen(getActivity(), jsonObject.getString("data"));
+                        queRen.show();
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                            }
+                        });
                     }
-                });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -578,7 +592,8 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "终止维修失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
     }
@@ -589,7 +604,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
     private void weixin() {
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", Conts.work_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wg_weixin, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wg_weixin, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
 
@@ -708,7 +723,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         AbRequestParams params = new AbRequestParams();
         Object json = JSON.toJSON(needAddList);
         params.put("addLists", json.toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_addnewcl, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_addnewcl, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 // 保存成功
@@ -858,7 +873,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         AbRequestParams params = new AbRequestParams();
         Object json = JSON.toJSON(needAddList);
         params.put("addLists", json.toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_addnewxm, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_addnewxm, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 // 保存成功
@@ -934,31 +949,19 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
 
     private void getPaiGongInfo(String workNo, String wxxmNo) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        listPGrenyuan.clear();
+        pgList.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", workNo);
         params.put("wxxm_no", wxxmNo);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_PaiGong_XiangXi, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_PaiGong_XiangXi, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("1")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("reco_no", item.getString("reco_no"));
-                            map.put("work_no", item.getString("work_no"));
-                            map.put("wxxm_no", item.getString("wxxm_no"));
-                            map.put("reny_no", item.getString("reny_no"));
-                            map.put("reny_mc", item.getString("reny_mc"));
-                            map.put("wxry_bm", item.getString("wxry_bm"));
-                            map.put("paig_khgs", item.getString("paig_khgs"));
-                            map.put("paig_khje", item.getString("paig_khje"));
-                            map.put("paig_pgsj", item.getString("paig_pgsj"));
-                            listPGrenyuan.add(map);
-                        }
+                    if (jsonObject.getString("message").equals("查询成功")) {
+                        JSONArray array = jsonObject.getJSONArray("data");
+                        List<WorkPgGz_Entity> _list = JSON.parseArray(array.toString(), WorkPgGz_Entity.class);
+                        pgList.addAll(_list);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

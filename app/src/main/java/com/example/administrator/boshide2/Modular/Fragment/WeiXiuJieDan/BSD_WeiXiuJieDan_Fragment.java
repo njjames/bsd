@@ -30,6 +30,7 @@ import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
+import com.example.administrator.boshide2.Modular.Entity.WorkPzGz_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.BaoYangChaXun.BSD_BaoYangChaXun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
@@ -53,6 +54,7 @@ import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
 
@@ -151,7 +153,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private TextView bsd_wxjd_lswxjy;
     private TextView bsd_wxjd_lswx;
     private String params;
-    private BSD_WeiXiuJieDan_Entity billEntiy;
+    private WorkPzGz_Entity billEntiy;
     private TextView title;
     private TextView footerText;
     private TextView billNo;
@@ -167,6 +169,8 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private UpdateItemInfoDialog updateItemInfoDialog;
     private LinearLayout bsd_lsbj_fanhui;
     private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
+    private double xm_zj;
+    private double cl_zj;
 
     public static BSD_WeiXiuJieDan_Fragment newInstance(String params) {
         BSD_WeiXiuJieDan_Fragment fragment = new BSD_WeiXiuJieDan_Fragment();
@@ -601,7 +605,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         et_cardno.setText(billEntiy.getCard_no());
         gongshifeili_name = billEntiy.getXche_sfbz();
         gongshifeili_id = String.valueOf(billEntiy.getXche_sffl());
-        tv_gcsj.setText(billEntiy.getGcsj());
+        tv_gcsj.setText(BsdUtil.dateToStr(billEntiy.getGcsj()));
         et_niankuan.setText(billEntiy.getChe_nf());
         et_color.setText(billEntiy.getChe_wxys());
         et_cunyou.setText(billEntiy.getXche_cy());
@@ -615,32 +619,9 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
      * 根据传入的参数，获取到单据中的信息
      */
     private void getBillInfoFromParam() {
-        try {
-            JSONObject item = new JSONObject(params);
-            billEntiy = new BSD_WeiXiuJieDan_Entity();
-            billEntiy.setWork_no(item.getString("work_no"));
-            billEntiy.setKehu_no(item.getString("kehu_no"));
-            billEntiy.setKehu_mc(item.getString("kehu_mc"));
-            billEntiy.setKehu_xm(item.getString("kehu_xm"));
-            billEntiy.setKehu_dh(item.getString("kehu_dh"));
-            billEntiy.setChe_no(item.getString("che_no"));
-            billEntiy.setChe_cx(item.getString("che_cx"));
-            billEntiy.setChe_vin(item.getString("che_vin"));
-            billEntiy.setXche_bz(item.getString("xche_bz"));   //故障描述
-            billEntiy.setXche_lc(item.getInt("xche_lc"));
-            billEntiy.setXche_jdrq(item.getString("xche_jdrq"));
-            billEntiy.setXche_sfbz(item.getString("xche_sfbz"));   //费率名称
-            billEntiy.setXche_sffl(item.getDouble("xche_sffl"));
-            billEntiy.setCangk_dm(item.getString("cangk_dm"));
-            billEntiy.setCangk_mc(item.getString("cangk_mc"));
-            billEntiy.setGcsj(item.getString("che_gcrq"));
-            billEntiy.setCard_no(item.getString("card_no"));
-            billEntiy.setXche_hjje(item.getDouble("xche_hjje"));
-//            xm_zj = item.getDouble("xche_rgf");
-//            cl_zj = item.getDouble("xche_clf");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        billEntiy = JSON.parseObject(params, WorkPzGz_Entity.class);
+        xm_zj = billEntiy.getXche_rgf();
+        cl_zj = billEntiy.getXche_clf();
     }
 
     /*
@@ -650,7 +631,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         listvincx.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("vinCode", et_vin.getText().toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcxnm_byvin, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_getcxnm_byvin, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 try {
@@ -678,7 +659,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                         }
                     }
                     if (jsonObject.get("message").toString().equals("查询失败")) {
-                        Toast.makeText(getActivity(), jsonObject.getString("data").toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -709,7 +690,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     public void getcx_by_cxdm() {
         AbRequestParams params = new AbRequestParams();
         params.put("chex_dm", cxnm);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getcx_byvindm, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_getcx_byvindm, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 try {
@@ -835,7 +816,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         listgslv.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("type", "ITGongShi");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_HYGL_ADD_TYPE, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 try {
@@ -916,7 +897,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         list_CL.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", billEntiy.getWork_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_cllb, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_cllb, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String s) {
                 try {
@@ -970,7 +951,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         list_XM.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", billEntiy.getWork_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_xmlb, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_xmlb, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aaa, String s) {
                 try {
@@ -1173,7 +1154,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         AbRequestParams params = new AbRequestParams();
         Object json = JSON.toJSON(needAddList);
         params.put("addLists", json.toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_addnewcl, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_addnewcl, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 if (data.equals("success")) {
@@ -1294,7 +1275,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         AbRequestParams params = new AbRequestParams();
         Object json = JSON.toJSON(needAddList);
         params.put("addLists", json.toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_addnewxm, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_addnewxm, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 // 保存成功
@@ -1390,7 +1371,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         listjbchexing.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("dm", chezuid);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_Chexing, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_Chexing, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 JSONObject jsonObject = null;
@@ -1477,7 +1458,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         listjbcz.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("dm", chexiid);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CZ, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CZ, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 try {
@@ -1586,7 +1567,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         listjbcx.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("dm", cxbianhao);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CX, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CX, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int aa, String s) {
                 JSONObject jsonObject = null;

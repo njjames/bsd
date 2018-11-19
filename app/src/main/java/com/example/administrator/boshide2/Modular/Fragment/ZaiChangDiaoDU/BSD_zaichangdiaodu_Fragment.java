@@ -1,7 +1,6 @@
 package com.example.administrator.boshide2.Modular.Fragment.ZaiChangDiaoDU;
 
 import android.app.Dialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -12,13 +11,12 @@ import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.alibaba.fastjson.JSON;
-import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
+import com.example.administrator.boshide2.Modular.Entity.WorkPzGz_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
-import com.example.administrator.boshide2.Modular.Fragment.ZaiChangDiaoDU.Entity.BSD_ZaiChangDiaoDu_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.ZaiChangDiaoDU.PopWindow.Adapter.BSD_ZCDD_XM_adp;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
@@ -37,7 +35,7 @@ import java.util.List;
 public class BSD_zaichangdiaodu_Fragment extends BaseFragment implements AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
     private ListView listview;
     private BSD_ZCDD_XM_adp adp_xm;
-    private List<BSD_ZaiChangDiaoDu_Entity> list = new ArrayList<BSD_ZaiChangDiaoDu_Entity>();
+    private List<WorkPzGz_Entity> list = new ArrayList<>();
     private Dialog mWeiboDialog;
     private TextView bsd_zcdd_name, bsd_zcdd_dh, bsd_zcdd_cp;
     private TextView tv_search;
@@ -120,7 +118,7 @@ public class BSD_zaichangdiaodu_Fragment extends BaseFragment implements AbPullT
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.getString("message").equals("查询成功")) {
                         JSONArray array = jsonObject.getJSONArray("data");
-                        List<BSD_ZaiChangDiaoDu_Entity> _list = JSON.parseArray(array.toString(), BSD_ZaiChangDiaoDu_Entity.class);
+                        List<WorkPzGz_Entity> _list = JSON.parseArray(array.toString(), WorkPzGz_Entity.class);
                         list.addAll(_list);
                     } else {
                         if (page > 1) {

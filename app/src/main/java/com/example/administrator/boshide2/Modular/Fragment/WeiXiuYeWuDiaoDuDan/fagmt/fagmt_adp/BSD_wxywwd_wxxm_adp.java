@@ -124,7 +124,7 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (onOperateItemListener != null) {
-                    onOperateItemListener.onPaiGong(list.get(i).getWxxm_no());
+                    onOperateItemListener.onPaiGong(i);
                 }
             }
         });
@@ -153,7 +153,7 @@ public class BSD_wxywwd_wxxm_adp extends BaseAdapter {
 
 
     public interface OnOperateItemListener {
-        void onPaiGong(String wxxmNo);
+        void onPaiGong(int position);
 
         /**
          * 删除维修项目

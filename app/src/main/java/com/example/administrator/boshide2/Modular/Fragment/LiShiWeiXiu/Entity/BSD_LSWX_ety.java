@@ -6,7 +6,6 @@ package com.example.administrator.boshide2.Modular.Fragment.LiShiWeiXiu.Entity;
  */
 
 public class BSD_LSWX_ety {
-
     private String id;
     private String work_no;
     private String kehu_mc;

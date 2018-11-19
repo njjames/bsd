@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.administrator.boshide2.Modular.Entity.WorkPgGz_Entity;
 import com.example.administrator.boshide2.R;
 
 import java.util.List;
@@ -19,14 +20,10 @@ import java.util.Map;
 
 public class BSD_wxywdd_dap extends BaseAdapter {
     private LayoutInflater layoutInflater;
-    private List<Map<String, String>> list;
+    private List<WorkPgGz_Entity> list;
     private OnOperateItemListener onOperateItemListener;
 
-    public void setList(List<Map<String, String>> list) {
-        this.list = list;
-    }
-
-    public BSD_wxywdd_dap(Context context, List<Map<String, String>> list) {
+    public BSD_wxywdd_dap(Context context, List<WorkPgGz_Entity> list) {
         layoutInflater = LayoutInflater.from(context);
         this.list = list;
     }
@@ -67,9 +64,9 @@ public class BSD_wxywdd_dap extends BaseAdapter {
         } else {
             holder = (Holder) contetview.getTag();
         }
-        holder.bsd_xsbj_name.setText(list.get(i).get("reny_mc"));
-        holder.bsd_xsbj_gongshi.setText(list.get(i).get("paig_khgs"));
-        holder.bsd_xsbj_je.setText(list.get(i).get("paig_khje"));
+        holder.bsd_xsbj_name.setText(list.get(i).getReny_mc());
+        holder.bsd_xsbj_gongshi.setText("" + list.get(i).getPaig_khgs());
+        holder.bsd_xsbj_je.setText("" + list.get(i).getPaig_khje());
         holder.bsd_xsbj_je.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +89,7 @@ public class BSD_wxywdd_dap extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (onOperateItemListener != null) {
-                    onOperateItemListener.onDelete(Integer.parseInt(list.get(i).get("reco_no")), i);
+                    onOperateItemListener.onDelete(list.get(i).getReco_no(), i);
                 }
             }
         });

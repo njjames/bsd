@@ -33,6 +33,8 @@ import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Adapter.AbstractSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Adapter.CustemSpinerAdapter;
 import com.example.administrator.boshide2.Modular.Entity.CustemObject;
+import com.example.administrator.boshide2.Modular.Entity.WorkPgGz_Entity;
+import com.example.administrator.boshide2.Modular.Entity.WorkPzGz_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.BaoYangChaXun.BSD_BaoYangChaXun_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
@@ -57,6 +59,7 @@ import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
 
@@ -82,7 +85,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private TextView bsd_ywwwdd_cp;
     private BSD_mrkx_wxcl BSD_wxcl;
     private BSD_mrkx_wxxm BSD_wxxm;
-    private List<Map<String, String>> listPGrenyuan = new ArrayList<Map<String, String>>();
     private TextView billNo;
     private TextView tv_jiesuan;
     //车辆信息、历史维修、历史维修建议
@@ -167,7 +169,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private String params;
     private TextView title;
     private TextView footerText;
-    private BSD_WeiXiuJieDan_Entity billEntiy;
+    private WorkPzGz_Entity billEntiy;
     private ImageView iv_wxxmAdd;
     private ImageView iv_wxllAdd;
     private int currentType = 0; // 标示当前是显示的维修项目还是维修用料，0是维修项目，1是维修用来
@@ -184,6 +186,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
     private boolean isShowWxcl = false;
+    private List<WorkPgGz_Entity> pgList = new ArrayList<>();
 
     public static BSD_MeiRongKuaiXiu_Fragment newInstance(String params) {
         BSD_MeiRongKuaiXiu_Fragment fragment = new BSD_MeiRongKuaiXiu_Fragment();
@@ -306,7 +309,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         bsd_mrkx_et_miaoshu = (EditText) view.findViewById(R.id.bsd_mrkx_et_miaoshu);
         //获取listView
         bsd_wxywdd_you_lv = (ListView) view.findViewById(R.id.bsd_wxywdd_you_lv);
-        paiGongInfoAdapter = new BSD_wxywdd_dap(getActivity(), listPGrenyuan);
+        paiGongInfoAdapter = new BSD_wxywdd_dap(getActivity(), pgList);
         paiGongInfoAdapter.setOnOperateItemListener(new BSD_wxywdd_dap.OnOperateItemListener() {
             @Override
             public void onDelete(int reco_no, int position) {
@@ -372,19 +375,19 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
      * @param position
      */
     private void updatePaigongJE(final int position) {
-        final int reco_no = Integer.parseInt(listPGrenyuan.get(position).get("reco_no"));
-        final double paig_khgs = Double.parseDouble(listPGrenyuan.get(position).get("paig_khgs"));
-        final double paig_khje = Double.parseDouble(listPGrenyuan.get(position).get("paig_khje"));
-        String reny_mc = listPGrenyuan.get(position).get("reny_mc");
+        final int reco_no = pgList.get(position).getReco_no();
+        final double paig_khgs = pgList.get(position).getPaig_khgs();
+        final double paig_khje = pgList.get(position).getPaig_khje();
+        String reny_mc = pgList.get(position).getReny_mc();
         updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PGJE, paig_khje, reny_mc);
         updateItemInfoDialog.show();
         updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
             @Override
             public void onYesClick(double gongshif) {
                 double jeNow = 0.0;
-                for (int i = 0; i < listPGrenyuan.size(); i++) {
+                for (int i = 0; i < pgList.size(); i++) {
                     if (i != position) {
-                        jeNow = jeNow + Double.parseDouble(listPGrenyuan.get(i).get("paig_khje"));
+                        jeNow = jeNow + pgList.get(position).getPaig_khje();
                     } else {
                         jeNow = jeNow + gongshif;
                     }
@@ -411,19 +414,19 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
      * @param position
      */
     private void updatePaigongGS(final int position) {
-        final int reco_no = Integer.parseInt(listPGrenyuan.get(position).get("reco_no"));
-        final double paig_khgs = Double.parseDouble(listPGrenyuan.get(position).get("paig_khgs"));
-        final double paig_khje = Double.parseDouble(listPGrenyuan.get(position).get("paig_khje"));
-        String reny_mc = listPGrenyuan.get(position).get("reny_mc");
+        final int reco_no = pgList.get(position).getReco_no();
+        final double paig_khgs = pgList.get(position).getPaig_khgs();
+        final double paig_khje = pgList.get(position).getPaig_khje();
+        String reny_mc = pgList.get(position).getReny_mc();
         updateItemInfoDialog = new UpdateItemInfoDialog(getActivity(), UpdateItemInfoDialog.CHANGE_PGGS, paig_khgs, reny_mc);
         updateItemInfoDialog.show();
         updateItemInfoDialog.setToopromtOnClickListener(new UpdateItemInfoDialog.ToopromtOnClickListener() {
             @Override
             public void onYesClick(double gongshif) {
                 double gongshiNow = 0.0;
-                for (int i = 0; i < listPGrenyuan.size(); i++) {
+                for (int i = 0; i < pgList.size(); i++) {
                     if (i != position) {
-                        gongshiNow = gongshiNow + Double.parseDouble(listPGrenyuan.get(i).get("paig_khgs"));
+                        gongshiNow = gongshiNow + pgList.get(position).getPaig_khgs();
                     } else {
                         gongshiNow = gongshiNow + gongshif;
                     }
@@ -471,12 +474,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
                 getPaiGongInfo(workNo, wxxmNo);
             }
 
-        });
-        BSD_wxxm.setChaKanPaiGongREN(new BSD_mrkx_wxxm.ChaKanPaiGongREN() {
-            @Override
-            public void onYesClick(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je) {
-                PGRenYuan(work_no, wxxm_no, wxxm_gs, wxxm_je);
-            }
         });
         BSD_wxxm.setXm_zj(new BSD_mrkx_wxxm.XM_ZJ() {
             @Override
@@ -535,36 +532,9 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
      * 根据传入的参数，获取到单据中的信息
      */
     private void getBillInfoFromParam() {
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = new JSONObject(params);
-            JSONObject item = jsonObject.getJSONObject("data");
-            billEntiy = new BSD_WeiXiuJieDan_Entity();
-            billEntiy.setWork_no(item.getString("work_no"));
-            billEntiy.setKehu_no(item.getString("kehu_no"));
-            billEntiy.setKehu_mc(item.getString("kehu_mc"));
-            billEntiy.setKehu_xm(item.getString("kehu_xm"));
-            billEntiy.setKehu_dz(item.getString("kehu_dz"));
-            billEntiy.setKehu_yb(item.getString("kehu_yb"));
-            billEntiy.setKehu_dh(item.getString("kehu_dh"));
-            billEntiy.setChe_no(item.getString("che_no"));
-            billEntiy.setChe_cx(item.getString("che_cx"));
-            billEntiy.setChe_vin(item.getString("che_vin"));
-            billEntiy.setXche_bz(item.getString("xche_bz"));   //故障描述
-            billEntiy.setXche_lc(item.getInt("xche_lc"));
-            billEntiy.setXche_jdrq(item.getString("xche_jdrq"));
-            billEntiy.setXche_sfbz(item.getString("xche_sfbz"));   //费率名称
-            billEntiy.setXche_sffl(item.getDouble("xche_sffl"));
-            billEntiy.setCangk_dm(item.getString("cangk_dm"));
-            billEntiy.setCangk_mc(item.getString("cangk_mc"));
-            billEntiy.setGcsj(item.getString("gcsj"));
-            billEntiy.setCard_no(item.getString("card_no"));
-            billEntiy.setXche_hjje(item.getDouble("xche_hjje"));
-            xm_zj = item.getDouble("xche_rgf");
-            cl_zj = item.getDouble("xche_clf");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        billEntiy = JSON.parseObject(params, WorkPzGz_Entity.class);
+        xm_zj = billEntiy.getXche_rgf();
+        cl_zj = billEntiy.getXche_clf();
     }
 
     public void updateBillInfo() {
@@ -589,11 +559,12 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         bsd_mrkx_et_miaoshu.setText(billEntiy.getXche_bz());
         bsd_mrkx_lianxifangshi.setText(billEntiy.getKehu_dh());
         bsd_mrkx_tv_gsfl.setText(billEntiy.getXche_sfbz());    //费率名称
-        Conts.feilv_name = billEntiy.getXche_sfbz();
+        gongshifeili_name = billEntiy.getXche_sfbz();
+        gongshifeili_id = String.valueOf(billEntiy.getXche_sffl());
         bsd_mrkx_tv_ck.setText(billEntiy.getCangk_mc());
-        bsd_mrxk_tv_djtime.setText(billEntiy.getGcsj());
-        billNo.setText(billEntiy.getWork_no());
         ckid = billEntiy.getCangk_dm();
+        bsd_mrxk_tv_djtime.setText(BsdUtil.dateToStr(billEntiy.getGcsj()));
+        billNo.setText(billEntiy.getWork_no());
         bsd_mrkx_zongjia.setText("");
     }
 
@@ -1518,8 +1489,8 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_GsDj_xiugai, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
-                listPGrenyuan.get(position).put("paig_khgs", gs + "");
-                listPGrenyuan.get(position).put("paig_khje", je + "");
+                pgList.get(position).setPaig_khgs(gs);
+                pgList.get(position).setPaig_khje(je);
                 paiGongInfoAdapter.notifyDataSetChanged();
                 updateItemInfoDialog.dismiss();
             }
@@ -1538,71 +1509,6 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             }
         });
     }
-
-    /**
-     * 派工人员详细
-     *
-     * @param work_no
-     * @param wxxm_no
-     */
-    public void PGRenYuan(String work_no, String wxxm_no, double wxxm_gs, double wxxm_je) {
-        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        listPGrenyuan.clear();
-        AbRequestParams params = new AbRequestParams();
-        params.put("work_no", Conts.work_no);
-        params.put("wxxm_no", wxxm_no);
-        Log.i("cjn", "查看两个数据" + work_no + "======" + wxxm_no);
-        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_PaiGong_XiangXi, params, new AbStringHttpResponseListener() {
-            @Override
-            public void onSuccess(int a, String s) {
-                Log.i("cjn", "派工明细" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("1")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            //这块拿到的是维系接单的详细表
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("reco_no", item.getString("reco_no"));
-                            map.put("work_no", item.getString("work_no"));
-                            map.put("wxxm_no", item.getString("wxxm_no"));
-                            map.put("reny_no", item.getString("reny_no"));
-                            map.put("reny_mc", item.getString("reny_mc"));
-                            map.put("wxry_bm", item.getString("wxry_bm"));
-                            map.put("paig_khgs", item.getString("paig_khgs"));
-                            map.put("paig_khje", item.getString("paig_khje"));
-                            map.put("paig_pgsj", item.getString("paig_pgsj"));
-                            listPGrenyuan.add(map);
-                            WeiboDialogUtils.closeDialog(mWeiboDialog);
-                        }
-                        paiGongInfoAdapter.setList(listPGrenyuan);
-                        paiGongInfoAdapter.notifyDataSetChanged();
-                    }
-
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-            @Override
-            public void onStart() {
-            }
-
-            @Override
-            public void onFinish() {
-            }
-
-            @Override
-            public void onFailure(int i, String s, Throwable throwable) {
-                WeiboDialogUtils.closeDialog(mWeiboDialog);
-            }
-        });
-    }
-
 
     //切换碎片事务的方法
     private void change_XM() {
@@ -1628,7 +1534,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
      */
     private void getPaiGongInfo(String workNo, String wxxmNo) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        listPGrenyuan.clear();
+        pgList.clear();
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", workNo);
         params.put("wxxm_no", wxxmNo);
@@ -1637,22 +1543,10 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             public void onSuccess(int a, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.get("status").toString().equals("1")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("reco_no", item.getString("reco_no"));
-                            map.put("work_no", item.getString("work_no"));
-                            map.put("wxxm_no", item.getString("wxxm_no"));
-                            map.put("reny_no", item.getString("reny_no"));
-                            map.put("reny_mc", item.getString("reny_mc"));
-                            map.put("wxry_bm", item.getString("wxry_bm"));
-                            map.put("paig_khgs", item.getString("paig_khgs"));
-                            map.put("paig_khje", item.getString("paig_khje"));
-                            map.put("paig_pgsj", item.getString("paig_pgsj"));
-                            listPGrenyuan.add(map);
-                        }
+                    if (jsonObject.getString("message").equals("查询成功")) {
+                        JSONArray array = jsonObject.getJSONArray("data");
+                        List<WorkPgGz_Entity> _list = JSON.parseArray(array.toString(), WorkPgGz_Entity.class);
+                        pgList.addAll(_list);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -2127,7 +2021,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
         Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_paigongdelPgxx, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
-                listPGrenyuan.remove(position);
+                pgList.remove(position);
                 paiGongInfoAdapter.notifyDataSetChanged();
             }
 

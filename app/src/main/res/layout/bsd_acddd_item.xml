@@ -7,27 +7,27 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/bsd_xzcl_name"
+        android:id="@+id/bsd_xzcl_workno"
         android:layout_weight="1.5"
         style="@style/mysearchinfostyle"
         android:text="维修单号" />
 
 
     <TextView
-        android:id="@+id/bsd_xzcl_shuliang"
+        android:id="@+id/bsd_xzcl_cheno"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
         android:text="车牌" />
 
 
     <TextView
-        android:id="@+id/bsd_xzcl_danjia"
+        android:id="@+id/bsd_xzcl_kehumc"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
         android:text="车主" />
 
     <TextView
-        android:id="@+id/bsd_xzcl_dw"
+        android:id="@+id/bsd_xzcl_fwgw"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
         android:text="服务顾问" />
@@ -52,7 +52,7 @@
         android:text="维修类型" />
 
     <TextView
-        android:id="@+id/bsd_xzcl_caozuo"
+        android:id="@+id/bsd_xzcl_kehudh"
         android:layout_weight="1"
         style="@style/mysearchinfostyle"
         android:text="联系方式" />

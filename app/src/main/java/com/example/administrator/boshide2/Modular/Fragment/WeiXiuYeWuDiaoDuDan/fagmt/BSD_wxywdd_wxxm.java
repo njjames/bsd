@@ -78,15 +78,25 @@ public class BSD_wxywdd_wxxm extends BaseFragment {
         adapter = new BSD_wxywwd_wxxm_adp(getActivity(), list_XM);
         adapter.setOnOperateItemListener(new BSD_wxywwd_wxxm_adp.OnOperateItemListener() {
             @Override
-            public void onPaiGong(final String wxxmNo) {
+            public void onPaiGong(final int position) {
+                if (currentPosition != position) {
+                    adapter.setCurrentPosition(position);
+                    currentPosition = position;
+                    int firstVisiblePosition = bsd_lsbj_lv.getFirstVisiblePosition();
+                    adapter.notifyDataSetChanged();
+                    bsd_lsbj_lv.setSelection(firstVisiblePosition);
+                    if (onRefreashPaiGongListener != null) {
+                        onRefreashPaiGongListener.onRefreash(list_XM.get(position).getWork_no(), list_XM.get(position).getWxxm_no());
+                    }
+                }
                 PaiGongDialog paiGongDialog = new PaiGongDialog(getContext(), PaiGongDialog.PAIGONG_SINGLE);
                 paiGongDialog.setWorkNo(param);
-                paiGongDialog.setWxxmNo(wxxmNo);
+                paiGongDialog.setWxxmNo(list_XM.get(position).getWxxm_no());
                 paiGongDialog.setOnPaiGongListener(new PaiGongDialog.OnPaiGongListener() {
                     @Override
                     public void onSuccess() {
                         if (onRefreashPaiGongListener != null) {
-                            onRefreashPaiGongListener.onRefreash(param, wxxmNo);
+                            onRefreashPaiGongListener.onRefreash(param, list_XM.get(position).getWxxm_no());
                         }
                     }
                 });

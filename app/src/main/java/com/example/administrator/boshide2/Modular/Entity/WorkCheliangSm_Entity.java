@@ -1,23 +1,22 @@
-package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity;
+package com.example.administrator.boshide2.Modular.Entity;
 
-/**
- * Created by 李赛 on 2017-09-09.
- */
+import java.util.Date;
 
-public class BSD_Car_Entity {
+public class WorkCheliangSm_Entity {
     private String che_no;
     private String che_vin;
+    private String che_cx;
     private String che_pinpai;
     private String che_chexi;
     private String che_chezu;
     private String che_chexing;
-    private String che_color;
+    private String che_wxys;
     private String che_nf;
-    private String che_gcrq;
-    private String che_xcbyrq;
-    private String che_xcjcrq;
-    private String che_jqxrq;
-    private String che_syxdq;
+    private Date che_gcrq;
+    private Date che_next_byrq;
+    private Date che_jianche_dqrq;
+    private Date che_jiaoqx_dqrq;
+    private Date che_shangyex_dqrq;
 
     public String getChe_no() {
         return che_no;
@@ -33,6 +32,14 @@ public class BSD_Car_Entity {
 
     public void setChe_vin(String che_vin) {
         this.che_vin = che_vin;
+    }
+
+    public String getChe_cx() {
+        return che_cx;
+    }
+
+    public void setChe_cx(String che_cx) {
+        this.che_cx = che_cx;
     }
 
     public String getChe_pinpai() {
@@ -67,12 +74,12 @@ public class BSD_Car_Entity {
         this.che_chexing = che_chexing;
     }
 
-    public String getChe_color() {
-        return che_color;
+    public String getChe_wxys() {
+        return che_wxys;
     }
 
-    public void setChe_color(String che_color) {
-        this.che_color = che_color;
+    public void setChe_wxys(String che_wxys) {
+        this.che_wxys = che_wxys;
     }
 
     public String getChe_nf() {
@@ -83,43 +90,43 @@ public class BSD_Car_Entity {
         this.che_nf = che_nf;
     }
 
-    public String getChe_gcrq() {
+    public Date getChe_gcrq() {
         return che_gcrq;
     }
 
-    public void setChe_gcrq(String che_gcrq) {
+    public void setChe_gcrq(Date che_gcrq) {
         this.che_gcrq = che_gcrq;
     }
 
-    public String getChe_xcbyrq() {
-        return che_xcbyrq;
+    public Date getChe_next_byrq() {
+        return che_next_byrq;
     }
 
-    public void setChe_xcbyrq(String che_xcbyrq) {
-        this.che_xcbyrq = che_xcbyrq;
+    public void setChe_next_byrq(Date che_next_byrq) {
+        this.che_next_byrq = che_next_byrq;
     }
 
-    public String getChe_xcjcrq() {
-        return che_xcjcrq;
+    public Date getChe_jianche_dqrq() {
+        return che_jianche_dqrq;
     }
 
-    public void setChe_xcjcrq(String che_xcjcrq) {
-        this.che_xcjcrq = che_xcjcrq;
+    public void setChe_jianche_dqrq(Date che_jianche_dqrq) {
+        this.che_jianche_dqrq = che_jianche_dqrq;
     }
 
-    public String getChe_jqxrq() {
-        return che_jqxrq;
+    public Date getChe_jiaoqx_dqrq() {
+        return che_jiaoqx_dqrq;
     }
 
-    public void setChe_jqxrq(String che_jqxrq) {
-        this.che_jqxrq = che_jqxrq;
+    public void setChe_jiaoqx_dqrq(Date che_jiaoqx_dqrq) {
+        this.che_jiaoqx_dqrq = che_jiaoqx_dqrq;
     }
 
-    public String getChe_syxdq() {
-        return che_syxdq;
+    public Date getChe_shangyex_dqrq() {
+        return che_shangyex_dqrq;
     }
 
-    public void setChe_syxdq(String che_syxdq) {
-        this.che_syxdq = che_syxdq;
+    public void setChe_shangyex_dqrq(Date che_shangyex_dqrq) {
+        this.che_shangyex_dqrq = che_shangyex_dqrq;
     }
 }
