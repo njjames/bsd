@@ -37,7 +37,6 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2017-11-13.
  */
-
 public class BSD_MeiRongKuaiXiu_KuCun_Fragment extends DialogFragment {
     private static final String PARAM_KEY = "param_key";
     private TextView bsd_wxcl_kc_bianma;
@@ -56,7 +55,7 @@ public class BSD_MeiRongKuaiXiu_KuCun_Fragment extends DialogFragment {
     private Dialog mWeiboDialog;
     private Context context;
     private BSD_wxcl_kc_apater mAdapter;
-    private ArrayList<BSD_WXCL_CK_Entity> mList = new ArrayList();
+    private ArrayList<BSD_WXCL_CK_Entity> mList = new ArrayList<>();
     private URLS url;
     private BSD_WXCL_CK_Entity ck_entity;
     private double currentKc;

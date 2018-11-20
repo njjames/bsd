@@ -63,6 +63,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -137,9 +138,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private LinearLayout ll_gcsj;
     private TextView bsd_wxjd_rl_bycx;
     private TextView tv_gcsj;
-    private EditText et_niankuan;
     private EditText et_cunyou;
-    private EditText et_color;
     private EditText et_miaoshu;
     private TimeDialog timePickerShow;
     private Queding_Quxiao queding_quxiao;
@@ -171,6 +170,10 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
     private double xm_zj;
     private double cl_zj;
+    private TextView tv_readcard;
+    private TextView tv_removecard;
+    private Queding_Quxiao quedingQuxiao;
+    private String che_cx;
 
     public static BSD_WeiXiuJieDan_Fragment newInstance(String params) {
         BSD_WeiXiuJieDan_Fragment fragment = new BSD_WeiXiuJieDan_Fragment();
@@ -214,9 +217,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         });
         bsd_wxjd_jc = (TextView) view.findViewById(R.id.bsd_wxjd_jc);
         bsd_wxjd_jc.setOnClickListener(this);
-        et_niankuan = (EditText) view.findViewById(R.id.et_niankuan);
         et_cunyou = (EditText) view.findViewById(R.id.et_cunyou);
-        et_color = (EditText) view.findViewById(R.id.et_color);
         et_miaoshu = (EditText) view.findViewById(R.id.et_miaoshu);
         ll_gsfl = (LinearLayout) view.findViewById(R.id.ll_gsfl);
         tv_gsfl = (TextView) view.findViewById(R.id.tv_gsfl);
@@ -349,6 +350,10 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         title = (TextView) view.findViewById(R.id.tv_title);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
         billNo = (TextView) view.findViewById(R.id.tv_billNo);
+        tv_readcard = (TextView) view.findViewById(R.id.tv_readcard);
+        tv_readcard.setOnClickListener(this);
+        tv_removecard = (TextView) view.findViewById(R.id.tv_removecard);
+        tv_removecard.setOnClickListener(this);
     }
 
     private void updateWxxmGsf(final double gongshif, final int position) {
@@ -358,7 +363,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         params.put("wxxm_no", list_XM.get(position).getWxxm_no());
         params.put("jg", gongshif + "");
         params.put("hyzk", "1"); // 这个参数目前也没有用
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_mrkx_upxm, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_mrkx_upxm, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 list_XM.get(position).setWxxm_yje(gongshif);
@@ -400,7 +405,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         params.put("work_no", list_XM.get(position).getWork_no());
         params.put("wxxm_no", list_XM.get(position).getWxxm_no());
         params.put("wxxm_mc", newWxxmMc);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_Update_WxxmMc, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_Update_WxxmMc, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 list_XM.get(position).setWxxm_mc(newWxxmMc);
@@ -436,7 +441,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         params.put("peij_no", list_CL.get(position).getPeij_no());
         params.put("ydj", newPeijYdj + "");
         params.put("zk", Conts.MRKX_CL_ZK + "");
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_update_peijydj, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_update_peijydj, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
                 list_CL.get(position).setPeij_ydj(newPeijYdj);
@@ -606,8 +611,6 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         gongshifeili_name = billEntiy.getXche_sfbz();
         gongshifeili_id = String.valueOf(billEntiy.getXche_sffl());
         tv_gcsj.setText(BsdUtil.dateToStr(billEntiy.getGcsj()));
-        et_niankuan.setText(billEntiy.getChe_nf());
-        et_color.setText(billEntiy.getChe_wxys());
         et_cunyou.setText(billEntiy.getXche_cy());
         et_miaoshu.setText(billEntiy.getXche_bz());
         tv_gsfl.setText(billEntiy.getXche_sfbz());
@@ -1000,7 +1003,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bsd_lsbj_fanhui:
-                ((MainActivity) getActivity()).upBSD_WXJD_log();
+                save(true, true);
                 break;
             case R.id.ll_pinpai:
                 showPinPaiDialog();
@@ -1039,13 +1042,117 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                 showBYCX();
                 break;
             case R.id.bsd_wxjd_save:
-                save();
+                save(true, false);
                 break;
             case R.id.bsd_wxjd_jc:
-                enter();
+                save(false, false);
                 break;
-
+            case R.id.tv_readcard:
+                readCardInfo();
+                break;
+            case R.id.tv_removecard:
+                removeCardInfo();
+                break;
         }
+    }
+
+    private void removeCardInfo() {
+        if (TextUtils.isEmpty(billEntiy.getCard_no()) && TextUtils.isEmpty(et_cardno.getText().toString())) {
+            Toast.makeText(getActivity(), "此单据未使用会员卡", Toast.LENGTH_SHORT).show();
+        } else {
+            quedingQuxiao = new Queding_Quxiao(getActivity(), "确认取消会员卡吗？");
+            quedingQuxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
+                @Override
+                public void onConfirm() {
+                    removeCardInfoFromBill();
+                    quedingQuxiao.dismiss();
+                }
+
+                @Override
+                public void onCancel() {
+                    quedingQuxiao.dismiss();
+                }
+            });
+            quedingQuxiao.show();
+        }
+    }
+
+    private void removeCardInfoFromBill() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", billEntiy.getWork_no());
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_REMOVEWXJDCARD, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                if (data.equals("success")) {
+                    et_cardno.setText("");
+                    billEntiy.setCard_no("");
+                }
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getHostActicity(), "清除会员信息失败，请重试", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void readCardInfo() {
+        if (TextUtils.isEmpty(et_cardno.getText().toString())) {
+            Show.showTime(getHostActicity(), "请输入会员卡卡号");
+        } else {
+            getCardInfo(et_cardno.getText().toString());
+        }
+    }
+
+    private void getCardInfo(final String cardNo) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("card_no", cardNo);
+        params.put("che_no", billEntiy.getChe_no());
+        params.put("work_no", billEntiy.getWork_no());
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_WXJD_HYK, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int aa, String data) {
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    if (jsonObject.getString("message").equals("查询成功")) {
+                        billEntiy.setCard_no(cardNo);
+                        queRen = new QueRen(getHostActicity(), "会员卡读取成功！");
+                        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                            @Override
+                            public void onYesClick() {
+                                queRen.dismiss();
+                            }
+                        });
+                        queRen.show();
+                    } else {
+                        Toast.makeText(getActivity(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(getHostActicity(), "会员卡信息读取失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void enter() {
@@ -1606,69 +1713,82 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
         });
     }
 
-    String chepai;
-    String pinpai;
-    String chexi;
-    String chezu;
-    String chexing;
-    String che_cx;
-    String VIN;
-    String huiyuankahao;
-    String jinchanglicheng;
-    String chezhu;
-    String dinahua;
-
     //存档操作
-    private void save() {
-        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
-        chepai = bsd_wxjd_tv_chepai.getText().toString();
-        pinpai = tv_pinpai.getText().toString();
-        chexi = tv_chexi.getText().toString();
-        chezu = tv_chezu.getText().toString();
-        chexing = tv_chexing.getText().toString();
-        if (tv_pinpai.getText().toString().equals("") ||
-                tv_chexi.getText().toString().equals("") ||
-                tv_chezu.getText().toString().equals("") ||
-                tv_chexing.getText().toString().equals("")) {
-            che_cx = "";
-        } else {
-            che_cx = pinpai + "|" + chexi + "|" + chezu + "|" + chexing;
+    private void save(final boolean onlySave, final boolean isBack) {
+        if (!checkCardBeforeSave()) {
+            return;
         }
-        VIN = et_vin.getText().toString();
-        jinchanglicheng = et_jclc.getText().toString();
-        dinahua = et_shouji.getText().toString();
-        chezhu = et_kehumc.getText().toString();
-        huiyuankahao = et_cardno.getText().toString();
+        if (onlySave) {
+            mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "保存中...");
+        } else {
+            mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "结算中...");
+        }
+        che_cx = "";
+        if (!TextUtils.isEmpty(tv_pinpai.getText().toString()) &&
+                !TextUtils.isEmpty(tv_chexi.getText().toString()) &&
+                !TextUtils.isEmpty(tv_chezu.getText().toString()) &&
+                !TextUtils.isEmpty(tv_chexing.getText().toString())) {
+            che_cx = tv_pinpai.getText().toString() + "|" +
+                    tv_chexi.getText().toString() + "|" +
+                    tv_chezu.getText().toString() + "|" +
+                    tv_chexing.getText().toString();
+        }
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", billEntiy.getWork_no());
         params.put("che_no", billEntiy.getChe_no());
         params.put("che_cx", che_cx);
-        params.put("che_vin", VIN);
-        params.put("xche_lc", jinchanglicheng);
-        params.put("kehu_mc", chezhu);
-        params.put("kehu_dh", dinahua);
+        params.put("che_vin", et_vin.getText().toString());
+        params.put("xche_lc", et_jclc.getText().toString());
+        params.put("kehu_mc", et_kehumc.getText().toString());
+        params.put("kehu_dh", et_shouji.getText().toString());
         params.put("xche_sfbz", gongshifeili_name);
         params.put("xche_sffl", gongshifeili_id);
         params.put("kehu_no", billEntiy.getKehu_no());
         params.put("xche_hjje", tv_wxjd_hj.getText().toString());
         params.put("gcsj", tv_gcsj.getText().toString());
         params.put("card_no", et_cardno.getText().toString());
-        params.put("che_nf", et_niankuan.getText().toString());
-        params.put("che_wxys", et_color.getText().toString());
         params.put("xche_cy", et_cunyou.getText().toString());
         params.put("xche_bz", et_miaoshu.getText().toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxjd_jbxxtj, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_jbxxtj, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
-                if ("success".equals(data)) {
-                    queRen = new QueRen(getActivity(), "存档成功");
-                    queRen.show();
-                    queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
-                        @Override
-                        public void onYesClick() {
-                            queRen.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    if (jsonObject.get("message").toString().equals("查询成功")) {
+                        if (onlySave) {
+                            if (!isBack) {
+                                queRen = new QueRen(getActivity(), "存档成功");
+                                queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                                    @Override
+                                    public void onYesClick() {
+                                        queRen.dismiss();
+                                    }
+                                });
+                                queRen.show();
+                            } else {
+                                ((MainActivity) getActivity()).upBSD_WXJD_log();
+                            }
+                        } else {
+                            // 进厂的话，把实体类对象的内容也更新一下，方便最后进程时跳转传数据
+                            billEntiy.setChe_cx(che_cx);
+                            billEntiy.setXche_lc(Double.parseDouble(et_jclc.getText().toString()));
+                            billEntiy.setKehu_mc(et_kehumc.getText().toString());
+                            billEntiy.setKehu_dh(et_shouji.getText().toString());
+                            billEntiy.setXche_sfbz(gongshifeili_name);
+                            billEntiy.setXche_sffl(Double.parseDouble(gongshifeili_id));
+                            billEntiy.setXche_hjje(Double.parseDouble(tv_wxjd_hj.getText().toString()));
+                            if (BsdUtil.strToDate(tv_gcsj.getText().toString()) != null) {
+                                billEntiy.setGcsj(BsdUtil.strToDate(tv_gcsj.getText().toString()));
+                            }
+                            billEntiy.setXche_cy(et_cunyou.getText().toString());
+                            billEntiy.setXche_bz(et_miaoshu.getText().toString());
+                            jinchang();
                         }
-                    });
+                    } else {
+                        Show.showTime(getActivity(), jsonObject.get("message").toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
@@ -1689,6 +1809,36 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                 Toast.makeText(getActivity(), "网络连接失败", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean checkCardBeforeSave() {
+        String tips = null;
+        if (TextUtils.isEmpty(billEntiy.getCard_no())) {
+            if (!TextUtils.isEmpty(et_cardno.getText().toString())) {
+                tips = "输入框中的会员卡还未读取\n请进行读取或者清除会员卡！";
+            }
+        } else {
+            if (TextUtils.isEmpty(et_cardno.getText().toString())) {
+                tips = "当前已读取会员卡【" + billEntiy.getCard_no() + "】\n如果不想用会员卡，请清除会员卡！";
+            } else {
+                if (!et_cardno.getText().toString().equals(billEntiy.getCard_no())) {
+                    tips = "当前已读取的会员卡【" + billEntiy.getCard_no() + "】\n与输入框内的会员卡不一致\n请重新读取会员卡！";
+                }
+            }
+        }
+        if (tips != null) {
+            queRen = new QueRen(getContext(), tips);
+            queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+                @Override
+                public void onYesClick() {
+                    queRen.dismiss();
+                }
+            });
+            queRen.show();
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -1728,13 +1878,13 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     public void jinchang() {
         AbRequestParams params = new AbRequestParams();
         params.put("work_no", billEntiy.getWork_no());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_WXJD_jc, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_WXJD_jc, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     // 进厂成功之后，发送微信，弹出提示框是否打印
-                    if (jsonObject.get("data").toString().trim().equals("进厂成功")) {
+                    if (jsonObject.getString("message").equals("查询成功")) {
                         //发送微信
                         weixin();
                         queRen = new QueRen(getActivity(), "进厂成功");
@@ -1762,6 +1912,8 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
                             }
                         });
 
+                    } else {
+                        Toast.makeText(getHostActicity(), jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1793,7 +1945,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             @Override
             public void onConfirm() {
                 queding_quxiao.dismiss();
-                ((MainActivity) getHostActicity()).showWxddFragment(billEntiy.getWork_no());
+                ((MainActivity) getHostActicity()).showWxddFragment(JSON.toJSONString(billEntiy));
             }
 
             @Override

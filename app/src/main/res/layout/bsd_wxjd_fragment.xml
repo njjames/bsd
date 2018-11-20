@@ -141,6 +141,7 @@
             <LinearLayout
                 android:id="@+id/relativeLayout20"
                 style="@style/myeditlinearlayoutstyle"
+                android:layout_weight="1.2"
                 android:layout_height="@dimen/qb_px_32">
 
                 <TextView
@@ -268,42 +269,19 @@
 
                 <EditText
                     android:id="@+id/et_cardno"
-                    style="@style/myeditinfovaluestyle"
-                    android:hint="请输入会员卡号" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_wxjd_rl_niankuan"
-                style="@style/myeditlinearlayoutstyle"
-                android:layout_height="@dimen/qb_px_32"
-                android:layout_marginLeft="@dimen/qb_px_10">
-
-                <TextView
-                    android:id="@+id/textView_nk"
-                    style="@style/myeditinfonamestyle"
-                    android:text="年款:" />
-
-                <EditText
-                    android:id="@+id/et_niankuan"
-                    style="@style/myeditinfovaluestyle"
-                    android:hint="请输入年款" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/bsd_wxjd_rl_color"
-                style="@style/myeditlinearlayoutstyle"
-                android:layout_height="@dimen/qb_px_32"
-                android:layout_marginLeft="@dimen/qb_px_10">
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:text=""
+                    android:textColorHint="#B1B0B0"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_clxx" />
 
                 <TextView
-                    android:id="@+id/textView_color"
-                    style="@style/myeditinfonamestyle"
-                    android:text="颜色:" />
-
-                <EditText
-                    android:id="@+id/et_color"
-                    style="@style/myeditinfovaluestyle"
-                    android:hint="请输入颜色" />
+                    android:id="@+id/tv_readcard"
+                    android:text="读取"
+                    style="@style/myeditreadbtnstyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -341,6 +319,12 @@
 
                 <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_removecard"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="0.5"
+                android:text="清除会员卡" />
 
             <TextView
                 android:id="@+id/bsd_wxjd_clxx"

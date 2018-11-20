@@ -420,7 +420,7 @@ public class URLS {
     /**
      * 维修接单基本信息添加
      */
-    public String BSD_wxjd_jbxxtj = "order/addjb";
+    public static final String BSD_wxjd_jbxxtj = "order/addjb";
     /**
      * 维修接单添加项目
      */
@@ -451,7 +451,7 @@ public class URLS {
     /**
      * 维修接单进厂
      */
-    public String BSD_WXJD_jc = "order/wx_jinchang";
+    public static final String BSD_WXJD_jc = "order/wx_jinchang";
     /**
      * 维修预约
      */
@@ -642,6 +642,8 @@ public class URLS {
      */
     public static final String BSD_MRKX_HYK="card/getVipCardByCardNo";
 
+    public static final String BSD_WXJD_HYK="card/wxjdReadCardNo";
+
     public static final String BSD_CKECKCARDPASS="card/checkcardpass";
 
     public static final String BSD_REALJIESUAN="kuaixiu/realjiesuan";
@@ -655,6 +657,8 @@ public class URLS {
     public static final String BSD_UPDATEBILLBYCARD="public/updatebillbycard";
 
     public static final String BSD_REMOVEBILLBYCARD="public/removebillbycard";
+
+    public static final String BSD_REMOVEWXJDCARD="public/removewxjdcard";
 
     /**
      * 根据操作员获取仓库
