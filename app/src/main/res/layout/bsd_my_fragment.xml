@@ -101,7 +101,7 @@
             <LinearLayout
                 android:id="@+id/bsd_my_qianzhui"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/qb_px_32"
                 android:layout_weight="1"
                 android:background="@drawable/bsd_chepaiyuan"
                 android:orientation="horizontal"
@@ -140,7 +140,7 @@
             <LinearLayout
                 android:id="@+id/bsd_my_jiaqian"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/qb_px_32"
                 android:layout_weight="1"
                 android:layout_marginLeft="@dimen/qb_px_10"
                 android:gravity="center_vertical"
@@ -181,7 +181,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/qb_px_32"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:background="@drawable/bsd_chepaiyuan"
@@ -189,15 +189,18 @@
 
                 <CheckBox
                     android:id="@+id/bsd_my_shifoudayin"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/qb_px_28"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/qb_px_4" />
+                    android:layout_width="@dimen/qb_px_22"
+                    android:layout_height="@dimen/qb_px_22"
+                    android:layout_marginLeft="@dimen/qb_px_4"
+                    android:background="@drawable/check_box"
+                    android:button="@null"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="快修单是否打印"
+                    android:gravity="right"
                     android:textColorHint="#B1B0B0"
                     android:textSize="16sp"
                     android:layout_marginRight="@dimen/qb_px_4"/>

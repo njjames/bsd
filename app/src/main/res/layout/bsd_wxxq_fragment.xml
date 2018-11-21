@@ -181,14 +181,17 @@
                 android:layout_weight="1.5">
 
                 <CheckBox
-                    android:id="@+id/bsd_lswx_jiesuanbiaozhi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="false" />
+                    android:id="@+id/cb_cardzhifu"
+                    android:layout_width="@dimen/qb_px_18"
+                    android:layout_height="@dimen/qb_px_18"
+                    android:clickable="false"
+                    android:background="@drawable/check_box"
+                    android:button="@null"/>
 
                 <TextView
                     style="@style/myinfonamestyle"
-                    android:text="储值卡结算标志" />
+                    android:text="是否储值卡结算"
+                    android:layout_marginLeft="@dimen/qb_px_2"/>
             </LinearLayout>
 
             <LinearLayout

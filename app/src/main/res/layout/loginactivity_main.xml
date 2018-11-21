@@ -52,11 +52,11 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/qb_px_40"
             android:paddingRight="@dimen/qb_px_40"
-            android:layout_marginLeft="@dimen/x40">
+            android:layout_marginLeft="@dimen/qb_px_70">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/qb_px_250"
+                android:layout_height="@dimen/qb_px_70"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/qb_px_10"
                 android:src="@drawable/top_icon" />
@@ -74,30 +74,37 @@
                 android:onClick="clk_bumen"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/qb_px_10"
-                android:background="@drawable/bg_icon">
+                android:background="@drawable/login_item_border">
+
+                <ImageView
+                    android:id="@+id/iv_gongsi"
+                    android:layout_width="@dimen/qb_px_30"
+                    android:layout_height="@dimen/qb_px_30"
+                    android:src="@drawable/ic_gongsi"
+                    android:layout_marginLeft="@dimen/qb_px_10"
+                    android:layout_centerVertical="true"/>
 
                 <TextView
                     android:id="@+id/bst_text_gs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:background="@null"
-                    android:drawableLeft="@drawable/one_icon"
-                    android:drawablePadding="@dimen/qb_px_8"
-                    android:layout_marginLeft="@dimen/qb_px_10"
                     android:hint="请选择公司"
+                    android:layout_toRightOf="@id/iv_gongsi"
+                    android:layout_centerVertical="true"
                     android:singleLine="true"
-                    android:textSize="@dimen/text18"
+                    android:textSize="18sp"
                     android:textColor="#ffffff"
-                    android:textColorHint="#ffffff" />
+                    android:textColorHint="#ffffff"
+                    android:layout_marginLeft="@dimen/qb_px_4"/>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/qb_px_16"
+                    android:layout_height="@dimen/qb_px_16"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/qb_px_10"
-                    android:src="@drawable/arrow" />
+                    android:src="@drawable/ic_down_white" />
             </RelativeLayout>
 
 
@@ -108,30 +115,37 @@
                 android:onClick="bsd_dluser"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/qb_px_10"
-                android:background="@drawable/bg_icon">
+                android:background="@drawable/login_item_border">
+
+                <ImageView
+                    android:id="@+id/iv_czy"
+                    android:layout_width="@dimen/qb_px_30"
+                    android:layout_height="@dimen/qb_px_30"
+                    android:src="@drawable/ic_czy"
+                    android:layout_marginLeft="@dimen/qb_px_10"
+                    android:layout_centerVertical="true"/>
 
                 <TextView
                     android:id="@+id/bsd_tv_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:drawableLeft="@drawable/lock"
-                    android:drawablePadding="@dimen/qb_px_8"
-                    android:layout_marginLeft="@dimen/qb_px_10"
+                    android:layout_marginLeft="@dimen/qb_px_4"
                     android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_czy"
                     android:hint="请选择用户"
                     android:singleLine="true"
-                    android:textSize="@dimen/text18"
+                    android:textSize="18sp"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"/>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/qb_px_16"
+                    android:layout_height="@dimen/qb_px_16"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/qb_px_10"
-                    android:src="@drawable/arrow" />
+                    android:src="@drawable/ic_down_white" />
             </RelativeLayout>
 
 
@@ -143,15 +157,22 @@
                 android:layout_below="@+id/bsd_rl_user"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/qb_px_10"
-                android:background="@drawable/bg_icon">
+                android:background="@drawable/login_item_border">
+
+                <ImageView
+                    android:id="@+id/iv_pass"
+                    android:layout_width="@dimen/qb_px_30"
+                    android:layout_height="@dimen/qb_px_30"
+                    android:src="@drawable/ic_pass"
+                    android:layout_marginLeft="@dimen/qb_px_10"
+                    android:layout_centerVertical="true"/>
 
                 <EditText
-                    android:drawableLeft="@drawable/user"
                     android:id="@+id/bsd_et_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawablePadding="@dimen/qb_px_8"
-                    android:layout_marginLeft="@dimen/qb_px_10"
+                    android:layout_marginLeft="@dimen/qb_px_4"
+                    android:layout_toRightOf="@id/iv_pass"
                     android:layout_centerVertical="true"
                     android:background="@null"
                     android:hint="请输入密码"
@@ -159,45 +180,45 @@
                     android:inputType="textPassword"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#ffffff"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="18sp" />
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:onClick="bsd_qiehuan"
                 android:id="@+id/bsd_rl_wjmm"
                 android:layout_width="@dimen/qb_px_250"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/qb_px_10"
+                android:layout_marginTop="@dimen/qb_px_6"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/qb_px_4">
 
                 <ImageView
                     android:id="@+id/bsd_im_jizhumima"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/qb_px_16"
+                    android:layout_height="@dimen/qb_px_16"
                     android:src="@drawable/bsd_no"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/qb_px_10"/>
+                    android:layout_centerVertical="true" />
 
                 <TextView
                     android:id="@+id/text1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/bsd_im_jizhumima"
+                    android:layout_marginLeft="@dimen/qb_px_10"
                     android:text="记住登录名"
                     android:singleLine="true"
-                    android:textSize="@dimen/text18"
+                    android:textSize="18sp"
                     android:textColor="#FFFFFF" />
             </RelativeLayout>
 
             <TextView
                 android:layout_width="@dimen/qb_px_230"
                 android:layout_height="@dimen/qb_px_50"
-                android:layout_marginTop="@dimen/qb_px_10"
+                android:layout_marginTop="@dimen/qb_px_6"
                 android:layout_marginBottom="@dimen/qb_px_10"
                 android:layout_gravity="center_horizontal"
-                android:background="@mipmap/bsd_dlanniu"
+                android:background="@drawable/login_btn_bg"
                 android:gravity="center"
                 android:text="登录"
                 android:onClick="bsd_login"

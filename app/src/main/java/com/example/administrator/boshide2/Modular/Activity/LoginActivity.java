@@ -35,6 +35,7 @@ import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.DensityUtil;
 import com.example.administrator.boshide2.Tools.PermissionUtils;
 import com.example.administrator.boshide2.Tools.PermissionsManager;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
@@ -132,6 +133,7 @@ public class LoginActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //透明状态栏
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        DensityUtil.setCustomDensity(this, getApplication());
         setContentView(R.layout.loginactivity_main);
         init();
         Conts.SBID = getDiviceUuid();

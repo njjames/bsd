@@ -106,7 +106,7 @@
             <TextView
                 style="@style/mysearchtitlestyle"
                 android:layout_weight="1.2"
-                android:text="日期" />
+                android:text="登记日期" />
 
             <TextView
                 style="@style/mysearchtitlestyle"

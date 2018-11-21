@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.administrator.boshide2.Modular.Fragment.CheLiangXinXi.Entity.BSD_CLXX_ety;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class BSD_clxx_adp extends BaseAdapter {
         holder.bsd_xsbj_cheno.setText(item.getChe_no());
         holder.bsd_xsbj_kehumc.setText(item.getKehu_mc());
         holder.bsd_kxbj_kehuxm.setText(item.getKehu_xm());
-        holder.bsd_kxbj_rq.setText(item.getChe_djrq());
+        holder.bsd_kxbj_rq.setText(BsdUtil.dateToStr(item.getChe_djrq()));
         holder.bsd_kxbj_cx.setText(item.getChe_cx());
         holder.bsd_kxbj_xz.setText(item.getChe_xingzhi());
         return contetview;

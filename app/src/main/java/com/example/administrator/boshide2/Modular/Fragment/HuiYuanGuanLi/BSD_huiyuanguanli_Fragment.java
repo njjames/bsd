@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
@@ -181,6 +182,11 @@ public class BSD_huiyuanguanli_Fragment extends BaseFragment implements AbPullTo
                             data.add(hygl_ety);
                         }
                     } else {
+                        if (page > 1) {
+                            Toast.makeText(getHostActicity(), "没有更多会员卡信息了", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getHostActicity(), "没有会员卡信息", Toast.LENGTH_SHORT).show();
+                        }
                         subPage();
                     }
                 } catch (JSONException e) {

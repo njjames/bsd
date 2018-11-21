@@ -73,7 +73,6 @@ public class BSD_my_Fragment extends BaseFragment {
     private  String   cpPrefix;
     private EditText  bsd_my_et_qianzhui;
     private TextView  bsd_my_rl_save;
-    private   SharedPreferences    mSharedPreferences;
     private TextView title;
     private TextView footerText;
     private EditText oldPsw;

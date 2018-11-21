@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
@@ -139,6 +140,11 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
                             data.add(lswx_ety);
                         }
                     } else {
+                        if (page > 1) {
+                            Toast.makeText(getHostActicity(), "没有更多维修信息了", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getHostActicity(), "没有维修信息", Toast.LENGTH_SHORT).show();
+                        }
                         subPage();
                     }
                 } catch (JSONException e) {

@@ -3,23 +3,21 @@ package com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
+import com.example.administrator.boshide2.Modular.Fragment.CheLiangXinXi.Entity.BSD_CLXX_ety;
 import com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng.Fagmt.BSD_CheLiangTuPian;
 import com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng.Fagmt.BSD_CheLiangWeiXiuLiShi;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.BSD_MeiRongKuaiXiu_Fragment;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 import com.example.administrator.boshide2.Tools.DownJianPan;
 
 /**
@@ -35,7 +33,8 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
             tv_xq_bylc,tv_xq_nextrq,tv_xq_next_lc;
     private TextView title;
     private TextView footerText;
-    private String param;
+    private String params;
+    private BSD_CLXX_ety clxxEty;
 
     public static BSD_CheXiangQing_Fragment newInstance(String params) {
         BSD_CheXiangQing_Fragment fragment = new BSD_CheXiangQing_Fragment();
@@ -48,18 +47,12 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        param = getArguments().getString(PARAM_KEY);
+        params = getArguments().getString(PARAM_KEY);
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.bsd_cxq_fragment;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        initFragment();
     }
 
     @Override
@@ -84,22 +77,6 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
         tv_xq_bylc=(TextView) view.findViewById(R.id.tv_xq_bylc);
         tv_xq_nextrq=(TextView) view.findViewById(R.id.tv_xq_nextrq);
         tv_xq_next_lc=(TextView) view.findViewById(R.id.tv_xq_next_lc);
-        tv_xq_number.setText(((MainActivity)getActivity()).getClxx_ety().getChe_no());
-        //拿到车牌，存进去
-        Conts.cp=((MainActivity)getActivity()).getClxx_ety().getChe_no();
-        MyApplication.editor.putString("che_no",((MainActivity)getActivity()).getClxx_ety().getChe_no());
-        MyApplication.editor.commit();
-        tv_xq_cx.setText(((MainActivity)getActivity()).getClxx_ety().getChe_cx());
-        tv_xq_xz.setText(((MainActivity)getActivity()).getClxx_ety().getChe_xingzhi());
-        tv_xq_vin.setText(((MainActivity)getActivity()).getClxx_ety().getChe_vin());
-        tv_xq_kh.setText(((MainActivity)getActivity()).getClxx_ety().getKehu_mc());
-        tv_xq_lxr.setText(((MainActivity)getActivity()).getClxx_ety().getKehu_xm());
-        tv_xq_phone.setText(((MainActivity)getActivity()).getClxx_ety().getKehu_dh());
-        tv_xq_gmrq.setText(((MainActivity)getActivity()).getClxx_ety().getChe_gcrq());
-        tv_xq_bysj.setText(((MainActivity)getActivity()).getClxx_ety().getChe_prior_byrq());
-        tv_xq_bylc.setText(((MainActivity)getActivity()).getClxx_ety().getChe_prior_licheng()+"");
-        tv_xq_nextrq.setText(((MainActivity)getActivity()).getClxx_ety().getChe_next_byrq());
-        tv_xq_next_lc.setText(((MainActivity)getActivity()).getClxx_ety().getChe_next_licheng());
         title = (TextView) view.findViewById(R.id.tv_title);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
         bsd_lsbj_fanhui = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
@@ -116,11 +93,28 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
         title.setText("车辆信息详情");
         footerText.setText("公司名称 :   " + MyApplication.shared.getString("GongSiMc", "") +
                 "                  公司电话 :   " + MyApplication.shared.getString("danw_dh", ""));
-        getCarInfo();
+        getCarInfoFromParams();
+        updateCarInfoUI();
+        initFragment();
     }
 
-    private void getCarInfo() {
+    private void updateCarInfoUI() {
+        tv_xq_number.setText(clxxEty.getChe_no());
+        tv_xq_cx.setText(clxxEty.getChe_cx());
+        tv_xq_xz.setText(clxxEty.getChe_xingzhi());
+        tv_xq_vin.setText(clxxEty.getChe_vin());
+        tv_xq_kh.setText(clxxEty.getKehu_mc());
+        tv_xq_lxr.setText(clxxEty.getKehu_xm());
+        tv_xq_phone.setText(clxxEty.getKehu_dh());
+        tv_xq_gmrq.setText(BsdUtil.dateToStr(clxxEty.getChe_gcrq()));
+        tv_xq_bysj.setText(BsdUtil.dateToStr(clxxEty.getChe_prior_byrq()));
+        tv_xq_bylc.setText("" + clxxEty.getChe_prior_licheng());
+        tv_xq_nextrq.setText(BsdUtil.dateToStr(clxxEty.getChe_next_byrq()));
+        tv_xq_next_lc.setText("" + clxxEty.getChe_next_licheng());
+    }
 
+    private void getCarInfoFromParams() {
+        clxxEty = JSON.parseObject(params, BSD_CLXX_ety.class);
     }
 
     /**
@@ -128,7 +122,7 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
      */
     private void initFragment() {
         DownJianPan.DJP(getActivity());
-        change(BSD_CheLiangTuPian.newInstance(((MainActivity)getActivity()).getClxx_ety().getChe_no()));
+        change(BSD_CheLiangTuPian.newInstance(clxxEty.getChe_no()));
         checkHighLight(0);
     }
 
@@ -149,12 +143,12 @@ public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnCl
         switch (view.getId()) {
             case R.id.bus_clxq_tv_wxls:
                 DownJianPan.DJP(getActivity());
-                change(BSD_CheLiangWeiXiuLiShi.newInstance(((MainActivity)getActivity()).getClxx_ety().getChe_no()));
+                change(BSD_CheLiangWeiXiuLiShi.newInstance(clxxEty.getChe_no()));
                 checkHighLight(1);
                 break;
             case R.id.bus_clxq_tv_cltp:
                 DownJianPan.DJP(getActivity());
-                change(BSD_CheLiangTuPian.newInstance(((MainActivity)getActivity()).getClxx_ety().getChe_no()));
+                change(BSD_CheLiangTuPian.newInstance(clxxEty.getChe_no()));
                 checkHighLight(0);
                 break;
         }

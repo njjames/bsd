@@ -1,5 +1,6 @@
 package com.example.administrator.boshide2.Modular.Fragment.CheXiangQIng.Fagmt;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,6 +26,7 @@ import com.example.administrator.boshide2.Modular.Activity.ActivityPhoto;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.View.diaog.CustomDialog;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 
 import org.json.JSONObject;
 
@@ -53,6 +55,7 @@ public class BSD_CheLiangTuPian extends BaseFragment {
     private Button  but1,but2,but3,but4;
     private String  name;
     private String param;
+    private Dialog mWeiboDialog;
 
     public static Fragment newInstance(String params) {
         BSD_CheLiangTuPian fragment = new BSD_CheLiangTuPian();
@@ -282,6 +285,7 @@ public class BSD_CheLiangTuPian extends BaseFragment {
    *获取显示图片的网页地址
    */
     public void getImages() {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getImgUrl, null, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
@@ -295,6 +299,7 @@ public class BSD_CheLiangTuPian extends BaseFragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -307,6 +312,7 @@ public class BSD_CheLiangTuPian extends BaseFragment {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });
     }

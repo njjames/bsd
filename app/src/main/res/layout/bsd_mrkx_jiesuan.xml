@@ -312,12 +312,12 @@
 
             <CheckBox
                 android:id="@+id/checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/qb_px_28"
+                android:layout_height="@dimen/qb_px_28"
                 android:layout_marginLeft="@dimen/qb_px_10"
-                android:paddingRight="@dimen/qb_px_10"
                 android:gravity="center"
-                android:button="@drawable/check_box"/>
+                android:background="@drawable/check_box"
+                android:button="@null" />
 
             <TextView
                 android:id="@+id/textView26"
@@ -325,7 +325,8 @@
                 android:layout_height="wrap_content"
                 android:text="使用储值卡结算"
                 android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:layout_marginLeft="@dimen/qb_px_6"/>
         </LinearLayout>
 
         <LinearLayout
@@ -335,23 +336,24 @@
             android:gravity="center_vertical"
             android:paddingTop="@dimen/qb_px_4"
             android:paddingBottom="@dimen/qb_px_4"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <CheckBox
                 android:id="@+id/cb_nexttx"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/qb_px_28"
+                android:layout_height="@dimen/qb_px_28"
                 android:layout_marginLeft="@dimen/qb_px_10"
-                android:paddingRight="@dimen/qb_px_10"
                 android:gravity="center"
-                android:button="@drawable/check_box"/>
+                android:background="@drawable/check_box"
+                android:button="@null"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="下次保养提醒"
                 android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:layout_marginLeft="@dimen/qb_px_6"/>
 
             <LinearLayout
                 android:id="@+id/ll_next_info"

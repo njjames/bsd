@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -50,6 +51,7 @@ import com.example.administrator.boshide2.Modular.View.diaog.ChangePageDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.CustomDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 import com.example.administrator.boshide2.Tools.DensityUtil;
 import com.example.administrator.boshide2.Tools.DownJianPan;
 
@@ -374,15 +376,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     /**
-     * 跳转车辆详情
-     * @param view
-     */
-    public void upclxq(View view) {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_cxq);
-    }
-
-    /**
      * 跳转联系我们
      */
     public void uplxwm() {
@@ -409,6 +402,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     //切换碎片事务的方法
     private void change(Fragment fragment) {
+        DensityUtil.setCustomDensity(this, getApplication());
         this.getSupportFragmentManager()//碎片管理者
                 //开启事务
                 .beginTransaction()
@@ -758,8 +752,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         change(mPageWXJDFragment);
     }
 
-    public void showCLXXXQFragment(String che_no) {
+    public void showCLXXXQFragment(String params) {
         DownJianPan.DJP(this);
-        change(BSD_CheXiangQing_Fragment.newInstance(che_no));
+        change(BSD_CheXiangQing_Fragment.newInstance(params));
     }
 }

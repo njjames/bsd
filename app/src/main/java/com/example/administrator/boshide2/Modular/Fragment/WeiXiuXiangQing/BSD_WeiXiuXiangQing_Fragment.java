@@ -110,7 +110,7 @@ public class BSD_WeiXiuXiangQing_Fragment extends BaseFragment {
         bsd_lswx_huiyuankahao = (TextView) view.findViewById(R.id.bsd_lswx_huiyuankahao);
         bsd_lswx_huiyuankazhifujine = (TextView) view.findViewById(R.id.bsd_lswx_huiyuankazhifujine);
         bsd_lswx_chuzhikahao = (TextView) view.findViewById(R.id.bsd_lswx_chuzhikahao);
-        bsd_lswx_jiesuanbiaozhi = (CheckBox) view.findViewById(R.id.bsd_lswx_jiesuanbiaozhi);
+        bsd_lswx_jiesuanbiaozhi = (CheckBox) view.findViewById(R.id.cb_cardzhifu);
         bsd_lswx_buxianjin = (TextView) view.findViewById(R.id.bsd_lswx_buxianjin);
         //维修项目
         listxm = (ListView) view.findViewById(R.id.bsd_wxxq_lv);

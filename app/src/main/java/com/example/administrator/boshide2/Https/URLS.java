@@ -123,7 +123,7 @@ public class URLS {
     /**
      * 车辆信息BSD/car/clxx
      */
-    public String BSD_CAR = "car/clxx";
+    public static final String BSD_CAR = "car/clxx";
 
     /**
      * 车辆信息---->维修历史

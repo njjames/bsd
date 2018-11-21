@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.view.pullview.AbPullToRefreshView;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
@@ -84,11 +85,7 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
         bsd_lsbj_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                BSD_CLXX_ety cx_ety = new BSD_CLXX_ety();//拿到数据set到activity
-                cx_ety = datas.get(i);
-                ((MainActivity) getHostActicity()).setClxx_ety(cx_ety);
-                ((MainActivity) getHostActicity()).upclxq(view);
-                ((MainActivity) getHostActicity()).showCLXXXQFragment(datas.get(i).getChe_no());
+                ((MainActivity) getHostActicity()).showCLXXXQFragment(JSON.toJSONString(datas.get(i)));
             }
         });
         refreshView = (AbPullToRefreshView) view.findViewById(R.id.refreshview);
@@ -128,51 +125,31 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
         params.put("pageNumber", page);
         params.put("che_no", chepai);
         params.put("kehu_mc", chezhu);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_CAR, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CAR, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
-                    if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject json = jsonarray.getJSONObject(i);
-                            BSD_CLXX_ety clxx_ety = new BSD_CLXX_ety();
-                            clxx_ety.setKehu_xm(json.optString("kehu_mc"));
-                            clxx_ety.setKehu_mc(json.optString("kehu_xm"));
-                            clxx_ety.setChe_djrq(json.optString("che_djrq"));
-                            clxx_ety.setChe_no(json.optString("che_no"));
-                            clxx_ety.setChe_cx(json.optString("che_cx"));
-                            clxx_ety.setChe_xingzhi(json.optString("che_xingzhi"));
-                            clxx_ety.setKehu_mc(json.optString("kehu_mc"));
-                            clxx_ety.setChe_vin(json.optString("che_vin"));
-                            clxx_ety.setChe_xingzhi(json.optString("che_xingzhi"));
-                            clxx_ety.setChe_gcrq(json.optString("che_gcrq"));
-                            clxx_ety.setKehu_xm(json.getString("kehu_xm"));
-                            clxx_ety.setKehu_dh(json.getString("kehu_dh"));
-                            clxx_ety.setChe_prior_byrq(json.optString("che_prior_byrq"));
-                            clxx_ety.setChe_prior_licheng(Double.parseDouble(json.optString("che_prior_licheng")));
-                            clxx_ety.setChe_next_byrq(json.optString("che_next_byrq"));
-                            clxx_ety.setChe_next_byrq(json.optString("che_next_byrq"));
-                            clxx_ety.setChe_next_licheng(json.optString("che_next_licheng"));
-                            clxx_ety.setChe_zjno(json.optString("che_zjno"));
-                            datas.add(clxx_ety);
-                        }
-                        adapter.notifyDataSetChanged();
+                    if (jsonObject.getString("message").equals("查询成功")) {
+                        JSONArray array = jsonObject.getJSONArray("data");
+                        List<BSD_CLXX_ety> _list = JSON.parseArray(array.toString(), BSD_CLXX_ety.class);
+                        datas.addAll(_list);
                     } else {
-                        Show.showTime(getActivity(), "没有更多数据了");
-                        page--;
+                        if (page > 1) {
+                            Show.showTime(getActivity(), "没有更多车辆信息了");
+                        } else {
+                            Show.showTime(getActivity(), "没有车辆信息");
+                        }
+                        subPage();
                     }
-                    refreshView.onFooterLoadFinish();
-                    refreshView.onHeaderRefreshFinish();
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    adapter.notifyDataSetChanged();
-                    refreshView.onFooterLoadFinish();
-                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-                    page--;
+                    subPage();
                 }
+                adapter.notifyDataSetChanged();
+                refreshView.onFooterLoadFinish();
+                refreshView.onHeaderRefreshFinish();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -185,13 +162,19 @@ public class BSD_cheliangxinxi_Fragment extends BaseFragment
 
             @Override
             public void onFailure(int statusCode, String s, Throwable throwable) {
-                Show.showTime(getActivity(), "网络连接超时");
+                Show.showTime(getActivity(), "查询失败");
                 refreshView.onFooterLoadFinish();
                 refreshView.onHeaderRefreshFinish();
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-                page--;
+                subPage();
             }
         });
+    }
+
+    private void subPage() {
+        if (page > 1) {
+            page--;
+        }
     }
 
     @Override
