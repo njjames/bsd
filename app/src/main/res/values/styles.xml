@@ -7,9 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="mydialog" parent="android:style/Theme.Dialog">
         <!-- 背景透明 -->
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -232,14 +230,6 @@
         <item name="android:singleLine">true</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:layout_marginLeft">@dimen/qb_px_8</item>
-    </style>
-
-    <style name="myworlmx_gzitemstyle">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="MySwitch" parent="Theme.AppCompat.Light">

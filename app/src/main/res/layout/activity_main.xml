@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bsd_top"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.boshide2.Modular.Activity.MainActivity">
@@ -29,7 +28,6 @@
             android:layout_marginRight="@dimen/qb_px_20">
 
             <ImageView
-                android:id="@+id/imageView2"
                 android:layout_width="@dimen/qb_px_22"
                 android:layout_height="@dimen/qb_px_22"
                 android:src="@drawable/ic_my" />
@@ -61,7 +59,6 @@
                 android:src="@drawable/ic_logout" />
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/qb_px_2"
@@ -89,7 +86,6 @@
                 android:src="@drawable/ic_close" />
 
             <TextView
-                android:id="@+id/textVie4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/qb_px_2"
@@ -107,7 +103,6 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/linearLayout_1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

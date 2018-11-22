@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/bsd_lsbj_zhong"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bsd_lsbj_body"
@@ -8,7 +7,6 @@
     android:padding="@dimen/qb_px_8">
 
     <TextView
-        android:id="@+id/bus_hybl_jia_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/qb_px_4"
@@ -18,13 +16,11 @@
         android:layout_gravity="center_horizontal"/>
 
     <View
-        android:id="@+id/bsd_hybl_xian"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_1"
         android:background="#ED1C24" />
 
     <LinearLayout
-        android:id="@+id/bsd_hybl_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -32,7 +28,6 @@
         android:layout_marginTop="@dimen/qb_px_8">
 
         <LinearLayout
-            android:id="@+id/relativeLayout1"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle">
 
@@ -65,13 +60,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout2"
             android:layout_weight="1.5"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10">
 
             <TextView
-                android:id="@+id/textView2"
                 style="@style/myeditinfonamestyle"
                 android:text="客户:"
                 android:textColor="#ED1C24" />
@@ -82,13 +75,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout3"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10">
 
             <TextView
-                android:id="@+id/textView3"
                 style="@style/myeditinfonamestyle"
                 android:text="地址:" />
 
@@ -98,7 +89,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout4"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10">
@@ -114,7 +104,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/bsd_hygl_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -122,23 +111,18 @@
         android:layout_marginTop="@dimen/qb_px_8">
 
         <LinearLayout
-            android:id="@+id/relativeLayout2_1"
             android:layout_weight="1"
             style="@style/myeditlinearlayoutstyle"
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/textView2_1"
                 style="@style/myeditinfonamestyle"
                 android:text="会员卡号:" />
 
-            <EditText
-                android:id="@+id/et_hy_kahao"
-                style="@style/myeditinfovaluestyle" />
+            <EditText style="@style/myeditinfovaluestyle" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout5"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle">
 
@@ -161,7 +145,6 @@
             android:layout_marginLeft="@dimen/qb_px_10">
 
             <TextView
-                android:id="@+id/textView6"
                 style="@style/myeditinfonamestyle"
                 android:text="生日:"/>
 
@@ -177,7 +160,6 @@
             android:layout_marginLeft="@dimen/qb_px_10">
 
             <TextView
-                android:id="@+id/textView2_3"
                 style="@style/myeditinfonamestyle"
                 android:text="卡名称:"
                 android:textColor="#ED1C24" />
@@ -204,7 +186,6 @@
             android:layout_marginLeft="@dimen/qb_px_10">
 
             <TextView
-                android:id="@+id/textView2_2"
                 style="@style/myeditinfonamestyle"
                 android:text="有效日期:" />
 
@@ -215,7 +196,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/bsd_hygl_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -224,12 +204,10 @@
 
 
         <LinearLayout
-            android:id="@+id/relativeLayout2_6"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle">
 
             <TextView
-                android:id="@+id/textView2_6"
                 style="@style/myeditinfonamestyle"
                 android:text="开户金额:" />
 
@@ -240,13 +218,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout2_7"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10">
 
             <TextView
-                android:id="@+id/textView2_7"
                 style="@style/myeditinfonamestyle"
                 android:text="可用金额:"/>
 
@@ -257,7 +233,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout3_1"
             android:layout_width="0dp"
             android:layout_height="@dimen/y55"
             android:layout_weight="2"
@@ -290,14 +265,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout3_2"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10"
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/textView3_2"
                 style="@style/myeditinfonamestyle"
                 android:text="优惠金额:" />
 
@@ -307,14 +280,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout3_3"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10"
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/textView3_3"
                 style="@style/myeditinfonamestyle"
                 android:text="可用金额:" />
 
@@ -324,13 +295,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout3_4"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10">
 
             <TextView
-                android:id="@+id/textView3_4"
                 style="@style/myeditinfonamestyle"
                 android:text="普洗次数:" />
 
@@ -341,13 +310,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout3_5"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10"
             android:layout_weight="2">
 
             <TextView
-                android:id="@+id/textView3_5"
                 style="@style/myeditinfonamestyle"
                 android:text="精洗次数:" />
 
@@ -358,14 +325,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout3_6"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10"
             android:layout_weight="2"
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/textView3_6"
                 style="@style/myeditinfonamestyle"
                 android:text="积分:" />
 
@@ -376,7 +341,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/bsd_hygl_4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -384,14 +348,12 @@
         android:layout_marginTop="@dimen/qb_px_8">
 
         <LinearLayout
-            android:id="@+id/relativeLayout4_1"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10"
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/textView4_1"
                 style="@style/myeditinfonamestyle"
                 android:text="账号选择:" />
 
@@ -413,7 +375,6 @@
             style="@style/myeditlinearlayoutstyle">
 
             <TextView
-                android:id="@+id/textView4_2"
                 style="@style/myeditinfonamestyle"
                 android:text="部门:" />
 
@@ -438,7 +399,6 @@
             android:layout_marginLeft="@dimen/qb_px_10">
 
             <TextView
-                android:id="@+id/textView4_3"
                 style="@style/myeditinfonamestyle"
                 android:text="经办人:" />
 
@@ -451,9 +411,7 @@
                 android:textColor="@color/main_ziti"
                 android:textSize="14sp" />
 
-            <ImageView
-                android:id="@+id/imageView13"
-                style="@style/myeditdowimgstyle" />
+            <ImageView style="@style/myeditdowimgstyle" />
         </LinearLayout>
 
         <LinearLayout
@@ -463,7 +421,6 @@
             android:layout_marginLeft="@dimen/qb_px_10">
 
             <TextView
-                android:id="@+id/textView4_4"
                 style="@style/myeditinfonamestyle"
                 android:text="结算方式:"/>
 
@@ -481,14 +438,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/relativeLayout4_5"
             android:layout_weight="2"
             style="@style/myeditlinearlayoutstyle"
             android:layout_marginLeft="@dimen/qb_px_10"
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/textView4_5"
                 style="@style/myeditinfonamestyle"
                 android:text="备注:" />
 
@@ -501,7 +456,6 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_bz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="注：红色字体的字段不能为空"

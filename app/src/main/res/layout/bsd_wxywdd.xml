@@ -17,19 +17,16 @@
         android:paddingTop="@dimen/qb_px_6">
 
         <LinearLayout
-            android:id="@+id/bsd_wxywdd_top_line1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/relativeLayout8"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32">
 
                 <TextView
-                    android:id="@+id/textView77"
                     style="@style/myeditinfonamestyle"
                     android:text="车牌:" />
 
@@ -39,7 +36,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout13"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_marginLeft="@dimen/qb_px_10">
@@ -55,7 +51,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout14"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_marginLeft="@dimen/qb_px_10"
@@ -89,7 +84,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout21"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_weight="1.5"
@@ -108,7 +102,6 @@
 
 
         <LinearLayout
-            android:id="@+id/bsd_wxywdd_top_line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_4"
@@ -116,7 +109,6 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/relativeLayout22"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_weight="1.5">
@@ -132,13 +124,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout23"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
-                    android:id="@+id/textView19"
                     style="@style/myeditinfonamestyle"
                     android:text="客户:" />
 
@@ -148,13 +138,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout26"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
-                    android:id="@+id/textView22"
                     style="@style/myeditinfonamestyle"
                     android:text="电话:" />
 
@@ -164,13 +152,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout24"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
-                    android:id="@+id/textView20"
                     style="@style/myeditinfonamestyle"
                     android:text="服务顾问:" />
 
@@ -180,14 +166,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout25"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_weight="1.5"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
-                    android:id="@+id/textView21"
                     style="@style/myeditinfonamestyle"
                     android:text="登记时间:" />
 
@@ -198,7 +182,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/bsd_wxywdd_top_line3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_4"
@@ -295,7 +278,6 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/bsd_clxxqiehua"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_34"
                     android:background="@drawable/bsd_chepaiyuan">
@@ -405,13 +387,11 @@
                         android:text="工时" />
 
                     <TextView
-                        android:id="@+id/bsd_xsbj_jiner"
                         style="@style/mysearchtitlestyle"
                         android:layout_weight="1"
                         android:text="金额" />
 
                     <TextView
-                        android:id="@+id/bsd_xsbj_caozuo"
                         style="@style/mysearchtitlestyle"
                         android:layout_weight="0.8"
                         android:text="操作" />

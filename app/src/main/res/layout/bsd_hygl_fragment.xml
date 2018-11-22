@@ -9,7 +9,6 @@
     <include layout="@layout/content_title_lishi_layout" />
 
     <LinearLayout
-        android:id="@+id/bsd_lsbj_zhong"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -20,7 +19,6 @@
         android:paddingTop="@dimen/qb_px_6">
 
         <LinearLayout
-            android:id="@+id/rl_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -28,7 +26,6 @@
 
 
             <LinearLayout
-                android:id="@+id/relativeLayout3333"
                 android:layout_width="@dimen/qb_px_180"
                 android:layout_height="@dimen/qb_px_32"
                 style="@style/myconditionboxstyle">
@@ -92,7 +89,6 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/bsd_hygl_zhongview"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_1"
             android:background="#F7714C"

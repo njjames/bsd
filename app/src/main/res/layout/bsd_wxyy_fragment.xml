@@ -17,15 +17,12 @@
         android:paddingTop="@dimen/qb_px_6">
 
         <LinearLayout
-            android:id="@+id/bsd_wxyy_top_line1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/relativeLayout7"
-                style="@style/myeditlinearlayoutstyle">
+            <LinearLayout style="@style/myeditlinearlayoutstyle">
 
                 <TextView
                     android:id="@+id/textView7"
@@ -53,9 +50,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请选择品牌" />
 
-                <ImageView
-                    android:id="@+id/iv1"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -74,9 +69,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请选择车系" />
 
-                <ImageView
-                    android:id="@+id/iv2"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,9 +88,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请选择车组" />
 
-                <ImageView
-                    android:id="@+id/iv3"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -116,24 +107,19 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请选择车型" />
 
-                <ImageView
-                    android:id="@+id/iv4"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
         </LinearLayout>
 
 
         <LinearLayout
-            android:id="@+id/bsd_wxyy_top_line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_4"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/relativeLayout20"
-                style="@style/myeditlinearlayoutstyle">
+            <LinearLayout style="@style/myeditlinearlayoutstyle">
 
                 <TextView
                     android:id="@+id/textView13"
@@ -171,13 +157,10 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="到场时间" />
 
-                <ImageView
-                    android:id="@+id/iv5"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout9"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
@@ -194,7 +177,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout10"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
@@ -210,7 +192,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout12"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
@@ -229,7 +210,6 @@
 
 
         <LinearLayout
-            android:id="@+id/bsd_wxyy_top_line3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_4"
@@ -241,7 +221,6 @@
                 style="@style/myeditlinearlayoutstyle">
 
                 <TextView
-                    android:id="@+id/bsd_ksbj_t1_gcsj"
                     style="@style/myeditinfonamestyle"
                     android:text="购车时间:" />
 
@@ -250,9 +229,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="选购车时间" />
 
-                <ImageView
-                    android:id="@+id/iv7"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -276,9 +253,7 @@
                     android:textColorHint="#B1B0B0"
                     android:textSize="14sp" />
 
-                <ImageView
-                    android:id="@+id/iv8"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <TextView

@@ -19,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ab.fragment.AbLoadDialogFragment;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.example.administrator.boshide2.Conts;
@@ -45,10 +44,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -90,7 +87,6 @@ public class LoginActivity extends Activity {
     //记住切换状态
     String yes_no = "0";
     //转圈
-    private AbLoadDialogFragment fragment;
     private Dialog mWeiboDialog;
     String ip;//请求ip
 
@@ -102,14 +98,15 @@ public class LoginActivity extends Activity {
 
     boolean hasLoginQX = false;
     QueRen queRen;
-    List<Map<String, Integer>> list = new ArrayList<>();
     String[] st = new String[8];
     URLS url;
     TextView bsd_sbid;
+    private ImageView iv_registe_phone;
 
     @Override
     protected void onResume() {
         super.onResume();
+        DensityUtil.setCustomDensity(this, getApplication());
         bsd_et_password.setText("");
     }
 
@@ -148,7 +145,6 @@ public class LoginActivity extends Activity {
         });
         url = new URLS();
         url.BSD = MyApplication.shared.getString("ip", "");
-        Log.i("cjn", "url==" + url.BSD);
         if (TextUtils.isEmpty(url.BSD)) {
             queRen = new QueRen(this, "请输入IP地址");
             queRen.show();
@@ -175,18 +171,6 @@ public class LoginActivity extends Activity {
         } else {
             bsd_im_jizhumima.setImageResource(R.drawable.bsd_no);
         }
-
-//        bsd_jizhumima();
-
-        /**
-         * 判断选没选中王者之路，1代表选中，0代表没选中
-         */
-//        if (MyApplication.shared.getInt("xz", 0) > 0) {
-//            wzngzhezhilu();
-//        } else {
-//            url.BSD = MyApplication.shared.getString("ip", "");
-//            Show.showTime(LoginActivity.this, url.BSD);
-//        }
     }
 
     /**
@@ -205,6 +189,48 @@ public class LoginActivity extends Activity {
         //记住密码
         bsd_im_jizhumima = (ImageView) findViewById(R.id.bsd_im_jizhumima);
         bsd_sbid = (TextView) findViewById(R.id.bsd_sbid);
+        iv_registe_phone = (ImageView) findViewById(R.id.iv_registe_phone);
+        iv_registe_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registePhone();
+            }
+        });
+    }
+
+    /**
+     * 注册手机设备号
+     */
+    private void registePhone() {
+        String diviceUuid = getDiviceUuid();
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(this, "注册中...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("diviceUuid", diviceUuid);
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_REGISTEPHONE, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int stud, String data) {
+                if (data.equals("fail")) {
+                    Toast.makeText(LoginActivity.this, "此设备已经注册过了", Toast.LENGTH_SHORT).show();
+                } else if (data.equals("success")) {
+                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(LoginActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
     }
 
     // 获取设备号
@@ -289,7 +315,6 @@ public class LoginActivity extends Activity {
      */
     public void clk_bumen(View view) {
         url.BSD = MyApplication.shared.getString("ip", "");
-        Log.i("cjn", "url==" + url.BSD);
         if (TextUtils.isEmpty(url.BSD)) {
             queRen = new QueRen(this, "请输入IP地址");
             queRen.show();
@@ -310,7 +335,6 @@ public class LoginActivity extends Activity {
      * 选择公司下拉
      */
     public void bumen() {
-        Log.i("cjn", "选择公司下拉");
         nameList.clear();
         for (int i = 0; i < listitem.size(); i++) {
             CustemObject object = new CustemObject();
@@ -365,9 +389,7 @@ public class LoginActivity extends Activity {
      */
     public void sbd_gongsi() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(LoginActivity.this, "加载中...");
-        Log.i("cjn", "获取公司转圈");
         listitem.clear();
-        Log.i("cjn", "查看公司网址" + MyApplication.shared.getString("ip", ""));
         AbRequestParams params = new AbRequestParams();
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_gongsi, params, new AbStringHttpResponseListener() {
             @Override
@@ -518,7 +540,7 @@ public class LoginActivity extends Activity {
         params.put("name", bsd_user_name);
         params.put("psd", bsd_password);
         params.put("sid", Conts.SBID);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_login, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_login, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 try {
@@ -628,25 +650,22 @@ public class LoginActivity extends Activity {
                             }
                             MyApplication.editor.putString("yes_no", yes_no);
                             MyApplication.editor.commit();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                            Bundle mBundle = new Bundle();
-                            mBundle.putStringArray("QD", st);
-                            intent.putExtras(mBundle);
-                            startActivity(intent);
+                            updateCaozuoyuanOnline(item.getString("name"), Conts.SBID);
                         } else {
                             Show.showTime(LoginActivity.this, "没有登录权限");
+                            WeiboDialogUtils.closeDialog(mWeiboDialog);
                         }
                     } else if (json.get("message").toString().equals("查询失败")) {
-
+                        WeiboDialogUtils.closeDialog(mWeiboDialog);
                         Toast.makeText(LoginActivity.this, json.getString("data"), Toast.LENGTH_SHORT).show();
                     } else {
+                        WeiboDialogUtils.closeDialog(mWeiboDialog);
                         Show.showTime(LoginActivity.this, "网络连接超时");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    WeiboDialogUtils.closeDialog(mWeiboDialog);
                 }
-                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -661,6 +680,41 @@ public class LoginActivity extends Activity {
             public void onFailure(int i, String s, Throwable throwable) {
                 Show.showTime(LoginActivity.this, "服务器连接失败，稍后重试");
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    private void updateCaozuoyuanOnline(String name, String sbid) {
+        AbRequestParams params = new AbRequestParams();
+        params.put("name", name);
+        params.put("sid", sbid);
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_ADDONLINE, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                if (data.equals("success")) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putStringArray("QD", st);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                    WeiboDialogUtils.closeDialog(mWeiboDialog);
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(LoginActivity.this, "更新操作员在线状态失败", Toast.LENGTH_SHORT).show();
             }
         });
     }

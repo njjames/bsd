@@ -28,9 +28,7 @@
         android:gravity="center_vertical"
         android:layout_marginTop="@dimen/qb_px_4">
 
-        <LinearLayout
-            android:id="@+id/rl_query"
-            style="@style/myeditlinearlayoutstyle">
+        <LinearLayout style="@style/myeditlinearlayoutstyle">
 
             <TextView
                 android:id="@+id/textView7"
@@ -62,7 +60,6 @@
         android:layout_marginTop="@dimen/qb_px_4"/>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_34"
         android:orientation="horizontal">

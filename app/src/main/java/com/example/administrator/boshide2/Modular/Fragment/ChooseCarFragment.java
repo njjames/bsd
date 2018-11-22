@@ -2,6 +2,7 @@ package com.example.administrator.boshide2.Modular.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +32,7 @@ import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialog
 import com.example.administrator.boshide2.Modular.View.diaog.OCRInfoDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.DensityUtil;
 import com.example.administrator.boshide2.Tools.OcrUtil;
 import com.example.administrator.boshide2.Tools.PermissionUtils;
 import com.example.administrator.boshide2.Tools.PermissionsManager;
@@ -177,6 +180,7 @@ public class ChooseCarFragment extends BaseFragment implements View.OnClickListe
     //打开相机返回
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        DensityUtil.setCustomDensity(getHostActicity(), getHostActicity().getApplication());
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
@@ -270,8 +274,8 @@ public class ChooseCarFragment extends BaseFragment implements View.OnClickListe
                 mOCRInfoDialog.setOnBackListener(new OCRInfoDialog.OnBackListener() {
                     @Override
                     public void onConfirm(String chepai) {
-                        checkCarCanused(chepai);
                         mOCRInfoDialog.dismiss();
+                        checkCarCanused(chepai);
                     }
                 });
             }

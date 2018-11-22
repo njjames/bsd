@@ -76,7 +76,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/bsd_xm5"
         android:layout_width="190dp"
         android:layout_height="40dp"
         android:layout_below="@+id/view2"

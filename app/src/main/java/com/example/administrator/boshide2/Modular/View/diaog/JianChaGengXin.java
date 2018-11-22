@@ -180,10 +180,7 @@ public class JianChaGengXin extends Dialog implements View.OnClickListener {
                 updateProgressDialog.setMax(100);
                 updateProgressDialog.setProgress(0);
                 updateProgressDialog.show();
-
                 updateMan.downloadPackage();
-
-
             }
         }
 

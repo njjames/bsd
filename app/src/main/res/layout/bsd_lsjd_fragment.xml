@@ -8,7 +8,6 @@
     <include layout="@layout/content_title_back_layout" />
 
     <LinearLayout
-        android:id="@+id/bsd_lsbj_zhong"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -72,7 +71,6 @@
             android:background="#F7714C" />
 
         <LinearLayout
-            android:id="@+id/bsd_lsbj_toubuju"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_30"
             android:layout_below="@+id/bsd_on_xian"

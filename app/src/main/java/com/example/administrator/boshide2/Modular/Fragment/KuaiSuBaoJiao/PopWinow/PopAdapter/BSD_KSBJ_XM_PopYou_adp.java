@@ -25,20 +25,9 @@ import java.util.List;
  */
 public class BSD_KSBJ_XM_PopYou_adp extends BaseAdapter {
     private Context mContext;
-    List<BSD_wxyy_xm_pop_entiy> mLists;
-    private static HashMap<Integer, Boolean> isSelected;
+    private List<BSD_wxyy_xm_pop_entiy> mLists;
     private OnAddListener onAddListener;
-
     private List<String> chooseLists = new ArrayList<>(); // 使用一个集合用来存储当前已经选择的Item
-
-    public static HashMap<Integer, Boolean> getIsSelected() {
-        return isSelected;
-    }
-
-    public static void setIsSelected(HashMap<Integer, Boolean> isSelected) {
-        BSD_KSBJ_XM_PopYou_adp.isSelected = isSelected;
-    }
-
 
     public void setmLists(List<BSD_wxyy_xm_pop_entiy> list) {
         this.mLists = list;
@@ -47,12 +36,10 @@ public class BSD_KSBJ_XM_PopYou_adp extends BaseAdapter {
     public BSD_KSBJ_XM_PopYou_adp(Context context, List<BSD_wxyy_xm_pop_entiy> list) {
         this.mContext = context;
         this.mLists = list;
-        isSelected = new HashMap<Integer, Boolean>();
     }
 
     public BSD_KSBJ_XM_PopYou_adp(Context context) {
         this.mContext = context;
-        isSelected = new HashMap<Integer, Boolean>();
     }
 
     @Override

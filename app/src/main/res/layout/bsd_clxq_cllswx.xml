@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/bsd_lsbj_toubuju"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_30"
         android:orientation="horizontal">

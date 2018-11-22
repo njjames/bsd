@@ -32,7 +32,6 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/bsd_wixiu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -102,7 +101,6 @@
                 android:gravity="center_vertical">
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout7"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/y45"
@@ -344,7 +342,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout9"
                     android:layout_width="0dp"
                     android:layout_weight="0.8"
                     android:layout_height="@dimen/y45"
@@ -377,7 +374,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout10"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/y45"
@@ -413,7 +409,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout12"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/y45"
@@ -488,7 +483,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout20"
                     android:layout_width="0dp"
                     android:layout_weight="1.2"
                     android:layout_height="@dimen/y45"
@@ -633,7 +627,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/bsd_xm555"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1.2"
@@ -650,7 +643,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/bsd_xm666"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -811,7 +803,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/bsd_xm66"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"

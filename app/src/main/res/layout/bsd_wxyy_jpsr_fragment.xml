@@ -8,7 +8,6 @@
     <include layout="@layout/content_title_back_layout" />
 
     <RelativeLayout
-        android:id="@+id/bsd_lsbj_zhong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -36,7 +35,6 @@
                 android:layout_marginTop="@dimen/qb_px_40"/>
 
             <LinearLayout
-                android:id="@+id/ll_license_input_boxes_content"
                 android:layout_width="@dimen/qb_px_630"
                 android:layout_height="@dimen/qb_px_70"
                 android:background="@drawable/cepai"

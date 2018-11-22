@@ -94,7 +94,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/bsd_xm66"
         android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_below="@+id/view22"

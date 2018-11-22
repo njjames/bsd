@@ -33,7 +33,6 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/ll_center"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -45,7 +44,6 @@
             android:src="@drawable/icon"/>
 
         <LinearLayout
-            android:id="@+id/ll_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#66000000"
@@ -150,7 +148,6 @@
 
 
             <RelativeLayout
-                android:id="@+id/relativeLayout4"
                 android:layout_width="@dimen/qb_px_250"
                 android:layout_height="@dimen/qb_px_50"
                 android:layout_alignStart="@+id/bsd_rl_user"
@@ -185,7 +182,6 @@
 
             <RelativeLayout
                 android:onClick="bsd_qiehuan"
-                android:id="@+id/bsd_rl_wjmm"
                 android:layout_width="@dimen/qb_px_250"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/qb_px_6"
@@ -201,7 +197,6 @@
                     android:layout_centerVertical="true" />
 
                 <TextView
-                    android:id="@+id/text1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/bsd_im_jizhumima"
@@ -227,13 +222,27 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/bsd_sbid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/qb_px_15"
-        android:background="#fff"
-        android:text="设备id为空"
-        android:textSize="@dimen/text16"
-        android:textColor="#000" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_registe_phone"
+            android:layout_width="@dimen/qb_px_30"
+            android:layout_height="@dimen/qb_px_30"
+            android:src="@drawable/ic_registe_phone"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/qb_px_10"/>
+
+        <TextView
+            android:id="@+id/bsd_sbid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/qb_px_15"
+            android:background="#fff"
+            android:text="设备id为空"
+            android:textSize="@dimen/text16"
+            android:textColor="#000"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 </LinearLayout>

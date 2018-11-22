@@ -168,7 +168,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/bsd_wzll_1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_46"
             android:background="@drawable/bsd_chepaiyuan_w"
@@ -176,7 +175,6 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/bsd_wzzl_ip"
                 style="@style/myeditinfonamestyle"
                 android:text="会员卡号："
                 android:textColor="#000000"
@@ -200,7 +198,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/bsd_wzll_11"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_46"
             android:layout_marginTop="@dimen/qb_px_10"
@@ -220,7 +217,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/bsd_wzll_33"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_46"
             android:layout_marginTop="@dimen/qb_px_10"
@@ -320,7 +316,6 @@
                 android:button="@null" />
 
             <TextView
-                android:id="@+id/textView26"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="使用储值卡结算"
@@ -399,15 +394,12 @@
                         style="@style/myeditinfomarqeestyle"
                         android:textColor="#000000"/>
 
-                    <ImageView
-                        android:id="@+id/iv_mrkx_time"
-                        style="@style/myeditdowimgstyle" />
+                    <ImageView style="@style/myeditdowimgstyle" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/bsd_mrkx_qrjs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

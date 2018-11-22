@@ -251,7 +251,6 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/bsd_xm5"
                         android:layout_width="190dp"
                         android:layout_height="40dp"
                         android:layout_below="@+id/view2"
@@ -268,7 +267,6 @@
                     </RelativeLayout>
 
                     <View
-                        android:id="@+id/view3"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/bsd_xm1"
@@ -281,7 +279,6 @@
                     android:layout_height="200dp"
                     android:layout_below="@+id/bsd_rl_xuanxiang"></ListView>
                 <View
-                    android:id="@+id/bsd_v_lv_xia1"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@+id/bsd_lv"
@@ -399,7 +396,6 @@
                     android:background="@drawable/biankuang_info_bg">
 
                     <TextView
-                        android:id="@+id/bsd_xsbj_name111"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
@@ -461,7 +457,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/bsd_xm555"
                     android:layout_width="190dp"
                     android:layout_height="40dp"
                     android:layout_toRightOf="@+id/bsd_xm444"

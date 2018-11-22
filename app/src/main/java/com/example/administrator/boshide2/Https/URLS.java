@@ -195,7 +195,7 @@ public class URLS {
     /**
      * 登陆
      */
-    public String BSD_login = "login";
+    public static final String BSD_login = "login";
     /**
      * 维修预约车牌输入后列表显示
      */
@@ -698,5 +698,13 @@ public class URLS {
 
 
     public static String CHECK_CAR_CANUSED = "public/carcanused";
+
+    public static final String BSD_REGISTEPHONE = "public/registephone";
+
+    public static final String BSD_ADDONLINE = "public/addonline";
+
+    public static final String BSD_REMOVEONLINE = "public/removeonline";
+
+    public static final String BSD_UPDATEONLINE = "public/updateonline";
 
 }

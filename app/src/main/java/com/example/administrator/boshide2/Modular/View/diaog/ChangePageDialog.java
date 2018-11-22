@@ -34,7 +34,7 @@ public class ChangePageDialog extends Dialog implements View.OnClickListener {
 		setContentView(view);
 		setCanceledOnTouchOutside(false);
 		WindowManager.LayoutParams params = this.getWindow().getAttributes();
-		params.width = getContext().getResources().getDimensionPixelSize(R.dimen.qb_px_360);
+		params.width = getContext().getResources().getDimensionPixelSize(R.dimen.qb_px_400);
 		params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
 		this.getWindow().setAttributes(params);
 	}

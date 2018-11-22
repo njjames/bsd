@@ -24,19 +24,16 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/bsd_on_top_line1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/bsd_mrkx_rl_hukx"
                     style="@style/myeditlinearlayoutstyle"
                     android:layout_weight="2.8">
 
                     <TextView
-                        android:id="@+id/bsd_ytp"
                         style="@style/myeditinfonamestyle"
                         android:text="会员卡号:" />
 
@@ -73,9 +70,7 @@
                         android:id="@+id/bsd_mrkx_tv_pp"
                         style="@style/myeditinfomarqeestyle" />
 
-                    <ImageView
-                        android:id="@+id/iv_mrkx_pp"
-                        style="@style/myeditdowimgstyle" />
+                    <ImageView style="@style/myeditdowimgstyle" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -93,9 +88,7 @@
                         android:id="@+id/bsd_mrkx_tv_chexi"
                         style="@style/myeditinfomarqeestyle" />
 
-                    <ImageView
-                        android:id="@+id/iv_mrkx_cx"
-                        style="@style/myeditdowimgstyle" />
+                    <ImageView style="@style/myeditdowimgstyle" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -113,9 +106,7 @@
                         android:id="@+id/bsd_mrkx_tv_chezu"
                         style="@style/myeditinfomarqeestyle" />
 
-                    <ImageView
-                        android:id="@+id/iv_mrkx_cz"
-                        style="@style/myeditdowimgstyle" />
+                    <ImageView style="@style/myeditdowimgstyle" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -133,26 +124,21 @@
                         android:id="@+id/bsd_mrkx_tv_chexing"
                         style="@style/myeditinfomarqeestyle"/>
 
-                    <ImageView
-                        android:id="@+id/iv_mrkx_cxing"
-                        style="@style/myeditdowimgstyle" />
+                    <ImageView style="@style/myeditdowimgstyle" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bsd_on_top_line2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/qb_px_4">
 
                 <LinearLayout
-                    android:id="@+id/relativeLayout8"
                     android:layout_weight="1"
                     style="@style/myeditlinearlayoutstyle">
 
                     <TextView
-                        android:id="@+id/textView77"
                         style="@style/myeditinfonamestyle"
                         android:text="车牌:" />
 
@@ -162,7 +148,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/relativeLayout22"
                     android:layout_weight="2"
                     style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_8">
@@ -190,13 +175,11 @@
 
 
                 <LinearLayout
-                    android:id="@+id/relativeLayout23"
                     android:layout_weight="1"
                     style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_8">
 
                     <TextView
-                        android:id="@+id/textView19"
                         style="@style/myeditinfonamestyle"
                         android:text="客户:" />
 
@@ -207,13 +190,11 @@
 
 
                 <LinearLayout
-                    android:id="@+id/relativeLayout26"
                     android:layout_weight="1.5"
                     style="@style/myeditlinearlayoutstyle"
                     android:layout_marginLeft="@dimen/qb_px_8">
 
                     <TextView
-                        android:id="@+id/textView22"
                         style="@style/myeditinfonamestyle"
                         android:text="电话:" />
 
@@ -231,7 +212,6 @@
                     android:layout_marginLeft="@dimen/qb_px_8">
 
                     <TextView
-                        android:id="@+id/textView21"
                         style="@style/myeditinfonamestyle"
                         android:text="购车时间:" />
 
@@ -239,25 +219,19 @@
                         android:id="@+id/bsd_mrxk_tv_djtime"
                         style="@style/myeditinfomarqeestyle" />
 
-                    <ImageView
-                        android:id="@+id/iv_mrkx_time"
-                        style="@style/myeditdowimgstyle" />
+                    <ImageView style="@style/myeditdowimgstyle" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bsd_on_top_line3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/qb_px_4">
 
-                <LinearLayout
-                    android:id="@+id/relativeLayout24"
-                    style="@style/myeditlinearlayoutstyle">
+                <LinearLayout style="@style/myeditlinearlayoutstyle">
 
                     <TextView
-                        android:id="@+id/textView20"
                         style="@style/myeditinfonamestyle"
                         android:text="里程:" />
 
@@ -275,7 +249,6 @@
                     android:layout_marginLeft="@dimen/qb_px_8">
 
                     <TextView
-                        android:id="@+id/bsd_mrkx_t1_gsfl"
                         style="@style/myeditinfonamestyle"
                         android:text="工时费率:" />
 
@@ -289,9 +262,7 @@
                         android:textColorHint="#B1B0B0"
                         android:textSize="14sp" />
 
-                    <ImageView
-                        android:id="@+id/iv_mrkx_fl"
-                        style="@style/myeditdowimgstyle" />
+                    <ImageView style="@style/myeditdowimgstyle" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -301,7 +272,6 @@
                     android:layout_marginLeft="@dimen/qb_px_8">
 
                     <TextView
-                        android:id="@+id/textView29"
                         style="@style/myeditinfonamestyle"
                         android:text="仓库:" />
 
@@ -315,9 +285,7 @@
                         android:textColorHint="#B1B0B0"
                         android:textSize="13sp" />
 
-                    <ImageView
-                        android:id="@+id/iv_mrkx_ck"
-                        style="@style/myeditdowimgstyle" />
+                    <ImageView style="@style/myeditdowimgstyle" />
                 </LinearLayout>
 
                 <TextView
@@ -340,19 +308,16 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bsd_on_top_line4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/qb_px_4">
 
                 <LinearLayout
-                    android:id="@+id/bsd_wxjd_rl_miaoshu"
                     android:layout_weight="3"
                     style="@style/myeditlinearlayoutstyle">
 
                     <TextView
-                        android:id="@+id/textView_miaoshu"
                         style="@style/myeditinfonamestyle"
                         android:text="故障描述:" />
 
@@ -432,7 +397,6 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/bsd_clxxqiehua"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_34"
                     android:background="@drawable/bsd_chepaiyuan">
@@ -542,13 +506,11 @@
                         android:text="工时" />
 
                     <TextView
-                        android:id="@+id/bsd_xsbj_jiner"
                         style="@style/mysearchtitlestyle"
                         android:layout_weight="1"
                         android:text="金额" />
 
                     <TextView
-                        android:id="@+id/bsd_xsbj_caozuo"
                         style="@style/mysearchtitlestyle"
                         android:layout_weight="0.8"
                         android:text="操作" />

@@ -101,6 +101,7 @@ public class WzzlDialog extends Dialog {
     public void initData() {
         String ip1 = MyApplication.shared.getString("ip1", "");
         if (TextUtils.isEmpty(ip1)) {
+//            bsd_wzzl_et_ip.setText("http://192.168.16.15");
             bsd_wzzl_et_ip.setText("http://");
         } else {
             bsd_wzzl_et_ip.setText(ip1);
@@ -108,7 +109,12 @@ public class WzzlDialog extends Dialog {
         bsd_wzzl_et_ip.setSelection(bsd_wzzl_et_ip.getText().length());
         bsd_wzzl_et_user.setText(MyApplication.shared.getString("username1", ""));
         bsd_wzzl_et_password.setText(MyApplication.shared.getString("password", ""));
-        bsd_wzzl_et_dk.setText(MyApplication.shared.getString("dk", ""));
+        String dk = MyApplication.shared.getString("dk", "");
+        if (TextUtils.isEmpty(dk)) {
+//            bsd_wzzl_et_dk.setText("8080/bsd");
+        } else {
+            bsd_wzzl_et_dk.setText(dk);
+        }
         if (MyApplication.shared.getInt("xz", 0) > 0) {
             checkBox.setChecked(true);
         } else {

@@ -17,7 +17,6 @@
         android:layout_gravity="center_horizontal"/>
 
     <View
-        android:id="@+id/shanghong"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_1"
         android:layout_marginLeft="@dimen/qb_px_4"

@@ -44,7 +44,6 @@
         android:background="@color/button"/>
 
     <LinearLayout
-        android:id="@+id/bsd_lsbj_zhong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -90,7 +89,6 @@
         android:layout_marginTop="@dimen/qb_px_4"/>
 
     <LinearLayout
-        android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_30"
         android:layout_below="@+id/bsd_bycx_top_tv"

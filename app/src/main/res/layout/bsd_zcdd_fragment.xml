@@ -23,7 +23,6 @@
             android:gravity="center_vertical">
 
             <LinearLayout
-                android:id="@+id/relativeLayout7"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -41,7 +40,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout9"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -60,7 +58,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout10"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"

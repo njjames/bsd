@@ -33,7 +33,7 @@
     <ImageView
         android:id="@+id/iv_add"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/qb_px_30"
         android:padding="@dimen/qb_px_2"
         android:layout_weight="0.4"
         android:src="@drawable/ic_add"

@@ -21,12 +21,10 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/bsd_cheliangxinxi"
                 style="@style/myinforowstyle"
                 android:layout_marginTop="@dimen/qb_px_2">
 
                 <TextView
-                    android:id="@+id/bsd_cxq_che"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="车辆信息"
@@ -34,21 +32,18 @@
                     android:textSize="16sp" />
 
                 <View
-                    android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/qb_px_2"
                     android:background="#F7714C" />
 
                 <LinearLayout
-                    android:id="@+id/ll_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/qb_px_2">
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout1"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="@dimen/qb_px_32"
@@ -65,7 +60,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout7"
                         android:layout_width="0dp"
                         android:layout_weight="1.5"
                         android:layout_height="@dimen/qb_px_32"
@@ -95,7 +89,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout3"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="@dimen/qb_px_32"
@@ -103,7 +96,6 @@
                         android:layout_marginLeft="@dimen/qb_px_6">
 
                         <TextView
-                            android:id="@+id/textView3"
                             style="@style/myinfonamestyle"
                             android:text="车辆性质:" />
 
@@ -113,7 +105,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout4"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="@dimen/qb_px_32"
@@ -121,7 +112,6 @@
                         android:layout_marginLeft="@dimen/qb_px_6">
 
                         <TextView
-                            android:id="@+id/textView4"
                             style="@style/myinfonamestyle"
                             android:text="VIN:" />
 
@@ -133,12 +123,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bus_userxinxi"
                 style="@style/myinforowstyle"
                 android:layout_marginTop="@dimen/qb_px_2">
 
                 <TextView
-                    android:id="@+id/bsd_cxq_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="客户信息"
@@ -146,14 +134,12 @@
                     android:textSize="16sp" />
 
                 <View
-                    android:id="@+id/view1"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/qb_px_2"
                     android:background="#F7714C" />
 
                 <LinearLayout
-                    android:id="@+id/ll_top2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -177,7 +163,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout71"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/qb_px_32"
                         android:layout_weight="1"
@@ -185,7 +170,6 @@
                         android:layout_marginLeft="@dimen/qb_px_6">
 
                         <TextView
-                            android:id="@+id/textView71"
                             style="@style/myinfonamestyle"
                             android:text="联系人:" />
 
@@ -195,7 +179,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout31"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/qb_px_32"
                         android:layout_weight="1"
@@ -203,7 +186,6 @@
                         android:layout_marginLeft="@dimen/qb_px_6">
 
                         <TextView
-                            android:id="@+id/textView41"
                             style="@style/myinfonamestyle"
                             android:text="电话:" />
 
@@ -213,7 +195,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout112"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/qb_px_32"
                         android:layout_weight="1"
@@ -221,7 +202,6 @@
                         android:layout_marginLeft="@dimen/qb_px_6">
 
                         <TextView
-                            android:id="@+id/textView112"
                             style="@style/myinfonamestyle"
                             android:text="购买日期:" />
 
@@ -245,12 +225,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bus_baoyangxinxi"
                 style="@style/myinforowstyle"
                 android:layout_marginTop="@dimen/qb_px_2">
 
                 <TextView
-                    android:id="@+id/bsd_cxq_user2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="保养信息"
@@ -258,28 +236,24 @@
                     android:textSize="16sp" />
 
                 <View
-                    android:id="@+id/view12"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/qb_px_2"
                     android:background="#F7714C" />
 
                 <LinearLayout
-                    android:id="@+id/ll_top3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/qb_px_2">
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout712"
                         android:layout_width="0dp"
                         android:layout_weight="1.5"
                         android:layout_height="@dimen/qb_px_32"
                         style="@style/myconditionboxstyle">
 
                         <TextView
-                            android:id="@+id/textView712"
                             style="@style/myinfonamestyle"
                             android:text="上次保养时间:" />
 
@@ -300,7 +274,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout312"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="@dimen/qb_px_32"
@@ -308,7 +281,6 @@
                         android:layout_marginLeft="@dimen/qb_px_6">
 
                         <TextView
-                            android:id="@+id/textView312"
                             style="@style/myinfonamestyle"
                             android:text="上次保养里程:" />
 
@@ -329,7 +301,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout412"
                         android:layout_width="0dp"
                         android:layout_weight="1.5"
                         android:layout_height="@dimen/qb_px_32"
@@ -337,7 +308,6 @@
                         android:layout_marginLeft="@dimen/qb_px_6">
 
                         <TextView
-                            android:id="@+id/textView412"
                             style="@style/myinfonamestyle"
                             android:text="下次保养日期:" />
 
@@ -358,7 +328,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/relativeLayout4122"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="@dimen/qb_px_32"
@@ -366,7 +335,6 @@
                         android:layout_marginLeft="@dimen/qb_px_6">
 
                         <TextView
-                            android:id="@+id/textView4122"
                             style="@style/myinfonamestyle"
                             android:text="下次保里程:" />
 
@@ -389,7 +357,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bsd_qiehuan1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/qb_px_4"
@@ -432,7 +399,6 @@
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/bus_vi1"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_1"
                     android:background="#F7714C"/>

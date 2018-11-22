@@ -8,7 +8,6 @@
     <include layout="@layout/content_title_back_layout" />
 
     <LinearLayout
-        android:id="@+id/bsd_lsbj_zhong"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -25,7 +24,6 @@
             android:gravity="center_vertical">
 
             <LinearLayout
-                android:id="@+id/relativeLayout7"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_weight="1"
@@ -43,7 +41,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout12"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_weight="1"
@@ -87,7 +84,6 @@
             android:layout_marginTop="@dimen/qb_px_4"/>
 
         <LinearLayout
-            android:id="@+id/bsd_lsbj_toubuju"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_30"
             android:orientation="horizontal">

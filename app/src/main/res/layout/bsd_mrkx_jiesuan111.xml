@@ -154,7 +154,6 @@
 
             </RelativeLayout>
             <RelativeLayout
-                android:id="@+id/bsd_mrkx_qrjs"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_below="@+id/bsd_wzll_7">

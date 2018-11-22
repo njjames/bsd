@@ -19,7 +19,6 @@
             android:visibility="invisible"/>
 
         <TextView
-            android:id="@+id/textView27"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -79,7 +78,6 @@
                 android:layout_marginLeft="@dimen/qb_px_8">
 
                 <TextView
-                    android:id="@+id/textview"
                     style="@style/myeditinfonamestyle"
                     android:text="VIN:" />
 
@@ -125,9 +123,7 @@
                     android:hint="请选择品牌"
                     style="@style/myeditinfomarqeestyle" />
 
-                <ImageView
-                    android:id="@+id/iv1"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -146,9 +142,7 @@
                     android:hint="请选择车系" />
 
 
-                <ImageView
-                    android:id="@+id/iv2"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
         </LinearLayout>
 
@@ -172,9 +166,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请选择车组" />
 
-                <ImageView
-                    android:id="@+id/iv3"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -192,9 +184,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请选择车型" />
 
-                <ImageView
-                    android:id="@+id/iv4"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
         </LinearLayout>
 
@@ -253,9 +243,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请输入购车日期" />
 
-                <ImageView
-                    android:id="@+id/iv5"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -286,9 +274,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请输入下次保养日期" />
 
-                <ImageView
-                    android:id="@+id/iv6"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -297,7 +283,6 @@
                 android:layout_marginLeft="@dimen/qb_px_8">
 
                 <TextView
-                    android:id="@+id/textView2"
                     style="@style/myeditinfonamestyle"
                     android:text="下次检车日期:" />
 
@@ -306,9 +291,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请输入下次检车日期" />
 
-                <ImageView
-                    android:id="@+id/iv7"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
         </LinearLayout>
 
@@ -324,7 +307,6 @@
                 style="@style/myeditlinearlayoutstyle">
 
                 <TextView
-                    android:id="@+id/textView3"
                     style="@style/myeditinfonamestyle"
                     android:text="交强险到期:" />
 
@@ -333,9 +315,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请输入交强险到期" />
 
-                <ImageView
-                    android:id="@+id/iv8"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -344,7 +324,6 @@
                 android:layout_marginLeft="@dimen/qb_px_8">
 
                 <TextView
-                    android:id="@+id/textView4"
                     style="@style/myeditinfonamestyle"
                     android:text="商业险到期:" />
 
@@ -353,9 +332,7 @@
                     style="@style/myeditinfomarqeestyle"
                     android:hint="请输入商业险到期" />
 
-                <ImageView
-                    android:id="@+id/iv9"
-                    style="@style/myeditdowimgstyle" />
+                <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

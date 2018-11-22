@@ -58,14 +58,17 @@ public class DensityUtil {
 //                // 不可能有虚拟按键
 //                display.getSize(outPoint);
 //            }
-        float targetDensity = displayMetrics.heightPixels * 1.0f / 752;
+//        float targetDensity = displayMetrics.heightPixels * 1.0f / 752;
+        float targetDensity = 1.5f;
 //            float targetDensity = outPoint.y * 1.0f / 600;
         float targetScaledDensity = targetDensity * (sNoncompatScaledDensity / sNoncompatDensity);
         displayMetrics.scaledDensity = targetScaledDensity;
         DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();
         activityDisplayMetrics.scaledDensity = targetScaledDensity;
 
-        Log.i("scaledDensity", "setCustomDensity: " + activity.getResources().getDisplayMetrics().scaledDensity);
+//        Log.i("scaledDensity", "setCustomDensity: " + activity.getResources().getDisplayMetrics().scaledDensity);
+//        Log.i("scaledDensity", "sNoncompatScaledDensity: " + sNoncompatScaledDensity);
+//        Log.i("scaledDensity", "sNoncompatDensity: " + sNoncompatDensity);
     }
 
     public static int getScreenHeight(Activity activity) {

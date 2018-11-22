@@ -12,7 +12,6 @@
         android:paddingRight="@dimen/qb_px_4" >
 
         <LinearLayout
-            android:id="@+id/timePicker1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >

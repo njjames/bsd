@@ -1,8 +1,12 @@
 package com.example.administrator.boshide2.Modular.Activity;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -13,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
@@ -49,15 +55,20 @@ import com.example.administrator.boshide2.Modular.Fragment.YuyueLiSHi.BSD_YuYueL
 import com.example.administrator.boshide2.Modular.Fragment.ZaiChangDiaoDU.BSD_zaichangdiaodu_Fragment;
 import com.example.administrator.boshide2.Modular.View.diaog.ChangePageDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.CustomDialog;
+import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.BsdUtil;
 import com.example.administrator.boshide2.Tools.DensityUtil;
 import com.example.administrator.boshide2.Tools.DownJianPan;
+import com.example.administrator.boshide2.Tools.MyTimeTask;
+import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.TimerTask;
 
 /**
  * @主页面
@@ -65,6 +76,7 @@ import org.json.JSONObject;
  */
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
+    private static final int TIMER = 1;
     //图标的数组
     private ImageView[] arr_iv;// 图标的数组
 
@@ -117,30 +129,36 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private LinearLayout bsd_main_loginAgain;
     private LinearLayout bsd_main_tuichu;
     private TextView bsd_main_guanliyuan;
+    private QueRen queRen;
+    private Dialog mWeiboDialog;
+    private MyTimeTask task;
+    private BSD_LSWX_ety data;
+    public BSD_WeiXiuYueYue_entiy entiy;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case TIMER:
+                    // 更新在线状态，不考虑是否更新成功
+                    updateOnline();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public BSD_WeiXiuYueYue_entiy getEntiy() {
         return entiy;
     }
+
     public void setEntiy(BSD_WeiXiuYueYue_entiy entiy) {
         this.entiy = entiy;
     }
-    public BSD_WeiXiuYueYue_entiy entiy;
 
-    public BSD_WeiXiuJieDan_Entity wxjdentity;
-
-    public void setWxjdentity(BSD_WeiXiuJieDan_Entity wxjdentity) {
-        this.wxjdentity = wxjdentity;
-    }
-    //客户信息实体
-    public BSD_KeHu_Entity khentity;
-    public void setKhentity(BSD_KeHu_Entity khentity) {
-        this.khentity = khentity;
-    }
-    //车辆信息实体
-    public BSD_Car_Entity carentity;
-    public void setCarentity(BSD_Car_Entity carentity) {
-        this.carentity = carentity;
-    }
 
     public BSD_LSWX_ety getData() {
         return data;
@@ -149,8 +167,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void setData(BSD_LSWX_ety data) {
         this.data = data;
     }
-
-    BSD_LSWX_ety data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,8 +178,58 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         DensityUtil.setCustomDensity(this, getApplication());
         setContentView(R.layout.activity_main);
+        setTimer();
         init();
         initJYParams();
+    }
+
+    private void setTimer() {
+        // 1分钟更新一次在线状态
+        task = new MyTimeTask(60000, new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(TIMER);
+            }
+        });
+        task.start();
+    }
+
+    public void stopTimer() {
+        task.stop();
+    }
+
+    private void updateOnline() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("name", MyApplication.shared.getString("name", ""));
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_UPDATEONLINE, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DensityUtil.setCustomDensity(this, getApplication());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopTimer();
     }
 
     /**
@@ -532,26 +598,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      * 显示操作员信息对话框
      */
     private void showCaoZuoYuanDialog() {
-        CustomDialog.Builder builder = new CustomDialog.Builder(MainActivity.this);
-        CustomDialog dialog = builder.style(R.style.mydialog)
-                .view(R.layout.dialog_caozuoyuaninfo_layout)
-                .widthDimenRes(R.dimen.qb_px_280)
-                .heightdp(LinearLayout.LayoutParams.WRAP_CONTENT)
-                .cancelTouchout(true)
-                .addViewOnclick(R.id.tv_confirm, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        CustomDialog.dismissDialog();
-                    }
-                })
-                .build();
-        TextView gongsiGndm = (TextView) dialog.getView().findViewById(R.id.tv_gongsi_gndm);
-        TextView cangkuGndm = (TextView) dialog.getView().findViewById(R.id.cangku_gndm);
-        TextView cangkuduGndm = (TextView) dialog.getView().findViewById(R.id.cangkudo_gndm);
-        gongsiGndm.setText("可查询公司：" + MyApplication.shared.getString("gongsi_gndm", ""));
-        cangkuGndm.setText("可查询仓库：" + MyApplication.shared.getString("cangku_gndm", ""));
-        cangkuduGndm.setText("可操作仓库：" + MyApplication.shared.getString("cangkudo_gndm", ""));
-        dialog.show();
+        String tip = "可查询公司：" + MyApplication.shared.getString("gongsi_gndm", "") +
+                "\n可查询仓库：" + MyApplication.shared.getString("cangku_gndm", "") +
+                "\n可操作仓库：" + MyApplication.shared.getString("cangkudo_gndm", "");
+        queRen = new QueRen(this, tip);
+        queRen.setToopromtOnClickListener(new QueRen.ToopromtOnClickListener() {
+            @Override
+            public void onYesClick() {
+                queRen.dismiss();
+            }
+        });
+        queRen.show();
     }
 
     /**
@@ -563,11 +620,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
             @Override
             public void onConfirm() {
-                MyApplication.editor.putString("psd", "");
-                MyApplication.editor.commit();
                 queding_quxiao.dismiss();
-                finish();
-                System.gc();
+                removeOnline(false);
             }
 
             @Override
@@ -585,13 +639,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         queding_quxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
             @Override
             public void onConfirm() {
-                MyApplication.editor.putString("psd", "");
-                MyApplication.editor.commit();
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_HOME);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                android.os.Process.killProcess(android.os.Process.myPid());
+                queding_quxiao.dismiss();
+                removeOnline(true);
             }
 
             @Override
@@ -600,6 +649,50 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
         });
         queding_quxiao.show();
+    }
+
+    private void removeOnline(final boolean isExit) {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(this, "正在退出...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("name", MyApplication.shared.getString("name", ""));
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_REMOVEONLINE, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+                if (data.equals("success")) {
+                    if (isExit) {
+                        MyApplication.editor.putString("psd", "");
+                        MyApplication.editor.commit();
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                    } else {
+                        MyApplication.editor.putString("psd", "");
+                        MyApplication.editor.commit();
+                        finish();
+                        System.gc();
+                    }
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                Toast.makeText(MainActivity.this, "更新操作员在线状态失败", Toast.LENGTH_SHORT).show();
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
     }
 
     private void switchPage(final int pageIndex) {

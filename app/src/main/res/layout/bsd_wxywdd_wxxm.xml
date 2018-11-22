@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/bsd_lsbj_toubuju"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_30">
 
@@ -48,7 +47,6 @@
     </ListView>
 
     <RelativeLayout
-        android:id="@+id/mrkx_xia"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_26"
         android:background="@drawable/bsd_xiamianyuan">

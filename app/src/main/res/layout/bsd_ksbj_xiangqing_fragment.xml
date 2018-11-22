@@ -23,9 +23,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/relativeLayout7"
-                style="@style/myeditlinearlayoutstyle">
+            <LinearLayout style="@style/myeditlinearlayoutstyle">
 
                 <TextView
                     android:id="@+id/textView7"
@@ -102,16 +100,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/rl_top2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_4"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/relativeLayout20"
-                style="@style/myeditlinearlayoutstyle">
+            <LinearLayout style="@style/myeditlinearlayoutstyle">
 
                 <TextView
                     android:id="@+id/textView13"
@@ -124,7 +119,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout9"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_8"
                 android:layout_weight="0.8">
@@ -140,7 +134,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout10"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_8">
 
@@ -155,7 +148,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout12"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_8"
                 android:layout_weight="0.8">
@@ -177,7 +169,6 @@
                 android:layout_marginLeft="@dimen/qb_px_8">
 
                 <TextView
-                    android:id="@+id/bsd_ksbj_t1_gsfl"
                     style="@style/myeditinfonamestyle"
                     android:text="工时费率:" />
 
@@ -267,7 +258,6 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/tv_hj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/qb_px_10"
@@ -368,7 +358,6 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/tv_hj2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/qb_px_10"

@@ -17,13 +17,11 @@
         android:paddingTop="@dimen/qb_px_6">
 
         <LinearLayout
-            android:id="@+id/ll_top_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/relativeLayout7"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_32"
@@ -40,7 +38,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout9"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_32"
@@ -58,7 +55,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout10"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_32"
@@ -66,7 +62,6 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/textView10"
                     style="@style/myinfonamestyle"
                     android:text="客户:" />
 
@@ -94,7 +89,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout12"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_32"
@@ -102,7 +96,6 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/textView12"
                     style="@style/myinfonamestyle"
                     android:text="电话:" />
 
@@ -120,7 +113,6 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/relativeLayout13"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_32"
@@ -137,7 +129,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativeLayout14"
                 style="@style/myconditionboxstyle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_32"
@@ -163,7 +154,6 @@
                 android:layout_weight="2">
 
                 <TextView
-                    android:id="@+id/textViewchuzhikahao"
                     style="@style/myinfonamestyle"
                     android:text="储值卡号:" />
 
@@ -299,7 +289,6 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:id="@+id/textView20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/qb_px_10"
@@ -389,7 +378,6 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:id="@+id/textView21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/qb_px_10"
