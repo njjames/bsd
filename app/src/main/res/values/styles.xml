@@ -210,6 +210,7 @@
         <item name="android:textColor">@color/text_clxx</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
     </style>
 

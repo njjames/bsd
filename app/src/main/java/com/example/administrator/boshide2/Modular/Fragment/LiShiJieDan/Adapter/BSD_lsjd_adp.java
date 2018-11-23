@@ -9,21 +9,22 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.administrator.boshide2.Modular.Entity.WorkPzGz_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2017-4-20.
  */
-
 public class BSD_lsjd_adp extends BaseAdapter {
     private LayoutInflater layoutInflater;
-    private List<BSD_WeiXiuJieDan_Entity> list;
+    private List<WorkPzGz_Entity> list;
     private Photo photo;
 
-    public BSD_lsjd_adp(Context context, List<BSD_WeiXiuJieDan_Entity> list) {
+    public BSD_lsjd_adp(Context context, List<WorkPzGz_Entity> list) {
         this.list = list;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -72,9 +73,9 @@ public class BSD_lsjd_adp extends BaseAdapter {
         } else {
             holder = (Holder) contetview.getTag();
         }
-        final BSD_WeiXiuJieDan_Entity item = list.get(i);
+        final WorkPzGz_Entity item = list.get(i);
         holder.bsd_lsjd_workno.setText(item.getWork_no());
-        holder.bsd_lsjd_jdrq.setText(item.getXche_jdrq());
+        holder.bsd_lsjd_jdrq.setText(BsdUtil.dateToStr(item.getXche_jdrq()));
         holder.bsd_lsjd_kehumc.setText(item.getKehu_mc());
         holder.bsd_lsjd_cheno.setText(item.getChe_no());
         holder.bsd_lsjd_fwgw.setText(item.getXche_pgcz());

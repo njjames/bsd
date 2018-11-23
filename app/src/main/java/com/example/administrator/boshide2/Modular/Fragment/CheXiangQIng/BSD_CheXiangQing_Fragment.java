@@ -25,11 +25,11 @@ import com.example.administrator.boshide2.Tools.DownJianPan;
  */
 public class BSD_CheXiangQing_Fragment extends BaseFragment implements View.OnClickListener {
     private static final String PARAM_KEY = "param_key";
-    LinearLayout bsd_lsbj_fanhui;
-    TextView bus_clxq_tv_cltp, bus_clxq_tv_wxls;
+    private LinearLayout bsd_lsbj_fanhui;
+    private TextView bus_clxq_tv_cltp, bus_clxq_tv_wxls;
     private TextView[] arr_tv;// 图标的数组0
-    ScrollView scrollview;
-    TextView tv_xq_number,tv_xq_cx,tv_xq_xz,tv_xq_vin,tv_xq_kh,tv_xq_lxr,tv_xq_chezhu,tv_xq_phone,tv_xq_gmrq,tv_xq_bysj,
+    private ScrollView scrollview;
+    private TextView tv_xq_number,tv_xq_cx,tv_xq_xz,tv_xq_vin,tv_xq_kh,tv_xq_lxr,tv_xq_chezhu,tv_xq_phone,tv_xq_gmrq,tv_xq_bysj,
             tv_xq_bylc,tv_xq_nextrq,tv_xq_next_lc;
     private TextView title;
     private TextView footerText;

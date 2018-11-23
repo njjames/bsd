@@ -79,7 +79,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private static final int TIMER = 1;
     //图标的数组
     private ImageView[] arr_iv;// 图标的数组
-
     private RelativeLayout rl_mrkx;
     private RelativeLayout rl_ksbj;
     private RelativeLayout rl_wxyy;
@@ -91,15 +90,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private RelativeLayout rl_my;
 
     private RelativeLayout[] arr_rl;//点击布局
-    //点击布局的id
-    private int[] arr_id_box = {R.id.rl_mrkx, R.id.rl_ksbj, R.id.rl_wxyy, R.id.rl_wxjd, R.id.rl_zcdd,
-            R.id.rl_hygl, R.id.rl_lswx, R.id.rl_clxx, R.id.rl_my};
 
     private String[] arr_name_box = {"美容快修", "快速报价", "维修预约", "维修接待", "在厂调度",
             "会员管理", "历史维修", "车辆信息", "我的管理"};
     //碎片
-    private Fragment BSD_mrkx_xq, BSD_lskx, BSD_mrkx, BSD_mrkx_clxx,BSD_mrkx_jpsr, BSD_mrby_Log, BSD_wxjd_xiangqing, BSD_wxyy_xiangqing, BSD_ksbj_xiangqing, BSD_bycx, BSD_wxjd_log, BSD_wxjd_srjp, BSD_wxyy_srjp, BSD_wxyy_log, BSD_KSBJ_Log, BSD_srjp, BSD_ksbj_smsr, BSD_lxwm, BSD_cxq, BSD_wxxq, BSD_ksbj, BSD_wxyy, BSD_wxjd, BSD_zcdd, BSD_hygl, BSD_lswx, BSD_clxx, BSD_my, BSD_lsbj, BSD_lsyy, BSD_lsjd;
-    private BSD_WeiXiuYeWuDiaoDu_Fragment BSD_wxywdd;
+    private Fragment BSD_wxyy_xiangqing;
     //图片数组
     private int[] imgyes = new int[]{R.drawable.bsd_mrkx_1, R.drawable.bsd_kuaisubaojia_1, R.drawable.bsd_weixiuyuyue_1,
             R.drawable.bsd_weixiujiedan_1, R.drawable.bsd_zaichangdiaodu_1, R.drawable.bsd_huiyuanguanli_1,
@@ -108,7 +103,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private int[] imgno = new int[]{R.drawable.bsd_mrkx_2, R.drawable.bsd_kuaisubaojia_2, R.drawable.bsd_weixiuyuyue_2,
             R.drawable.bsd_weixiujiedan_2, R.drawable.bsd_zaichangdiaodu_2, R.drawable.bsd_huiyuanguanli_2,
             R.drawable.bsd_lishiweixiu_2, R.drawable.bsd_cheliangxinxi_2, R.drawable.bsd_my_2};
-    public BSD_CLXX_ety clxx_ety;
     String work_no;//历史维修单号
     private int firstPageIndex = 0;
     private int currentPageIndex = 0;
@@ -345,14 +339,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         initFragment(firstPageIndex);
     }
 
-    public BSD_CLXX_ety getClxx_ety() {
-        return clxx_ety;
-    }
-
-    public void setClxx_ety(BSD_CLXX_ety clxx_ety) {
-        this.clxx_ety = clxx_ety;
-    }
-
     public String getWork_no() {
         return work_no;
     }
@@ -456,14 +442,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void showManualInputFragment(String billType) {
         DownJianPan.DJP(this);
         change(ManualInputFragment.newInstance(billType));
-    }
-
-    /**
-     * 保养查询
-     */
-    public void upBSD_bycx() {
-        DownJianPan.DJP(MainActivity.this);
-        change(BSD_bycx);
     }
 
     //切换碎片事务的方法

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
@@ -26,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,27 +148,13 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends BaseFragment {
         bsd_lswx_chuzhikahao.setText(billEntiy.getZhifu_card_no());
         bsd_lswx_jiesuanbiaozhi.setChecked(billEntiy.isFlag_cardjs());
         bsd_lswx_buxianjin.setText(billEntiy.getZhifu_card_xj());
+        tv_totalJE.setText(billEntiy.getXche_hjje() + "元");
         lswx_wxxm();
         lswx_wxcl();
     }
 
     private void getBillInfoFromParam() {
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = new JSONObject(params);
-            billEntiy = new BSD_LSWX_ety();
-            billEntiy.setWork_no(jsonObject.getString("work_no"));
-            billEntiy.setChe_no(jsonObject.getString("che_no"));
-            billEntiy.setKehu_mc(jsonObject.getString("kehu_mc"));
-            billEntiy.setXche_jsrq(jsonObject.getString("xche_jsrq"));
-            billEntiy.setKehu_dh(jsonObject.getString("kehu_dh"));
-            billEntiy.setCard_no(jsonObject.getString("card_no"));
-            billEntiy.setZhifu_card_je(jsonObject.getString("zhifu_card_je"));
-            billEntiy.setFlag_IsCheck(jsonObject.getBoolean("flag_cardjs"));
-            billEntiy.setZhifu_card_xj(jsonObject.getString("zhifu_card_xj"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        billEntiy = JSON.parseObject(params, BSD_LSWX_ety.class);
     }
 
     /**
@@ -222,13 +210,12 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends BaseFragment {
      */
     public void xq_xm() {
         tv_wxxmCount.setText("(共" + xmLists.size() + "条记录)");
-        double _xmZje = 0;
+        BigDecimal xmZje = new BigDecimal(0);
         for (int i = 0; i < xmLists.size(); i++) {
-            _xmZje = _xmZje + Double.parseDouble((xmLists.get(i).getWxxm_je()));
+            BigDecimal xmje= new BigDecimal(xmLists.get(i).getWxxm_je());
+            xmZje = xmZje.add(xmje);
         }
-        tv_xmZje.setText(_xmZje + "元");
-        xmZJe = _xmZje;
-        zongjia();
+        tv_xmZje.setText(xmZje.toString() + "元");
     }
 
     /**
@@ -236,17 +223,12 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends BaseFragment {
      */
     public void xq_cl() {
         tv_wxclCount.setText("(共" + clLists.size() + "条记录)");
-        double _clZje = 0;
+        BigDecimal clZje = new BigDecimal(0);
         for (int i = 0; i < clLists.size(); i++) {
-            _clZje = _clZje + (clLists.get(i).getPeij_dj() * clLists.get(i).getPeij_sl());
+            BigDecimal clje= new BigDecimal(clLists.get(i).getPeij_je());
+            clZje = clje.add(clje);
         }
-        tv_clZje.setText(_clZje + "元");
-        clZje = _clZje;
-        zongjia();
-    }
-
-    public void zongjia() {
-        tv_totalJE.setText(clZje + xmZJe + "");
+        tv_clZje.setText(clZje.toString() + "元");
     }
 
     /**
@@ -285,12 +267,10 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends BaseFragment {
 
             @Override
             public void onStart() {
-
             }
 
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -299,5 +279,4 @@ public class BSD_MeiRongKuaiXiuWeiXiuXiangQing_Fragment extends BaseFragment {
             }
         });
     }
-
 }

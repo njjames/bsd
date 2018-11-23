@@ -199,7 +199,7 @@ public class URLS {
     /**
      * 维修预约车牌输入后列表显示
      */
-    public String BSD_wxyy_LieBiao = "yuyue/jbxx";
+    public static final String BSD_wxyy_LieBiao = "yuyue/jbxx";
     /**
      * 维修预约单号输入项目显示
      */

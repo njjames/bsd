@@ -4,7 +4,6 @@ package com.example.administrator.boshide2.Modular.Fragment.LiShiWeiXiu.Entity;
  * Created by Administrator on 2017-5-4.
  * 历史维修
  */
-
 public class BSD_LSWX_ety {
     private String id;
     private String work_no;
@@ -94,288 +93,68 @@ public class BSD_LSWX_ety {
     private String xche_wxxmglf;
     private String xche_peijglf;
     private String yuyue_eString;
-
     private String yuyue_gw;
-
     private String yuyue_ry;
-
     private String xche_wxjy;
-
     private String xche_jcjg;
-
     private String xche_jcyj;
-
     private boolean Flag_UfPz;
-
     private String yh_zhanghao;
-
     private String xche_last_lc;
-
     private String xche_last_jdrq;
-
     private String kemu_dm;
-
     private String kemu_mc;
-
     private String AccountNo;
-
     private String kemu_dmcb;
-
     private String kemu_mccb;
-
     private boolean Flag_UfPzcb;
-
     private String xche_sbclf;
-
     private String xche_sbgss;
-
     private String xche_sbgsf;
-
     private String xche_sbclcb;
-
     private String xche_sbgsff;
-
     private String xche_bxclf;
-
     private String xche_bxgss;
-
     private String xche_bxgsf;
-
     private String xche_bxclcb;
-
     private String xche_bxgscb;
-
     private String xche_xzrgf_je;
-
     private String xche_xzclf_je;
-
     private String cangk_dm;
-
     private String che_zjno;
-
     private String xche_jianyi_lc;
-
     private int mainstate;
-
     private String substate;
-
     private boolean flag_IsCheck;
-
     private String xche_CheckRen;
-
     private boolean flag_CheckOK;
-
     private String xche_zjkgrq;
-
     private String xche_zjwgrq;
-
     private String xche_xckgrq;
-
     private String xche_xcwgrq;
-
     private String xche_kgrq;
-
     private boolean flag_isxiche;
-
     private int xche_wxsj;
-
     private String yuyue_no;
-
     private String gujia_no;
-
     private String gujia_imptrq;
-
     private boolean Flag_NotRemind;
-
     private String xche_haocai_je;
-
     private String xche_haocai_cb;
-
     private String xche_yjwgrq;
-
     private String xche_cclc;
-
     private String wxxm_tcje_sum;
-
     private String peij_tcje_sum;
-
     private String wxxm_zztcje_sum;
-
     private String xche_saobmianshou;
-
     private String xche_bxmianshou;
-
     private String xche_zengsgsf;
-
     private String xche_zengsclf;
-
     private String xche_zengsmianshou;
-
     private String xche_wxxm_yhje;
-
     private String xche_peij_yhje;
-
     private String work_jifen_sum;
-
     private boolean flag_pad;
-
-    public BSD_LSWX_ety() {
-
-    }
-
-
-    public BSD_LSWX_ety(String id, String work_no, String kehu_mc, String kehu_dh, String che_cx, String kehu_no, String kehu_sj, String che_no, String xche_sfbz, String xche_sffl, String xche_lc, String xche_cy, String xche_jdrq, String xche_gj, String xche_wxjd, String xche_wgrq, String xche_pgcz, String xche_jlr, String xche_jlrq, String xche_jsr, String xche_jsrq, String xche_fpfs, String xche_fplv, String xche_rgf, String xche_rgsl, String xche_rgse, String xche_rgbh, String xche_clf, String xche_clsl, String xche_clse, String xche_clbh, String xche_glf, String xche_wjgf, String xche_wjgcb, String xche_qtf, String xche_yhje, String xche_ysje, String xche_rgcb, String xche_cb, String xche_zxr, String xche_qtxm, String xche_wjgx, String xche_yhyy, String xche_gdfl, String xche_wxfl, String xche_bz, String xche_cz, String xche_jb, String xche_hjje, String xche_ssje, String xche_yeje, String xche_jsfs, String dept_mc, String xche_fpno, String xche_kpje, String xche_kpse, boolean flag_fast, String card_no, String card_kind, boolean flag_cardjs, String zhifu_card_no, String zhifu_card_je, String xche_gj_wx, String xche_gj_ll, String zhifu_card_xj, String card_itemrate, String card_peijrate, int xche_state, String xche_dinge, String kehu_bxno, String xche_sgsj, String xche_sgdd, String xche_sgyy, String gongSiNo, String gongSiMc, String xche_jcr, String xche_zgr, String xche_ywlx, String yuyue_String, String xche_sjhk, String temp_hk, String xche_yqhk, boolean flag_hk, String xche_wxxmlv, String xche_peijlv, String xche_wxxmglf, String xche_peijglf, String yuyue_eString, String yuyue_gw, String yuyue_ry, String xche_wxjy, String xche_jcjg, String xche_jcyj, boolean flag_UfPz, String yh_zhanghao, String xche_last_lc, String xche_last_jdrq, String kemu_dm, String kemu_mc, String accountNo, String kemu_dmcb, String kemu_mccb, boolean flag_UfPzcb, String xche_sbclf, String xche_sbgss, String xche_sbgsf, String xche_sbclcb, String xche_sbgsff, String xche_bxclf, String xche_bxgss, String xche_bxgsf, String xche_bxclcb, String xche_bxgscb, String xche_xzrgf_je, String xche_xzclf_je, String cangk_dm, String che_zjno, String xche_jianyi_lc, int mainstate, String substate, boolean flag_IsCheck, String xche_CheckRen, boolean flag_CheckOK, String xche_zjkgrq, String xche_zjwgrq, String xche_xckgrq, String xche_xcwgrq, String xche_kgrq, boolean flag_isxiche, int xche_wxsj, String yuyue_no, String gujia_no, String gujia_imptrq, boolean flag_NotRemind, String xche_haocai_je, String xche_haocai_cb, String xche_yjwgrq, String xche_cclc, String wxxm_tcje_sum, String peij_tcje_sum, String wxxm_zztcje_sum, String xche_saobmianshou, String xche_bxmianshou, String xche_zengsgsf, String xche_zengsclf, String xche_zengsmianshou, String xche_wxxm_yhje, String xche_peij_yhje, String work_jifen_sum, boolean flag_pad) {
-        this.id = id;
-        this.work_no = work_no;
-        this.kehu_mc = kehu_mc;
-        this.kehu_dh = kehu_dh;
-        this.che_cx = che_cx;
-        this.kehu_no = kehu_no;
-        this.kehu_sj = kehu_sj;
-        this.che_no = che_no;
-        this.xche_sfbz = xche_sfbz;
-        this.xche_sffl = xche_sffl;
-        this.xche_lc = xche_lc;
-        this.xche_cy = xche_cy;
-        this.xche_jdrq = xche_jdrq;
-        this.xche_gj = xche_gj;
-        this.xche_wxjd = xche_wxjd;
-        this.xche_wgrq = xche_wgrq;
-        this.xche_pgcz = xche_pgcz;
-        this.xche_jlr = xche_jlr;
-        this.xche_jlrq = xche_jlrq;
-        this.xche_jsr = xche_jsr;
-        this.xche_jsrq = xche_jsrq;
-        this.xche_fpfs = xche_fpfs;
-        this.xche_fplv = xche_fplv;
-        this.xche_rgf = xche_rgf;
-        this.xche_rgsl = xche_rgsl;
-        this.xche_rgse = xche_rgse;
-        this.xche_rgbh = xche_rgbh;
-        this.xche_clf = xche_clf;
-        this.xche_clsl = xche_clsl;
-        this.xche_clse = xche_clse;
-        this.xche_clbh = xche_clbh;
-        this.xche_glf = xche_glf;
-        this.xche_wjgf = xche_wjgf;
-        this.xche_wjgcb = xche_wjgcb;
-        this.xche_qtf = xche_qtf;
-        this.xche_yhje = xche_yhje;
-        this.xche_ysje = xche_ysje;
-        this.xche_rgcb = xche_rgcb;
-        this.xche_cb = xche_cb;
-        this.xche_zxr = xche_zxr;
-        this.xche_qtxm = xche_qtxm;
-        this.xche_wjgx = xche_wjgx;
-        this.xche_yhyy = xche_yhyy;
-        this.xche_gdfl = xche_gdfl;
-        this.xche_wxfl = xche_wxfl;
-        this.xche_bz = xche_bz;
-        this.xche_cz = xche_cz;
-        this.xche_jb = xche_jb;
-        this.xche_hjje = xche_hjje;
-        this.xche_ssje = xche_ssje;
-        this.xche_yeje = xche_yeje;
-        this.xche_jsfs = xche_jsfs;
-        this.dept_mc = dept_mc;
-        this.xche_fpno = xche_fpno;
-        this.xche_kpje = xche_kpje;
-        this.xche_kpse = xche_kpse;
-        this.flag_fast = flag_fast;
-        this.card_no = card_no;
-        this.card_kind = card_kind;
-        this.flag_cardjs = flag_cardjs;
-        this.zhifu_card_no = zhifu_card_no;
-        this.zhifu_card_je = zhifu_card_je;
-        this.xche_gj_wx = xche_gj_wx;
-        this.xche_gj_ll = xche_gj_ll;
-        this.zhifu_card_xj = zhifu_card_xj;
-        this.card_itemrate = card_itemrate;
-        this.card_peijrate = card_peijrate;
-        this.xche_state = xche_state;
-        this.xche_dinge = xche_dinge;
-        this.kehu_bxno = kehu_bxno;
-        this.xche_sgsj = xche_sgsj;
-        this.xche_sgdd = xche_sgdd;
-        this.xche_sgyy = xche_sgyy;
-        GongSiNo = gongSiNo;
-        GongSiMc = gongSiMc;
-        this.xche_jcr = xche_jcr;
-        this.xche_zgr = xche_zgr;
-        this.xche_ywlx = xche_ywlx;
-        this.yuyue_String = yuyue_String;
-        this.xche_sjhk = xche_sjhk;
-        this.temp_hk = temp_hk;
-        this.xche_yqhk = xche_yqhk;
-        this.flag_hk = flag_hk;
-        this.xche_wxxmlv = xche_wxxmlv;
-        this.xche_peijlv = xche_peijlv;
-        this.xche_wxxmglf = xche_wxxmglf;
-        this.xche_peijglf = xche_peijglf;
-        this.yuyue_eString = yuyue_eString;
-        this.yuyue_gw = yuyue_gw;
-        this.yuyue_ry = yuyue_ry;
-        this.xche_wxjy = xche_wxjy;
-        this.xche_jcjg = xche_jcjg;
-        this.xche_jcyj = xche_jcyj;
-        Flag_UfPz = flag_UfPz;
-        this.yh_zhanghao = yh_zhanghao;
-        this.xche_last_lc = xche_last_lc;
-        this.xche_last_jdrq = xche_last_jdrq;
-        this.kemu_dm = kemu_dm;
-        this.kemu_mc = kemu_mc;
-        AccountNo = accountNo;
-        this.kemu_dmcb = kemu_dmcb;
-        this.kemu_mccb = kemu_mccb;
-        Flag_UfPzcb = flag_UfPzcb;
-        this.xche_sbclf = xche_sbclf;
-        this.xche_sbgss = xche_sbgss;
-        this.xche_sbgsf = xche_sbgsf;
-        this.xche_sbclcb = xche_sbclcb;
-        this.xche_sbgsff = xche_sbgsff;
-        this.xche_bxclf = xche_bxclf;
-        this.xche_bxgss = xche_bxgss;
-        this.xche_bxgsf = xche_bxgsf;
-        this.xche_bxclcb = xche_bxclcb;
-        this.xche_bxgscb = xche_bxgscb;
-        this.xche_xzrgf_je = xche_xzrgf_je;
-        this.xche_xzclf_je = xche_xzclf_je;
-        this.cangk_dm = cangk_dm;
-        this.che_zjno = che_zjno;
-        this.xche_jianyi_lc = xche_jianyi_lc;
-        this.mainstate = mainstate;
-        this.substate = substate;
-        this.flag_IsCheck = flag_IsCheck;
-        this.xche_CheckRen = xche_CheckRen;
-        this.flag_CheckOK = flag_CheckOK;
-        this.xche_zjkgrq = xche_zjkgrq;
-        this.xche_zjwgrq = xche_zjwgrq;
-        this.xche_xckgrq = xche_xckgrq;
-        this.xche_xcwgrq = xche_xcwgrq;
-        this.xche_kgrq = xche_kgrq;
-        this.flag_isxiche = flag_isxiche;
-        this.xche_wxsj = xche_wxsj;
-        this.yuyue_no = yuyue_no;
-        this.gujia_no = gujia_no;
-        this.gujia_imptrq = gujia_imptrq;
-        Flag_NotRemind = flag_NotRemind;
-        this.xche_haocai_je = xche_haocai_je;
-        this.xche_haocai_cb = xche_haocai_cb;
-        this.xche_yjwgrq = xche_yjwgrq;
-        this.xche_cclc = xche_cclc;
-        this.wxxm_tcje_sum = wxxm_tcje_sum;
-        this.peij_tcje_sum = peij_tcje_sum;
-        this.wxxm_zztcje_sum = wxxm_zztcje_sum;
-        this.xche_saobmianshou = xche_saobmianshou;
-        this.xche_bxmianshou = xche_bxmianshou;
-        this.xche_zengsgsf = xche_zengsgsf;
-        this.xche_zengsclf = xche_zengsclf;
-        this.xche_zengsmianshou = xche_zengsmianshou;
-        this.xche_wxxm_yhje = xche_wxxm_yhje;
-        this.xche_peij_yhje = xche_peij_yhje;
-        this.work_jifen_sum = work_jifen_sum;
-        this.flag_pad = flag_pad;
-    }
 
     public String getId() {
         return id;

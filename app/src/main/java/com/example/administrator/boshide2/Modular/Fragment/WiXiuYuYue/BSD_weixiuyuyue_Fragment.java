@@ -59,6 +59,7 @@ import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.Modular.View.timepicker.TimePickerShow;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
 
@@ -81,11 +82,9 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
     ListView listcl;//维修材料
     ScrollView scrollview;
     RelativeLayout beijing;
-
     //弹出popwin
     TextView tv_add_wxcl;
     TextView tv_add_wxxm;
-
     //维修项目
     BSD_WeiXiyYueYue_XM_entity_Dao XM_Dao;
     BSD_WXYY_XM_adp adp_xm;
@@ -140,18 +139,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
     //项目和金河
     double clzj, xmzj;
     private Dialog mWeiboDialog;
-
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 10) { // 更改选中商品的总价格
-
-
-            }
-        }
-    };
     //品牌 车系车组 车行
     PinpaiInfoDialog pinpaiInfoDialog;
     LinearLayout ll_pinpai;
@@ -434,42 +421,18 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         } else {
             bsd_wxyy_top_vin.setText(billEntiy.getChe_vin());
         }
-        bsd_wxyy_top_daochangshijian.setText(billEntiy.getYuyue_yjjcrq());
+        bsd_wxyy_top_daochangshijian.setText(BsdUtil.dateToStr(billEntiy.getYuyue_yjjcrq()));
         bsd_wxyy_top_jinchanglicheng.setText("" + billEntiy.getYuyue_yjjclc());
         bsd_wxyy_top_chezhusiji.setText(billEntiy.getKehu_mc());
         bsd_wxyy_top_dianhua.setText(billEntiy.getKehu_dh());
         bsd_wxyy_tv_gsfl.setText(billEntiy.getYuyue_sfbz());
         gongshifeili_name = billEntiy.getYuyue_sfbz();
         gongshifeili_id = billEntiy.getYuyue_gdfl();
-        bsd_wxyy_tv_gcsj.setText(billEntiy.getGcsj());
+        bsd_wxyy_tv_gcsj.setText(BsdUtil.dateToStr(billEntiy.getGcsj()));
     }
 
     private void getBillInfoFromParam() {
-        try {
-            JSONObject item = new JSONObject(params);
-            billEntiy = new BSD_WeiXiuYueYue_entiy();
-            billEntiy.setWork_no(item.getString("work_no"));
-            billEntiy.setKehu_no(item.getString("kehu_no"));
-            billEntiy.setKehu_mc(item.getString("kehu_mc"));
-            billEntiy.setKehu_xm(item.getString("kehu_xm"));
-            billEntiy.setKehu_dz(item.getString("kehu_dz"));
-            billEntiy.setKehu_yb(item.getString("kehu_yb"));
-            billEntiy.setKehu_dh(item.getString("kehu_dh"));
-            billEntiy.setChe_no(item.getString("che_no"));
-            billEntiy.setChe_cx(item.getString("che_cx"));
-            billEntiy.setChe_vin(item.getString("che_vin"));
-            billEntiy.setGcsj(item.getString("gcsj"));
-            billEntiy.setYuyue_yjjcrq(item.getString("yuyue_yjjcrq"));
-            billEntiy.setYuyue_yjjclc(item.getInt("yuyue_yjjclc"));
-            billEntiy.setYuyue_sfbz(item.getString("yuyue_sfbz"));
-            billEntiy.setYuyue_gdfl(item.getString("yuyue_gdfl"));
-            billEntiy.setYuyue_no(item.getString("yuyue_no"));
-            billEntiy.setYuyue_jlrq(item.getString("yuyue_jlrq"));
-//            xm_zj = item.getDouble("xche_rgf");
-//            cl_zj = item.getDouble("xche_clf");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        billEntiy = JSON.parseObject(params, BSD_WeiXiuYueYue_entiy.class);
     }
 
     /*
@@ -613,14 +576,10 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                         for (int j = 0; j < s1.length; j++) {
                             arr.add(j, s1[j]);
                         }
-
-
                         tv_pinpai.setText(s1[0]);
                         tv_chexi.setText(s1[1]);
                         tv_chezu.setText(s1[2]);
                         tv_chexing.setText(s1[3]);
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -656,8 +615,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         params.width = 900;
         params.height = 500;
         dialog.getWindow().setAttributes(params);
-
-
         ListView lv = (ListView) window.findViewById(R.id.bsd_clxx_lv_for_select_cx);
         lv.setAdapter(new BaseAdapter() {
             @Override
@@ -699,7 +656,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         });
         dialog.show();
     }
-
 
     /**
      * 进厂成功
@@ -762,14 +718,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
             }
         });
     }
-
-
-    private void showGongSi3() {
-        mSpinerPopWindow3.setWidth(bsd_wxyy_rl_gsfl.getWidth());
-        mSpinerPopWindow3.showAsDropDown(bsd_wxyy_rl_gsfl);
-    }
-
-    //
 
     /**
      * 工时费率数据
@@ -934,20 +882,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         mSpinerPopWindow2.showAsDropDown(ll_chexing);
     }
 
-
-    private void showGongSi2() {
-        mSpinerPopWindow2.setWidth(ll_chexing.getWidth());
-        mSpinerPopWindow2.showAsDropDown(ll_chexing);
-    }
-
-
-    //车组=======================================================================
-
-    private void showGongSi1() {
-        mSpinerPopWindow1.setWidth(ll_chezu.getWidth());
-        mSpinerPopWindow1.showAsDropDown(ll_chezu);
-    }
-
     /**
      * 基本信息车组接口
      */
@@ -1098,12 +1032,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
             }
         });
     }
-
-
-    //   ========================================
-
-
-    //品牌    车系   车组    车行
 
     //项目合计
     double jg = 0;
@@ -1456,8 +1384,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
                 Log.i("cjn", "存档失败 " + s);
             }
         });
-
-
     }
 
 

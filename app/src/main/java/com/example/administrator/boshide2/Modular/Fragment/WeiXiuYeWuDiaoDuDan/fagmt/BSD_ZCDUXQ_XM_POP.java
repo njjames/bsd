@@ -66,11 +66,6 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
     private LinearLayout ll_byWxxm;
     private LinearLayout ll_allWxxm;
     private ImageView iv_allCategory;
-    //图片选择切换
-    private LinearLayout bsd_wxyy_pop_rl_xiangmu_quanbu;
-    private LinearLayout bsd_wxyy_pop_rl_xiangmu_1;
-    private LinearLayout bsd_wxyy_pop_rl_xiangmu_2;
-    private LinearLayout bsd_wxyy_pop_rl_xiangmu_3;
     private ImageView bsd_wxyy_pop_im_xiangmu_quanbu;
     private ImageView bsd_wxyy_pop_im_xiangmu_1;
     private ImageView bsd_wxyy_pop_im_xiangmu_2;
@@ -118,32 +113,19 @@ public class BSD_ZCDUXQ_XM_POP extends PopupWindow implements AbPullToRefreshVie
                 getDetialsInfo();
             }
         });
-        bsd_wxyy_pop_rl_xiangmu_quanbu = (LinearLayout) view.findViewById(R.id.ll_all_wxxm);
-        bsd_wxyy_pop_rl_xiangmu_1 = (LinearLayout) view.findViewById(R.id.ll_by_wxxm);
-        bsd_wxyy_pop_rl_xiangmu_2 = (LinearLayout) view.findViewById(R.id.ll_wx_wxxm);
-        bsd_wxyy_pop_rl_xiangmu_3 = (LinearLayout) view.findViewById(R.id.ll_wjg_wxxm);
-
         bsd_wxyy_pop_im_xiangmu_quanbu = (ImageView) view.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_quanbu);
         bsd_wxyy_pop_im_xiangmu_1 = (ImageView) view.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_1);
         bsd_wxyy_pop_im_xiangmu_2 = (ImageView) view.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_2);
         bsd_wxyy_pop_im_xiangmu_3 = (ImageView) view.findViewById(R.id.bsd_wxyy_pop_im_xiangmu_3);
-
-        bsd_wxyy_pop_rl_xiangmu_quanbu.setOnClickListener(this);
-        bsd_wxyy_pop_rl_xiangmu_1.setOnClickListener(this);
-        bsd_wxyy_pop_rl_xiangmu_2.setOnClickListener(this);
-        bsd_wxyy_pop_rl_xiangmu_3.setOnClickListener(this);
-
         mAbPullToRefreshView = (AbPullToRefreshView) view.findViewById(R.id.bsd_wxyy_xm_mPullRefreshView);
         // 设置监听器
         mAbPullToRefreshView.setOnHeaderRefreshListener(this);
         mAbPullToRefreshView.setOnFooterLoadListener(this);
-
         // 设置进度条的样式
         mAbPullToRefreshView.getHeaderView().setHeaderProgressBarDrawable(
                 context.getResources().getDrawable(R.drawable.progress_circular));
         mAbPullToRefreshView.getFooterView().setFooterProgressBarDrawable(
                 context.getResources().getDrawable(R.drawable.progress_circular));
-
         ll_allWxxm = (LinearLayout) view.findViewById(R.id.ll_all_wxxm);
         ll_byWxxm = (LinearLayout) view.findViewById(R.id.ll_by_wxxm);
         ll_wxWxxm = (LinearLayout) view.findViewById(R.id.ll_wx_wxxm);

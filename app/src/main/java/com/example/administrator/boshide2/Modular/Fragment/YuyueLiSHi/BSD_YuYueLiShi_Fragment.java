@@ -18,6 +18,7 @@ import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.view.pullview.AbPullToRefreshView;
 import com.ab.view.pullview.AbPullToRefreshView.OnFooterLoadListener;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Conts;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
@@ -139,27 +140,9 @@ public class BSD_YuYueLiShi_Fragment extends BaseFragment implements OnFooterLoa
                 try {
                     result = new JSONObject(s);
                     if (result.get("message").toString().equals("查询成功")) {
-                        JSONArray json = result.getJSONArray("data");
-                        for (int j = 0; j < json.length(); j++) {
-                            JSONObject item = json.getJSONObject(j);
-                            BSD_WeiXiuYueYue_entiy entity = new BSD_WeiXiuYueYue_entiy();
-                            entity.setYuyue_no(item.getString("yuyue_no"));
-                            entity.setKehu_mc(item.getString("kehu_mc"));
-                            entity.setKehu_dh(item.getString("kehu_dh"));
-                            entity.setChe_no(item.getString("che_no"));
-                            entity.setChe_vin(item.getString("che_vin"));
-                            entity.setChe_cx(item.getString("che_cx"));
-                            entity.setYuyue_yjjcrq(item.getString("yuyue_yjjcrq"));
-                            entity.setYuyue_yjjclc(item.getInt("yuyue_yjjclc"));
-                            entity.setYuyue_jlrq(item.getString("yuyue_jlrq"));
-                            entity.setYuyue_scjcrq(item.getString("yuyue_scjcrq"));
-                            entity.setKehu_xm(item.getString("kehu_xm"));
-                            entity.setYuyue_czy(item.getString("yuyue_czy"));
-                            entity.setYuyue_progress(item.getString("yuyue_progress"));
-                            entity.setYuyue_sffl(item.getDouble("yuyue_sffl"));
-                            entity.setYuyue_sfbz(item.getString("yuyue_sfbz"));
-                            data.add(entity);
-                        }
+                        JSONArray array = result.getJSONArray("data");
+                        List<BSD_WeiXiuYueYue_entiy> _list = JSON.parseArray(array.toString(), BSD_WeiXiuYueYue_entiy.class);
+                        data.addAll(_list);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

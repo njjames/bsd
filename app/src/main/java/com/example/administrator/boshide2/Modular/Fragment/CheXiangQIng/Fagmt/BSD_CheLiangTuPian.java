@@ -36,7 +36,6 @@ import java.io.IOException;
 /**
  * Created by Administrator on 2017-4-24.
  */
-
 public class BSD_CheLiangTuPian extends BaseFragment {
     private static final String PARAM_KEY = "param_key";
     private WebView bsd_cxq_wbweb;
@@ -193,7 +192,7 @@ public class BSD_CheLiangTuPian extends BaseFragment {
     }
 
     /*
-    *弹出选择删除对话框；
+    * 弹出选择删除对话框
     */
     public void showDeletImgDialog() {
         CustomDialog.Builder builder = new CustomDialog.Builder(getHostActicity());
@@ -220,26 +219,26 @@ public class BSD_CheLiangTuPian extends BaseFragment {
         cb2 = (CheckBox) view.findViewById(R.id.cb_tp2);
         cb3 = (CheckBox) view.findViewById(R.id.cb_tp3);
         cb4 = (CheckBox) view.findViewById(R.id.cb_tp4);
-        cb1.setText("图一："+Conts.cp+"_1");
-        cb2.setText("图二："+Conts.cp+"_2");
-        cb3.setText("图三："+Conts.cp+"_3");
-        cb4.setText("图四："+Conts.cp+"_4");
+        cb1.setText("图一：" + Conts.cp + "_1");
+        cb2.setText("图二：" + Conts.cp + "_2");
+        cb3.setText("图三：" + Conts.cp + "_3");
+        cb4.setText("图四：" + Conts.cp + "_4");
         dialog.show();
     }
 
     private void deleteImg() {
-        picnames="";
+        picnames = "";
         if (cb1.isChecked()) {
-            picnames += Conts.cp + "1" + ",";
+            picnames += Conts.cp + "1,";
         }
         if (cb2.isChecked()) {
-            picnames += Conts.cp + "2".toString() + ",";
+            picnames += Conts.cp + "2,";
         }
         if (cb3.isChecked()) {
-            picnames += Conts.cp + "3".toString() + ",";
+            picnames += Conts.cp + "3,";
         }
         if (cb4.isChecked()) {
-            picnames += Conts.cp + "4".toString() + ",";
+            picnames += Conts.cp + "4,";
         }
         if (picnames.equals("")){
             Toast.makeText(context,"请选择要删除的照片",Toast.LENGTH_LONG).show();
@@ -281,9 +280,9 @@ public class BSD_CheLiangTuPian extends BaseFragment {
         });
     }
 
-    /*
-   *获取显示图片的网页地址
-   */
+    /**
+     * 获取显示图片的网页地址
+     */
     public void getImages() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_getImgUrl, null, new AbStringHttpResponseListener() {

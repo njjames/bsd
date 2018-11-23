@@ -43,6 +43,7 @@ import com.example.administrator.boshide2.Modular.View.Time.TimeDialog1;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.timepicker.TimePickerShow;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 import com.example.administrator.boshide2.Tools.Show;
 
@@ -360,7 +361,7 @@ public class BSD_weixiuyuyue_xiangqing_Fragment extends Fragment  {
                 bsd_chexingdata(arr.get(2).toString());
             }
             bsd_wxyy_top_vin.setText(entiy.getChe_vin());
-            bsd_wxyy_top_daochangshijian.setText(entiy.getYuyue_yjjcrq());
+            bsd_wxyy_top_daochangshijian.setText(BsdUtil.dateToStr(entiy.getYuyue_yjjcrq()));
             bsd_wxyy_top_jinchanglicheng.setText("" + entiy.getYuyue_yjjclc());
             bsd_wxyy_top_chezhusiji.setText(entiy.getKehu_mc());
             bsd_wxyy_top_dianhua.setText(entiy.getKehu_dh());

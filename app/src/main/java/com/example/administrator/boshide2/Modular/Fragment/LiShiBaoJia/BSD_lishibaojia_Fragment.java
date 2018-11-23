@@ -121,7 +121,7 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
     public void searchLSBJ() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "查询中...");
         data.clear();
-        AbRequestParams params = new AbRequestParams();
+        final AbRequestParams params = new AbRequestParams();
         params.put("che_no", cardNo);
         params.put("kehu_mc", kehuMc);
         Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CL_WX2, params, new AbStringHttpResponseListener() {
@@ -130,30 +130,9 @@ public class BSD_lishibaojia_Fragment extends BaseFragment {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            BSD_KuaiSuBaoJia_ety entity = new BSD_KuaiSuBaoJia_ety();
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            entity.setReco_no(item.getDouble("reco_no"));
-                            entity.setList_no(item.getString("list_no"));
-                            entity.setList_sfbz(item.getString("List_sfbz"));
-                            entity.setList_sffl(item.getDouble("List_sffl"));
-                            entity.setKehu_no(item.getString("kehu_no"));
-                            entity.setKehu_mc(item.getString("kehu_mc"));
-                            entity.setKehu_xm(item.getString("kehu_xm"));
-                            entity.setKehu_dh(item.getString("kehu_dh"));
-                            entity.setChe_no(item.getString("che_no"));
-                            entity.setChe_vin(item.getString("che_vin"));
-                            entity.setChe_cx(item.getString("che_cx"));
-                            entity.setList_czy(item.getString("List_czy"));
-                            entity.setGongSiNo(item.getString("GongSiNo"));
-                            entity.setGongSiMc(item.getString("GongSiMc"));
-                            entity.setWork_no(item.getString("work_no"));
-                            entity.setList_jlrq(item.getString("List_jlrq"));
-                            entity.setList_yjjclc(item.getInt("List_yjjclc"));
-                            entity.setList_hjje(item.getDouble("List_hjje"));
-                            data.add(entity);
-                        }
+                        JSONArray array = jsonObject.getJSONArray("data");
+                        List<BSD_KuaiSuBaoJia_ety> _list = JSON.parseArray(array.toString(), BSD_KuaiSuBaoJia_ety.class);
+                        data.addAll(_list);
                         adapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {

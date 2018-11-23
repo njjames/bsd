@@ -1,6 +1,7 @@
 package com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 维修预约首页实体类
@@ -8,23 +9,15 @@ import java.io.Serializable;
  */
 
 public class BSD_WeiXiuYueYue_entiy implements Serializable {
-    private String gcsj;
-
-    public String getGcsj() {
-        return gcsj;
-    }
-
-    public void setGcsj(String gcsj) {
-        this.gcsj = gcsj;
-    }
+    private Date gcsj;
 
     private String reco_no;
 
     private String yuyue_no;
 
-    private String yuyue_jlrq;
+    private Date yuyue_jlrq;
 
-    private String yuyue_scjcrq;
+    private Date yuyue_scjcrq;
 
     private String yuyue_sfbz;
 
@@ -70,11 +63,11 @@ public class BSD_WeiXiuYueYue_entiy implements Serializable {
 
     private String yuyue_jcr;
 
-    private String yuyue_yjjcrq;
+    private Date yuyue_yjjcrq;
 
     private int yuyue_yjjclc;
 
-    private String yuyue_sjjcrq;
+    private Date yuyue_sjjcrq;
 
     private String yuyue_gdfl;
 
@@ -134,22 +127,6 @@ public class BSD_WeiXiuYueYue_entiy implements Serializable {
 
     public void setYuyue_no(String yuyue_no) {
         this.yuyue_no = yuyue_no;
-    }
-
-    public String getYuyue_jlrq() {
-        return yuyue_jlrq;
-    }
-
-    public void setYuyue_jlrq(String yuyue_jlrq) {
-        this.yuyue_jlrq = yuyue_jlrq;
-    }
-
-    public String getYuyue_scjcrq() {
-        return yuyue_scjcrq;
-    }
-
-    public void setYuyue_scjcrq(String yuyue_scjcrq) {
-        this.yuyue_scjcrq = yuyue_scjcrq;
     }
 
     public String getYuyue_sfbz() {
@@ -328,28 +305,12 @@ public class BSD_WeiXiuYueYue_entiy implements Serializable {
         this.yuyue_jcr = yuyue_jcr;
     }
 
-    public String getYuyue_yjjcrq() {
-        return yuyue_yjjcrq;
-    }
-
-    public void setYuyue_yjjcrq(String yuyue_yjjcrq) {
-        this.yuyue_yjjcrq = yuyue_yjjcrq;
-    }
-
     public int getYuyue_yjjclc() {
         return yuyue_yjjclc;
     }
 
     public void setYuyue_yjjclc(int yuyue_yjjclc) {
         this.yuyue_yjjclc = yuyue_yjjclc;
-    }
-
-    public String getYuyue_sjjcrq() {
-        return yuyue_sjjcrq;
-    }
-
-    public void setYuyue_sjjcrq(String yuyue_sjjcrq) {
-        this.yuyue_sjjcrq = yuyue_sjjcrq;
     }
 
     public String getYuyue_gdfl() {
@@ -526,5 +487,45 @@ public class BSD_WeiXiuYueYue_entiy implements Serializable {
 
     public void setYuyue_lc(double yuyue_lc) {
         this.yuyue_lc = yuyue_lc;
+    }
+
+    public Date getGcsj() {
+        return gcsj;
+    }
+
+    public void setGcsj(Date gcsj) {
+        this.gcsj = gcsj;
+    }
+
+    public Date getYuyue_jlrq() {
+        return yuyue_jlrq;
+    }
+
+    public void setYuyue_jlrq(Date yuyue_jlrq) {
+        this.yuyue_jlrq = yuyue_jlrq;
+    }
+
+    public Date getYuyue_scjcrq() {
+        return yuyue_scjcrq;
+    }
+
+    public void setYuyue_scjcrq(Date yuyue_scjcrq) {
+        this.yuyue_scjcrq = yuyue_scjcrq;
+    }
+
+    public Date getYuyue_yjjcrq() {
+        return yuyue_yjjcrq;
+    }
+
+    public void setYuyue_yjjcrq(Date yuyue_yjjcrq) {
+        this.yuyue_yjjcrq = yuyue_yjjcrq;
+    }
+
+    public Date getYuyue_sjjcrq() {
+        return yuyue_sjjcrq;
+    }
+
+    public void setYuyue_sjjcrq(Date yuyue_sjjcrq) {
+        this.yuyue_sjjcrq = yuyue_sjjcrq;
     }
 }

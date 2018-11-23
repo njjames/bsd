@@ -23,6 +23,7 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
+import com.example.administrator.boshide2.Modular.Entity.WorkPzGz_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.LiShiJieDan.Adapter.BSD_lsjd_adp;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
@@ -46,7 +47,7 @@ import static android.content.Context.TELEPHONY_SERVICE;
 public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRefreshView.OnFooterLoadListener, AbPullToRefreshView.OnHeaderRefreshListener {
     private LinearLayout bsd_lsbj_fanhui;
     private ListView bsd_lsbj_lv;
-    private List<BSD_WeiXiuJieDan_Entity> data = new ArrayList<BSD_WeiXiuJieDan_Entity>();
+    private List<WorkPzGz_Entity> data = new ArrayList<>();
     private BSD_lsjd_adp adapter;
     private AbPullToRefreshView abPullToRefreshView = null;
     private int page = 1;
@@ -154,27 +155,9 @@ public class BSD_lishijiedan_Fragment extends BaseFragment implements AbPullToRe
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject item = jsonarray.getJSONObject(i);
-                            BSD_WeiXiuJieDan_Entity entiy = new BSD_WeiXiuJieDan_Entity();
-                            entiy.setWork_no(item.getString("work_no"));
-                            entiy.setKehu_no(item.getString("kehu_no"));
-                            entiy.setKehu_mc(item.getString("kehu_mc"));
-                            entiy.setChe_no(item.getString("che_no"));
-                            entiy.setChe_cx(item.getString("che_cx"));
-                            entiy.setChe_vin(item.getString("che_vin"));
-                            entiy.setXche_lc(item.getInt("xche_lc"));
-                            entiy.setKehu_dh(item.getString("kehu_dh"));
-                            entiy.setCard_no(item.getString("card_no"));
-                            entiy.setXche_jdrq(item.getString("xche_jdrq"));
-                            entiy.setXche_sfbz(item.getString("xche_sfbz"));
-                            entiy.setXche_sffl(item.getDouble("xche_sffl"));
-                            entiy.setXche_pgcz(item.getString("xche_pgcz"));
-                            entiy.setXche_wxjd(item.getString("xche_wxjd"));
-                            entiy.setXche_hjje(item.getDouble("xche_hjje"));
-                            data.add(entiy);
-                        }
+                        JSONArray array = jsonObject.getJSONArray("data");
+                        List<WorkPzGz_Entity> _list = JSON.parseArray(array.toString(), WorkPzGz_Entity.class);
+                        data.addAll(_list);
                     } else {
                         Show.showTime(getActivity(), jsonObject.get("message").toString());
                     }

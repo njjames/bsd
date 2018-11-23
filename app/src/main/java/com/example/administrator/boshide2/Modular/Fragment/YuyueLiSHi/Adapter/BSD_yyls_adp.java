@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD_WeiXiuYueYue_entiy;
 import com.example.administrator.boshide2.R;
+import com.example.administrator.boshide2.Tools.BsdUtil;
 
 import java.util.List;
 
@@ -67,8 +68,8 @@ public class BSD_yyls_adp extends BaseAdapter {
         } else {
             holder = (Holder) contetview.getTag();
         }
-        holder.bsd_xsbj_jlrq.setText(list.get(i).getYuyue_jlrq());
-        holder.bsd_kxbj_jcrq.setText(list.get(i).getYuyue_scjcrq());
+        holder.bsd_xsbj_jlrq.setText(BsdUtil.dateToStr(list.get(i).getYuyue_jlrq()));
+        holder.bsd_kxbj_jcrq.setText(BsdUtil.dateToStr(list.get(i).getYuyue_scjcrq()));
         holder.bsd_kxbj_kehumc.setText(list.get(i).getKehu_mc());
         holder.bsd_kxbj_phone.setText(list.get(i).getKehu_dh());
         holder.bsd_kxbj_cheno.setText(list.get(i).getChe_no());

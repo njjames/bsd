@@ -46,16 +46,14 @@ import java.util.Map;
 
 public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRefreshView.OnHeaderRefreshListener, AbPullToRefreshView.OnFooterLoadListener {
     private ListView bsd_lsbj_lv;
-    private List<BSD_LSWX_ety> data = new ArrayList<BSD_LSWX_ety>();
+    private List<BSD_LSWX_ety> data = new ArrayList<>();
     private BSD_lswx_adp adapter;
     private AbPullToRefreshView wx_rfview;//刷新
     private int page = 1;//分页
     private EditText et_wx_chepai;
     private TextView tv_wx_chaxun;
     private String wx_chepai;
-    //转圈
     private Dialog mWeiboDialog;
-    private BSD_lswx_guwen_adp lswx_guwen_adp;//服务顾问适配器
     private List<Map<String, String>> list_gu = new ArrayList<Map<String, String>>();
     private URLS url;
     private TextView title;
@@ -114,31 +112,13 @@ public class BSD_lishiweixiu_Fragment extends BaseFragment implements AbPullToRe
         params.put("caozuoyuanid", Integer.parseInt(MyApplication.shared.getString("id", "")));
         Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_CL_WX, params, new AbStringHttpResponseListener() {
             @Override
-            public void onSuccess(int sss, String s) {
+            public void onSuccess(int code, String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        JSONArray jsonarray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject json = jsonarray.getJSONObject(i);
-                            BSD_LSWX_ety lswx_ety = new BSD_LSWX_ety();
-                            lswx_ety.setWork_no(json.getString("work_no"));
-                            lswx_ety.setKehu_mc(json.getString("kehu_mc"));
-                            lswx_ety.setChe_no(json.getString("che_no"));
-                            lswx_ety.setXche_jsrq(json.getString("xche_jsrq"));
-                            lswx_ety.setXche_jcr(json.getString("xche_jcr"));
-                            lswx_ety.setXche_hjje(json.getString("xche_hjje"));
-                            lswx_ety.setXche_jdrq(json.getString("xche_jdrq"));
-                            lswx_ety.setKehu_mc(json.getString("kehu_mc"));
-                            lswx_ety.setKehu_dh(json.getString("kehu_dh"));
-                            lswx_ety.setXche_jsrq(json.getString("xche_jsrq"));
-                            lswx_ety.setCard_no(json.getString("card_no"));
-                            lswx_ety.setZhifu_card_je(json.getString("zhifu_card_je"));//会员卡支付金额
-                            lswx_ety.setZhifu_card_no(json.getString("zhifu_card_no"));//储值卡号
-                            lswx_ety.setFlag_cardjs(json.getBoolean("flag_cardjs"));//储值卡结算标志
-                            lswx_ety.setZhifu_card_xj(json.getString("zhifu_card_xj"));//补现金
-                            data.add(lswx_ety);
-                        }
+                        JSONArray array = jsonObject.getJSONArray("data");
+                        List<BSD_LSWX_ety> _list = JSON.parseArray(array.toString(), BSD_LSWX_ety.class);
+                        data.addAll(_list);
                     } else {
                         if (page > 1) {
                             Toast.makeText(getHostActicity(), "没有更多维修信息了", Toast.LENGTH_SHORT).show();

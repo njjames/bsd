@@ -57,7 +57,7 @@
                 android:id="@+id/ll_chexi"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_10"
-                android:layout_weight="1.5">
+                android:layout_weight="1.2">
 
                 <TextView
                     android:id="@+id/textView15"
@@ -76,7 +76,7 @@
                 android:id="@+id/ll_chezu"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_10"
-                android:layout_weight="2">
+                android:layout_weight="1.5">
 
                 <TextView
                     android:id="@+id/textView16"
@@ -95,7 +95,7 @@
                 android:id="@+id/ll_chexing"
                 style="@style/myeditlinearlayoutstyle"
                 android:layout_marginLeft="@dimen/qb_px_10"
-                android:layout_weight="2">
+                android:layout_weight="1.8">
 
                 <TextView
                     android:id="@+id/textView17"
@@ -110,7 +110,6 @@
                 <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -134,7 +133,8 @@
                     android:background="@null"
                     android:hint="请输入VIN号"
                     android:textColorHint="#B1B0B0"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:maxLines="1"/>
 
                 <TextView
                     android:id="@+id/tv_readvin"
@@ -143,25 +143,8 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bsd_wxyy_rl_daochangshijian"
                 style="@style/myeditlinearlayoutstyle"
-                android:layout_marginLeft="@dimen/qb_px_10">
-
-                <TextView
-                    android:id="@+id/textView88"
-                    style="@style/myeditinfonamestyle"
-                    android:text="时间:" />
-
-                <com.example.administrator.boshide2.Modular.View.MarqueeView
-                    android:id="@+id/bsd_wxyy_top_daochangshijian"
-                    style="@style/myeditinfomarqeestyle"
-                    android:hint="到场时间" />
-
-                <ImageView style="@style/myeditdowimgstyle" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/myeditlinearlayoutstyle"
+                android:layout_weight="0.8"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
@@ -178,6 +161,7 @@
 
             <LinearLayout
                 style="@style/myeditlinearlayoutstyle"
+                android:layout_weight="0.8"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
@@ -193,6 +177,7 @@
 
             <LinearLayout
                 style="@style/myeditlinearlayoutstyle"
+                android:layout_weight="0.8"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
@@ -206,19 +191,11 @@
                     android:hint="请输入手机号"
                     android:inputType="number" />
             </LinearLayout>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_4"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/bsd_wxyy_rl_gcsj"
-                style="@style/myeditlinearlayoutstyle">
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
                     style="@style/myeditinfonamestyle"
@@ -232,11 +209,31 @@
                 <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/bsd_wxyy_rl_bycx"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="0.5"
+                android:text="保养查询" />
+
+            <TextView
+                android:id="@+id/bsd_wxyy_clxx"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="0.5"
+                android:text="车辆信息" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_4"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
             <LinearLayout
                 android:id="@+id/bsd_wxyy_rl_gsfl"
                 style="@style/myeditlinearlayoutstyle"
-                android:layout_marginLeft="@dimen/qb_px_10"
-                android:layout_weight="1.2">
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textView142"
@@ -249,29 +246,36 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="          "
                     android:textColorHint="#B1B0B0"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:maxLines="1"/>
+
+                <ImageView style="@style/myeditdowimgstyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bsd_wxyy_rl_daochangshijian"
+                style="@style/myeditlinearlayoutstyle"
+                android:layout_weight="1.2"
+                android:layout_marginLeft="@dimen/qb_px_10">
+
+                <TextView
+                    android:id="@+id/textView88"
+                    style="@style/myeditinfonamestyle"
+                    android:text="到场时间:" />
+
+                <com.example.administrator.boshide2.Modular.View.MarqueeView
+                    android:id="@+id/bsd_wxyy_top_daochangshijian"
+                    style="@style/myeditinfomarqeestyle"
+                    android:hint="到场时间" />
 
                 <ImageView style="@style/myeditdowimgstyle" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/bsd_wxyy_rl_bycx"
-                style="@style/myeditnormalbtnstyle"
-                android:layout_weight="0.8"
-                android:text="保养查询" />
-
-            <TextView
-                android:id="@+id/bsd_wxyy_clxx"
-                style="@style/myeditnormalbtnstyle"
-                android:layout_weight="0.8"
-                android:text="车辆信息" />
-
-            <TextView
                 android:id="@+id/bsd_wxyy_lswx"
                 style="@style/myeditnormalbtnstyle"
-                android:layout_weight="0.8"
+                android:layout_weight="0.5"
                 android:text="历史维修" />
 
             <TextView
@@ -284,20 +288,14 @@
             <TextView
                 android:id="@+id/tv_add_wxxm"
                 style="@style/myeditnormalbtnstyle"
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:text="添加维修项目" />
 
             <TextView
                 android:id="@+id/tv_add_wxcl"
                 style="@style/myeditnormalbtnstyle"
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:text="添加维修用料" />
-
-            <TextView
-                android:id="@+id/bsd_ksbj_jc"
-                style="@style/myeditnormalbtnstyle"
-                android:layout_weight="0.5"
-                android:text="进厂" />
 
             <TextView
                 android:id="@+id/bsd_wxyy_cundang"
@@ -305,9 +303,15 @@
                 android:layout_weight="0.5"
                 android:text="确认预约" />
 
+            <TextView
+                android:id="@+id/bsd_ksbj_jc"
+                style="@style/myeditnormalbtnstyle"
+                android:layout_weight="0.5"
+                android:text="进厂" />
+
             <LinearLayout
                 style="@style/myeditlinearlayoutstyle"
-                android:layout_weight="1.2"
+                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/qb_px_10">
 
                 <TextView
@@ -373,7 +377,7 @@
 
                 <TextView
                     style="@style/mysearchtitlestyle"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:text="操作" />
             </LinearLayout>
 

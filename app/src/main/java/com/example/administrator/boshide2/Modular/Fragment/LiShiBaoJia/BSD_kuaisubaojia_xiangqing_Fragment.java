@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
@@ -27,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,56 +151,30 @@ public class BSD_kuaisubaojia_xiangqing_Fragment extends BaseFragment {
         bsd_ksbj_cezhu.setText(billEntiy.getKehu_mc());
         bsd_ksbj_dh.setText(billEntiy.getKehu_dh());
         bsd_ksbj_tv_gsfl.setText(billEntiy.getList_sfbz());
-        tv_zong_money.setText("" + billEntiy.getList_hjje());
+        tv_zong_money.setText(billEntiy.getList_hjje() + "元");
     }
 
-    private void getBillInfoFromParam() {   // 注意这个里面取值的字段都需要小写
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = new JSONObject(params);
-            billEntiy = new BSD_KuaiSuBaoJia_ety();
-            billEntiy.setList_no(jsonObject.getString("list_no"));
-            billEntiy.setChe_no(jsonObject.getString("che_no"));
-            billEntiy.setKehu_mc(jsonObject.getString("kehu_mc"));
-            billEntiy.setKehu_no(jsonObject.getString("kehu_no"));
-            billEntiy.setKehu_dh(jsonObject.getString("kehu_dh"));
-            billEntiy.setKehu_xm(jsonObject.getString("kehu_xm"));
-            billEntiy.setChe_vin(jsonObject.getString("che_vin"));
-            billEntiy.setChe_cx(jsonObject.getString("che_cx"));
-            billEntiy.setList_hjje(jsonObject.getDouble("list_hjje"));
-            billEntiy.setList_yjjclc(jsonObject.getInt("list_yjjclc"));
-            billEntiy.setList_sfbz(jsonObject.getString("list_sfbz"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    private void getBillInfoFromParam() {
+        billEntiy = JSON.parseObject(params, BSD_KuaiSuBaoJia_ety.class);
     }
-
-    /**
-     * 计算维修项目的总价格
-     */
-    double b = 0;
 
     public void wxxmPrice() {
-        double bb = 0;
+        BigDecimal xmZje = new BigDecimal(0);
         for (int i = 0; i < listXM.size(); i++) {
-            bb = bb + (listXM.get(i).getWxxm_dj() * listXM.get(i).getWxxm_gs());
+            BigDecimal xmje = new BigDecimal(listXM.get(i).getWxxm_je());
+            xmZje = xmZje.add(xmje);
         }
-        tv_wxxm_money.setText(bb + "元");
+        tv_wxxm_money.setText(xmZje.toString() + "元");
         tv_wxxmCount.setText("(共" + listXM.size() + "条记录)");
     }
 
-    /**
-     * 计算维修材料的总价
-     */
-    double a = 0;
-
-    double c = 0;
     public void wxclPrice() {
-        double jg = 0;
+        BigDecimal clZje = new BigDecimal(0);
         for (int i = 0; i < listCL.size(); i++) {
-            jg = jg + (listCL.get(i).getPeij_dj() * listCL.get(i).getPeij_sl());
+            BigDecimal clje = new BigDecimal(listCL.get(i).getPeij_je());
+            clZje = clZje.add(clje);
         }
-        tv_wxcl_money.setText(jg + "元");
+        tv_wxcl_money.setText(clZje.toString() + "元");
         tv_wxclVount.setText("(共" + listCL.size() + "条记录)");
     }
 

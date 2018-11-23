@@ -600,11 +600,11 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
         list_wxyy.clear();
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("pai", cardNo);
+        params.put("che_no", cardNo);
         params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
         params.put("yuyue_no", billNo);
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_wxyy_LieBiao, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxyy_LieBiao, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int a, String data) {
                 try {
