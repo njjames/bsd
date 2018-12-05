@@ -1,4 +1,4 @@
-package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment;
+package com.example.administrator.boshide2.Modular.Fragment;
 
 
 import android.app.Dialog;
@@ -34,13 +34,11 @@ import com.example.administrator.boshide2.Modular.Entity.CustemObject;
 import com.example.administrator.boshide2.Modular.Entity.Kehu_Entity;
 import com.example.administrator.boshide2.Modular.Entity.WorkCheliangSm_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_ety;
-import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_Car_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity.BSD_KeHu_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.Entity.BSD_WeiXiuYueYue_entiy;
 import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
 import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
+import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.BsdUtil;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
@@ -60,7 +58,7 @@ import java.util.Map;
  * @编辑车辆、客户信息页面 Created by 李赛 on 2017-09-06.
  */
 
-public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
+public class CheliangxinxiDialogFragment extends DialogFragment {
     private static final String PARAM_BILLTYPE = "param_billtype";
     private static final String PARAM_BILLNO = "param_billno";
     private static final String PARAM_CHENO = "param_cheno";
@@ -125,6 +123,11 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     private String paramBillType;
     private String paramBillNo;
     private String paramCheNo;
+    private TextView tv_save;
+    private int draftbillcount;
+    private TextView tv_draftbill_count;
+    private DraftBillDialogFragment draftBillDialogFragment;
+    private Queding_Quxiao quedingQuxiao;
 
     /**
      * 初始化
@@ -133,8 +136,8 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
      * @param billNo  维修单号
      * @return
      */
-    public static BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment newInstance(String cheNo, String billType, String billNo) {
-        BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment dialogFragment = new BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment();
+    public static CheliangxinxiDialogFragment newInstance(String cheNo, String billType, String billNo) {
+        CheliangxinxiDialogFragment dialogFragment = new CheliangxinxiDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString(PARAM_CHENO, cheNo);
         bundle.putString(PARAM_BILLTYPE, billType);
@@ -181,10 +184,16 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //调用保存车辆客户信息接口
-                saveCarInfo();
+                saveCarInfo(false);
             }
         });
-
+        tv_save = (TextView) view.findViewById(R.id.tv_save);
+        tv_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveCarInfo(true);
+            }
+        });
         cancel = (TextView) view.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -318,7 +327,51 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             }
         });
         isNewCar = (ImageView) view.findViewById(R.id.iv_new);
+        tv_draftbill_count = (TextView) view.findViewById(R.id.tv_draftbill_count);
+        tv_draftbill_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDraftBillDialog();
+            }
+        });
         getCarInfo();
+    }
+
+    private void showDraftBillDialog() {
+        draftBillDialogFragment = DraftBillDialogFragment.newInstance(paramCheNo, paramBillType);
+        draftBillDialogFragment.setOnOpterateDraftBillListener(new DraftBillDialogFragment.OnOpterateDraftBillListener() {
+            @Override
+            public void onOpen(String billNo) {
+                draftBillDialogFragment.dismiss();
+                paramBillNo = billNo;
+                showDraftBill();
+            }
+
+            @Override
+            public void onDelete(String billNo) {
+                quedingQuxiao = new Queding_Quxiao(getContext(), "您确实要作废该草稿单吗？");
+                quedingQuxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
+                    @Override
+                    public void onConfirm() {
+                        deleteDraftBill();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        quedingQuxiao.dismiss();
+                    }
+                });
+                quedingQuxiao.show();
+            }
+        });
+        draftBillDialogFragment.show(getFragmentManager(), "draftbill_dialogfragment");
+    }
+
+    /**
+     * 作废草稿单
+     */
+    private void deleteDraftBill() {
+
     }
 
     public void updateUI() {
@@ -326,6 +379,25 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             isNewCar.setVisibility(View.VISIBLE);
         } else {
             isNewCar.setVisibility(View.INVISIBLE);
+        }
+        if (draftbillcount == 0) {
+            tv_draftbill_count.setVisibility(View.INVISIBLE);
+        } else {
+            tv_draftbill_count.setVisibility(View.VISIBLE);
+            switch (paramBillType) {
+                case Conts.BILLTYPE_MRKX:
+                    tv_draftbill_count.setText("此车有【" + draftbillcount + "】张美容快修草稿单，点此处查询");
+                    break;
+                case Conts.BILLTYPE_WXJD:
+                    tv_draftbill_count.setText("此车有【" + draftbillcount + "】张接待登记草稿单，点此处查询");
+                    break;
+                case Conts.BILLTYPE_KSBJ:
+                    tv_draftbill_count.setText("此车有【" + draftbillcount + "】张快速报价草稿单，点此处查询");
+                    break;
+                case Conts.BILLTYPE_WXYY:
+                    tv_draftbill_count.setText("此车有【" + draftbillcount + "】张维修预约草稿单，点此处查询");
+                    break;
+            }
         }
         // 初始化车辆信息
         String cheCxs = carEntity.getChe_cx();
@@ -358,6 +430,7 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     public void getCarInfo() {
         AbRequestParams params = new AbRequestParams();
         params.put("che_no", paramCheNo);
+        params.put("billtype", paramBillType);
         Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_wxjd_clandkh, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
@@ -372,6 +445,7 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
                         JSONObject carObject = object.getJSONObject("cheliang");
                         carEntity = JSON.parseObject(carObject.toString(), WorkCheliangSm_Entity.class);
                         isnew = object.getBoolean("isnew");
+                        draftbillcount = object.getInt("draftbillcount");
                         updateUI();
                     }
                 } catch (JSONException e) {
@@ -399,7 +473,7 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
     /*
      * 保存车辆、客户信息
      */
-    private void saveCarInfo() {
+    private void saveCarInfo(final boolean isJustSave) {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         pinpai = tv_pinpai.getText().toString();
         chexi = tv_chexi.getText().toString();
@@ -435,7 +509,12 @@ public class BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment extends DialogFragment {
             @Override
             public void onSuccess(int code, String data) {
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-                showDraftBill();
+                // 如果只是保存信息，则提示保存成功
+                if (isJustSave) {
+                    Toast.makeText(getContext(), "车辆信息保存成功", Toast.LENGTH_SHORT).show();
+                } else {  // 否则获取草稿单据
+                    showDraftBill();
+                }
             }
 
             @Override

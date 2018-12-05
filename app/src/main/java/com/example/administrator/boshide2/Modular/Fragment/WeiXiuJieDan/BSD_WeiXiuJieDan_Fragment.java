@@ -36,12 +36,11 @@ import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
+import com.example.administrator.boshide2.Modular.Fragment.KuCunDialogFragment;
+import com.example.administrator.boshide2.Modular.Fragment.CheliangxinxiDialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Adapter.BSD_WXJD_CL_adp;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Adapter.BSD_WXJD_XM_adp;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
-import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_XM_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_XM_POP;
@@ -63,7 +62,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -292,7 +290,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
 
             @Override
             public void onSearchStock(String peij_no) {
-                BSD_MeiRongKuaiXiu_KuCun_Fragment.newInstance(peij_no).show(getFragmentManager(), "kcDialog");
+                KuCunDialogFragment.newInstance(peij_no).show(getFragmentManager(), "kcDialog");
             }
         });
         listViewCL.setAdapter(adp_cl);
@@ -1181,7 +1179,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     }
 
     private void showCarInfo() {
-        BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXJD, billEntiy.getWork_no())
+        CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXJD, billEntiy.getWork_no())
                 .show(getFragmentManager(), "dialog_fragment");
     }
 

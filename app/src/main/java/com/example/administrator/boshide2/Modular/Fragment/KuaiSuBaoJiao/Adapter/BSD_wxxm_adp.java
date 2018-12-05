@@ -23,30 +23,10 @@ import java.util.List;
  * 博士德维修项目适配器
  */
 public class BSD_wxxm_adp extends BaseAdapter {
-    LayoutInflater layoutInflater;
-    Context context;
+    private LayoutInflater layoutInflater;
+    private Context context;
     private OnOperateItemListener onOperateItemListener;
-
-    public void setList(List<BSD_KuaiSuBaoJia_XM_entity> list) {
-        this.list = list;
-    }
-
-    List<BSD_KuaiSuBaoJia_XM_entity> list;
-    TooPromptdiaog promptdiaog;
-    Up_ksbj_gs up_ksbj_gs;
-    Up_ksbj_gsdj up_ksbj_gsdj;
-    Up_ksbj_gsdj_shanchu up_ksbj_sc;
-
-    public void setUp_ksbj_gs(Up_ksbj_gs up_ksbj_gs) {
-        this.up_ksbj_gs = up_ksbj_gs;
-    }
-
-    public void setUp_ksbj_gsdj(Up_ksbj_gsdj up_ksbj_gsdj) {
-        this.up_ksbj_gsdj = up_ksbj_gsdj;
-    }
-    public void setUp_ksbj_gsdj_shanchu(Up_ksbj_gsdj_shanchu up_ksbj_sc) {
-        this.up_ksbj_sc = up_ksbj_sc;
-    }
+    private List<BSD_KuaiSuBaoJia_XM_entity> list;
 
     public BSD_wxxm_adp(Context context, List<BSD_KuaiSuBaoJia_XM_entity> list) {
         this.context = context;
@@ -134,17 +114,6 @@ public class BSD_wxxm_adp extends BaseAdapter {
             }
         });
         return contetview;
-    }
-
-    public interface Up_ksbj_gs {
-        public void onYesClick(int i,String name, double gongshi);
-    }
-
-    public interface Up_ksbj_gsdj {
-        public void onYesClick(int i,String name, double gongshidanjia);
-    }
-    public interface  Up_ksbj_gsdj_shanchu{
-        public void onYesClick();
     }
 
     public interface OnOperateItemListener {

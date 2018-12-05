@@ -20,7 +20,6 @@ import com.example.administrator.boshide2.Https.Request;
 import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Activity.MainActivity;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_Entity;
 import com.example.administrator.boshide2.Modular.View.KeyBoard.KeyboardUtil;
 import com.example.administrator.boshide2.Modular.View.diaog.CustomDialog;
@@ -191,7 +190,7 @@ public class ManualInputFragment extends BaseFragment {
                     boolean canUsedType = jsonObject.getBoolean("data");
                     if (canUsedType) {
                         //跳转到编辑车辆、客户信息对话框
-                        BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(cheNo, billType,"")
+                        CheliangxinxiDialogFragment.newInstance(cheNo, billType,"")
                                 .show(getFragmentManager(), "dialog_fragment");
                     } else {   // 这种情况是有这个车，但是没有权限
                         showTipsDialog("此车已存在，但是您没有查询权限");

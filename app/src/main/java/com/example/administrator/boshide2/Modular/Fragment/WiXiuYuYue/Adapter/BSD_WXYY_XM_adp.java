@@ -22,17 +22,16 @@ import java.util.List;
 /**
  * Created by Administrator on 2017-4-21.
  */
-
 public class BSD_WXYY_XM_adp extends BaseAdapter {
     LayoutInflater layoutInflater;
     Context context;
     List<BSD_WeiXiyYuYue_XM_entity> list;
     TooPromptdiaog promptdiaog;
-    public BSD_WeiXiyYueYue_XM_entity_Dao bsdwxyy_xm_dao;//维修项目
-    EditText edtext;
+    private BSD_WeiXiyYueYue_XM_entity_Dao bsdwxyy_xm_dao;//维修项目
     upgongshi upgongshi;
     upgongshidanjia upgongshidanjia;
     ShanchuXM shanchuXM;
+    private OnOperateItemListener onOperateItemListener;
 
     public void setShanchuXM(ShanchuXM shanchuXM) {
         this.shanchuXM = shanchuXM;
@@ -100,7 +99,9 @@ public class BSD_WXYY_XM_adp extends BaseAdapter {
             holder = (Holder) contetview.getTag();
         }
         holder.bsd_xzcl_name.setText(list.get(i).getWxxm_mc());
-        //工时
+        if (list.get(i).getWxxm_gs() == 0) {
+            list.get(i).setWxxm_gs(1.0);
+        }
         holder.bsd_xzcl_gs.setText("" + list.get(i).getWxxm_gs());
         holder.bsd_xzcl_gs.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,57 +109,27 @@ public class BSD_WXYY_XM_adp extends BaseAdapter {
                 upgongshi.onYesClick(i, list.get(i).getWxxm_mc(), list.get(i).getWxxm_gs());
             }
         });
-
-        //        String a  = String.valueOf((list.get(i).getWxxm_je()/list.get
-        //                (i).getWxxm_gs()));
-        //        if (a.equals("NaN")){
-        //            holder.bsd_xzcl_danjia.setText(list.get(i).getWxxm_je()+"");
-        //        }else {
-        //            holder.bsd_xzcl_danjia.setText(""+list.get(i).getWxxm_je
-        //                    ()/list.get(i).getWxxm_gs());
-        //        }
-        if (list.get(i).getWxxm_gs() == 0) {
-            list.get(i).setWxxm_gs(1.0);
-        }
-        DecimalFormat df = new DecimalFormat("#.##");
-        String gs = df.format(list.get(i).getWxxm_je() / list.get(i).getWxxm_gs());
-
-        //工时单价
-        holder.bsd_xzcl_danjia.setText(gs);
-
-        //        holder.bsd_xzcl_danjia.setText(list.get(i).getWxxm_dj()+"");
-
+        holder.bsd_xzcl_danjia.setText("" + list.get(i).getWxxm_dj());
         holder.bsd_xzcl_je.setText("" + list.get(i).getWxxm_je());
         holder.bsd_xzcl_je.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                upgongshidanjia.onYesClick(i, list.get(i).getWxxm_mc(), list.get(i).getWxxm_je());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateYgsf(i);
+                }
             }
         });
-
-
         holder.bsd_xzcl_zt.setText(list.get(i).getWxxm_zt());
-
         //删除
         holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                promptdiaog = new TooPromptdiaog(context, "是否删除");
-                promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        list.remove(i);
-                        notifyDataSetChanged();
-                        promptdiaog.dismiss();
-                        shanchuXM.onYesClick();
-                    }
-                });
-
-                promptdiaog.show();
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onDelete(i);
+                }
             }
         });
         return contetview;
-
     }
 
     public interface upgongshi {
@@ -172,6 +143,16 @@ public class BSD_WXYY_XM_adp extends BaseAdapter {
     //删除项目
     public interface ShanchuXM {
         public void onYesClick();
+    }
+
+    public interface OnOperateItemListener {
+        void onDelete(int position);
+
+        void onUpdateYgsf(int position);
+    }
+
+    public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {
+        this.onOperateItemListener = onOperateItemListener;
     }
 
 }

@@ -1,11 +1,8 @@
 package com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,7 +15,6 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,27 +36,21 @@ import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Adapter
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_CL_entity;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_XM_entity;
 import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.Entity.BSD_KuaiSuBaoJia_ety;
-import com.example.administrator.boshide2.Modular.Fragment.KuaiSuBaoJiao.PopWinow.BSD_KSBJ_CL_POP;
 import com.example.administrator.boshide2.Modular.Fragment.PinpaiInfoDialog;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LiShiWeiXiuJianYi_DialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_LishiWeiXiu_DialogFragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment;
+import com.example.administrator.boshide2.Modular.Fragment.KuCunDialogFragment;
+import com.example.administrator.boshide2.Modular.Fragment.CheliangxinxiDialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_CL_POP;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuYeWuDiaoDuDan.fagmt.BSD_ZCDUXQ_XM_POP;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_WXYY_XM_POP;
-import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.BSD_XiuGaiGongShi;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_cl_pop_entity;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.Pop_Entity.BSD_wxyy_xm_pop_entiy;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
-import com.example.administrator.boshide2.Modular.View.MarqueeView;
 import com.example.administrator.boshide2.Modular.View.SpinerPopWindow;
 import com.example.administrator.boshide2.Modular.View.Time.TimeDialog;
-import com.example.administrator.boshide2.Modular.View.diaog.CustomDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.QueRen;
 import com.example.administrator.boshide2.Modular.View.diaog.Queding_Quxiao;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
-import com.example.administrator.boshide2.Modular.View.timepicker.TimePickerShow;
 import com.example.administrator.boshide2.R;
 import com.example.administrator.boshide2.Tools.DownJianPan;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
@@ -302,7 +292,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment {
 
             @Override
             public void onSearchStock(String peij_no) {
-                BSD_MeiRongKuaiXiu_KuCun_Fragment kcDialog = BSD_MeiRongKuaiXiu_KuCun_Fragment.newInstance(peij_no);
+                KuCunDialogFragment kcDialog = KuCunDialogFragment.newInstance(peij_no);
                 kcDialog.show(getFragmentManager(), "kcDialog");
             }
         });
@@ -408,7 +398,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment {
         bsd_ksbj_clxx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BSD_MeiRongKuaiXiu_cheliangxinxi_Fragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_KSBJ, billEntiy.getList_no())
+                CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_KSBJ, billEntiy.getList_no())
                         .show(getFragmentManager(), "dialog_fragment");
 
             }

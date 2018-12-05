@@ -1,10 +1,9 @@
-package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment;
+package com.example.administrator.boshide2.Modular.Fragment;
 
 import android.app.Dialog;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Entity
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.adapter.BSD_wxcl_kc_apater;
 import com.example.administrator.boshide2.Modular.View.MarqueeView;
 import com.example.administrator.boshide2.R;
-import com.example.administrator.boshide2.Tools.DensityUtil;
 import com.example.administrator.boshide2.Tools.DownJianPan;
 import com.example.administrator.boshide2.Tools.QuanQuan.WeiboDialogUtils;
 
@@ -37,7 +35,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2017-11-13.
  */
-public class BSD_MeiRongKuaiXiu_KuCun_Fragment extends DialogFragment {
+public class KuCunDialogFragment extends DialogFragment {
     private static final String PARAM_KEY = "param_key";
     private TextView bsd_wxcl_kc_bianma;
     private TextView bsd_wxcl_kc_tuhao;
@@ -66,8 +64,8 @@ public class BSD_MeiRongKuaiXiu_KuCun_Fragment extends DialogFragment {
     private double currentKcSum = 0, pjdjSum = 0, jeSum = 0, kcsxSum = 0, kcxxSum = 0;
     private String param;
 
-    public static BSD_MeiRongKuaiXiu_KuCun_Fragment newInstance(String param) {
-        BSD_MeiRongKuaiXiu_KuCun_Fragment fragment = new BSD_MeiRongKuaiXiu_KuCun_Fragment();
+    public static KuCunDialogFragment newInstance(String param) {
+        KuCunDialogFragment fragment = new KuCunDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString(PARAM_KEY, param);
         fragment.setArguments(bundle);

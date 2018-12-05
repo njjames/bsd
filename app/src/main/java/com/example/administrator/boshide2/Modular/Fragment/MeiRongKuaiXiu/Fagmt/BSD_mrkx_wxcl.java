@@ -2,7 +2,6 @@ package com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.UriMatcher;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +17,7 @@ import com.example.administrator.boshide2.Https.URLS;
 import com.example.administrator.boshide2.Main.MyApplication;
 import com.example.administrator.boshide2.Modular.Fragment.BaseFragment;
 import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.Fagmt.fagmt_adp.BSD_mrkx_wxcl_adp;
-import com.example.administrator.boshide2.Modular.Fragment.MeiRongKuaiXiu.dialogFragment.BSD_MeiRongKuaiXiu_KuCun_Fragment;
+import com.example.administrator.boshide2.Modular.Fragment.KuCunDialogFragment;
 import com.example.administrator.boshide2.Modular.Fragment.WeiXiuJieDan.Entity.BSD_WeiXiuJieDan_CL_Entity;
 import com.example.administrator.boshide2.Modular.Fragment.WiXiuYuYue.PopWindow.UpdateItemInfoDialog;
 import com.example.administrator.boshide2.Modular.View.diaog.TooPromptdiaog;
@@ -92,7 +91,7 @@ public class BSD_mrkx_wxcl extends BaseFragment {
 
             @Override
             public void onSearchStock(String peij_no) {
-                BSD_MeiRongKuaiXiu_KuCun_Fragment  kcDialog = BSD_MeiRongKuaiXiu_KuCun_Fragment.newInstance(peij_no);
+                KuCunDialogFragment kcDialog = KuCunDialogFragment.newInstance(peij_no);
                 kcDialog.show(getFragmentManager(),"kcDialog");
             }
 

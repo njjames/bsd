@@ -707,4 +707,10 @@ public class URLS {
 
     public static final String BSD_UPDATEONLINE = "public/updateonline";
 
+    public static final String BSD_WXYYDELETEXM = "yuyue/deletewxxm";
+
+    public static final String BSD_WXYYUPDATEJE = "yuyue/updatexmje";
+
+    public static final String BSD_GETDRAFTBILLINFO = "public/getdraftbillinfo";
+
 }

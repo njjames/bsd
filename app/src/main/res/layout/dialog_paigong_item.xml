@@ -21,7 +21,7 @@
     <ImageView
         android:id="@+id/iv_paigong"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/qb_px_34"
         android:layout_weight="0.5"
         android:src="@drawable/ic_paigong_fail"
         android:background="@drawable/biankuang_info_bg"/>

@@ -32,6 +32,7 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
     Updanjia updanjia;
     private  KuCun   kuCun;
     private  DeleteCL deleteCL;
+    private OnOperateItemListener onOperateItemListener;
 
     public  void  setKuCun(KuCun   kuCun){
         this.kuCun=kuCun;
@@ -119,38 +120,40 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
         }
 
         holder.bsd_xzcl_name.setText(list.get(i).getPeij_mc());
-        holder.bsd_xzcl_shuliang.setText("" + (int) list.get(i).getPeij_sl());
+        holder.bsd_xzcl_shuliang.setText("" + list.get(i).getPeij_sl());
+        holder.bsd_xzcl_shuliang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateSl(i);
+                }
+            }
+        });
         holder.bsd_xzcl_danjia.setText("" + list.get(i).getPeij_dj());
         holder.bsd_xzcl_danjia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updanjia.onYesClick(i,list.get(i).getPeij_mc(),list.get(i).getPeij_dj());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onUpdateYDj(i);
+                }
             }
         });
-
         holder.bsd_xzcl_dw.setText(list.get(i).getPeij_dw());
-        holder.bsd_xzcl_je.setText("" + "" +list.get(i).getPeij_sl()*list.get(i).getPeij_dj());
-//        holder.bsd_xzcl_caozuo.setText(list.get(i).get("caozuo"));
+        holder.bsd_xzcl_je.setText("" + list.get(i).getPeij_je());
         holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                promptdiaog = new TooPromptdiaog(context, "是否删除");
-                promptdiaog.setToopromtOnClickListener(new TooPromptdiaog.ToopromtOnClickListener() {
-                    @Override
-                    public void onYesClick() {
-                        list.remove(i);
-                        notifyDataSetChanged();
-                        promptdiaog.dismiss();
-                        deleteCL.onYesClick();
-                    }
-                });
-                promptdiaog.show();
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onDelete(list.get(i).getPeij_no(), i);
+                }
             }
         });
         holder.iv_stock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                kuCun.query_kc(list.get(i).getPeij_no());
+                if (onOperateItemListener != null) {
+                    onOperateItemListener.onSearchStock(list.get(i).getPeij_no());
+                }
             }
         });
         return contetview;
@@ -172,5 +175,19 @@ public class BSD_WXYY_CL_adp extends BaseAdapter {
     //删除
     public interface DeleteCL {
         public void onYesClick();
+    }
+
+    public interface OnOperateItemListener {
+        void onDelete(String peij_no, int position);
+
+        void onSearchStock(String peij_no);
+
+        void onUpdateSl(int position);
+
+        void onUpdateYDj(int position);
+    }
+
+    public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {
+        this.onOperateItemListener = onOperateItemListener;
     }
 }
