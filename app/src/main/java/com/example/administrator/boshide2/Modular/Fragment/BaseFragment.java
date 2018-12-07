@@ -48,4 +48,13 @@ public abstract class BaseFragment extends Fragment {
     public View getView() {
         return view;
     }
+
+    @Override
+    public void onPause() {
+        removeUsingCzy();
+        super.onPause();
+    }
+
+    public void removeUsingCzy() {
+    }
 }

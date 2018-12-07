@@ -190,7 +190,7 @@ public class ManualInputFragment extends BaseFragment {
                     boolean canUsedType = jsonObject.getBoolean("data");
                     if (canUsedType) {
                         //跳转到编辑车辆、客户信息对话框
-                        CheliangxinxiDialogFragment.newInstance(cheNo, billType,"")
+                        CheliangxinxiDialogFragment.newInstance(cheNo, billType,"", false)
                                 .show(getFragmentManager(), "dialog_fragment");
                     } else {   // 这种情况是有这个车，但是没有权限
                         showTipsDialog("此车已存在，但是您没有查询权限");

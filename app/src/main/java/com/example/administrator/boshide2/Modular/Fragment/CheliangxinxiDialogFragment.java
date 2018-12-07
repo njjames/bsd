@@ -62,6 +62,7 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
     private static final String PARAM_BILLTYPE = "param_billtype";
     private static final String PARAM_BILLNO = "param_billno";
     private static final String PARAM_CHENO = "param_cheno";
+    private static final String PARAM_ISOPENING = "param_isopening";
     private MainActivity mainActivity;
     private TextView confirm;
     private TextView cancel;
@@ -122,12 +123,15 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
     private boolean isnew;
     private String paramBillType;
     private String paramBillNo;
+    private String oldBillNo; // 需要去掉占用的单号
     private String paramCheNo;
     private TextView tv_save;
     private int draftbillcount;
     private TextView tv_draftbill_count;
     private DraftBillDialogFragment draftBillDialogFragment;
     private Queding_Quxiao quedingQuxiao;
+    private Context mContext;
+    private boolean paramIsOpening;
 
     /**
      * 初始化
@@ -136,12 +140,13 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
      * @param billNo  维修单号
      * @return
      */
-    public static CheliangxinxiDialogFragment newInstance(String cheNo, String billType, String billNo) {
+    public static CheliangxinxiDialogFragment newInstance(String cheNo, String billType, String billNo, boolean isOpening) {
         CheliangxinxiDialogFragment dialogFragment = new CheliangxinxiDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString(PARAM_CHENO, cheNo);
         bundle.putString(PARAM_BILLTYPE, billType);
         bundle.putString(PARAM_BILLNO, billNo);
+        bundle.putBoolean(PARAM_ISOPENING, isOpening);
         dialogFragment.setArguments(bundle);
         return dialogFragment;
     }
@@ -149,9 +154,11 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mContext = context;
         paramBillType = getArguments().getString(PARAM_BILLTYPE);
         paramBillNo = getArguments().getString(PARAM_BILLNO);
         paramCheNo = getArguments().getString(PARAM_CHENO);
+        paramIsOpening = getArguments().getBoolean(PARAM_ISOPENING);
     }
 
     @Override
@@ -338,40 +345,51 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
     }
 
     private void showDraftBillDialog() {
-        draftBillDialogFragment = DraftBillDialogFragment.newInstance(paramCheNo, paramBillType);
+        draftBillDialogFragment = DraftBillDialogFragment.newInstance(paramCheNo, paramBillType, paramBillNo);
         draftBillDialogFragment.setOnOpterateDraftBillListener(new DraftBillDialogFragment.OnOpterateDraftBillListener() {
             @Override
             public void onOpen(String billNo) {
-                draftBillDialogFragment.dismiss();
-                paramBillNo = billNo;
+                // 如果当前打开着单据，
+                // 1，把当前打开的单据设置为旧的单据（需要取消占用的单据）
+                // 2，把回调的单号设置为需要打开的单号
+                if (paramIsOpening) {
+                    if (billNo.equals(paramBillNo)) {
+                        Toast.makeText(mContext, "当前打开的就是此单据！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    oldBillNo = paramBillNo;
+                    paramBillNo = billNo;
+                } else {
+                    oldBillNo = "";
+                    paramBillNo = billNo;
+                }
                 showDraftBill();
             }
 
             @Override
-            public void onDelete(String billNo) {
-                quedingQuxiao = new Queding_Quxiao(getContext(), "您确实要作废该草稿单吗？");
-                quedingQuxiao.setOnResultClickListener(new Queding_Quxiao.OnResultClickListener() {
-                    @Override
-                    public void onConfirm() {
-                        deleteDraftBill();
+            public void onDelete() {
+                draftbillcount--;
+                if (draftbillcount > 0) {
+                    switch (paramBillType) {
+                        case Conts.BILLTYPE_MRKX:
+                            tv_draftbill_count.setText("此车有【" + draftbillcount + "】张美容快修草稿单，点此处查询");
+                            break;
+                        case Conts.BILLTYPE_WXJD:
+                            tv_draftbill_count.setText("此车有【" + draftbillcount + "】张接待登记草稿单，点此处查询");
+                            break;
+                        case Conts.BILLTYPE_KSBJ:
+                            tv_draftbill_count.setText("此车有【" + draftbillcount + "】张快速报价草稿单，点此处查询");
+                            break;
+                        case Conts.BILLTYPE_WXYY:
+                            tv_draftbill_count.setText("此车有【" + draftbillcount + "】张维修预约草稿单，点此处查询");
+                            break;
                     }
-
-                    @Override
-                    public void onCancel() {
-                        quedingQuxiao.dismiss();
-                    }
-                });
-                quedingQuxiao.show();
+                } else {
+                    tv_draftbill_count.setVisibility(View.INVISIBLE);
+                }
             }
         });
         draftBillDialogFragment.show(getFragmentManager(), "draftbill_dialogfragment");
-    }
-
-    /**
-     * 作废草稿单
-     */
-    private void deleteDraftBill() {
-
     }
 
     public void updateUI() {
@@ -380,9 +398,7 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
         } else {
             isNewCar.setVisibility(View.INVISIBLE);
         }
-        if (draftbillcount == 0) {
-            tv_draftbill_count.setVisibility(View.INVISIBLE);
-        } else {
+        if (draftbillcount > 0) {
             tv_draftbill_count.setVisibility(View.VISIBLE);
             switch (paramBillType) {
                 case Conts.BILLTYPE_MRKX:
@@ -398,6 +414,8 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
                     tv_draftbill_count.setText("此车有【" + draftbillcount + "】张维修预约草稿单，点此处查询");
                     break;
             }
+        } else {
+            tv_draftbill_count.setVisibility(View.INVISIBLE);
         }
         // 初始化车辆信息
         String cheCxs = carEntity.getChe_cx();
@@ -431,6 +449,7 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
         AbRequestParams params = new AbRequestParams();
         params.put("che_no", paramCheNo);
         params.put("billtype", paramBillType);
+        params.put("gongsino", MyApplication.shared.getString("GongSiNo", ""));
         Request.Post(MyApplication.shared.getString("ip", "")+url.BSD_wxjd_clandkh, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
@@ -512,8 +531,8 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
                 // 如果只是保存信息，则提示保存成功
                 if (isJustSave) {
                     Toast.makeText(getContext(), "车辆信息保存成功", Toast.LENGTH_SHORT).show();
-                } else {  // 否则获取草稿单据
-                    showDraftBill();
+                } else {  // 否则新建单号
+                    showNewBill();
                 }
             }
 
@@ -536,74 +555,47 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
         });
     }
 
-    /**
-     * 显示草稿单据
-     */
-    private void showDraftBill() {
-        switch (paramBillType) {
-            case Conts.BILLTYPE_MRKX:
-                data_mrkx(paramCheNo, paramBillNo);
-                break;
-            case Conts.BILLTYPE_KSBJ:
-                data_ksbj(paramCheNo, paramBillNo);
-                break;
-            case Conts.BILLTYPE_WXDD:
-                ((MainActivity) getActivity()).showWxddFragment(paramBillNo);
-                break;
-            case Conts.BILLTYPE_WXJD:
-                data_wxjd(paramCheNo, paramBillNo);
-                break;
-            case Conts.BILLTYPE_WXYY:
-                data_wxyy(paramCheNo, paramBillNo);
-                break;
+    private void showNewBill() {
+        if (paramIsOpening) {
+            oldBillNo = paramBillNo;
+        } else {
+            oldBillNo = "";
         }
-        dismiss();
-//        if ("mrkx".equals(paramBillType)) {
-//            // 去获取草稿单据
-//            data_mrkx(Conts.cp, billNo);
-////            //打开美容快修单据
-////            mainActivity.upBSD_mrkx();
-//        }
-//        if ("ksbj".equals(type)) {
-//            //打开快速单据
-//            data_ksbj(Conts.cp, view);
-//        }
-//        if ("wxyy".equals(type)) {
-//            //打开维修预约单据
-//            data_wxyy(Conts.cp, view);
-//        }
-//        if ("wxjd".equals(type)) {
-//            //打开维修接待单据
-//            data_wxjd(Conts.cp, view);
-//        }
-//        if ("wxywdd".equals(type)) {
-//            Log.i("wxywdd", "走wxywdd了");
-//            //打开维修业务调度单据
-//            ((MainActivity) getActivity()).upwxywdd(view);
-//        }
+        getNewBillInfo();
     }
 
-    /*
-     *根据车牌获取数据，打开美容快修单据
-     */
-    public void data_mrkx(final String cheNo, String billNo) {
-        list.clear();
+    private void getNewBillInfo() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
-        params.put("che_no", cheNo);
+        params.put("che_no", paramCheNo);
         params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
-        params.put("work_no", billNo);
-        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_MRKX_IN, params, new AbStringHttpResponseListener() {
+        params.put("billtype", paramBillType);
+        params.put("oldbillno", oldBillNo);
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_GETNEWEBILL, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     // 如果查询成功就启动美容快修的fragment
-                    if (jsonObject.get("message").toString().equals("查询成功")) {
-                        mainActivity.showMrkxFragment(jsonObject.getJSONObject("data").toString());
+                    if (jsonObject.getString("message").equals("查询成功")) {
+                        dismiss();
+                        switch (paramBillType) {
+                            case Conts.BILLTYPE_MRKX:
+                                mainActivity.showMrkxFragment(jsonObject.getString("data"));
+                                break;
+                            case Conts.BILLTYPE_KSBJ:
+                                mainActivity.showKSBJFragment(jsonObject.getString("data"));
+                                break;
+                            case Conts.BILLTYPE_WXJD:
+                                mainActivity.showWxjdFragment(jsonObject.getString("data"));
+                                break;
+                            case Conts.BILLTYPE_WXYY:
+                                mainActivity.showWxyyFragment(jsonObject.getString("data"));
+                                break;
+                        }
                     } else {
-                        Show.showTime(getActivity(), jsonObject.get("message").toString());
+                        Toast.makeText(mContext, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -626,8 +618,82 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
         });
     }
 
+    /**
+     * 显示草稿单据
+     */
+    private void showDraftBill() {
+        switch (paramBillType) {
+            case Conts.BILLTYPE_MRKX:
+                data_mrkx(paramCheNo, paramBillNo, oldBillNo);
+                break;
+            case Conts.BILLTYPE_KSBJ:
+                data_ksbj(paramCheNo, paramBillNo);
+                break;
+            case Conts.BILLTYPE_WXDD:
+                ((MainActivity) getActivity()).showWxddFragment(paramBillNo);
+                break;
+            case Conts.BILLTYPE_WXJD:
+                data_wxjd(paramCheNo, paramBillNo, oldBillNo);
+                break;
+            case Conts.BILLTYPE_WXYY:
+                data_wxyy(paramCheNo, paramBillNo);
+                break;
+        }
+    }
+
     /*
-    *根据车牌获取数据，打开快速报价
+     *根据车牌获取数据，打开美容快修单据
+     */
+    public void data_mrkx(final String cheNo, String billNo, final String oldBillNo) {
+        list.clear();
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
+        AbRequestParams params = new AbRequestParams();
+        params.put("che_no", cheNo);
+        params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
+        params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
+        params.put("work_no", billNo);
+        params.put("old_work_no", oldBillNo);
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_MRKX_IN, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    // 如果查询成功就启动美容快修的fragment
+                    if (jsonObject.getString("message").equals("查询成功")) {
+                        if (draftBillDialogFragment != null) {
+                            draftBillDialogFragment.dismiss();
+                        }
+                        dismiss();
+                        mainActivity.showMrkxFragment(jsonObject.getString("data"));
+                    } else {
+                        paramBillNo = oldBillNo;
+                        Toast.makeText(mContext, jsonObject.getString("data"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    paramBillNo = oldBillNo;
+                    e.printStackTrace();
+                }
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+                paramBillNo = oldBillNo;
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
+            }
+        });
+    }
+
+    /*
+    * 根据车牌获取数据，打开快速报价
     */
     public void data_ksbj(final String cardNo, String billNo) {
         list_ksbj.clear();
@@ -643,9 +709,13 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        mainActivity.showKSBJFragment(data);
+                        if (draftBillDialogFragment != null) {
+                            draftBillDialogFragment.dismiss();
+                        }
+                        dismiss();
+                        mainActivity.showKSBJFragment(jsonObject.getString("data"));
                     } else {
-                        Show.showTime(getActivity(), jsonObject.get("message").toString());
+                        Show.showTime(getActivity(), jsonObject.getString("data"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -689,9 +759,13 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
+                        if (draftBillDialogFragment != null) {
+                            draftBillDialogFragment.dismiss();
+                        }
+                        dismiss();
                         mainActivity.showWxyyFragment(jsonObject.getString("data"));
                     } else {
-                        Show.showTime(getActivity(), jsonObject.get("message").toString());
+                        Show.showTime(getActivity(), jsonObject.getString("data"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -720,7 +794,7 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
     /*
     *根据车牌获取数据，打开维修接待
     */
-    public void data_wxjd(final String cheNo, String billNo) {
+    public void data_wxjd(final String cheNo, String billNo, final String oldBillNo) {
         list_wxjd.clear();
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中...");
         AbRequestParams params = new AbRequestParams();
@@ -728,17 +802,25 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
         params.put("gongsiNo", MyApplication.shared.getString("GongSiNo", ""));
         params.put("caozuoyuan_xm", MyApplication.shared.getString("name", ""));
         params.put("work_no", billNo);
-        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_wxjd_jbxx, params, new AbStringHttpResponseListener() {
+        params.put("old_work_no", oldBillNo);
+        // 和美容快修是一个接口
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_MRKX_IN, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int code, String data) {
                 try {
                     JSONObject jsonObject = new JSONObject(data);
                     if (jsonObject.get("message").toString().equals("查询成功")) {
-                        mainActivity.showWxjdFragment(jsonObject.getJSONObject("data").toString());
+                        if (draftBillDialogFragment != null) {
+                            draftBillDialogFragment.dismiss();
+                        }
+                        dismiss();
+                        mainActivity.showWxjdFragment(jsonObject.getString("data"));
                     } else {
-                        Show.showTime(getActivity(), jsonObject.get("message").toString());
+                        paramBillNo = oldBillNo;
+                        Show.showTime(getActivity(), jsonObject.getString("data"));
                     }
                 } catch (JSONException e) {
+                    paramBillNo = oldBillNo;
                     e.printStackTrace();
                 }
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
@@ -756,7 +838,7 @@ public class CheliangxinxiDialogFragment extends DialogFragment {
 
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
-                Log.i("cjn", "失败");
+                paramBillNo = oldBillNo;
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
         });

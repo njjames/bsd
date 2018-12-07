@@ -44,7 +44,7 @@ public class DraftBillApater extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Holder holder = null;
         if (convertView == null) {
             holder = new Holder();
@@ -72,7 +72,7 @@ public class DraftBillApater extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (onOperateItemListener != null) {
-                    onOperateItemListener.onDelete(item.get("billNo").toString());
+                    onOperateItemListener.onDelete(position);
                 }
             }
         });
@@ -89,7 +89,7 @@ public class DraftBillApater extends BaseAdapter {
     public interface OnOperateItemListener {
         void onOpen(String billNo);
 
-        void onDelete(String billNo);
+        void onDelete(int position);
     }
 
     public void setOnOperateItemListener(OnOperateItemListener onOperateItemListener) {

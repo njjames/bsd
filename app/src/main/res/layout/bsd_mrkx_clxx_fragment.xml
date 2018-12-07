@@ -442,7 +442,6 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/qb_px_36"
             android:gravity="center_vertical"
-            android:text="此车有n张草稿单据"
             android:textColor="@color/maincolor"
             android:paddingLeft="@dimen/qb_px_4"
             android:paddingRight="@dimen/qb_px_4"
@@ -459,7 +458,7 @@
             android:textSize="16sp"
             android:background="@drawable/roundbtn_ring_bg"
             android:layout_toLeftOf="@id/tv_save"
-            android:layout_marginRight="@dimen/qb_px_20"/>
+            android:layout_marginRight="@dimen/qb_px_16"/>
 
         <TextView
             android:id="@+id/tv_save"
@@ -471,14 +470,14 @@
             android:textSize="16sp"
             android:background="@drawable/roundbtn_solid_bg"
             android:layout_toLeftOf="@id/tv_confirm"
-            android:layout_marginRight="@dimen/qb_px_20"/>
+            android:layout_marginRight="@dimen/qb_px_16"/>
 
         <TextView
             android:id="@+id/tv_confirm"
             android:layout_width="@dimen/qb_px_80"
             android:layout_height="@dimen/qb_px_34"
             android:gravity="center"
-            android:text="确定"
+            android:text="新建"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:background="@drawable/roundbtn_solid_bg"

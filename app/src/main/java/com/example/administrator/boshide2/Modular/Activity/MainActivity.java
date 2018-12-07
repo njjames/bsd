@@ -220,12 +220,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         DensityUtil.setCustomDensity(this, getApplication());
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stopTimer();
-    }
-
     /**
      * 精友数据
      */
@@ -826,5 +820,24 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void showCLXXXQFragment(String params) {
         DownJianPan.DJP(this);
         change(BSD_CheXiangQing_Fragment.newInstance(params));
+    }
+
+    @Override
+    protected void onPause() {
+        Log.i("KKKKKKKKKKKKK", "onPause: main");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.i("KKKKKKKKKKKKK", "onStop: main");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.i("KKKKKKKKKKKKK", "onDestroy: main");
+        super.onDestroy();
+        stopTimer();
     }
 }

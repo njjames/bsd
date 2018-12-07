@@ -214,7 +214,7 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
             public void onClick(View v) {
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
                         WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-                CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_MRKX, billEntiy.getWork_no())
+                CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_MRKX, billEntiy.getWork_no(), true)
                         .show(getFragmentManager(), "dialog_fragment");
             }
         });
@@ -2076,9 +2076,26 @@ public class BSD_MeiRongKuaiXiu_Fragment extends BaseFragment implements View.On
     }
 
     @Override
-    public void onDestroy() {
-        BSD_wxxm = null;
-        BSD_wxcl = null;
-        super.onDestroy();
+    public void removeUsingCzy() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", billEntiy.getWork_no());
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_REMOVEUSINGCZY, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                // 不管成功与否，都不管了
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
+            }
+        });
     }
 }

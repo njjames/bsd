@@ -207,6 +207,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
     private BSD_ZCDUXQ_CL_POP bsd_zcduxq_cl_pop;
     private TooPromptdiaog promptdiaog;
     private UpdateItemInfoDialog updateItemInfoDialog;
+    private LinearLayout ll_back;
 
     public static BSD_weixiuyuyue_Fragment newInstance(String params) {
         BSD_weixiuyuyue_Fragment fragment = new BSD_weixiuyuyue_Fragment();
@@ -412,6 +413,13 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
         title = (TextView) view.findViewById(R.id.tv_title);
         footerText = (TextView) view.findViewById(R.id.tv_footertext);
         billNo = (TextView) view.findViewById(R.id.tv_billNo);
+        ll_back = (LinearLayout) view.findViewById(R.id.bsd_lsbj_fanhui);
+        ll_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private void updateWxxmGsf(final double ygsf, final int position) {
@@ -1477,7 +1485,6 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-                Log.i("cjn", "存档失败 " + s);
             }
         });
     }
@@ -1754,7 +1761,7 @@ public class BSD_weixiuyuyue_Fragment extends BaseFragment implements View.OnCli
     }
 
     private void showCarInfo() {
-        CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXYY, billEntiy.getWork_no())
+        CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXYY, billEntiy.getWork_no(), true)
                 .show(getFragmentManager(), "dialog_fragment");
     }
 

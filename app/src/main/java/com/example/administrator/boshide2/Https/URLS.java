@@ -713,4 +713,9 @@ public class URLS {
 
     public static final String BSD_GETDRAFTBILLINFO = "public/getdraftbillinfo";
 
+    public static final String BSD_DELETEBILL = "public/deletedraftbill";
+
+    public static final String BSD_GETNEWEBILL = "public/getnewbill";
+
+    public static final String BSD_REMOVEUSINGCZY = "public/removeusingczy";
 }

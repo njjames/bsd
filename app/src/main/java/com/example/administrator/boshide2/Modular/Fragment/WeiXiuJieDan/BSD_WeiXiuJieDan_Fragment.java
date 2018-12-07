@@ -1179,7 +1179,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     }
 
     private void showCarInfo() {
-        CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXJD, billEntiy.getWork_no())
+        CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXJD, billEntiy.getWork_no(), true)
                 .show(getFragmentManager(), "dialog_fragment");
     }
 
@@ -1960,7 +1960,7 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
     public void getBYCXData() {
         AbRequestParams params = new AbRequestParams();
         params.put("quanMing", tv_chexing.getText().toString());
-        Request.Post(MyApplication.shared.getString("ip", "") + url.BSD_chexing_fansuan, params, new AbStringHttpResponseListener() {
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_chexing_fansuan, params, new AbStringHttpResponseListener() {
             @Override
             public void onSuccess(int i, String s) {
                 try {
@@ -1989,6 +1989,30 @@ public class BSD_WeiXiuJieDan_Fragment extends BaseFragment implements View.OnCl
             @Override
             public void onFailure(int i, String s, Throwable throwable) {
 
+            }
+        });
+    }
+
+    @Override
+    public void removeUsingCzy() {
+        AbRequestParams params = new AbRequestParams();
+        params.put("work_no", billEntiy.getWork_no());
+        Request.Post(MyApplication.shared.getString("ip", "") + URLS.BSD_REMOVEUSINGCZY, params, new AbStringHttpResponseListener() {
+            @Override
+            public void onSuccess(int code, String data) {
+                // 不管成功与否，都不管了
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onFailure(int i, String s, Throwable throwable) {
             }
         });
     }

@@ -184,7 +184,7 @@ public class BSD_WeiXiuYeWuDiaoDu_Fragment extends BaseFragment implements View.
         bsd_wxywdd_clxx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXDD, billEntiy.getWork_no())
+                CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_WXDD, billEntiy.getWork_no(), true)
                         .show(getFragmentManager(), "dialog_fragment");
 
             }

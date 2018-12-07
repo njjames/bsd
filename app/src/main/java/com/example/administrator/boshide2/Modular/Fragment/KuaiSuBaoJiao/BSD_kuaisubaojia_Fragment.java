@@ -398,7 +398,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment {
         bsd_ksbj_clxx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_KSBJ, billEntiy.getList_no())
+                CheliangxinxiDialogFragment.newInstance(billEntiy.getChe_no(), Conts.BILLTYPE_KSBJ, billEntiy.getList_no(), true)
                         .show(getFragmentManager(), "dialog_fragment");
 
             }
@@ -912,33 +912,7 @@ public class BSD_kuaisubaojia_Fragment extends BaseFragment {
     }
 
     private void getBillInfoFromParam() {
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = new JSONObject(param);
-            JSONObject item = jsonObject.getJSONObject("data");
-            billEntiy = new BSD_KuaiSuBaoJia_ety();
-            billEntiy.setList_no(item.getString("list_no"));
-            billEntiy.setList_sfbz(item.getString("List_sfbz"));
-            billEntiy.setList_sffl(item.getDouble("List_sffl"));
-            billEntiy.setKehu_no(item.getString("kehu_no"));
-            billEntiy.setKehu_mc(item.getString("kehu_mc"));
-            billEntiy.setKehu_xm(item.getString("kehu_xm"));
-            billEntiy.setKehu_dh(item.getString("kehu_dh"));
-            billEntiy.setChe_no(item.getString("che_no"));
-            billEntiy.setChe_vin(item.getString("che_vin"));
-            billEntiy.setChe_cx(item.getString("che_cx"));
-            billEntiy.setList_czy(item.getString("List_czy"));
-            billEntiy.setGongSiNo(item.getString("GongSiNo"));
-            billEntiy.setGongSiMc(item.getString("GongSiMc"));
-            billEntiy.setWork_no(item.getString("work_no"));
-            billEntiy.setList_jlrq(item.getString("List_jlrq"));
-            billEntiy.setList_yjjclc(item.getInt("List_yjjclc"));
-            billEntiy.setList_hjje(item.getDouble("List_hjje"));
-            billEntiy.setGcsj(item.getString("che_gcrq"));
-            billEntiy.setList_lc(Double.parseDouble(item.getString("List_lc")));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        billEntiy = JSON.parseObject(param, BSD_KuaiSuBaoJia_ety.class);
     }
 
     /**
